@@ -1,15 +1,37 @@
-*.iml
+# Android / Gradle
 .gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
 /build
-/captures
 .externalNativeBuild
 .cxx
+
+# OS
+.DS_Store
+
+# Android Studio
+/captures
+
+# Local config
 local.properties
+
+# IntelliJ / Android Studio
+.idea/
+!.idea/codeStyles/
+!.idea/codeStyles/*
+!.idea/inspectionProfiles/
+!.idea/inspectionProfiles/*
+*.iml
+
+# Secrets and configurations
+**/google-services.json
+**/firebase.json
+**/keystore.properties
+**/*.jks
+**/*.keystore
+.env
+
+# Tests
+test-output/
+
+# Generated
+.dart_tool/
+

@@ -1,8 +1,10 @@
 import 'package:SwishLab/pages/home_page.dart';
+import 'package:SwishLab/pages/login.dart';
 import 'package:SwishLab/pages/past_activity.dart';
 import 'package:SwishLab/pages/profile_page.dart';
 import 'package:SwishLab/pages/settings.dart';
 import 'package:SwishLab/pages/splash_screen.dart';
+import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/router/go_router_refresh_stream.dart';
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/themes.dart';
@@ -55,17 +57,18 @@ final _routerProvider = Provider<GoRouter>((ref) {
         name: 'splash',
         builder: (context, state) => const SplashScreen(),
       ),
+      GoRoute(
+        path: '/login',
+        name: 'login',
+        builder: (context, state) => const LoginPage(),
+      ),
     ],
     redirect: (context, state) {
-      final session = supabase.auth.currentSession;
-      final loggedIn = session != null;
+      final loggedIn = ref.read(loggedInProvider);
       final location = state.matchedLocation;
-      final isSplash = location == '/splash';
-      final isLogin = location == '/login';
-      final isSignup = location == '/signup';
 
       // If logged in -> redirect to home
-      if ((isSplash || isLogin || isSignup) && loggedIn) {
+      if (loggedIn && (location == '/splash' || location == '/login')) {
         return '/home';
       }
 

@@ -1,3 +1,4 @@
+import 'package:SwishLab/services/authentication.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -12,7 +13,7 @@ final authStateProvider = StreamProvider<AuthState>((ref) {
   return supabase.auth.onAuthStateChange;
 });
 
-/// FlutterFlow-like loggedIn flag
+/// LoggedIn flag
 final loggedInProvider = Provider<bool>((ref) {
   final authState = ref.watch(authStateProvider);
 
@@ -26,4 +27,10 @@ final loggedInProvider = Provider<bool>((ref) {
 final currentUserProvider = Provider<User?>((ref) {
   final supabase = ref.watch(supabaseProvider);
   return supabase.auth.currentUser;
+});
+
+/// Auth service (actions)
+final authServiceProvider = Provider<AuthService>((ref) {
+  final supabase = ref.watch(supabaseProvider);
+  return AuthService(supabase);
 });

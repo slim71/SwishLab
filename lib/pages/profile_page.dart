@@ -1,6 +1,5 @@
 import 'package:SwishLab/constants.dart';
 import 'package:SwishLab/models/statistics_row.dart';
-import 'package:SwishLab/providers/statistics_provider.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
@@ -31,7 +30,6 @@ class _ProfilePageWidgetState extends ConsumerState<ProfilePage>
   @override
   Widget build(BuildContext context) {
     final appState = ref.watch(appStateProvider);
-    final statsAsync = ref.watch(userStatisticsProvider);
     final appColors = Theme.of(context).extension<AppColorSet>()!;
 
     return GestureDetector(

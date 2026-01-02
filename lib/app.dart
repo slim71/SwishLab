@@ -2,20 +2,26 @@ import 'package:SwishLab/pages/home_page.dart';
 import 'package:SwishLab/pages/past_activity.dart';
 import 'package:SwishLab/pages/profile_page.dart';
 import 'package:SwishLab/pages/settings.dart';
+import 'package:SwishLab/pages/splash_screen.dart';
+import 'package:SwishLab/router/go_router_refresh_stream.dart';
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/themes.dart';
 import 'package:SwishLab/widgets/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Expose the app title globally through this one provider
 final appTitleProvider = Provider((_) => 'SwishLab');
 
 // Basically all app's navigation routes
 final _routerProvider = Provider<GoRouter>((ref) {
+  final supabase = Supabase.instance.client;
+
   return GoRouter(
-    initialLocation: '/',
+    initialLocation: '/splash',
+    refreshListenable: GoRouterRefreshStream(supabase.auth.onAuthStateChange),
     routes: [
       ShellRoute(
         builder: (context, state, child) {
@@ -23,7 +29,7 @@ final _routerProvider = Provider<GoRouter>((ref) {
         },
         routes: [
           GoRoute(
-            path: '/',
+            path: '/home',
             name: 'home',
             builder: (context, state) => const HomePage(),
           ),
@@ -44,8 +50,28 @@ final _routerProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
+      GoRoute(
+        path: '/splash',
+        name: 'splash',
+        builder: (context, state) => const SplashScreen(),
+      ),
     ],
-    // redirect: (context, state) => ... if you want auth guard
+    redirect: (context, state) {
+      final session = supabase.auth.currentSession;
+      final loggedIn = session != null;
+      final location = state.matchedLocation;
+      final isSplash = location == '/splash';
+      final isLogin = location == '/login';
+      final isSignup = location == '/signup';
+
+      // If logged in -> redirect to home
+      if ((isSplash || isLogin || isSignup) && loggedIn) {
+        return '/home';
+      }
+
+      // No redirect
+      return null;
+    },
   );
 });
 

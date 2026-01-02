@@ -14,6 +14,8 @@ dependencies:
   flutter_animate: ^4.5.0
   font_awesome_flutter: ^10.12.0
 
+  smooth_page_indicator: ^2.0.0
+
   google_fonts: ^6.2.1
 
   # state management & routing (opinionated)

@@ -20,4 +20,19 @@ class UsersRepository {
     if (response == null) return null;
     return UsersRow.fromJson(response);
   }
+
+  Future<void> insertUser({
+    required String id,
+    required String email,
+    required String firstName,
+    required String lastName,
+  }) async {
+    await _client.from('Users').insert({
+      'id': id,
+      'email': email,
+      'first_name': firstName,
+      'last_name': lastName,
+      'created_at': DateTime.now().toIso8601String(),
+    });
+  }
 }

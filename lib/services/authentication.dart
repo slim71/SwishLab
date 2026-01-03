@@ -29,5 +29,16 @@ class AuthService {
     await _supabase.auth.signOut();
   }
 
+  Future<User?> signUp({
+    required String email,
+    required String password,
+  }) async {
+    final res = await _supabase.auth.signUp(
+      email: email,
+      password: password,
+    );
+    return res.user;
+  }
+
   User? get currentUser => _supabase.auth.currentUser;
 }

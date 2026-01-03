@@ -3,8 +3,10 @@ import 'package:SwishLab/pages/login.dart';
 import 'package:SwishLab/pages/past_activity.dart';
 import 'package:SwishLab/pages/profile_page.dart';
 import 'package:SwishLab/pages/settings.dart';
+import 'package:SwishLab/pages/signup.dart';
 import 'package:SwishLab/pages/splash_screen.dart';
 import 'package:SwishLab/providers/auth_providers.dart';
+import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/router/go_router_refresh_stream.dart';
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/themes.dart';
@@ -62,6 +64,11 @@ final _routerProvider = Provider<GoRouter>((ref) {
         name: 'login',
         builder: (context, state) => const LoginPage(),
       ),
+      GoRoute(
+        path: '/signup',
+        name: 'signup',
+        builder: (context, state) => const SignupPage(),
+      ),
     ],
     redirect: (context, state) {
       final loggedIn = ref.read(loggedInProvider);
@@ -86,6 +93,35 @@ class SwishLab extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final router = ref.watch(_routerProvider);
     final title = ref.watch(appTitleProvider);
+
+    // Listener to add the user to the DB
+    ref.listen<AsyncValue<AuthState>>(
+      authStateProvider,
+      (previous, next) {
+        next.when(
+          data: (authState) async {
+            final user = authState.session?.user;
+            if (user == null) return;
+
+            final usersRepo = ref.read(usersRepositoryProvider);
+
+            // Only insert if the user does not exist
+            final existing = await usersRepo.getSingleUserById(user.id);
+
+            if (existing == null) {
+              await usersRepo.insertUser(
+                id: user.id,
+                email: user.email ?? '',
+                firstName: '',
+                lastName: '',
+              );
+            }
+          },
+          loading: () {},
+          error: (_, __) {},
+        );
+      },
+    );
 
     return MaterialApp.router(
       title: title,

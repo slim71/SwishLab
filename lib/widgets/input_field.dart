@@ -3,7 +3,7 @@ import 'package:SwishLab/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class InputField extends StatelessWidget {
+class InputField extends StatefulWidget {
   final TextEditingController controller;
   final FocusNode? focusNode;
   final String label;
@@ -14,6 +14,7 @@ class InputField extends StatelessWidget {
   final String? Function(String?)? validator;
   final RegExp? regex;
   final List<TextInputFormatter> additionalFormatters;
+  final Widget? suffixIcon;
 
   const InputField({
     super.key,
@@ -27,30 +28,41 @@ class InputField extends StatelessWidget {
     this.validator,
     this.regex,
     this.additionalFormatters = const [],
+    this.suffixIcon,
   });
+
+  @override
+  State<InputField> createState() => _InputField();
+}
+
+class _InputField extends State<InputField> {
+  bool _isVisible = false;
 
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).extension<AppColorSet>()!;
 
     return TextFormField(
-      controller: controller,
-      focusNode: focusNode,
+      controller: widget.controller,
+      focusNode: widget.focusNode,
       autofocus: false,
-      keyboardType: keyboardType,
-      autofillHints: autofillHints,
-      textCapitalization: textCapitalization,
-      obscureText: obscureText,
+      keyboardType: widget.keyboardType,
+      autofillHints: widget.autofillHints,
+      textCapitalization: widget.textCapitalization,
+      obscureText: widget.obscureText && !_isVisible,
       style: AppTextStyles.bodyLarge(context, color: appColors.textFieldText),
-      validator: validator,
+      validator: widget.validator,
+      enableSuggestions: !widget.obscureText,
+      autocorrect: !widget.obscureText,
       inputFormatters: [
         // Optional regex filtering
-        if (regex != null) FilteringTextInputFormatter.allow(regex!),
+        if (widget.regex != null)
+          FilteringTextInputFormatter.allow(widget.regex!),
 
-        ...additionalFormatters,
+        ...widget.additionalFormatters,
       ],
       decoration: InputDecoration(
-        labelText: label,
+        labelText: widget.label,
         labelStyle: AppTextStyles.labelLarge(context,
             color: appColors.textFieldLabelText),
         filled: true,
@@ -83,6 +95,23 @@ class InputField extends StatelessWidget {
             width: 2,
           ),
         ),
+        suffixIcon: widget.obscureText
+            ? InkWell(
+                onTap: () {
+                  setState(() {
+                    _isVisible = !_isVisible;
+                  });
+                },
+                focusNode: FocusNode(skipTraversal: true),
+                child: Icon(
+                  _isVisible
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
+                  color: const Color(0xFF757575),
+                  size: 22,
+                ),
+              )
+            : widget.suffixIcon,
       ),
     );
   }

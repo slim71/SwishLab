@@ -7,6 +7,7 @@ import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/input_field.dart';
 import 'package:SwishLab/widgets/light_button.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,28 +28,28 @@ class _SignupPageState extends ConsumerState<SignupPage>
 
   // State field(s) for firstname widget.
   FocusNode? firstnameFocusNode;
-  late TextEditingController firstnameTextController;
-  String? Function(BuildContext, String?)? firstnameTextControllerValidator;
+  late TextEditingController firstnameController;
+  String? Function(BuildContext, String?)? firstnameValidator;
 
   // State field(s) for lastname widget.
   FocusNode? lastnameFocusNode;
-  late TextEditingController lastnameTextController;
-  String? Function(BuildContext, String?)? lastnameTextControllerValidator;
+  late TextEditingController lastnameController;
+  String? Function(BuildContext, String?)? lastnameValidator;
 
   // State field(s) for emailAddress widget.
   FocusNode? emailAddressFocusNode;
-  late TextEditingController emailAddressTextController;
-  String? Function(BuildContext, String?)? emailAddressTextControllerValidator;
+  late TextEditingController emailAddressController;
+  String? Function(BuildContext, String?)? emailValidator;
 
   // State field(s) for password widget.
   FocusNode? passwordFocusNode;
-  late TextEditingController passwordTextController;
-  String? Function(BuildContext, String?)? passwordTextControllerValidator;
+  late TextEditingController passwordController;
+  String? Function(BuildContext, String?)? passwordValidator;
 
   // State field(s) for confpswd widget.
   FocusNode? confpswdFocusNode;
-  late TextEditingController confpswdTextController;
-  String? Function(BuildContext, String?)? confpswdTextControllerValidator;
+  late TextEditingController confpswdController;
+  String? Function(BuildContext, String?)? confpswdValidator;
 
   // Stores action output result for [Backend Call - Insert Row] action in manualSignupButton widget.
   UsersRow? backendResult;
@@ -57,20 +58,59 @@ class _SignupPageState extends ConsumerState<SignupPage>
   void initState() {
     super.initState();
 
-    firstnameTextController = TextEditingController();
+    firstnameController = TextEditingController();
     firstnameFocusNode ??= FocusNode();
+    firstnameValidator = (context, value) {
+      if (value == null || value.isEmpty) return 'First name required';
+      if (value.length < 2) return 'First name too short';
+      if (!RegExp(r"^[a-zA-ZÀ-ÿ \'-]+$").hasMatch(value))
+        return 'Invalid characters';
+      return null;
+    };
 
-    lastnameTextController = TextEditingController();
+    lastnameController = TextEditingController();
     lastnameFocusNode ??= FocusNode();
+    lastnameValidator = (context, value) {
+      if (value == null || value.isEmpty) return 'Last name required';
+      if (value.length < 2) return 'Last name too short';
+      if (!RegExp(r"^[a-zA-ZÀ-ÿ \'-]+$").hasMatch(value))
+        return 'Invalid characters';
+      return null;
+    };
 
-    emailAddressTextController = TextEditingController();
+    emailAddressController = TextEditingController();
     emailAddressFocusNode ??= FocusNode();
+    emailValidator = (context, value) {
+      if (value == null || value.isEmpty) return 'Email required';
+      if (!EmailValidator.validate(value)) return 'Enter a valid email';
+      return null;
+    };
 
-    passwordTextController = TextEditingController();
+    passwordController = TextEditingController();
     passwordFocusNode ??= FocusNode();
+    passwordValidator = (context, value) {
+      if (value == null || value.isEmpty) return 'Password required';
+      if (value.length < 8) return 'Password must be at least 8 characters';
+      // Optional: enforce at least one number and one letter
+      if (!RegExp(r'(?=.*[A-Za-z])').hasMatch(value))
+        return 'Password must contain a letter';
+      if (!RegExp(r'(?=.*\d)').hasMatch(value))
+        return 'Password must contain a number';
+      return null;
+    };
 
-    confpswdTextController = TextEditingController();
+    confpswdController = TextEditingController();
     confpswdFocusNode ??= FocusNode();
+    confpswdValidator = (context, value) {
+      if (value == null || value.isEmpty) return 'Password required';
+      if (value.length < 8) return 'Password must be at least 8 characters';
+      // Optional: enforce at least one number and one letter
+      if (!RegExp(r'(?=.*[A-Za-z])').hasMatch(value))
+        return 'Password must contain a letter';
+      if (!RegExp(r'(?=.*\d)').hasMatch(value))
+        return 'Password must contain a number';
+      return null;
+    };
   }
 
   @override
@@ -210,7 +250,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                   width: double.infinity,
                                                   child: InputField(
                                                       controller:
-                                                          firstnameTextController,
+                                                          firstnameController,
                                                       focusNode:
                                                           firstnameFocusNode,
                                                       autofillHints: [
@@ -221,11 +261,11 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                               .words,
                                                       label: 'First Name',
                                                       validator:
-                                                          firstnameTextControllerValidator ==
+                                                          firstnameValidator ==
                                                                   null
                                                               ? null
                                                               : (value) =>
-                                                                  firstnameTextControllerValidator!(
+                                                                  firstnameValidator!(
                                                                       context,
                                                                       value),
                                                       regex: RegExp(
@@ -244,7 +284,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                   width: double.infinity,
                                                   child: InputField(
                                                       controller:
-                                                          lastnameTextController,
+                                                          lastnameController,
                                                       focusNode:
                                                           lastnameFocusNode,
                                                       autofillHints: [
@@ -255,11 +295,11 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                               .words,
                                                       label: 'Last Name',
                                                       validator:
-                                                          lastnameTextControllerValidator ==
+                                                          lastnameValidator ==
                                                                   null
                                                               ? null
                                                               : (value) =>
-                                                                  lastnameTextControllerValidator!(
+                                                                  lastnameValidator!(
                                                                       context,
                                                                       value),
                                                       regex: RegExp(
@@ -278,23 +318,22 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                   width: double.infinity,
                                                   child: InputField(
                                                     controller:
-                                                        emailAddressTextController,
+                                                        emailAddressController,
                                                     focusNode:
                                                         emailAddressFocusNode,
                                                     label: 'Email',
-                                                    autofillHints: const [
+                                                    autofillHints: [
                                                       AutofillHints.email
                                                     ],
-                                                    validator:
-                                                        emailAddressTextControllerValidator ==
-                                                                null
+                                                    validator: emailValidator ==
+                                                            null
                                                             ? null
                                                             : (value) =>
-                                                                emailAddressTextControllerValidator!(
-                                                                    context,
+                                                            emailValidator!(
+                                                                context,
                                                                     value),
                                                     regex: RegExp(
-                                                        '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.[A-Za-z]{2,}\$'),
+                                                        r'[a-zA-Z0-9@._%+-]'),
                                                   ),
                                                 ),
                                               ),
@@ -310,7 +349,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                   width: double.infinity,
                                                   child: InputField(
                                                     controller:
-                                                        passwordTextController,
+                                                        passwordController,
                                                     focusNode:
                                                         passwordFocusNode,
                                                     label: 'Password',
@@ -318,13 +357,12 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                       AutofillHints.password
                                                     ],
                                                     obscureText: true,
-                                                    validator:
-                                                        passwordTextControllerValidator ==
-                                                                null
+                                                    validator: passwordValidator ==
+                                                            null
                                                             ? null
                                                             : (value) =>
-                                                                passwordTextControllerValidator!(
-                                                                    context,
+                                                            passwordValidator!(
+                                                                context,
                                                                     value),
                                                   ),
                                                 ),
@@ -341,7 +379,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                   width: double.infinity,
                                                   child: InputField(
                                                     controller:
-                                                        confpswdTextController,
+                                                        confpswdController,
                                                     focusNode:
                                                         confpswdFocusNode,
                                                     label: 'Confirm password',
@@ -350,12 +388,11 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                     ],
                                                     obscureText: true,
                                                     validator:
-                                                        confpswdTextControllerValidator ==
+                                                        confpswdValidator ==
                                                                 null
                                                             ? null
-                                                            : (value) =>
-                                                                confpswdTextControllerValidator!(
-                                                                    context,
+                                                            : (value) => !(
+                                                                  context,
                                                                     value),
                                                   ),
                                                 ),
@@ -367,11 +404,32 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                               label: 'Manual signup',
                                               child: DarkButton(
                                                 onPressed: () async {
+                                                  // Check all required fields are filled
+                                                  if (emailAddressController
+                                                          .text.isEmpty ||
+                                                      passwordController
+                                                          .text.isEmpty ||
+                                                      confpswdController
+                                                          .text.isEmpty ||
+                                                      firstnameController
+                                                          .text.isEmpty ||
+                                                      lastnameController
+                                                          .text.isEmpty) {
+                                                    if (!mounted) return;
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      const SnackBar(
+                                                        content: Text(
+                                                            'Please fill all fields!'),
+                                                      ),
+                                                    );
+                                                    return;
+                                                  }
+
                                                   // Password check
-                                                  if (passwordTextController
-                                                          .text !=
-                                                      confpswdTextController
-                                                          .text) {
+                                                  if (passwordController.text !=
+                                                      confpswdController.text) {
                                                     if (!mounted) return;
                                                     ScaffoldMessenger.of(
                                                             context)
@@ -391,11 +449,10 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                   final user =
                                                       await authService.signUp(
                                                     email:
-                                                        emailAddressTextController
+                                                        emailAddressController
                                                             .text,
                                                     password:
-                                                        passwordTextController
-                                                            .text,
+                                                        passwordController.text,
                                                   );
 
                                                   if (user == null ||
@@ -416,14 +473,13 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                   await usersRepo.insertUser(
                                                     id: user.id,
                                                     email:
-                                                        emailAddressTextController
+                                                        emailAddressController
                                                             .text,
                                                     firstName:
-                                                        firstnameTextController
+                                                        firstnameController
                                                             .text,
                                                     lastName:
-                                                        lastnameTextController
-                                                            .text,
+                                                        lastnameController.text,
                                                   );
 
                                                   // Navigate

@@ -19,7 +19,7 @@ class NavBar extends StatelessWidget {
   void _onTap(BuildContext context, int index) {
     switch (index) {
       case 0:
-        context.go('/');
+        context.go('/home');
         break;
       case 1:
         context.go('/activity');

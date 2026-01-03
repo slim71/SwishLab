@@ -5,6 +5,7 @@ import 'package:SwishLab/pages/profile_page.dart';
 import 'package:SwishLab/pages/settings.dart';
 import 'package:SwishLab/pages/signup.dart';
 import 'package:SwishLab/pages/splash_screen.dart';
+import 'package:SwishLab/pages/success.dart';
 import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/router/go_router_refresh_stream.dart';
@@ -68,6 +69,11 @@ final _routerProvider = Provider<GoRouter>((ref) {
         path: '/signup',
         name: 'signup',
         builder: (context, state) => const SignupPage(),
+      ),
+      GoRoute(
+        path: '/success',
+        name: 'success',
+        builder: (context, state) => const SuccessAfterSignup(),
       ),
     ],
     redirect: (context, state) {

@@ -7,6 +7,7 @@ import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -162,64 +163,16 @@ class _HomePageState extends ConsumerState<HomePage> {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: appColors.primaryBackground,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100),
-          child: AppBar(
-            backgroundColor: appColors.primaryOne,
-            automaticallyImplyLeading: false,
-            title:
-                // Home page title
-                Text(
-              'Home',
-              style: AppTextStyles.displayMedium(context,
-                  color: appColors.primaryTwo),
-            ),
-            actions: [
-              // Container with user's profile picture
-              Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: appColors.alternateTwo, // TODO: specify an appColor?
-                    width: 2,
-                  ),
-                ),
-                alignment: AlignmentDirectional(0, 0),
-                child: Padding(
-                  // User profile picture
-                  padding: EdgeInsets.all(8),
-                  child: InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      print('Navigating...');
-                      context.goNamed('profile');
-                    },
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                      ),
-                      child: Image.network(
-                        appState.userData?.profilePicture ??
-                            kDefaultProfilePictureUrl,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-            centerTitle: false,
-            toolbarHeight: 100,
-            elevation: 0,
-          ),
+        appBar: MyAppBar(
+          style: MyAppBarStyle.titleWithProfileImage,
+          title: 'Home',
+          height: 100,
+          onProfilePressed: () async {
+            print('Navigating...');
+            context.goNamed('profile');
+          },
+          profileImageUrl:
+              appState.userData?.profilePicture ?? kDefaultProfilePictureUrl,
         ),
         body:
             // Container to have a colored background

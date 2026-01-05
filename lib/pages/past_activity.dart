@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,22 +31,9 @@ class _PastActivityWidgetState extends ConsumerState<PastActivity> {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: appColors.secondaryBackground,
-      appBar: AppBar(
-        backgroundColor: appColors.primaryOne,
-        automaticallyImplyLeading: false,
-        title:
-            // Activity page title
-            Semantics(
-          label: 'Activity page title',
-          child: Text(
-            'Past activity',
-            style: AppTextStyles.displaySmall(context,
-                color: appColors.primaryTwo),
-          ),
-        ),
-        actions: [],
-        centerTitle: false,
-        elevation: 10,
+      appBar: MyAppBar(
+        style: MyAppBarStyle.titleOnly,
+        title: 'Past activity',
       ),
       body: SafeArea(
         top: true,
@@ -425,7 +413,7 @@ class _PastActivityWidgetState extends ConsumerState<PastActivity> {
                                                   label:
                                                       'Activity section image',
                                                   child: Image.asset(
-                                                    'assets/images/allTasksComplete@2x.png',
+                                                    'assets/images/tasks.png',
                                                     width: 300,
                                                     height: 100,
                                                     fit: BoxFit.fitHeight,

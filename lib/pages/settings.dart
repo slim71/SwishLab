@@ -1,5 +1,6 @@
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/light_button.dart';
 import 'package:SwishLab/widgets/settings_item.dart';
 import 'package:SwishLab/widgets/settings_row.dart';
@@ -9,7 +10,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:SwishLab/widgets/app_bar.dart';
 
 /// Settings page
 class Settings extends ConsumerStatefulWidget {
@@ -157,21 +157,9 @@ class _SettingsState extends ConsumerState<Settings>
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: appColors.secondaryBackground,
-      appBar: AppBar(
-        backgroundColor: appColors.primaryOne,
-        automaticallyImplyLeading: false,
-        title:
-            // Settings page title
-            Semantics(
-          label: 'Settings page title',
-          child: Text(
-            'Settings',
-            style: AppTextStyles.displaySmall(context),
-          ),
-        ),
-        actions: [],
-        centerTitle: false,
-        elevation: 10,
+      appBar: MyAppBar(
+        style: MyAppBarStyle.titleOnly,
+        title: 'Settings',
       ),
       body:
           // Container used to have a colored background

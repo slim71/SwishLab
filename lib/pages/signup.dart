@@ -391,8 +391,9 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                         confpswdValidator ==
                                                                 null
                                                             ? null
-                                                            : (value) => !(
-                                                                  context,
+                                                        : (value) =>
+                                                            confpswdValidator!(
+                                                                context,
                                                                     value),
                                                   ),
                                                 ),

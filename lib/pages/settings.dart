@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:SwishLab/widgets/app_bar.dart';
 
 /// Settings page
 class Settings extends ConsumerStatefulWidget {
@@ -27,13 +29,13 @@ class _SettingsState extends ConsumerState<Settings>
     SettingsItem(
         title: 'User Info',
         background: const Color(0x33FFC72C),
-        onTap: () async {
+        onTap: (context) async {
           // context.pushNamed(UserDataWidget.routeName);
         }),
     SettingsItem(
       title: 'Getting Started',
       background: const Color(0x340C0C0C),
-      onTap: () async {
+      onTap: (context) async {
         // context.pushNamed(
         //     GettingStartedPageWidget.routeName);
       },
@@ -41,14 +43,14 @@ class _SettingsState extends ConsumerState<Settings>
     SettingsItem(
       title: 'About Us',
       background: const Color(0x35BE3A34),
-      onTap: () async {
-        // context.pushNamed(AboutUsWidget.routeName);
+      onTap: (context) async {
+        context.pushNamed('about');
       },
     ),
     SettingsItem(
       title: 'Help',
       background: const Color(0x33FFC72C),
-      onTap: () async {
+      onTap: (context) async {
         // _model.faqsJsonList =
         // await actions.loadJsonRemoteOrAppState(
         //   'faqs',
@@ -66,7 +68,7 @@ class _SettingsState extends ConsumerState<Settings>
     SettingsItem(
       title: 'Privacy Policy',
       background: const Color(0x340C0C0C),
-      onTap: () async {
+      onTap: (context) async {
         // context.pushNamed(
         //     PrivacyPolicyPageWidget.routeName);
       },
@@ -74,21 +76,21 @@ class _SettingsState extends ConsumerState<Settings>
     SettingsItem(
       title: 'Terms & Conditions',
       background: const Color(0x35BE3A34),
-      onTap: () async {
+      onTap: (context) async {
         // context.pushNamed(TacPageWidget.routeName);
       },
     ),
     SettingsItem(
       title: 'EULA',
       background: const Color(0x33FFC72C),
-      onTap: () async {
+      onTap: (context) async {
         // context.pushNamed(EulaPageWidget.routeName);
       },
     ),
     SettingsItem(
       title: 'Disclaimer',
       background: const Color(0x340C0C0C),
-      onTap: () async {
+      onTap: (context) async {
         // context
         //     .pushNamed(DisclaimerPageWidget.routeName);
       },
@@ -96,7 +98,7 @@ class _SettingsState extends ConsumerState<Settings>
     SettingsItem(
       title: 'Acceptable Use Policy',
       background: const Color(0x35BE3A34),
-      onTap: () async {
+      onTap: (context) async {
         // context.pushNamed(
         //     AcceptableUsePageWidget.routeName);
       },
@@ -104,14 +106,14 @@ class _SettingsState extends ConsumerState<Settings>
     SettingsItem(
       title: 'Credits',
       background: const Color(0x33FFC72C),
-      onTap: () async {
+      onTap: (context) async {
         // context.pushNamed(CreditsWidget.routeName);
       },
     ),
     SettingsItem(
       title: 'Debug utilities',
       background: const Color(0x340C0C0C),
-      onTap: () async {
+      onTap: (context) async {
         // context
         //     .pushNamed(DebugUtilitiesWidget.routeName);
       },

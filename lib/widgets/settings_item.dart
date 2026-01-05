@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class SettingsItem {
   final String title;
   final Color background;
-  final VoidCallback? onTap;
+  final Future<void> Function(BuildContext context)? onTap;
 
   const SettingsItem({
     required this.title,

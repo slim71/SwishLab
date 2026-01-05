@@ -22,7 +22,9 @@ class SettingsRow extends StatelessWidget {
         focusColor: Colors.transparent,
         hoverColor: Colors.transparent,
         highlightColor: Colors.transparent,
-        onTap: item.onTap,
+        onTap: () {
+          item.onTap?.call(context);
+        },
         child: Container(
           width: double.infinity,
           decoration: BoxDecoration(

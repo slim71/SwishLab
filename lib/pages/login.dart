@@ -179,8 +179,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPage>
                                                   : (value) =>
                                                       emailAddressTextControllerValidator!(
                                                           context, value),
-                                          regex: RegExp(
-                                              '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*\\.[A-Za-z]{2,}\$'),
+                                          regex: RegExp(r'[a-zA-Z0-9@._%+-]'),
                                         ),
                                       ),
                                     ),

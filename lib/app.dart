@@ -1,3 +1,5 @@
+import 'package:SwishLab/pages/about.dart';
+import 'package:SwishLab/pages/error_page.dart';
 import 'package:SwishLab/pages/home_page.dart';
 import 'package:SwishLab/pages/login.dart';
 import 'package:SwishLab/pages/past_activity.dart';
@@ -11,7 +13,7 @@ import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/router/go_router_refresh_stream.dart';
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/themes.dart';
-import 'package:SwishLab/widgets/nav_bar.dart';
+import 'package:SwishLab/widgets/nav_bar_scaffold.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -25,36 +27,59 @@ final _routerProvider = Provider<GoRouter>((ref) {
   final supabase = Supabase.instance.client;
 
   return GoRouter(
-    initialLocation: '/splash',
+    initialLocation: '/',
     refreshListenable: GoRouterRefreshStream(supabase.auth.onAuthStateChange),
+    errorBuilder: (context, state) {
+      final error = state.error;
+
+      return ErrorPage(
+        message: error?.toString(),
+        onHome: () => context.go('/'),
+      );
+    },
     routes: [
-      ShellRoute(
-        builder: (context, state, child) {
-          return NavBar(child: child);
+      GoRoute(
+        name: 'root',
+        path: '/',
+        redirect: (context, state) {
+          final loggedIn = ref.read(loggedInProvider);
+          final location = state.matchedLocation;
+
+          // If logged in -> redirect to home
+          if (loggedIn) {
+            return '/home';
+          }
+
+          // No redirect
+          return '/splash';
         },
-        routes: [
-          GoRoute(
+      ),
+      GoRoute(
             path: '/home',
             name: 'home',
-            builder: (context, state) => const HomePage(),
-          ),
+        builder: (context, state) => NavBarScaffold(child: HomePage()),
+      ),
           GoRoute(
             path: '/activity',
             name: 'activity',
-            builder: (context, state) => const PastActivity(),
-          ),
+        builder: (context, state) => NavBarScaffold(child: PastActivity()),
+      ),
           GoRoute(
             path: '/profile',
             name: 'profile',
-            builder: (context, state) => const ProfilePage(),
-          ),
+        builder: (context, state) => NavBarScaffold(child: ProfilePage()),
+      ),
           GoRoute(
             path: '/settings',
             name: 'settings',
-            builder: (_, __) => const Settings(),
-          ),
-        ],
-      ),
+          builder: (context, state) => NavBarScaffold(child: Settings()),
+          routes: [
+            GoRoute(
+              path: 'about',
+              name: 'about',
+              builder: (context, state) => const AboutUs(),
+            ),
+          ]),
       GoRoute(
         path: '/splash',
         name: 'splash',
@@ -76,18 +101,6 @@ final _routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) => const SuccessAfterSignup(),
       ),
     ],
-    redirect: (context, state) {
-      final loggedIn = ref.read(loggedInProvider);
-      final location = state.matchedLocation;
-
-      // If logged in -> redirect to home
-      if (loggedIn && (location == '/splash' || location == '/login')) {
-        return '/home';
-      }
-
-      // No redirect
-      return null;
-    },
   );
 });
 

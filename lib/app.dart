@@ -1,12 +1,8 @@
 import 'package:SwishLab/pages/about.dart';
-import 'package:SwishLab/pages/disclaimer.dart';
-import 'package:SwishLab/pages/eula.dart';
-import 'package:SwishLab/pages/tac.dart';
-import 'package:SwishLab/pages/privacy_policy.dart';
-import 'package:SwishLab/pages/acceptable_use.dart';
 import 'package:SwishLab/pages/error_page.dart';
 import 'package:SwishLab/pages/home_page.dart';
 import 'package:SwishLab/pages/login.dart';
+import 'package:SwishLab/pages/markdown_document.dart';
 import 'package:SwishLab/pages/past_activity.dart';
 import 'package:SwishLab/pages/profile_page.dart';
 import 'package:SwishLab/pages/settings.dart';
@@ -15,6 +11,7 @@ import 'package:SwishLab/pages/splash_screen.dart';
 import 'package:SwishLab/pages/success.dart';
 import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/providers/users_provider.dart';
+import 'package:SwishLab/router/app_documents.dart';
 import 'package:SwishLab/router/go_router_refresh_stream.dart';
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/themes.dart';
@@ -85,6 +82,19 @@ final _routerProvider = Provider<GoRouter>((ref) {
               path: 'about',
               name: 'about',
               builder: (context, state) => const AboutUs(),
+            ),
+            GoRoute(
+              path: '/doc/:name',
+              name: 'document',
+              builder: (context, state) {
+                final name = state.pathParameters['name']!;
+                final doc = appDocuments[name]!;
+
+                return MarkdownDocument(
+                  fileName: doc.file,
+                  title: doc.title,
+                );
+              },
             ),
           ]),
       GoRoute(

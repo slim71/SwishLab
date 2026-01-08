@@ -69,38 +69,35 @@ class _SettingsState extends ConsumerState<Settings>
       title: 'Privacy Policy',
       background: const Color(0x340C0C0C),
       onTap: (context) async {
-        // context.pushNamed(
-        //     PrivacyPolicyPageWidget.routeName);
+        context.pushNamed('document', pathParameters: {'name': 'PRIVACY'});
       },
     ),
     SettingsItem(
       title: 'Terms & Conditions',
       background: const Color(0x35BE3A34),
       onTap: (context) async {
-        // context.pushNamed(TacPageWidget.routeName);
+        context.pushNamed('document', pathParameters: {'name': 'TAC'});
       },
     ),
     SettingsItem(
       title: 'EULA',
       background: const Color(0x33FFC72C),
       onTap: (context) async {
-        // context.pushNamed(EulaPageWidget.routeName);
+        context.pushNamed('document', pathParameters: {'name': 'EULA'});
       },
     ),
     SettingsItem(
       title: 'Disclaimer',
       background: const Color(0x340C0C0C),
       onTap: (context) async {
-        // context
-        //     .pushNamed(DisclaimerPageWidget.routeName);
+        context.pushNamed('document', pathParameters: {'name': 'DISCLAIMER'});
       },
     ),
     SettingsItem(
       title: 'Acceptable Use Policy',
       background: const Color(0x35BE3A34),
       onTap: (context) async {
-        // context.pushNamed(
-        //     AcceptableUsePageWidget.routeName);
+        context.pushNamed('document', pathParameters: {'name': 'USE'});
       },
     ),
     SettingsItem(
@@ -327,6 +324,7 @@ class _SettingsState extends ConsumerState<Settings>
                                     // context.goNamedAuth(
                                     //     SplashScreenWidget.routeName,
                                     //     context.mounted);
+                                    // AuthStorage.setLoggedIn(false);
                                   },
                                   text: 'Log Out',
                                 ),

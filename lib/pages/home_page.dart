@@ -1,6 +1,5 @@
 import 'package:SwishLab/constants.dart';
 import 'package:SwishLab/models/statistics_row.dart';
-import 'package:SwishLab/models/user_row_data.dart';
 import 'package:SwishLab/models/users_row.dart';
 import 'package:SwishLab/providers/statistics_provider.dart';
 import 'package:SwishLab/providers/users_provider.dart';
@@ -29,6 +28,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
+    // TODO: might need a ref.listen on the statistics
   }
 
   Future<void> _showErrorDialog(String msg) async {
@@ -87,73 +87,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                 (last.followThroughTotalScore ?? 0.0)) /
             6;
 
-    // previous, next: values of the provider
-    ref.listen<AsyncValue<UsersRow?>>(
-      currentUserProvider,
-      (previous, next) async {
-        final appColors = Theme.of(context).extension<AppColorSet>()!;
-        final appState = ref.read(appStateProvider);
-
-        // AsyncValue: STM with 3 states (loading, error, data); when matches them
-        next.when(
-          loading: () {},
-          error: (e, _) async {
-            await _showErrorDialog('User data could not be retrieved.');
-          },
-          data: (user) async {
-            if (user == null) {
-              await _showErrorDialog('User data could not be retrieved.');
-              return;
-            }
-
-            // Debug snackbar (optional)
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(
-                  'session: ${appState.sessionInitialized} '
-                  'hand:${user.shootingHand}',
-                  style: TextStyle(color: appColors.primaryTwo),
-                ),
-                duration: const Duration(milliseconds: 4000),
-                backgroundColor: appColors.primaryBackground,
-              ),
-            );
-
-            // Map to AppState model
-            final updatedUserData = UserRowData(
-              userID: user.id,
-              firstName: user.firstName,
-              lastName: user.lastName,
-              eMail: user.email,
-              profilePicture: (user.profilePic?.isNotEmpty ?? false)
-                  ? user.profilePic!
-                  : kDefaultProfilePictureUrl,
-              registrationDate: user.createdAt,
-              shootingHand: user.shootingHand,
-            );
-
-            ref.read(appStateProvider.notifier)
-              ..setUserDataFetched(true)
-              ..setUserData(updatedUserData);
-
-            // First-session logic
-            if (!appState.sessionInitialized &&
-                (user.shootingHand == null || user.shootingHand!.isEmpty)) {
-              await _showInfoDialog(
-                'One quick step before you continue: tell us your shooting hand.',
-              );
-
-              // if (mounted) { // TODO: uncomment when page is available
-              //   context.pushNamed(UserDataWidget.routeName);
-              // }
-            }
-
-            ref.read(appStateProvider.notifier).setSessionInitialized(true);
-          },
-        );
-      },
-    );
-    // TODO: might need a ref.listen on the statistics
 
     return GestureDetector(
       onTap: () {

@@ -1,4 +1,5 @@
 import 'package:SwishLab/services/authentication.dart';
+import 'package:SwishLab/state/persisted_states.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -13,7 +14,7 @@ final authStateProvider = StreamProvider<AuthState>((ref) {
   return supabase.auth.onAuthStateChange;
 });
 
-/// LoggedIn flag
+/// LoggedIn flag tracking Supabase auth state in real-time
 final loggedInProvider = Provider<bool>((ref) {
   final authState = ref.watch(authStateProvider);
 
@@ -21,6 +22,11 @@ final loggedInProvider = Provider<bool>((ref) {
     data: (state) => state.session != null,
     orElse: () => false,
   );
+});
+
+/// Provides for the value of the persisted flag, kept in memory at all times
+final persistedLoggedInProvider = FutureProvider<bool>((ref) async {
+  return AuthStorage.isLoggedIn();
 });
 
 /// Current user (null if logged out)

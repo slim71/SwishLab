@@ -1,5 +1,6 @@
 import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/state/app_state.dart';
+import 'package:SwishLab/state/persisted_states.dart';
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
@@ -231,6 +232,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPage>
                                         ref
                                             .read(appStateProvider.notifier)
                                             .setHasOpenedBefore(true);
+                                        AuthStorage.setLoggedIn(true);
 
                                         context.goNamed('home');
                                       },

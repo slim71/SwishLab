@@ -1,4 +1,9 @@
 import 'package:SwishLab/pages/about.dart';
+import 'package:SwishLab/pages/disclaimer.dart';
+import 'package:SwishLab/pages/eula.dart';
+import 'package:SwishLab/pages/tac.dart';
+import 'package:SwishLab/pages/privacy_policy.dart';
+import 'package:SwishLab/pages/acceptable_use.dart';
 import 'package:SwishLab/pages/error_page.dart';
 import 'package:SwishLab/pages/home_page.dart';
 import 'package:SwishLab/pages/login.dart';
@@ -21,12 +26,14 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Expose the app title globally through this one provider
 final appTitleProvider = Provider((_) => 'SwishLab');
+final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 // Basically all app's navigation routes
 final _routerProvider = Provider<GoRouter>((ref) {
   final supabase = Supabase.instance.client;
 
   return GoRouter(
+    navigatorKey: rootNavigatorKey,
     initialLocation: '/',
     refreshListenable: GoRouterRefreshStream(supabase.auth.onAuthStateChange),
     errorBuilder: (context, state) {
@@ -41,17 +48,17 @@ final _routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         name: 'root',
         path: '/',
+        builder: (context, state) {
+          // Render nothing while deciding
+          return const SizedBox.shrink();
+        },
         redirect: (context, state) {
-          final loggedIn = ref.read(loggedInProvider);
-          final location = state.matchedLocation;
+          final loggedInAsync = ref.watch(persistedLoggedInProvider);
 
-          // If logged in -> redirect to home
-          if (loggedIn) {
-            return '/home';
-          }
-
-          // No redirect
-          return '/splash';
+          return loggedInAsync.maybeWhen(
+            data: (isLoggedIn) => isLoggedIn ? '/home' : '/splash',
+            orElse: () => null, // wait until loaded
+          );
         },
       ),
       GoRoute(
@@ -146,9 +153,7 @@ class SwishLab extends ConsumerWidget {
       title: title,
       routerConfig: router,
       theme: buildTheme(theBay, Brightness.light),
-      // Light theme
       darkTheme: buildTheme(theBay, Brightness.dark),
-      // Dark theme
       themeMode: ThemeMode.system, // Auto-switch based on device
     );
   }

@@ -12,9 +12,11 @@ class InputField extends StatefulWidget {
   final TextCapitalization textCapitalization;
   final bool obscureText;
   final String? Function(String?)? validator;
-  final RegExp? regex;
+  final RegExp? allowRegex;
+  final RegExp? denyRegex;
   final List<TextInputFormatter> additionalFormatters;
   final Widget? suffixIcon;
+  final void Function(String)? onChanged;
 
   const InputField({
     super.key,
@@ -26,9 +28,11 @@ class InputField extends StatefulWidget {
     this.textCapitalization = TextCapitalization.none,
     this.obscureText = false,
     this.validator,
-    this.regex,
+    this.allowRegex,
+    this.denyRegex,
     this.additionalFormatters = const [],
     this.suffixIcon,
+    this.onChanged,
   });
 
   @override
@@ -56,8 +60,8 @@ class _InputField extends State<InputField> {
       autocorrect: !widget.obscureText,
       inputFormatters: [
         // Optional regex filtering
-        if (widget.regex != null)
-          FilteringTextInputFormatter.allow(widget.regex!),
+        if (widget.allowRegex != null) FilteringTextInputFormatter.allow(widget.allowRegex!),
+        if (widget.denyRegex != null) FilteringTextInputFormatter.deny(widget.denyRegex!),
 
         ...widget.additionalFormatters,
       ],

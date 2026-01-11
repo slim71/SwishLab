@@ -28,8 +28,8 @@ class _LoginPageWidgetState extends ConsumerState<LoginPage>
   FocusNode? emailAddressFocusNode;
   FocusNode? passwordFocusNode;
   late bool passwordVisibility;
-  String? Function(BuildContext, String?)? emailAddressTextControllerValidator;
-  String? Function(BuildContext, String?)? passwordTextControllerValidator;
+  late String? Function(BuildContext, String?) emailAddressTextControllerValidator;
+  late String? Function(BuildContext, String?) passwordTextControllerValidator;
 
   @override
   void initState() {
@@ -39,6 +39,29 @@ class _LoginPageWidgetState extends ConsumerState<LoginPage>
     passwordTextController = TextEditingController();
     emailAddressFocusNode ??= FocusNode();
     passwordFocusNode ??= FocusNode();
+
+    emailAddressTextControllerValidator = (context, value) {
+      if (value == null || value.isEmpty) return 'Email required';
+
+      final emailRegex = RegExp(r'^[\w\-.]+@([\w-]+\.)+[a-zA-Z]{2,}$');
+
+      if (!emailRegex.hasMatch(value)) {
+        return 'Enter a valid email';
+      }
+
+      return null;
+    };
+    passwordTextControllerValidator = (context, value) {
+      if (value == null || value.isEmpty) return 'Password required';
+      if (value.length < 8) return 'At least 8 characters'; // TODO: create constant
+      if (!RegExp(r'(?=.*[A-Za-z])').hasMatch(value)) {
+        return 'Must contain a letter';
+      }
+      if (!RegExp(r'(?=.*\d)').hasMatch(value)) {
+        return 'Must contain a number';
+      }
+      return null;
+    };
   }
 
   @override
@@ -173,14 +196,8 @@ class _LoginPageWidgetState extends ConsumerState<LoginPage>
                                           autofillHints: const [
                                             AutofillHints.email
                                           ],
-                                          validator:
-                                              emailAddressTextControllerValidator ==
-                                                      null
-                                                  ? null
-                                                  : (value) =>
-                                                      emailAddressTextControllerValidator!(
-                                                          context, value),
-                                          regex: RegExp(r'[a-zA-Z0-9@._%+-]'),
+                                          validator: (value) => emailAddressTextControllerValidator(context, value),
+                                          allowRegex: RegExp(r'[a-zA-Z0-9@._%+-]'),
                                         ),
                                       ),
                                     ),
@@ -202,13 +219,8 @@ class _LoginPageWidgetState extends ConsumerState<LoginPage>
                                             AutofillHints.password
                                           ],
                                           obscureText: !passwordVisibility,
-                                          validator:
-                                              passwordTextControllerValidator ==
-                                                      null
-                                                  ? null
-                                                  : (value) =>
-                                                      passwordTextControllerValidator!(
-                                                          context, value),
+                                          validator: (value) => passwordTextControllerValidator(context, value),
+                                          denyRegex: RegExp(r'\s'),
                                         ),
                                       ),
                                     ),

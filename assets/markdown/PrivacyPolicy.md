@@ -35,7 +35,7 @@ our [table of contents](#table-of-contents) below to find the section you are lo
 **What personal information do we process?** When you visit, use, or navigate our Services, we may
 process personal information depending on how you interact with us and the Services, the choices you
 make, and the products and features you use. Learn more
-about [personal information you disclose to us](personal-information-you-disclose-to-us).
+about [personal information you disclose to us](#personal-information-you-disclose-to-us).
 
 **Do we process any sensitive personal information?** Some of the information may be considered "
 special" or "sensitive" in certain jurisdictions, for example your racial or ethnic origins, sexual
@@ -54,7 +54,7 @@ about [how we process your information](#2-how-do-we-process-your-information).
 
 **In what situations and with which parties do we share personal information?** We may share
 information in specific situations and with specific third parties. Learn more
-about [when and with whom we share your personal information]((#4-when-and-with-whom-do-we-share-your-personal-information)).
+about [when and with whom we share your personal information](#4-when-and-with-whom-do-we-share-your-personal-information).
 
 **How do we keep your information safe?** We have adequate organizational and technical processes
 and procedures in place to protect your personal information. However, no electronic transmission

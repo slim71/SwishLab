@@ -31,38 +31,6 @@ class _HomePageState extends ConsumerState<HomePage> {
     // TODO: might need a ref.listen on the statistics
   }
 
-  Future<void> _showErrorDialog(String msg) async {
-    return showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Error'),
-        content: Text(msg),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Ok'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _showInfoDialog(String msg) async {
-    return showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Info needed'),
-        content: Text(msg),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Ok'),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final appState = ref.watch(appStateProvider);

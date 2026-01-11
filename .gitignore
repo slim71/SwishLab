@@ -34,4 +34,5 @@ test-output/
 
 # Generated
 .dart_tool/
+.flutter-plugins-dependencies
 

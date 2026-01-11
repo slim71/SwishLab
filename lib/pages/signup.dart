@@ -268,8 +268,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                                   firstnameValidator!(
                                                                       context,
                                                                       value),
-                                                      regex: RegExp(
-                                                          '^[A-Za-z\' -]+\$')),
+                                                      allowRegex: RegExp('^[A-Za-z\' -]+\$')),
                                                 ),
                                               ),
                                             ),
@@ -302,8 +301,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                                   lastnameValidator!(
                                                                       context,
                                                                       value),
-                                                      regex: RegExp(
-                                                          '^[A-Za-z\' -]+\$')),
+                                                      allowRegex: RegExp('^[A-Za-z\' -]+\$')),
                                                 ),
                                               ),
                                             ),
@@ -332,8 +330,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                             emailValidator!(
                                                                 context,
                                                                     value),
-                                                    regex: RegExp(
-                                                        r'[a-zA-Z0-9@._%+-]'),
+                                                    allowRegex: RegExp(r'[a-zA-Z0-9@._%+-]'),
                                                   ),
                                                 ),
                                               ),

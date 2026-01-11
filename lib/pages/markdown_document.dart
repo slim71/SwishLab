@@ -1,4 +1,4 @@
-import 'package:SwishLab/actions/load_markdown.dart';
+import 'package:SwishLab/functions/load_markdown.dart';
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:flutter/material.dart';

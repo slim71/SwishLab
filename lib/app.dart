@@ -1,5 +1,8 @@
 import 'package:SwishLab/pages/about.dart';
+import 'package:SwishLab/pages/analysis_results.dart';
+import 'package:SwishLab/pages/debug_utilities.dart';
 import 'package:SwishLab/pages/error_page.dart';
+import 'package:SwishLab/pages/help.dart';
 import 'package:SwishLab/pages/home_page.dart';
 import 'package:SwishLab/pages/login.dart';
 import 'package:SwishLab/pages/markdown_document.dart';
@@ -59,29 +62,39 @@ final _routerProvider = Provider<GoRouter>((ref) {
         },
       ),
       GoRoute(
-            path: '/home',
-            name: 'home',
+        path: '/home',
+        name: 'home',
         builder: (context, state) => NavBarScaffold(child: HomePage()),
       ),
-          GoRoute(
-            path: '/activity',
-            name: 'activity',
+      GoRoute(
+        path: '/activity',
+        name: 'activity',
         builder: (context, state) => NavBarScaffold(child: PastActivity()),
       ),
-          GoRoute(
-            path: '/profile',
-            name: 'profile',
+      GoRoute(
+        path: '/profile',
+        name: 'profile',
         builder: (context, state) => NavBarScaffold(child: ProfilePage()),
       ),
-          GoRoute(
-            path: '/settings',
-            name: 'settings',
+      GoRoute(
+          path: '/settings',
+          name: 'settings',
           builder: (context, state) => NavBarScaffold(child: Settings()),
           routes: [
             GoRoute(
               path: 'about',
               name: 'about',
               builder: (context, state) => const AboutUs(),
+            ),
+            GoRoute(
+              path: 'help',
+              name: 'help',
+              builder: (context, state) => const HelpPage(),
+            ),
+            GoRoute(
+              path: 'debug',
+              name: 'debug',
+              builder: (context, state) => const DebugUtilities(),
             ),
             GoRoute(
               path: '/doc/:name',
@@ -116,6 +129,14 @@ final _routerProvider = Provider<GoRouter>((ref) {
         path: '/success',
         name: 'success',
         builder: (context, state) => const SuccessAfterSignup(),
+      ),
+      GoRoute(
+        path: '/results',
+        name: 'results',
+        builder: (context, state) {
+          final videoDataJson = state.extra as Map<String, dynamic>;
+          return AnalysisResults(videoDataJson: videoDataJson);
+        },
       ),
     ],
   );

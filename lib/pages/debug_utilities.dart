@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:SwishLab/constants.dart';
 import 'package:SwishLab/functions/parse_json.dart';
 import 'package:SwishLab/state/app_state.dart';
@@ -9,7 +7,7 @@ import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/debug_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 
 /// Page with debug utilities
 class DebugUtilities extends ConsumerStatefulWidget {
@@ -119,16 +117,11 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                                 title: 'Test results page',
                                 buttonText: 'Test',
                                 onPressed: () async {
-                                  defaultJson = parseJson(kDefaultResultsJson);
+                                  final defaultJson = parseJson(kDefaultResultsJson);
 
-                                  context.pushNamed(
-                                    VideoResultsWidget.routeName,
-                                    queryParameters: {
-                                      'videoDataJson': serializeParam(
-                                        defaultJson,
-                                        ParamType.JSON,
-                                      ),
-                                    }.withoutNulls,
+                                  context.go(
+                                    'results',
+                                    extra: defaultJson,
                                   );
                                 },
                               ),

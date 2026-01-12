@@ -334,10 +334,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                         hoverColor: Colors.transparent,
                         highlightColor: Colors.transparent,
                         onTap: () async {
-                          // if (!hasShootingHand) {
-                          //   context
-                          //       .pushNamed(SideDetailsWidget.routeName);
-                          // }
+                          if (hasShootingHand) {
+                            context.pushNamed("side");
+                          }
                         },
                         child: Container(
                           // width: MediaQuery.sizeOf(context).width,

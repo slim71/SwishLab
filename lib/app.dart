@@ -2,6 +2,7 @@ import 'package:SwishLab/pages/about.dart';
 import 'package:SwishLab/pages/analysis_results.dart';
 import 'package:SwishLab/pages/debug_utilities.dart';
 import 'package:SwishLab/pages/error_page.dart';
+import 'package:SwishLab/pages/front_details.dart';
 import 'package:SwishLab/pages/help.dart';
 import 'package:SwishLab/pages/home_page.dart';
 import 'package:SwishLab/pages/login.dart';
@@ -9,6 +10,7 @@ import 'package:SwishLab/pages/markdown_document.dart';
 import 'package:SwishLab/pages/past_activity.dart';
 import 'package:SwishLab/pages/profile_page.dart';
 import 'package:SwishLab/pages/settings.dart';
+import 'package:SwishLab/pages/side_details.dart';
 import 'package:SwishLab/pages/signup.dart';
 import 'package:SwishLab/pages/splash_screen.dart';
 import 'package:SwishLab/pages/success.dart';
@@ -130,6 +132,11 @@ final _routerProvider = Provider<GoRouter>((ref) {
         path: '/success',
         name: 'success',
         builder: (context, state) => const SuccessAfterSignup(),
+      ),
+      GoRoute(
+        path: '/side',
+        name: 'side',
+        builder: (context, state) => const SideDetails(),
       ),
       GoRoute(
         path: '/front',

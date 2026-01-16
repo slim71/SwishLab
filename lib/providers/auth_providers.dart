@@ -1,12 +1,8 @@
+import 'package:SwishLab/providers/supabase_provider.dart';
 import 'package:SwishLab/services/authentication.dart';
 import 'package:SwishLab/state/persisted_states.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-/// Supabase client
-final supabaseProvider = Provider<SupabaseClient>((ref) {
-  return Supabase.instance.client;
-});
 
 /// Emits auth state changes (login / logout / token refresh)
 final authStateProvider = StreamProvider<AuthState>((ref) {
@@ -29,8 +25,9 @@ final persistedLoggedInProvider = FutureProvider<bool>((ref) async {
   return AuthStorage.isLoggedIn();
 });
 
-/// Current user (null if logged out)
-final currentUserProvider = Provider<User?>((ref) {
+/// Current Supabase auth user (null if logged out).
+/// Used in Supabase for authentication-related ops.
+final authUserProvider = Provider<User?>((ref) {
   final supabase = ref.watch(supabaseProvider);
   return supabase.auth.currentUser;
 });

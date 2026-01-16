@@ -1,14 +1,16 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class VideoPreview extends StatefulWidget {
-  final String videoUrl;
+  final File videoFile; // TODO: might need to support both local and remote in VideoPreview
   final bool autoPlay;
   final bool looping;
 
   const VideoPreview({
     super.key,
-    required this.videoUrl,
+    required this.videoFile,
     this.autoPlay = false,
     this.looping = true,
   });
@@ -23,9 +25,7 @@ class _VideoPreviewState extends State<VideoPreview> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.networkUrl(
-      Uri.parse(widget.videoUrl),
-    )
+    _controller = VideoPlayerController.file(widget.videoFile)
       ..setLooping(widget.looping)
       ..initialize().then((_) {
         if (widget.autoPlay) {

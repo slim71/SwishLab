@@ -11,7 +11,7 @@ final navigationContextProvider = StateProvider<BuildContext?>((ref) => null);
 
 final sessionBootstrapProvider = Provider<void>((ref) {
   final appState = ref.read(appStateProvider);
-  final userAsync = ref.watch(currentUserProvider);
+  final userAsync = ref.watch(appUserProvider);
 
   userAsync.whenData((user) {
     if (user == null) return;

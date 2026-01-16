@@ -28,7 +28,7 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).extension<AppColorSet>()!;
-    final userInfoAsync = ref.watch(currentUserProvider);
+    final userInfoAsync = ref.watch(appUserProvider);
     final UsersRow? userInfo = userInfoAsync.value;
 
     return GestureDetector(

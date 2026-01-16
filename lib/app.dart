@@ -14,7 +14,7 @@ import 'package:SwishLab/pages/side_details.dart';
 import 'package:SwishLab/pages/signup.dart';
 import 'package:SwishLab/pages/splash_screen.dart';
 import 'package:SwishLab/pages/success.dart';
-import 'package:SwishLab/pages/front_details.dart';
+import 'package:SwishLab/pages/video_pre_upload.dart';
 import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/router/app_documents.dart';
@@ -26,6 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:SwishLab/models/custom_enums.dart';
 
 // Expose the app title globally through this one provider
 final appTitleProvider = Provider((_) => 'SwishLab');
@@ -149,6 +150,26 @@ final _routerProvider = Provider<GoRouter>((ref) {
         builder: (context, state) {
           final videoDataJson = state.extra as Map<String, dynamic>;
           return AnalysisResults(videoDataJson: videoDataJson);
+        },
+      ),
+      GoRoute(
+        name: 'pre-upload',
+        path: '/pre-upload',
+        builder: (context, state) {
+          final extra = state.extra;
+
+          // Defensive guard
+          if (extra is! Map<String, dynamic>) {
+            return const SizedBox.shrink();
+          }
+
+          final originFunc = extra['originFunc'] as OriginFunc;
+          final File videoFile = extra['videoFile'] as File;
+
+          return VideoPreUpload(
+            perspective: originFunc,
+            videoFile: videoFile,
+          );
         },
       ),
     ],

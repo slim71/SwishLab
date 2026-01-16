@@ -10,8 +10,9 @@ final usersRepositoryProvider = Provider<UsersRepository>((ref) {
   return UsersRepository(Supabase.instance.client);
 });
 
-/// Current user (by Supabase auth UID)
-final currentUserProvider = FutureProvider<UsersRow?>((ref) async {
+/// Application user record, from DB "Users" table.
+/// Use for profile and app-related ops, and as foreign key for other DB tables.
+final appUserProvider = FutureProvider<UsersRow?>((ref) async {
   final repo = ref.watch(usersRepositoryProvider);
 
   final userId = Supabase.instance.client.auth.currentUser?.id;

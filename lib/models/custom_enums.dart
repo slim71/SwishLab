@@ -12,3 +12,10 @@ enum AssetType {
   animation,
   gif,
 }
+
+/// Types of directions for the ChoiceChips
+enum ChipsDirection {
+  wrap,
+  horizontal,
+  vertical,
+}

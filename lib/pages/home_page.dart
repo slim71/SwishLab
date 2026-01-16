@@ -37,7 +37,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     final hasShootingHand =
         (appState.userData?.shootingHand?.isNotEmpty ?? false);
     final appColors = Theme.of(context).extension<AppColorSet>()!;
-    final userInfoAsync = ref.watch(currentUserProvider);
+    final userInfoAsync = ref.watch(appUserProvider);
     final UsersRow? userInfo = userInfoAsync.value;
     final statsAsync = ref.watch(userStatisticsProvider);
     final List<StatisticsRow> checkedForms = statsAsync.maybeWhen(

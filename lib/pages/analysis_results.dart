@@ -2,7 +2,10 @@ import 'package:SwishLab/constants.dart';
 import 'package:SwishLab/functions/get_border_color.dart';
 import 'package:SwishLab/functions/process_analysis_results.dart';
 import 'package:SwishLab/functions/score_to_rating.dart';
+import 'package:SwishLab/models/analysis_state.dart';
 import 'package:SwishLab/models/statistics_row.dart';
+import 'package:SwishLab/models/video_source.dart';
+import 'package:SwishLab/providers/shooting_analysis_provider.dart';
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
@@ -39,6 +42,12 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
   @override
   Widget build(BuildContext context) {
     final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final state = ref.watch(shootingAnalysisProvider);
+
+    // To be sure we have data to show
+    if (state is! AnalysisSuccess) {
+      return const SizedBox.shrink();
+    }
 
     return GestureDetector(
       onTap: () {
@@ -87,9 +96,9 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                   Semantics(
                                     label: 'Annotated video preview',
                                     child: VideoPreview(
-                                        // TODO: video as argument?
-                                        videoUrl:
-                                            'https://www.pexels.com/video/low-angle-view-of-a-man-playing-basketball-5192077/'),
+                                      source: NetworkVideoSource(
+                                          'https://www.pexels.com/video/low-angle-view-of-a-man-playing-basketball-5192077/'),
+                                    ),
                                   ),
 
                                   // Divider between the video preview and the scores

@@ -27,6 +27,11 @@ class ShootingAnalysisController extends StateNotifier<AnalysisState> {
       final eventId = analyzeResponse.eventId;
       final result = await api.getFinalAnalysisResult(hfEventId: eventId);
 
+      if (!result.succeeded) {
+        state = AnalysisFailure(result.error ?? 'Analysis failed');
+        return;
+      }
+
       state = AnalysisSuccess(result);
     } catch (e) {
       state = AnalysisFailure(e);

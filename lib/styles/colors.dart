@@ -119,6 +119,7 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
 
   bool get isDark => brightness == Brightness.dark;
 
+  // TODO: double check these, as i don't always like them
   Color get primaryBackground =>
       isDark ? primaryBackgroundDark : primaryBackgroundLight;
 
@@ -129,18 +130,12 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
 
   Color get secondaryText => isDark ? secondaryTextDark : secondaryTextLight;
 
-  // Parameterized main background gradient
   LinearGradient gradientBackground({
-    List<double>? stops, // distributed evenly if null
+    List<double>? stops,
     Alignment begin = Alignment.topLeft,
     Alignment end = Alignment.bottomRight,
   }) {
-    final colorsList = primaryThree == null
-        ? [primaryOne, primaryTwo]
-        : [primaryOne, primaryThree!, primaryTwo];
-
-    return LinearGradient(
-      colors: colorsList,
+    return gradient(
       stops: stops,
       begin: begin,
       end: end,
@@ -148,16 +143,11 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
   }
 
   LinearGradient gradientCircle({
-    List<double>? stops, // distributed evenly if null
+    List<double>? stops,
     Alignment begin = Alignment.topLeft,
     Alignment end = Alignment.bottomRight,
   }) {
-    final colorsList = primaryThree == null
-        ? [primaryOne, primaryTwo]
-        : [primaryOne, primaryTwo, primaryThree!];
-
-    return LinearGradient(
-      colors: colorsList,
+    return gradient(
       stops: stops,
       begin: begin,
       end: end,
@@ -165,13 +155,36 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
   }
 
   LinearGradient gradientText({
-    List<double>? stops, // distributed evenly if null
+    List<double>? stops,
     Alignment begin = Alignment.centerLeft,
     Alignment end = Alignment.centerRight,
   }) {
+    return gradient(
+      stops: stops,
+      begin: begin,
+      end: end,
+    );
+  }
+
+  LinearGradient gradientLinear({
+    List<double>? stops,
+    Alignment begin = const Alignment(1, -1),
+    Alignment end = const Alignment(-1, 1),
+  }) {
+    return gradient(
+      stops: stops,
+      begin: begin,
+      end: end,
+    );
+  }
+
+  LinearGradient gradient({
+    List<double>? stops, // distributed evenly if null
+    required Alignment begin,
+    required Alignment end,
+  }) {
     final colorsList = primaryThree == null
-        ? [primaryOne, primaryTwo]
-        : [primaryOne, primaryTwo, primaryThree!];
+        ? [primaryOne, primaryTwo] : [primaryOne, primaryThree!, primaryTwo];
 
     return LinearGradient(
       colors: colorsList,
@@ -419,11 +432,14 @@ const theBay = AppColorSet(
     dropDownTextColor: primaryTextDark,
     labelSelectedBackground: pictonBlue,
     labelSelectedIconColor: primaryTextDark,
+    // TODO: not used?
     labelSelectedBorders: persianRed,
     labelUnselectedBackground: oxfordBlue,
     labelUnselectedIconColor: secondaryTextDark,
+    // TODO: not used?
     labelUnselectedBorders: airForceBlue,
     // profilePictureBorders
     containersBorders: persianRed,
     altContBorders: pictonBlue // or airForceBlue
+    // TODO: specific AppBar colors?
     );

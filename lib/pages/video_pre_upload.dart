@@ -5,6 +5,7 @@ import 'package:SwishLab/models/analysis_response.dart';
 import 'package:SwishLab/models/custom_enums.dart';
 import 'package:SwishLab/models/results_response.dart';
 import 'package:SwishLab/models/statistics_row.dart';
+import 'package:SwishLab/models/video_source.dart';
 import 'package:SwishLab/providers/shooting_analysis_provider.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/colors.dart';
@@ -176,7 +177,7 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
                                                   Semantics(
                                                       label: 'Video player',
                                                       child: VideoPreview(
-                                                        videoFile: widget.videoFile,
+                                                        source: FileVideoSource(widget.videoFile),
                                                       )),
                                                   const SizedBox(height: 12),
 

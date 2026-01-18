@@ -1,3 +1,4 @@
+import 'package:SwishLab/models/credit_item.dart';
 import 'package:SwishLab/models/user_row_data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,7 +8,7 @@ class AppState {
       hasOpenedBefore; //  Whether this is the first time the user opens up the app or not
   final bool userDataFetched; //  Whether the user data has been fetched or not
   final UserRowData? userData;
-  final List<Map<String, dynamic>>? creditsJson;
+  final List<Credit> credits;
   final List<Map<String, dynamic>>?
       loadedFaqs; // Container to store FAQs loaded either from remote or from the default constant
   final bool
@@ -17,7 +18,7 @@ class AppState {
     this.hasOpenedBefore = false,
     this.userDataFetched = false,
     this.userData = const UserRowData(),
-    this.creditsJson,
+    this.credits = const [],
     this.loadedFaqs,
     this.sessionInitialized = false,
   });
@@ -27,7 +28,7 @@ class AppState {
     bool? hasOpenedBefore,
     bool? userDataFetched,
     UserRowData? userData,
-    List<Map<String, dynamic>>? creditsJson,
+    List<Credit>? credits,
     List<Map<String, dynamic>>? loadedFaqs,
     bool? sessionInitialized,
   }) {
@@ -35,7 +36,7 @@ class AppState {
       hasOpenedBefore: hasOpenedBefore ?? this.hasOpenedBefore,
       userDataFetched: userDataFetched ?? this.userDataFetched,
       userData: userData ?? this.userData,
-      creditsJson: creditsJson ?? this.creditsJson,
+      credits: credits ?? this.credits,
       loadedFaqs: loadedFaqs ?? this.loadedFaqs,
       sessionInitialized: sessionInitialized ?? this.sessionInitialized,
     );
@@ -59,8 +60,8 @@ class AppStateNotifier extends Notifier<AppState> {
     state = state.copyWith(userData: data, userDataFetched: true);
   }
 
-  void setCreditsJson(List<Map<String, dynamic>> json) {
-    state = state.copyWith(creditsJson: json);
+  void setCredits(List<Credit> credits) {
+    state = state.copyWith(credits: credits);
   }
 
   void setLoadedFaqs(List<Map<String, dynamic>> faqs) {

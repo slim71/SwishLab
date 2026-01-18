@@ -13,7 +13,7 @@ class UsersRepository {
     return (response as List).map((json) => UsersRow.fromJson(json)).toList();
   }
 
-  Future<UsersRow?> getSingleUserById(String userId) async {
+  Future<UsersRow?> getUserRow(String userId) async {
     final response =
         await _client.from('Users').select().eq('id', userId).maybeSingle();
 
@@ -34,5 +34,16 @@ class UsersRepository {
       'last_name': lastName,
       'created_at': DateTime.now().toIso8601String(),
     });
+  }
+
+  Future<UsersRow?> updateProfilePicture({
+    required String userId,
+    required String profilePicUrl,
+  }) async {
+    final response =
+        await _client.from('Users').update({'profile_pic': profilePicUrl}).eq('id', userId).select().maybeSingle();
+
+    if (response == null) return null;
+    return UsersRow.fromJson(response);
   }
 }

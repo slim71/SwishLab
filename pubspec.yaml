@@ -13,22 +13,29 @@ dependencies:
     sdk: flutter
   flutter_animate: ^4.5.0
 
+  # text
   font_awesome_flutter: ^10.12.0
   google_fonts: ^7.0.0
   flutter_md: ^0.0.8
 
+  # widget helpers
   smooth_page_indicator: ^2.0.0
   easy_debounce: ^2.0.0
 
+  # media
   video_player: ^2.8.2
   image_picker: ^1.0.7
   lottie: ^3.3.2
 
-  # state management & routing (opinionated)
+  # file paths
+  path_provider: ^2.1.5
+  path: ^1.9.1
+
+  # state management & routing
   flutter_riverpod: ^3.1.0
   go_router: ^17.0.0
 
-  # networking / auth / storage - add as needed
+  # networking / auth / storage
   dio: ^5.0.0
   supabase_flutter: ^2.0.0
   flutter_dotenv: ^6.0.0

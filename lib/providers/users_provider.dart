@@ -18,5 +18,5 @@ final appUserProvider = FutureProvider<UsersRow?>((ref) async {
   final userId = Supabase.instance.client.auth.currentUser?.id;
   if (userId == null) return null;
 
-  return repo.getSingleUserById(userId);
+  return repo.getUserRow(userId);
 });

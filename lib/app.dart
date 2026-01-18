@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:SwishLab/models/custom_enums.dart';
 import 'package:SwishLab/pages/about.dart';
 import 'package:SwishLab/pages/analysis_results.dart';
 import 'package:SwishLab/pages/debug_utilities.dart';
@@ -9,6 +12,7 @@ import 'package:SwishLab/pages/login.dart';
 import 'package:SwishLab/pages/markdown_document.dart';
 import 'package:SwishLab/pages/past_activity.dart';
 import 'package:SwishLab/pages/profile_page.dart';
+import 'package:SwishLab/pages/profile_picture.dart';
 import 'package:SwishLab/pages/settings.dart';
 import 'package:SwishLab/pages/side_details.dart';
 import 'package:SwishLab/pages/signup.dart';
@@ -26,7 +30,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:SwishLab/models/custom_enums.dart';
 
 // Expose the app title globally through this one provider
 final appTitleProvider = Provider((_) => 'SwishLab');
@@ -153,6 +156,11 @@ final _routerProvider = Provider<GoRouter>((ref) {
         },
       ),
       GoRoute(
+        path: '/pic',
+        name: 'pic',
+        builder: (context, state) => const ProfilePicturePage(),
+      ),
+      GoRoute(
         name: 'pre-upload',
         path: '/pre-upload',
         builder: (context, state) {
@@ -197,7 +205,7 @@ class SwishLab extends ConsumerWidget {
             final usersRepo = ref.read(usersRepositoryProvider);
 
             // Only insert if the user does not exist
-            final existing = await usersRepo.getSingleUserById(user.id);
+            final existing = await usersRepo.getUserRow(user.id);
 
             if (existing == null) {
               await usersRepo.insertUser(

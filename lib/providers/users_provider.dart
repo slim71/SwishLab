@@ -1,4 +1,7 @@
+import 'package:SwishLab/features/update_user_field.dart';
+import 'package:SwishLab/features/upload_profile_picture.dart';
 import 'package:SwishLab/models/users_row.dart';
+import 'package:SwishLab/providers/storage_providers.dart';
 import 'package:SwishLab/repositories/users_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -19,4 +22,23 @@ final appUserProvider = FutureProvider<UsersRow?>((ref) async {
   if (userId == null) return null;
 
   return repo.getUserRow(userId);
+});
+
+/// Simple changes of the user's info
+final updateUserProvider = Provider<UpdateUser>((ref) {
+  return UpdateUser(
+    usersRepository: ref.read(usersRepositoryProvider),
+  );
+});
+
+/// To trigger the profile picture change, comprising of:
+/// - fetching user row
+/// - image upload
+/// - old pic deletion
+final changeProfilePictureProvider = Provider<ChangeProfilePicture>((ref) {
+  return ChangeProfilePicture(
+    usersRepository: ref.read(usersRepositoryProvider),
+    storageRepository: ref.read(storageRepositoryProvider),
+    updateUser: ref.read(updateUserProvider),
+  );
 });

@@ -29,27 +29,27 @@ class _SignupPageState extends ConsumerState<SignupPage>
   // State field(s) for firstname widget.
   FocusNode? firstnameFocusNode;
   late TextEditingController firstnameController;
-  String? Function(BuildContext, String?)? firstnameValidator;
+  late String? Function(BuildContext, String?) firstnameValidator;
 
   // State field(s) for lastname widget.
   FocusNode? lastnameFocusNode;
   late TextEditingController lastnameController;
-  String? Function(BuildContext, String?)? lastnameValidator;
+  late String? Function(BuildContext, String?) lastnameValidator;
 
   // State field(s) for emailAddress widget.
   FocusNode? emailAddressFocusNode;
   late TextEditingController emailAddressController;
-  String? Function(BuildContext, String?)? emailValidator;
+  late String? Function(BuildContext, String?) emailValidator;
 
   // State field(s) for password widget.
   FocusNode? passwordFocusNode;
   late TextEditingController passwordController;
-  String? Function(BuildContext, String?)? passwordValidator;
+  late String? Function(BuildContext, String?) passwordValidator;
 
   // State field(s) for confpswd widget.
   FocusNode? confpswdFocusNode;
   late TextEditingController confpswdController;
-  String? Function(BuildContext, String?)? confpswdValidator;
+  late String? Function(BuildContext, String?) confpswdValidator;
 
   // Stores action output result for [Backend Call - Insert Row] action in manualSignupButton widget.
   UsersRow? backendResult;
@@ -63,8 +63,9 @@ class _SignupPageState extends ConsumerState<SignupPage>
     firstnameValidator = (context, value) {
       if (value == null || value.isEmpty) return 'First name required';
       if (value.length < 2) return 'First name too short';
-      if (!RegExp(r"^[a-zA-ZÀ-ÿ \'-]+$").hasMatch(value))
+      if (!RegExp(r"^[a-zA-ZÀ-ÿ \'-]+$").hasMatch(value)) {
         return 'Invalid characters';
+      }
       return null;
     };
 
@@ -73,8 +74,9 @@ class _SignupPageState extends ConsumerState<SignupPage>
     lastnameValidator = (context, value) {
       if (value == null || value.isEmpty) return 'Last name required';
       if (value.length < 2) return 'Last name too short';
-      if (!RegExp(r"^[a-zA-ZÀ-ÿ \'-]+$").hasMatch(value))
+      if (!RegExp(r"^[a-zA-ZÀ-ÿ \'-]+$").hasMatch(value)) {
         return 'Invalid characters';
+      }
       return null;
     };
 
@@ -92,10 +94,12 @@ class _SignupPageState extends ConsumerState<SignupPage>
       if (value == null || value.isEmpty) return 'Password required';
       if (value.length < 8) return 'Password must be at least 8 characters';
       // Optional: enforce at least one number and one letter
-      if (!RegExp(r'(?=.*[A-Za-z])').hasMatch(value))
+      if (!RegExp(r'(?=.*[A-Za-z])').hasMatch(value)) {
         return 'Password must contain a letter';
-      if (!RegExp(r'(?=.*\d)').hasMatch(value))
+      }
+      if (!RegExp(r'(?=.*\d)').hasMatch(value)) {
         return 'Password must contain a number';
+      }
       return null;
     };
 
@@ -105,10 +109,12 @@ class _SignupPageState extends ConsumerState<SignupPage>
       if (value == null || value.isEmpty) return 'Password required';
       if (value.length < 8) return 'Password must be at least 8 characters';
       // Optional: enforce at least one number and one letter
-      if (!RegExp(r'(?=.*[A-Za-z])').hasMatch(value))
+      if (!RegExp(r'(?=.*[A-Za-z])').hasMatch(value)) {
         return 'Password must contain a letter';
-      if (!RegExp(r'(?=.*\d)').hasMatch(value))
+      }
+      if (!RegExp(r'(?=.*\d)').hasMatch(value)) {
         return 'Password must contain a number';
+      }
       return null;
     };
   }
@@ -260,14 +266,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                           TextCapitalization
                                                               .words,
                                                       label: 'First Name',
-                                                      validator:
-                                                          firstnameValidator ==
-                                                                  null
-                                                              ? null
-                                                              : (value) =>
-                                                                  firstnameValidator!(
-                                                                      context,
-                                                                      value),
+                                                      validator: (value) => firstnameValidator.call(context, value),
                                                       allowRegex: RegExp('^[A-Za-z\' -]+\$')),
                                                 ),
                                               ),
@@ -293,14 +292,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                           TextCapitalization
                                                               .words,
                                                       label: 'Last Name',
-                                                      validator:
-                                                          lastnameValidator ==
-                                                                  null
-                                                              ? null
-                                                              : (value) =>
-                                                                  lastnameValidator!(
-                                                                      context,
-                                                                      value),
+                                                      validator: (value) => lastnameValidator.call(context, value),
                                                       allowRegex: RegExp('^[A-Za-z\' -]+\$')),
                                                 ),
                                               ),
@@ -323,13 +315,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                     autofillHints: [
                                                       AutofillHints.email
                                                     ],
-                                                    validator: emailValidator ==
-                                                            null
-                                                            ? null
-                                                            : (value) =>
-                                                            emailValidator!(
-                                                                context,
-                                                                    value),
+                                                    validator: (value) => emailValidator.call(context, value),
                                                     allowRegex: RegExp(r'[a-zA-Z0-9@._%+-]'),
                                                   ),
                                                 ),
@@ -354,13 +340,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                       AutofillHints.password
                                                     ],
                                                     obscureText: true,
-                                                    validator: passwordValidator ==
-                                                            null
-                                                            ? null
-                                                            : (value) =>
-                                                            passwordValidator!(
-                                                                context,
-                                                                    value),
+                                                    validator: (value) => passwordValidator.call(context, value),
                                                   ),
                                                 ),
                                               ),
@@ -384,14 +364,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                       AutofillHints.password
                                                     ],
                                                     obscureText: true,
-                                                    validator:
-                                                        confpswdValidator ==
-                                                                null
-                                                            ? null
-                                                        : (value) =>
-                                                            confpswdValidator!(
-                                                                context,
-                                                                    value),
+                                                    validator: (value) => confpswdValidator.call(context, value),
                                                   ),
                                                 ),
                                               ),

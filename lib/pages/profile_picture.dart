@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:SwishLab/providers/profile_pic_providers.dart';
 import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/colors.dart';

@@ -37,7 +37,6 @@ class VideoPreUpload extends ConsumerStatefulWidget {
 }
 
 class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProviderStateMixin {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   final formKey = GlobalKey<FormState>();
   String? analysisFinalJson;
 
@@ -110,7 +109,6 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: appColors.secondaryBackground,
         appBar: MyAppBar(
           style: MyAppBarStyle.backButtonTitleCentered,

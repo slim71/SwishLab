@@ -26,7 +26,6 @@ class ProfilePicturePage extends ConsumerStatefulWidget {
 }
 
 class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with TickerProviderStateMixin {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   bool showUrlField = false;
   File? imgLocal;
   Uint8List? imgLocalBytes;
@@ -168,7 +167,6 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: appColors.secondaryBackground,
         appBar: MyAppBar(
           title: 'Profile Picture',

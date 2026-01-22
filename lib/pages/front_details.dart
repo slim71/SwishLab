@@ -20,8 +20,6 @@ class FrontDetails extends ConsumerStatefulWidget {
 }
 
 class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProviderStateMixin {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   bool isDataUploading = false;
   File? chosenFrontVideo;
 
@@ -40,7 +38,6 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: appColors.primaryBackground,
         body:
             // Container with all content on the Front Details page

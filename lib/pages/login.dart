@@ -1,3 +1,4 @@
+import 'package:SwishLab/constants.dart';
 import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/state/persisted_states.dart';
@@ -17,12 +18,10 @@ class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  ConsumerState<LoginPage> createState() => _LoginPageWidgetState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageWidgetState extends ConsumerState<LoginPage>
-    with TickerProviderStateMixin {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateMixin {
   late final TextEditingController emailAddressTextController;
   late final TextEditingController passwordTextController;
   FocusNode? emailAddressFocusNode;
@@ -53,7 +52,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPage>
     };
     passwordTextControllerValidator = (context, value) {
       if (value == null || value.isEmpty) return 'Password required';
-      if (value.length < 8) return 'At least 8 characters'; // TODO: create constant
+      if (value.length < passwordMinSize) return 'At least $passwordMinSize characters';
       if (!RegExp(r'(?=.*[A-Za-z])').hasMatch(value)) {
         return 'Must contain a letter';
       }
@@ -74,7 +73,6 @@ class _LoginPageWidgetState extends ConsumerState<LoginPage>
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: appColors.secondaryBackground,
         body:
             // Container used for background purposes
@@ -353,7 +351,7 @@ class _LoginPageWidgetState extends ConsumerState<LoginPage>
                         )
                         // Tilt simulation: small rotation around X axis
                         .rotate(
-                          begin: -0.05, // radians ≈ small tilt
+                          begin: -0.05, // radians ~ small tilt
                           end: 0,
                           duration: 300.ms,
                           curve: Curves.easeInOut,

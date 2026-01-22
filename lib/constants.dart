@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 
 const String kDefaultResultsJson = '''
@@ -140,3 +142,8 @@ const String kDefaultFaqsJson = '''
   }
 ]
 ''';
+
+const passwordMinSize = 8;
+
+const String hfSpace = "https://959857f59626f333d5.gradio.live";
+const String supabaseDomain = "https://ccqvtpiltowjpogbjmpd.supabase.co";

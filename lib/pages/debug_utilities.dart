@@ -1,5 +1,6 @@
+import 'dart:convert';
+
 import 'package:SwishLab/constants.dart';
-import 'package:SwishLab/functions/parse_json.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
@@ -18,7 +19,6 @@ class DebugUtilities extends ConsumerStatefulWidget {
 }
 
 class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   dynamic defaultJson;
 
   @override
@@ -36,7 +36,6 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: appColors.secondaryBackground,
         appBar: MyAppBar(
           style: MyAppBarStyle.backButtonTitleCentered,
@@ -117,7 +116,7 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                                 title: 'Test results page',
                                 buttonText: 'Test',
                                 onPressed: () async {
-                                  final defaultJson = parseJson(kDefaultResultsJson);
+                                  final defaultJson = jsonDecode(kDefaultResultsJson);
 
                                   context.go(
                                     'results',

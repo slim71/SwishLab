@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:SwishLab/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
 
@@ -9,14 +10,9 @@ import 'package:path/path.dart' as path;
 /// This is needed because we don't supply URLs to Gradio/HuggingFace, but a
 /// local file. These files need to be in Gradio's cache, but directly using
 /// the file local path won't work: it would result in an InvalidPathError
-/// similar to "gradio.exceptions.InvalidPathError: Cannot move
-/// /home/user/app/blob:https:/ff-debug-service-frontend-free-ygxkweukma-uc.a.run.app/<hash>
-/// to the gradio cache dir because it was not uploaded by a user.". This
-/// actions solves that, uploading the local file to Gradio's cache so that it
-/// as a reference available for it.
+/// This actions solves that, uploading the local file to Gradio's cache so
+/// that it as a reference available for it.
 Future<String?> uploadVideoToGradio(File videoFile) async {
-  const String spaceUrl = "https://959857f59626f333d5.gradio.live"; // TODO: constant
-
   try {
     // Check there are actually file bytes
     if (!await videoFile.exists()) {
@@ -25,7 +21,7 @@ Future<String?> uploadVideoToGradio(File videoFile) async {
     final bytes = await videoFile.readAsBytes();
 
     // Create a multipart request
-    final uri = Uri.parse('$spaceUrl/gradio_api/upload');
+    final uri = Uri.parse('$hfSpace/gradio_api/upload');
     final request = http.MultipartRequest('POST', uri);
 
     // Attach the file

@@ -3,11 +3,14 @@ import 'dart:io';
 import 'package:SwishLab/models/custom_enums.dart';
 import 'package:SwishLab/pages/about.dart';
 import 'package:SwishLab/pages/analysis_results.dart';
+import 'package:SwishLab/pages/credits.dart';
 import 'package:SwishLab/pages/debug_utilities.dart';
 import 'package:SwishLab/pages/error_page.dart';
 import 'package:SwishLab/pages/front_details.dart';
+import 'package:SwishLab/pages/getting_started.dart';
 import 'package:SwishLab/pages/help.dart';
 import 'package:SwishLab/pages/home_page.dart';
+import 'package:SwishLab/pages/loading_page.dart';
 import 'package:SwishLab/pages/login.dart';
 import 'package:SwishLab/pages/markdown_document.dart';
 import 'package:SwishLab/pages/past_activity.dart';
@@ -18,10 +21,13 @@ import 'package:SwishLab/pages/side_details.dart';
 import 'package:SwishLab/pages/signup.dart';
 import 'package:SwishLab/pages/splash_screen.dart';
 import 'package:SwishLab/pages/success.dart';
+import 'package:SwishLab/pages/user_data.dart';
 import 'package:SwishLab/pages/video_pre_upload.dart';
 import 'package:SwishLab/providers/auth_providers.dart';
+import 'package:SwishLab/providers/supabase_provider.dart';
 import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/router/app_documents.dart';
+import 'package:SwishLab/router/app_transitions.dart';
 import 'package:SwishLab/router/go_router_refresh_stream.dart';
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/themes.dart';
@@ -37,7 +43,7 @@ final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 // Basically all app's navigation routes
 final _routerProvider = Provider<GoRouter>((ref) {
-  final supabase = Supabase.instance.client;
+  final supabase = ref.watch(supabaseProvider);
 
   return GoRouter(
     navigatorKey: rootNavigatorKey,
@@ -104,12 +110,26 @@ final _routerProvider = Provider<GoRouter>((ref) {
               builder: (context, state) => const DebugUtilities(),
             ),
             GoRoute(
+              path: 'user',
+              name: 'user',
+              builder: (context, state) => const UserData(),
+            ),
+            GoRoute(
+              path: 'getting-started',
+              name: 'getting-started',
+              builder: (context, state) => const GettingStartedPage(),
+            ),
+            GoRoute(
+              path: 'credits',
+              name: 'credits',
+              builder: (context, state) => const Credits(),
+            ),
+            GoRoute(
               path: '/doc/:name',
               name: 'document',
               builder: (context, state) {
                 final name = state.pathParameters['name']!;
                 final doc = appDocuments[name]!;
-
                 return MarkdownDocument(
                   fileName: doc.file,
                   title: doc.title,
@@ -125,12 +145,26 @@ final _routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/login',
         name: 'login',
-        builder: (context, state) => const LoginPage(),
+        pageBuilder: (context, state) {
+          return buildTransitionPage(
+            state: state,
+            child: const LoginPage(),
+            transition: AppTransition.bottomToTop,
+            duration: const Duration(milliseconds: 300),
+          );
+        },
       ),
       GoRoute(
         path: '/signup',
         name: 'signup',
-        builder: (context, state) => const SignupPage(),
+        pageBuilder: (context, state) {
+          return buildTransitionPage(
+            state: state,
+            child: const SignupPage(),
+            transition: AppTransition.bottomToTop,
+            duration: const Duration(milliseconds: 300),
+          );
+        },
       ),
       GoRoute(
         path: '/success',
@@ -179,6 +213,11 @@ final _routerProvider = Provider<GoRouter>((ref) {
             videoFile: videoFile,
           );
         },
+      ),
+      GoRoute(
+        path: '/loading',
+        name: 'loading',
+        builder: (context, state) => const LoadingPage(),
       ),
     ],
   );

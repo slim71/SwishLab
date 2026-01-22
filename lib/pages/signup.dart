@@ -24,8 +24,6 @@ class SignupPage extends ConsumerStatefulWidget {
 
 class _SignupPageState extends ConsumerState<SignupPage>
     with TickerProviderStateMixin {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   // State field(s) for firstname widget.
   FocusNode? firstnameFocusNode;
   late TextEditingController firstnameController;
@@ -129,7 +127,6 @@ class _SignupPageState extends ConsumerState<SignupPage>
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: appColors.secondaryBackground,
         body:
             // Row used to locate the whole signup page content

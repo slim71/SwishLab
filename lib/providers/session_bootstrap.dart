@@ -51,7 +51,6 @@ Future<void> _showInfoDialog(String msg) async {
       title: const Text('Info needed'),
       content: Text(msg,
           style: AppTextStyles.bodyLarge(context, color: Colors.black)),
-      // TODO: color
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(ctx),

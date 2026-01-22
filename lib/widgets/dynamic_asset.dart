@@ -1,11 +1,9 @@
 import 'dart:async';
 
+import 'package:SwishLab/constants.dart';
+import 'package:SwishLab/models/custom_enums.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart'; // for kIsWeb
-import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
-
-import '../models/custom_enums.dart';
 
 /// Widget to upload an asset based on the supplied string.
 ///
@@ -32,8 +30,7 @@ class DynamicAsset extends StatefulWidget {
 class _DynamicAssetState extends State<DynamicAsset> {
   String? _resolvedPath;
 
-  static const String supabaseRoot = // TODO: use const
-      'https://ccqvtpiltowjpogbjmpd.storage.supabase.co/storage/v1/object/public/';
+  static const String supabaseRoot = '$supabaseDomain/storage/v1/object/public/';
   static const String iconNetworkPath = "Icons";
   static const String iconLocalPath = "assets/icons";
   static const String imagePath = "assets/images";
@@ -103,14 +100,6 @@ class _DynamicAssetState extends State<DynamicAsset> {
         // Store local first
         _resolvedPath = candidateLocal;
 
-        // For web, test via HTTP GET
-        if (kIsWeb) {
-          final exists = await _webAssetExists(candidateLocal);
-          if (!exists) {
-            _resolvedPath =
-                '$supabaseRoot/$animationPath/$normalizedPlusExtension?v=${DateTime.now().millisecondsSinceEpoch}';
-          }
-        }
         break;
 
       case AssetType.gif:
@@ -186,22 +175,6 @@ class _DynamicAssetState extends State<DynamicAsset> {
     }
 
     return success;
-  }
-
-  Future<bool> _webAssetExists(String assetPath) async {
-    if (!kIsWeb) return true; // On mobile assume it's bundled, try normally.
-
-    // FlutterFlow's web assets are served under /assets/**
-    final url = Uri.parse('/$assetPath');
-
-    try {
-      final res = await http.get(url);
-
-      // A missing asset returns 404 or an HTML response instead of JSON.
-      return res.statusCode == 200 && res.body.trim().startsWith('{');
-    } catch (_) {
-      return false;
-    }
   }
 
   @override

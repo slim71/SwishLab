@@ -29,8 +29,6 @@ class AnalysisResults extends ConsumerStatefulWidget {
 }
 
 class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerProviderStateMixin {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   // Stores action output result for [Backend Call - Insert Row] action in pageTitle widget.
   StatisticsRow? testInsertionReturn;
 
@@ -55,10 +53,8 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: appColors.secondaryBackground,
         appBar: MyAppBar(
-          // TODO: what about the ontap in FF?
           style: MyAppBarStyle.backButtonTitleCentered,
           title: 'Analysis results',
         ),

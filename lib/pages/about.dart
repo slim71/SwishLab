@@ -18,7 +18,6 @@ class AboutUs extends ConsumerStatefulWidget {
 }
 
 class _AboutUsState extends ConsumerState<AboutUs> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
   DateTime? datePicked;
 
   @override
@@ -36,7 +35,6 @@ class _AboutUsState extends ConsumerState<AboutUs> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: appColors.secondaryBackground,
         appBar: MyAppBar(
           style: MyAppBarStyle.backButtonTitleLeft,

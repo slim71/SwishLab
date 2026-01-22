@@ -1,3 +1,6 @@
+import 'package:SwishLab/constants.dart';
+import 'package:SwishLab/functions/load_json_remote_or_app_state.dart';
+import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
@@ -21,24 +24,21 @@ class Settings extends ConsumerStatefulWidget {
 
 class _SettingsState extends ConsumerState<Settings>
     with TickerProviderStateMixin {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  List<Map<String, dynamic>>? faqsJsonList;
 
-  // Stores action output result for [Custom Action - loadJsonRemoteOrAppState] action in helpContainer widget.
-  List<dynamic>? faqsJsonList;
-  final List<SettingsItem> items = [
-    SettingsItem(
+  List<SettingsItem> get items => [
+        SettingsItem(
         title: 'User Info',
         background: const Color(0x33FFC72C),
         onTap: (context) async {
-          // context.pushNamed(UserDataWidget.routeName);
-        }),
+              context.pushNamed('user');
+            }),
     SettingsItem(
       title: 'Getting Started',
       background: const Color(0x340C0C0C),
       onTap: (context) async {
-        // context.pushNamed(
-        //     GettingStartedPageWidget.routeName);
-      },
+            context.pushNamed('getting-started');
+          },
     ),
     SettingsItem(
       title: 'About Us',
@@ -51,19 +51,19 @@ class _SettingsState extends ConsumerState<Settings>
       title: 'Help',
       background: const Color(0x33FFC72C),
       onTap: (context) async {
-        // _model.faqsJsonList =
-        // await actions.loadJsonRemoteOrAppState(
-        //   'faqs',
-        //   FFAppConstants.defaultFaqs,
-        // );
-        // FFAppState().loadedFaqs = _model.faqsJsonList!
-        //     .toList()
-        //     .cast<dynamic>();
-        //
-        // context.pushNamed(HelpPageWidget.routeName);
-        //
-        // safeSetState(() {});
-      },
+            final appStateNotifier = ref.read(appStateProvider.notifier);
+
+            faqsJsonList = await loadJsonRemoteOrAppState(
+              'faqs',
+              kDefaultFaqsJson,
+            );
+            appStateNotifier.setLoadedFaqs(faqsJsonList!);
+
+            if (!context.mounted) return;
+            context.pushNamed('help');
+
+            setState(() {});
+          },
     ),
     SettingsItem(
       title: 'Privacy Policy',
@@ -104,16 +104,15 @@ class _SettingsState extends ConsumerState<Settings>
       title: 'Credits',
       background: const Color(0x33FFC72C),
       onTap: (context) async {
-        // context.pushNamed(CreditsWidget.routeName);
-      },
+            context.pushNamed('credits');
+          },
     ),
     SettingsItem(
       title: 'Debug utilities',
       background: const Color(0x340C0C0C),
       onTap: (context) async {
-        // context
-        //     .pushNamed(DebugUtilitiesWidget.routeName);
-      },
+            context.pushNamed('debug');
+          },
     ),
   ];
 
@@ -129,7 +128,7 @@ class _SettingsState extends ConsumerState<Settings>
 
     return child
         .animate()
-        // 1️⃣ enter from bottom (no bounce)
+        // Enter from bottom (no bounce)
         .slide(
           begin: const Offset(0, 100),
           end: Offset.zero,
@@ -137,7 +136,7 @@ class _SettingsState extends ConsumerState<Settings>
           duration: slideDuration.ms,
           curve: Curves.easeOutCubic,
         )
-        // 2️⃣ small elastic settle
+        // Small elastic settle
         .moveY(
           begin: 100,
           end: 0,
@@ -152,7 +151,6 @@ class _SettingsState extends ConsumerState<Settings>
     final appColors = Theme.of(context).extension<AppColorSet>()!;
 
     return Scaffold(
-      key: scaffoldKey,
       backgroundColor: appColors.secondaryBackground,
       appBar: MyAppBar(
         style: MyAppBarStyle.titleOnly,

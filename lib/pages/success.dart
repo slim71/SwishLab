@@ -18,7 +18,6 @@ class SuccessAfterSignup extends ConsumerStatefulWidget {
 
 class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
     with TickerProviderStateMixin {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -37,7 +36,6 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: appColors.primaryBackground,
         appBar: AppBar(
           backgroundColor: appColors.primaryBackground,
@@ -173,7 +171,6 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                             )
                                             .rotate(
                                               begin: -0.08,
-                                              // approximation of TiltEffect(0, 1.396)
                                               end: 0,
                                               duration: 300.ms,
                                               curve: Curves.easeInOut,
@@ -244,7 +241,6 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                           )
                                           .rotate(
                                             begin: -0.08,
-                                            // approximation of TiltEffect(0, 1.396)
                                             end: 0,
                                             delay: 150.ms,
                                             duration: 300.ms,
@@ -285,7 +281,6 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                       )
                                       .rotate(
                                         begin: -0.08,
-                                        // approximation of TiltEffect(0, 1.396)
                                         end: 0,
                                         delay: 200.ms,
                                         duration: 300.ms,
@@ -415,7 +410,6 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                             )
                                             .rotate(
                                               begin: -0.08,
-                                              // approximation of TiltEffect(0, 1.396)
                                               end: 0,
                                               delay: 250.ms,
                                               duration: 300.ms,
@@ -458,7 +452,6 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                       )
                                       .rotate(
                                         begin: 0.08,
-                                        // approximation of FlutterFlow TiltEffect(1.222, 0)
                                         end: 0,
                                         delay: 350.ms,
                                         duration: 300.ms,

@@ -1,15 +1,14 @@
+import 'package:SwishLab/functions/load_credits.dart';
+import 'package:SwishLab/models/credit_item.dart';
 import 'package:SwishLab/state/app_state.dart';
+import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/widgets/app_bar.dart';
+import 'package:SwishLab/widgets/dynamic_asset.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:SwishLab/styles/colors.dart';
-import 'package:SwishLab/widgets/app_bar.dart';
-import 'package:SwishLab/functions/load_credits.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../models/credit_item.dart';
-import '../widgets/dynamic_asset.dart';
 
 /// Page to give credit where it's due
 class Credits extends ConsumerStatefulWidget {
@@ -20,9 +19,6 @@ class Credits extends ConsumerStatefulWidget {
 }
 
 class _CreditsState extends ConsumerState<Credits> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
-  // Stores action output result for [Custom Action - loadCredits] action in Credits widget.
   List<dynamic>? creditsLoaded;
 
   @override
@@ -53,7 +49,6 @@ class _CreditsState extends ConsumerState<Credits> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: appColors.secondaryBackground,
         appBar: MyAppBar(
           style: MyAppBarStyle.backButtonTitleCentered,

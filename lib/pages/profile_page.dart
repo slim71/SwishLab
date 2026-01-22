@@ -7,20 +7,19 @@ import 'package:SwishLab/widgets/stats_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 /// Profile page with user data
 class ProfilePage extends ConsumerStatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  ConsumerState<ProfilePage> createState() => _ProfilePageWidgetState();
+  ConsumerState<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _ProfilePageWidgetState extends ConsumerState<ProfilePage>
-    with TickerProviderStateMixin {
+class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderStateMixin {
   // Stores action output result for [Backend Call - Query Rows] action in ProfilePage widget.
   List<StatisticsRow>? statisticsDataDecreasing;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -38,7 +37,6 @@ class _ProfilePageWidgetState extends ConsumerState<ProfilePage>
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
         body:
             // Container used for background purposes
             Align(
@@ -93,9 +91,7 @@ class _ProfilePageWidgetState extends ConsumerState<ProfilePage>
                                           width: 200,
                                           height: 200,
                                           decoration: BoxDecoration(
-                                            color:
-                                                appColors.lightButtonBackground,
-                                            // TODO: ad-hoc?
+                                            color: appColors.altContBorders,
                                             shape: BoxShape.circle,
                                           ),
                                           child:
@@ -111,9 +107,7 @@ class _ProfilePageWidgetState extends ConsumerState<ProfilePage>
                                                 highlightColor:
                                                     Colors.transparent,
                                                 onTap: () async {
-                                                  // context.pushNamed(
-                                                  //     ProfilePicturePageWidget
-                                                  //         .routeName);
+                                                  context.pushNamed('pic');
                                                 },
                                                 child: ClipRRect(
                                                   borderRadius:

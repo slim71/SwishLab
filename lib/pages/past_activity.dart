@@ -11,11 +11,10 @@ class PastActivity extends ConsumerStatefulWidget {
   const PastActivity({super.key});
 
   @override
-  ConsumerState<PastActivity> createState() => _PastActivityWidgetState();
+  ConsumerState<PastActivity> createState() => _PastActivityState();
 }
 
-class _PastActivityWidgetState extends ConsumerState<PastActivity> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+class _PastActivityState extends ConsumerState<PastActivity> {
   ScrollController? activityListScrollController;
 
   @override
@@ -29,7 +28,6 @@ class _PastActivityWidgetState extends ConsumerState<PastActivity> {
     final appColors = Theme.of(context).extension<AppColorSet>()!;
 
     return Scaffold(
-      key: scaffoldKey,
       backgroundColor: appColors.secondaryBackground,
       appBar: MyAppBar(
         style: MyAppBarStyle.titleOnly,

@@ -16,8 +16,6 @@ class SplashScreen extends ConsumerStatefulWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   // State field(s) for pageView widget.
   PageController? pageViewController;
 
@@ -42,7 +40,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: appColors.primaryBackground,
         body: SafeArea(
           top: true,
@@ -485,10 +482,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                       radius: 16,
                                       dotWidth: 16,
                                       dotHeight: 4,
-                                      dotColor: appColors.secondaryBackground,
-                                      // TODO: check
-                                      activeDotColor:
-                                          appColors.primaryBackground,
+                                      dotColor: appColors.primaryOne,
+                                      activeDotColor: appColors.primaryTwo,
                                       paintStyle: PaintingStyle.fill,
                                     ),
                                   ),
@@ -520,7 +515,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                               label: 'Login button',
                               child: LightButton(
                                 onPressed: () async {
-                                  context.goNamed('login'); // TODO: bottom2top
+                                  context.goNamed('login');
                                 },
                                 text: 'Login',
                               ),
@@ -531,8 +526,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                               label: 'Register button',
                               child: DarkButton(
                                 onPressed: () async {
-                                  context.goNamed(
-                                      'signup'); // TODO: bottobottom2top
+                                  context.goNamed('signup');
                                 },
                                 text: 'Register',
                               ),

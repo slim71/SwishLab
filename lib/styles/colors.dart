@@ -44,12 +44,6 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
   final Color darkButtonTextColor;
   final Color lightButtonTextColor;
   final Color transparentButtonTextColor;
-  final Color switchActiveBorders;
-  final Color switchInactiveBorders;
-  final Color switchActiveBackground;
-  final Color switchInactiveBackground;
-  final Color switchActiveThumbColor;
-  final Color switchInactiveThumbColor;
   final Color actionButtonBorders;
   final Color actionButtonBackground;
   final Color actionButtonIconColor;
@@ -90,12 +84,6 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
     required this.darkButtonTextColor,
     required this.lightButtonTextColor,
     required this.transparentButtonTextColor,
-    required this.switchActiveBorders,
-    required this.switchInactiveBorders,
-    required this.switchActiveBackground,
-    required this.switchInactiveBackground,
-    required this.switchActiveThumbColor,
-    required this.switchInactiveThumbColor,
     required this.actionButtonBorders,
     required this.actionButtonBackground,
     required this.actionButtonIconColor,
@@ -196,8 +184,7 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
 
   @override
   AppColorSet copyWith({
-    Brightness? brightness,
-    Color? primaryOne,
+    Brightness? b,
     Color? pOne,
     Color? pTwo,
     Color? pThree,
@@ -207,101 +194,74 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
     Color? rOne,
     Color? rTwo,
     Color? rThree,
-    Color? darkButtonBorders,
-    Color? lightButtonBorders,
-    Color? transparentButtonBorders,
-    Color? darkButtonBackground,
-    Color? lightButtonBackground,
-    Color? transparentButtonBackground,
-    Color? darkButtonTextColor,
-    Color? lightButtonTextColor,
-    Color? transparentButtonTextColor,
-    Color? switchActiveBorders,
-    Color? switchInactiveBorders,
-    Color? switchActiveBackground,
-    Color? switchInactiveBackground,
-    Color? switchActiveThumbColor,
-    Color? switchInactiveThumbColor,
-    Color? actionButtonBorders,
-    Color? actionButtonBackground,
-    Color? actionButtonIconColor,
-    Color? textFieldBorders,
-    Color? textFieldBackground,
-    Color? textFieldText,
-    Color? textFieldLabelText,
-    Color? dropDownBorders,
-    Color? dropDownBackground,
-    Color? dropDownIconColor,
-    Color? dropDownTextColor,
-    Color? labelSelectedBackground,
-    Color? labelSelectedIconColor,
-    Color? labelSelectedBorders,
-    Color? labelUnselectedBackground,
-    Color? labelUnselectedIconColor,
-    Color? labelBorders,
-    Color? containersBorders,
-    Color? altContBorders,
+    Color? darkBtnBorders,
+    Color? lightBtnBorders,
+    Color? transpBtnBorders,
+    Color? darkBtnBkg,
+    Color? lightBtnBkg,
+    Color? transpBtnBkg,
+    Color? darkBtnText,
+    Color? lightBtnText,
+    Color? transpBtnText,
+    Color? actionBtnBorders,
+    Color? actionBtnBackground,
+    Color? actionBtnIcon,
+    Color? textBorders,
+    Color? textBackground,
+    Color? textColor,
+    Color? textLabel,
+    Color? ddBorders,
+    Color? ddBkg,
+    Color? ddIcon,
+    Color? ddText,
+    Color? labelSelBkg,
+    Color? labelSelIcon,
+    Color? labelSelBorders,
+    Color? labelUnselBkg,
+    Color? labelUnselIcon,
+    Color? labelUnselBorders,
+    Color? contBorders,
+    Color? contAltBorders,
   }) {
     return AppColorSet(
-      brightness: brightness ?? this.brightness,
-      primaryOne: pOne ?? this.primaryOne,
-      primaryTwo: pTwo ?? this.primaryTwo,
-      primaryThree: pThree ?? this.primaryThree,
-      alternateOne: aOne ?? this.alternateOne,
-      alternateTwo: aTwo ?? this.alternateTwo,
-      alternateThree: aThree ?? this.alternateThree,
-      retroOne: rOne ?? this.retroOne,
-      retroTwo: rTwo ?? this.retroTwo,
-      retroThree: rThree ?? this.retroThree,
-      darkButtonBorders: darkButtonBorders ?? this.darkButtonBorders,
-      lightButtonBorders: lightButtonBorders ?? this.lightButtonBorders,
-      transparentButtonBorders:
-          transparentButtonBorders ?? this.transparentButtonBorders,
-      darkButtonBackground: darkButtonBackground ?? this.darkButtonBackground,
-      lightButtonBackground:
-          lightButtonBackground ?? this.lightButtonBackground,
-      transparentButtonBackground:
-          transparentButtonBackground ?? this.transparentButtonBackground,
-      darkButtonTextColor: darkButtonTextColor ?? this.darkButtonTextColor,
-      lightButtonTextColor: lightButtonTextColor ?? this.lightButtonTextColor,
-      transparentButtonTextColor:
-          transparentButtonTextColor ?? this.transparentButtonTextColor,
-      switchActiveBorders: switchActiveBorders ?? this.switchActiveBorders,
-      switchInactiveBorders:
-          switchInactiveBorders ?? this.switchInactiveBorders,
-      switchActiveBackground:
-          switchActiveBackground ?? this.switchActiveBackground,
-      switchInactiveBackground:
-          switchInactiveBackground ?? this.switchInactiveBackground,
-      switchActiveThumbColor:
-          switchActiveThumbColor ?? this.switchActiveThumbColor,
-      switchInactiveThumbColor:
-          switchInactiveThumbColor ?? this.switchInactiveThumbColor,
-      actionButtonBorders: actionButtonBorders ?? this.actionButtonBorders,
-      actionButtonBackground:
-          actionButtonBackground ?? this.actionButtonBackground,
-      actionButtonIconColor:
-          actionButtonIconColor ?? this.actionButtonIconColor,
-      textFieldBorders: textFieldBorders ?? this.textFieldBorders,
-      textFieldBackground: textFieldBackground ?? this.textFieldBackground,
-      textFieldText: textFieldText ?? this.textFieldText,
-      textFieldLabelText: textFieldLabelText ?? this.textFieldLabelText,
-      dropDownBorders: dropDownBorders ?? this.dropDownBorders,
-      dropDownBackground: dropDownBackground ?? this.dropDownBackground,
-      dropDownIconColor: dropDownIconColor ?? this.dropDownIconColor,
-      dropDownTextColor: dropDownTextColor ?? this.dropDownTextColor,
-      labelSelectedBackground:
-          labelSelectedBackground ?? this.labelSelectedBackground,
-      labelSelectedIconColor:
-          labelSelectedIconColor ?? this.labelSelectedIconColor,
-      labelSelectedBorders: labelSelectedBorders ?? this.labelSelectedBorders,
-      labelUnselectedBackground:
-          labelUnselectedBackground ?? this.labelUnselectedBackground,
-      labelUnselectedIconColor:
-          labelUnselectedIconColor ?? this.labelUnselectedIconColor,
-      labelUnselectedBorders: labelBorders ?? this.labelUnselectedBorders,
-      containersBorders: containersBorders ?? this.containersBorders,
-      altContBorders: altContBorders ?? this.altContBorders,
+      brightness: b ?? brightness,
+      primaryOne: pOne ?? primaryOne,
+      primaryTwo: pTwo ?? primaryTwo,
+      primaryThree: pThree ?? primaryThree,
+      alternateOne: aOne ?? alternateOne,
+      alternateTwo: aTwo ?? alternateTwo,
+      alternateThree: aThree ?? alternateThree,
+      retroOne: rOne ?? retroOne,
+      retroTwo: rTwo ?? retroTwo,
+      retroThree: rThree ?? retroThree,
+      darkButtonBorders: darkBtnBorders ?? darkButtonBorders,
+      lightButtonBorders: lightBtnBorders ?? lightButtonBorders,
+      transparentButtonBorders: transpBtnBorders ?? transparentButtonBorders,
+      darkButtonBackground: darkBtnBkg ?? darkButtonBackground,
+      lightButtonBackground: lightBtnBkg ?? lightButtonBackground,
+      transparentButtonBackground: transpBtnBkg ?? transparentButtonBackground,
+      darkButtonTextColor: darkBtnText ?? darkButtonTextColor,
+      lightButtonTextColor: lightBtnText ?? lightButtonTextColor,
+      transparentButtonTextColor: transpBtnText ?? transparentButtonTextColor,
+      actionButtonBorders: actionBtnBorders ?? actionButtonBorders,
+      actionButtonBackground: actionBtnBackground ?? actionButtonBackground,
+      actionButtonIconColor: actionBtnIcon ?? actionButtonIconColor,
+      textFieldBorders: textBorders ?? textFieldBorders,
+      textFieldBackground: textBackground ?? textFieldBackground,
+      textFieldText: textColor ?? textFieldText,
+      textFieldLabelText: textLabel ?? textFieldLabelText,
+      dropDownBorders: ddBorders ?? dropDownBorders,
+      dropDownBackground: ddBkg ?? dropDownBackground,
+      dropDownIconColor: ddIcon ?? dropDownIconColor,
+      dropDownTextColor: ddText ?? dropDownTextColor,
+      labelSelectedBackground: labelSelBkg ?? labelSelectedBackground,
+      labelSelectedIconColor: labelSelIcon ?? labelSelectedIconColor,
+      labelSelectedBorders: labelSelBorders ?? labelSelectedBorders,
+      labelUnselectedBackground: labelUnselBkg ?? labelUnselectedBackground,
+      labelUnselectedIconColor: labelUnselIcon ?? labelUnselectedIconColor,
+      labelUnselectedBorders: labelUnselBorders ?? labelUnselectedBorders,
+      containersBorders: contBorders ?? containersBorders,
+      altContBorders: contAltBorders ?? altContBorders,
     );
   }
 
@@ -338,18 +298,6 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
           transparentButtonBackground, other.transparentButtonBackground, t)!,
       transparentButtonTextColor: Color.lerp(
           transparentButtonTextColor, other.transparentButtonTextColor, t)!,
-      switchActiveBorders:
-          Color.lerp(switchActiveBorders, other.switchActiveBorders, t)!,
-      switchActiveBackground:
-          Color.lerp(switchActiveBackground, other.switchActiveBackground, t)!,
-      switchActiveThumbColor:
-          Color.lerp(switchActiveThumbColor, other.switchActiveThumbColor, t)!,
-      switchInactiveBorders:
-          Color.lerp(switchInactiveBorders, other.switchInactiveBorders, t)!,
-      switchInactiveBackground: Color.lerp(
-          switchInactiveBackground, other.switchInactiveBackground, t)!,
-      switchInactiveThumbColor: Color.lerp(
-          switchInactiveThumbColor, other.switchInactiveThumbColor, t)!,
       actionButtonBorders:
           Color.lerp(actionButtonBorders, other.actionButtonBorders, t)!,
       actionButtonBackground:
@@ -410,14 +358,6 @@ const theBay = AppColorSet(
     darkButtonTextColor: darkerGold,
     lightButtonTextColor: white,
     transparentButtonTextColor: oxfordBlue,
-    // TODO: switch not used?
-    switchActiveBorders: white,
-    switchInactiveBorders: white,
-    switchActiveBackground: marianBlue,
-    switchInactiveBackground: oxfordBlue,
-    switchActiveThumbColor: goldenYellow,
-    switchInactiveThumbColor: persianRed,
-    //
     actionButtonBorders: persianRed,
     actionButtonBackground: primaryBackgroundDark,
     // TODO: might need to be changed
@@ -432,13 +372,10 @@ const theBay = AppColorSet(
     dropDownTextColor: primaryTextDark,
     labelSelectedBackground: pictonBlue,
     labelSelectedIconColor: primaryTextDark,
-    // TODO: not used?
     labelSelectedBorders: persianRed,
     labelUnselectedBackground: oxfordBlue,
     labelUnselectedIconColor: secondaryTextDark,
-    // TODO: not used?
     labelUnselectedBorders: airForceBlue,
-    // profilePictureBorders
     containersBorders: persianRed,
     altContBorders: pictonBlue // or airForceBlue
     // TODO: specific AppBar colors?

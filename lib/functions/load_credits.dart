@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:SwishLab/constants.dart';
 import 'package:SwishLab/models/credit_item.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
@@ -8,8 +9,7 @@ import 'package:http/http.dart' as http;
 /// storage.
 Future<List<Credit>> loadCredits() async {
   const localPath = 'assets/json/credits.json';
-  const remoteUrl = // TODO: use a constant
-      'https://ccqvtpiltowjpogbjmpd.supabase.co/storage/v1/object/public/assets/json/credits.json';
+  const remoteUrl = '$supabaseDomain/storage/v1/object/public/assets/json/credits.json';
 
   String? jsonString;
 

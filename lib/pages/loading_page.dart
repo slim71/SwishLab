@@ -12,12 +12,10 @@ class LoadingPage extends ConsumerStatefulWidget {
   const LoadingPage({super.key});
 
   @override
-  ConsumerState<LoadingPage> createState() => _LoadingPageWidgetState();
+  ConsumerState<LoadingPage> createState() => _LoadingPageState();
 }
 
-class _LoadingPageWidgetState extends ConsumerState<LoadingPage> {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
+class _LoadingPageState extends ConsumerState<LoadingPage> {
   @override
   void initState() {
     super.initState();
@@ -65,7 +63,6 @@ class _LoadingPageWidgetState extends ConsumerState<LoadingPage> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: appColors.primaryBackground,
         body: SafeArea(
           top: true,

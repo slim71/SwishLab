@@ -1,7 +1,6 @@
+import 'package:SwishLab/widgets/icon_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
-
-import '../widgets/icon_action_button.dart';
 
 void main() {
   runApp(const WidgetbookApp());

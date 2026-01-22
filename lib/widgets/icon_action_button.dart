@@ -20,7 +20,7 @@ class IconActionButton extends StatelessWidget {
     required this.icon,
     required this.onPressed,
     this.size = 50,
-    this.iconSize = 30, //TODO: 24?
+    this.iconSize = 30,
     this.borderRadius = 30,
     this.borderWidth = 1,
     this.borderColor = Colors.transparent,

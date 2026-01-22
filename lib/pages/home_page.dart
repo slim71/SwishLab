@@ -23,12 +23,10 @@ class HomePage extends ConsumerStatefulWidget {
 class _HomePageState extends ConsumerState<HomePage> {
   ///  Local state fields for this page.
   dynamic defaultJson;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    // TODO: might need a ref.listen on the statistics
   }
 
   @override
@@ -62,7 +60,6 @@ class _HomePageState extends ConsumerState<HomePage> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: appColors.primaryBackground,
         appBar: MyAppBar(
           style: MyAppBarStyle.titleWithProfileImage,
@@ -223,7 +220,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         ),
                         DarkButton(
                           onPressed: () async {
-                            // context.pushNamed(UserDataWidget.routeName);
+                            context.pushNamed('user');
                           },
                           text: 'Button',
                         ),

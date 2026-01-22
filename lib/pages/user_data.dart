@@ -25,8 +25,6 @@ class UserData extends ConsumerStatefulWidget {
 }
 
 class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMixin {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   /// Storage for validation states
   UserInfoValidation? validationStruct;
 
@@ -155,7 +153,6 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
     final userId = userInfo?.id;
 
     return Scaffold(
-      key: scaffoldKey,
       backgroundColor: appColors.secondaryBackground,
       appBar: MyAppBar(
         style: MyAppBarStyle.backButtonTitleLeft,

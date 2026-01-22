@@ -22,8 +22,6 @@ class HelpPage extends ConsumerStatefulWidget {
 }
 
 class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMixin {
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
   /// Index of the currently opened FAQ
   int? openIndex = -1;
 
@@ -47,18 +45,14 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
   void updateFilteredFaqsPageStateAtIndex(int index, Function(dynamic) updateFn) =>
       filteredFaqsPageState[index] = updateFn(filteredFaqsPageState[index]);
 
-  ///  State fields for stateful widgets in this page.
-  // Stores action output result for [Custom Action - filterFaqs] action in HelpPage widget.
   List<dynamic>? filteredFaqsAction;
 
-  // Stores action output result for [Custom Action - filterFaqs] action in searchContainer widget.
   List<dynamic>? filteredFaqsActionContainer;
 
   // State field(s) for searchField widget.
   FocusNode? searchFieldFocusNode;
   late final TextEditingController searchFieldTextController;
 
-  // Stores action output result for [Custom Action - filterFaqs] action in searchField widget.
   List<dynamic>? filteredFaqsActionOnChange;
 
   @override
@@ -98,7 +92,6 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        key: scaffoldKey,
         backgroundColor: appColors.secondaryBackground,
         appBar: MyAppBar(
           style: MyAppBarStyle.backButtonTitleLeft,
@@ -210,7 +203,7 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                                   faqSearchQuery = '';
                                                 });
 
-                                                // Delay // TODO: might deleted this
+                                                // Delay
                                                 await Future.delayed(Duration(milliseconds: 300));
                                                 if (!mounted) return;
 

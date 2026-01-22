@@ -1,5 +1,5 @@
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/settings_item.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +13,7 @@ class SettingsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
@@ -37,7 +37,7 @@ class SettingsRow extends StatelessWidget {
             children: [
               Text(
                 item.title,
-                style: AppTextStyles.titleLarge(context),
+                style: AppTextStyles.titleLarge(),
               ),
               Icon(
                 Icons.chevron_right_rounded,

@@ -1,5 +1,5 @@
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 class SingleChoiceChip extends StatelessWidget {
@@ -20,7 +20,7 @@ class SingleChoiceChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return ChoiceChip(
       label: Row(
@@ -37,7 +37,6 @@ class SingleChoiceChip extends StatelessWidget {
           Text(
             label,
             style: AppTextStyles.bodyMedium(
-              context,
               color: selected ? appColors.primaryTwo : Colors.white,
             ),
           ),

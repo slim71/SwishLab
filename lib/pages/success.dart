@@ -1,7 +1,7 @@
 import 'package:SwishLab/models/users_row.dart';
 import 'package:SwishLab/providers/users_provider.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -26,7 +26,7 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
     final userInfoAsync = ref.watch(appUserProvider);
     final UsersRow? userInfo = userInfoAsync.value;
 
@@ -186,7 +186,6 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                         child: Text(
                                           'Success!',
                                           style: AppTextStyles.displaySmall(
-                                              context,
                                               color: appColors.secondaryText),
                                         ),
                                       )
@@ -213,7 +212,6 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                         child: Text(
                                           'Account created',
                                           style: AppTextStyles.labelMedium(
-                                              context,
                                               color: appColors.secondaryText),
                                         ),
                                       )
@@ -310,7 +308,6 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                                   'Your registered email is',
                                                   style:
                                                       AppTextStyles.labelMedium(
-                                                          context,
                                                           color: appColors
                                                               .secondaryText),
                                                 ),
@@ -326,7 +323,6 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                                   textAlign: TextAlign.end,
                                                   style:
                                                       AppTextStyles.labelMedium(
-                                                          context,
                                                           color: appColors
                                                               .secondaryText),
                                                 ),
@@ -348,10 +344,8 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                                       children: [
                                                         TextSpan(
                                                           text: 'Navigate to ',
-                                                          style: AppTextStyles
-                                                              .labelMedium(
-                                                                  context,
-                                                                  color: appColors
+                                                          style:
+                                                              AppTextStyles.labelMedium(color: appColors
                                                                       .secondaryText),
                                                         ),
                                                         TextSpan(
@@ -375,8 +369,7 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                                           ),
                                                         )
                                                       ],
-                                                      style: AppTextStyles
-                                                          .labelMedium(context),
+                                                      style: AppTextStyles.labelMedium(),
                                                     ),
                                                     textAlign: TextAlign.center,
                                                   ),

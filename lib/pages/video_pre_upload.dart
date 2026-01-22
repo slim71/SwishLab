@@ -8,8 +8,8 @@ import 'package:SwishLab/models/statistics_row.dart';
 import 'package:SwishLab/models/video_source.dart';
 import 'package:SwishLab/providers/shooting_analysis_provider.dart';
 import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/choice_chips_group.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
@@ -101,7 +101,7 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return GestureDetector(
       onTap: () {
@@ -228,7 +228,7 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
                                                         label: '"Category" text',
                                                         child: Text(
                                                           'Category',
-                                                          style: AppTextStyles.labelMedium(context),
+                                                          style: AppTextStyles.labelMedium(),
                                                         ),
                                                       ),
                                                       const SizedBox(height: 12),

@@ -4,8 +4,8 @@ import 'package:SwishLab/models/user_info_validation.dart';
 import 'package:SwishLab/models/users_row.dart';
 import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/drop_down.dart';
@@ -147,7 +147,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     final appState = ref.watch(appStateProvider);
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
     final userInfoAsync = ref.watch(appUserProvider);
     final UsersRow? userInfo = userInfoAsync.value;
     final userId = userInfo?.id;
@@ -177,7 +177,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                       child: Text(
                         'Your information',
-                        style: AppTextStyles.headlineMedium(context),
+                        style: AppTextStyles.headlineMedium(),
                       ),
                     ),
                   ],
@@ -211,7 +211,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                         child: Text(
                                           'Valid First Name required',
                                           textAlign: TextAlign.end,
-                                          style: AppTextStyles.labelMedium(context),
+                                          style: AppTextStyles.labelMedium(),
                                         ),
                                       ),
                                   ],
@@ -258,7 +258,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                         child: Text(
                                           'Valid Last Name required',
                                           textAlign: TextAlign.end,
-                                          style: AppTextStyles.labelMedium(context),
+                                          style: AppTextStyles.labelMedium(),
                                         ),
                                       ),
                                   ],
@@ -303,7 +303,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                         child: Text(
                                           'Valid Email required',
                                           textAlign: TextAlign.end,
-                                          style: AppTextStyles.labelMedium(context),
+                                          style: AppTextStyles.labelMedium(),
                                         ),
                                       ),
                                   ],
@@ -348,7 +348,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                         child: Text(
                                           'Please select a valid Shooting Hand',
                                           textAlign: TextAlign.end,
-                                          style: AppTextStyles.labelMedium(context),
+                                          style: AppTextStyles.labelMedium(),
                                         ),
                                       ),
                                   ],

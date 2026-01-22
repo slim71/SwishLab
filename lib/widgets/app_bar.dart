@@ -1,6 +1,6 @@
 import 'package:SwishLab/constants.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/icon_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -35,7 +35,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return AppBar(
       backgroundColor: appColors.primaryOne,
@@ -45,7 +45,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: height,
       title: Text(
         title,
-        style: AppTextStyles.displaySmall(context, color: appColors.primaryTwo),
+        style: AppTextStyles.displaySmall(color: appColors.primaryTwo),
       ),
       leading: _buildLeading(context),
       actions: _buildActions(context),
@@ -79,7 +79,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   List<Widget> _buildActions(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     if (style != MyAppBarStyle.titleWithProfileImage) {
       return const [];

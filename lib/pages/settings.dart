@@ -1,8 +1,8 @@
 import 'package:SwishLab/constants.dart';
 import 'package:SwishLab/functions/load_json_remote_or_app_state.dart';
 import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/light_button.dart';
 import 'package:SwishLab/widgets/settings_item.dart';
@@ -148,7 +148,7 @@ class _SettingsState extends ConsumerState<Settings>
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return Scaffold(
       backgroundColor: appColors.secondaryBackground,
@@ -208,7 +208,7 @@ class _SettingsState extends ConsumerState<Settings>
                                 label: '"Follow us on" text',
                                 child: Text(
                                   'Follow us on',
-                                  style: AppTextStyles.labelMedium(context),
+                                  style: AppTextStyles.labelMedium(),
                                 ),
                               ),
                             ),
@@ -288,7 +288,7 @@ class _SettingsState extends ConsumerState<Settings>
                                 label: '"App version" text',
                                 child: Text(
                                   'App Versions',
-                                  style: AppTextStyles.titleLarge(context),
+                                  style: AppTextStyles.titleLarge(),
                                 ),
                               ),
                             ),
@@ -301,7 +301,7 @@ class _SettingsState extends ConsumerState<Settings>
                                 label: 'App version',
                                 child: Text(
                                   'v0.0.1',
-                                  style: AppTextStyles.labelMedium(context),
+                                  style: AppTextStyles.labelMedium(),
                                 ),
                               ),
                             ),

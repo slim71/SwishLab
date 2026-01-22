@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -36,7 +36,7 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return
         // Main container for the whole content of the widget
@@ -99,7 +99,7 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
                                     label: 'Item title',
                                     child: Text(
                                       widget.title,
-                                      style: AppTextStyles.bodyLarge(context),
+                                      style: AppTextStyles.bodyLarge(),
                                     ),
                                   ),
                                 ),
@@ -146,7 +146,7 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
                                     label: 'Description text',
                                     child: Text(
                                       widget.description,
-                                      style: AppTextStyles.labelMedium(context),
+                                      style: AppTextStyles.labelMedium(),
                                     ),
                                   ).animate(controller: _controller).fade(
                                         begin: 0,

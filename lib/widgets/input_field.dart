@@ -1,5 +1,5 @@
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -44,7 +44,7 @@ class _InputField extends State<InputField> {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return TextFormField(
       controller: widget.controller,
@@ -54,7 +54,7 @@ class _InputField extends State<InputField> {
       autofillHints: widget.autofillHints,
       textCapitalization: widget.textCapitalization,
       obscureText: widget.obscureText && !_isVisible,
-      style: AppTextStyles.bodyLarge(context, color: appColors.textFieldText),
+      style: AppTextStyles.bodyLarge(color: appColors.textFieldText),
       validator: widget.validator,
       enableSuggestions: !widget.obscureText,
       autocorrect: !widget.obscureText,
@@ -67,8 +67,7 @@ class _InputField extends State<InputField> {
       ],
       decoration: InputDecoration(
         labelText: widget.label,
-        labelStyle: AppTextStyles.labelLarge(context,
-            color: appColors.textFieldLabelText),
+        labelStyle: AppTextStyles.labelLarge(color: appColors.textFieldLabelText),
         filled: true,
         fillColor: appColors.textFieldBackground,
         enabledBorder: OutlineInputBorder(

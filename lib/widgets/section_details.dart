@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/dynamic_icon_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +32,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return
         // Stack to place the whole bottom sheet content
@@ -152,7 +152,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                             label: 'Details section title',
                                             child: Text(
                                               'Details',
-                                              style: AppTextStyles.titleLarge(context),
+                                              style: AppTextStyles.titleLarge(),
                                             ),
                                           ),
                                         ),
@@ -233,7 +233,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                     label: 'Item\'s name',
                                                                     child: Text(
                                                                       sectionFieldsItem['name']?.toString() ?? '',
-                                                                      style: AppTextStyles.bodyMedium(context),
+                                                                      style: AppTextStyles.bodyMedium(),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -254,7 +254,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                   label: 'Item\'s value',
                                                                   child: Text(
                                                                     sectionFieldsItem['value']?.toString() ?? '',
-                                                                    style: AppTextStyles.bodyMedium(context),
+                                                                    style: AppTextStyles.bodyMedium(),
                                                                   ),
                                                                 ),
 
@@ -265,7 +265,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                   label: 'Item\'s unit of measurement',
                                                                   child: Text(
                                                                     sectionFieldsItem['unit']?.toString() ?? '',
-                                                                    style: AppTextStyles.bodyMedium(context),
+                                                                    style: AppTextStyles.bodyMedium(),
                                                                   ),
                                                                 ),
                                                               ],
@@ -284,7 +284,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                   label: 'Item\'s value range',
                                                                   child: Text(
                                                                     sectionFieldsItem['range']?.toString() ?? '',
-                                                                    style: AppTextStyles.bodyMedium(context),
+                                                                    style: AppTextStyles.bodyMedium(),
                                                                   ),
                                                                 ),
                                                               ],
@@ -317,7 +317,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                             label: 'Scores section title',
                                             child: Text(
                                               'Scores',
-                                              style: AppTextStyles.titleLarge(context),
+                                              style: AppTextStyles.titleLarge(),
                                             ),
                                           ),
                                         ),
@@ -409,8 +409,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                               child: Text(
                                                                                 scoresJsonItem['name']?.toString() ??
                                                                                     '',
-                                                                                style:
-                                                                                    AppTextStyles.bodyMedium(context),
+                                                                                style: AppTextStyles.bodyMedium(),
                                                                               ),
                                                                             ),
                                                                           ),
@@ -429,7 +428,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                             label: 'Score value',
                                                                             child: Text(
                                                                               scoresJsonItem['value']?.toString() ?? '',
-                                                                              style: AppTextStyles.bodyMedium(context),
+                                                                              style: AppTextStyles.bodyMedium(),
                                                                             ),
                                                                           ),
 
@@ -493,8 +492,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                                 child: Text(
                                                                                   'Some feedback to download or I don\'t know how to gather',
                                                                                   textAlign: TextAlign.start,
-                                                                                  style:
-                                                                                      AppTextStyles.bodyMedium(context),
+                                                                                  style: AppTextStyles.bodyMedium(),
                                                                                 ),
                                                                               ),
                                                                             ),

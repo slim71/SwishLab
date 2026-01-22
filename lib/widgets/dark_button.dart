@@ -1,5 +1,5 @@
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 class DarkButton extends StatelessWidget {
@@ -22,7 +22,7 @@ class DarkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return ElevatedButton(
       onPressed: onPressed,
@@ -48,8 +48,7 @@ class DarkButton extends StatelessWidget {
         if (icon != null) const SizedBox(width: 8),
         Text(
           text,
-          style: AppTextStyles.titleLarge(context,
-              color: appColors.darkButtonTextColor),
+          style: AppTextStyles.titleLarge(color: appColors.darkButtonTextColor),
         ),
       ]),
     );

@@ -6,8 +6,8 @@ import 'package:SwishLab/models/analysis_state.dart';
 import 'package:SwishLab/models/statistics_row.dart';
 import 'package:SwishLab/models/video_source.dart';
 import 'package:SwishLab/providers/shooting_analysis_provider.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/dynamic_icon_image.dart';
 import 'package:SwishLab/widgets/section_details.dart';
@@ -39,7 +39,7 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
     final state = ref.watch(shootingAnalysisProvider);
 
     // To be sure we have data to show
@@ -224,7 +224,7 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                                           ?.toDouble() ??
                                                                       0.0),
                                                                 ),
-                                                                style: AppTextStyles.bodyLarge(context),
+                                                                style: AppTextStyles.bodyLarge(),
                                                               ),
                                                             ),
                                                           ),
@@ -242,7 +242,7 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                                     )?['value'])
                                                                         ?.toString() ??
                                                                     ''),
-                                                                style: AppTextStyles.bodySmall(context),
+                                                                style: AppTextStyles.bodySmall(),
                                                               ),
                                                             ),
                                                           ),

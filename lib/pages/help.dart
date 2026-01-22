@@ -1,8 +1,8 @@
 import 'package:SwishLab/functions/filter_faqs.dart';
 import 'package:SwishLab/functions/sort_by_order.dart';
 import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/faq_item.dart';
@@ -84,7 +84,7 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     final appState = ref.watch(appStateProvider);
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return GestureDetector(
       onTap: () {
@@ -132,7 +132,7 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                     label: '"How can we help you?" text',
                                     child: Text(
                                       'How can we help you?',
-                                      style: AppTextStyles.headlineMedium(context),
+                                      style: AppTextStyles.headlineMedium(),
                                     ),
                                   ),
                                 ),
@@ -284,7 +284,7 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                                                 child: Text(
                                                                   'Search FAQs',
                                                                   textAlign: TextAlign.center,
-                                                                  style: AppTextStyles.titleLarge(context,
+                                                                  style: AppTextStyles.titleLarge(
                                                                       color: appColors.darkButtonTextColor),
                                                                 ),
                                                               ),
@@ -398,7 +398,7 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                     label: '"Frequently Asked Questions" text',
                                     child: Text(
                                       'Frequently Asked Questions',
-                                      style: AppTextStyles.headlineSmall(context),
+                                      style: AppTextStyles.headlineSmall(),
                                     ),
                                   ),
                                 ),
@@ -409,7 +409,7 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                     label: '"No results found." text',
                                     child: Text(
                                       'No results found.',
-                                      style: AppTextStyles.titleLarge(context),
+                                      style: AppTextStyles.titleLarge(),
                                     ),
                                   ),
 

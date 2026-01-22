@@ -2,8 +2,8 @@ import 'package:SwishLab/constants.dart';
 import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/state/persisted_states.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/input_field.dart';
 import 'package:SwishLab/widgets/light_button.dart';
@@ -65,7 +65,7 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return GestureDetector(
       onTap: () {
@@ -158,8 +158,7 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                     child: Text(
                                       'Welcome Back',
                                       textAlign: TextAlign.center,
-                                      style:
-                                          AppTextStyles.displaySmall(context),
+                                      style: AppTextStyles.displaySmall(),
                                     ),
                                   ),
 
@@ -172,8 +171,7 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                       child: Text(
                                         'Insert credentials to login',
                                         textAlign: TextAlign.center,
-                                        style:
-                                            AppTextStyles.labelMedium(context),
+                                        style: AppTextStyles.labelMedium(),
                                       ),
                                     ),
                                   ),
@@ -259,8 +257,7 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                       child: Text(
                                         'Or sign in with',
                                         textAlign: TextAlign.center,
-                                        style:
-                                            AppTextStyles.labelMedium(context),
+                                        style: AppTextStyles.labelMedium(),
                                       ),
                                     ),
                                   ),
@@ -310,12 +307,10 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                               ),
                                               TextSpan(
                                                 text: 'Sign Up',
-                                                style: AppTextStyles.bodyMedium(
-                                                    context),
+                                                style: AppTextStyles.bodyMedium(),
                                               )
                                             ],
-                                            style: AppTextStyles.bodyMedium(
-                                                context),
+                                            style: AppTextStyles.bodyMedium(),
                                           ),
                                         ),
                                       ),

@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:SwishLab/constants.dart';
 import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/debug_item.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,7 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return GestureDetector(
       onTap: () {
@@ -75,7 +75,7 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                             label: '"Available debug functionalities" text',
                             child: Text(
                               'Available debug functionalities',
-                              style: AppTextStyles.titleSmall(context),
+                              style: AppTextStyles.titleSmall(),
                             ),
                           ),
                         ),

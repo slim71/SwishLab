@@ -49,8 +49,7 @@ Future<void> _showInfoDialog(String msg) async {
     context: context,
     builder: (ctx) => AlertDialog(
       title: const Text('Info needed'),
-      content: Text(msg,
-          style: AppTextStyles.bodyLarge(context, color: Colors.black)),
+      content: Text(msg, style: AppTextStyles.bodyLarge(color: Colors.black)),
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(ctx),

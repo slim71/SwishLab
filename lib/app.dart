@@ -30,6 +30,7 @@ import 'package:SwishLab/router/app_documents.dart';
 import 'package:SwishLab/router/app_transitions.dart';
 import 'package:SwishLab/router/go_router_refresh_stream.dart';
 import 'package:SwishLab/styles/colors.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/styles/themes.dart';
 import 'package:SwishLab/widgets/nav_bar_scaffold.dart';
 import 'package:flutter/material.dart';
@@ -224,11 +225,27 @@ final _routerProvider = Provider<GoRouter>((ref) {
 });
 
 // Root widget of the app
-class SwishLab extends ConsumerWidget {
+class SwishLab extends ConsumerStatefulWidget {
   const SwishLab({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SwishLab> createState() => _SwishLabState();
+}
+
+class _SwishLabState extends ConsumerState<SwishLab> {
+  AppColorSet currentColors = theBay;
+  Brightness brightness = Brightness.light;
+
+  void updateTheme(AppColorSet newColors, Brightness newBrightness) {
+    setState(() {
+      currentColors = newColors;
+      brightness = newBrightness;
+      AppThemeManager.setColors(newColors);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final router = ref.watch(_routerProvider);
     final title = ref.watch(appTitleProvider);
 
@@ -264,8 +281,8 @@ class SwishLab extends ConsumerWidget {
     return MaterialApp.router(
       title: title,
       routerConfig: router,
-      theme: buildTheme(theBay, Brightness.light),
-      darkTheme: buildTheme(theBay, Brightness.dark),
+      theme: buildTheme(currentColors, Brightness.light),
+      darkTheme: buildTheme(currentColors, Brightness.dark),
       themeMode: ThemeMode.system, // Auto-switch based on device
     );
   }

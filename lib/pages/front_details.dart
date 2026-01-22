@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:SwishLab/models/custom_enums.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/icon_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -30,7 +30,7 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return GestureDetector(
       onTap: () {
@@ -217,7 +217,7 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                                   blendMode: BlendMode.srcIn,
                                   child: Text(
                                     'Front view analysis',
-                                    style: AppTextStyles.displaySmall(context),
+                                    style: AppTextStyles.displaySmall(),
                                   ),
                                 )
                                     .animate()
@@ -242,7 +242,7 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                               label: 'Section overview',
                               child: Text(
                                 'Take a video with the camera facing you while you shoot.\nThis will analyze how you jump and release the ball.\nUseful to detect inefficient release points, power loss do to ball swings, etc...',
-                                style: AppTextStyles.titleSmall(context),
+                                style: AppTextStyles.titleSmall(),
                               ),
                             )
                                 .animate()

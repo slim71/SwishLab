@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:SwishLab/models/custom_enums.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/icon_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -30,7 +30,7 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return GestureDetector(
       onTap: () {
@@ -219,7 +219,7 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                       blendMode: BlendMode.srcIn,
                                       child: Text(
                                         'Side view analysis',
-                                        style: AppTextStyles.displaySmall(context),
+                                        style: AppTextStyles.displaySmall(),
                                       ),
                                     )
                                         .animate()
@@ -244,7 +244,7 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                               label: 'Section overview',
                               child: Text(
                                 'Take a video with the camera on either side.\nThis will analyze your body posture and flow when shooting.\nUseful to detect incorrect ball paths, flow ruptures, etc...',
-                                style: AppTextStyles.titleSmall(context),
+                                style: AppTextStyles.titleSmall(),
                               ),
                             )
                                 .animate()

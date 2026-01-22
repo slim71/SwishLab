@@ -1,5 +1,5 @@
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +17,7 @@ class DebugItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 5, 16, 5),
@@ -54,7 +54,7 @@ class DebugItem extends StatelessWidget {
                         label: 'Debug item title',
                         child: Text(
                           title,
-                          style: AppTextStyles.bodyMedium(context),
+                          style: AppTextStyles.bodyMedium(),
                         ),
                       ),
                     ),

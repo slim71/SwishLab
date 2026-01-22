@@ -1,5 +1,5 @@
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/light_button.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +32,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return GestureDetector(
       onTap: () {
@@ -117,10 +117,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                 label: 'First page title',
                                                 child: Text(
                                                   'Understand Your Form',
-                                                  style: AppTextStyles
-                                                      .headlineLarge(context,
-                                                          color: appColors
-                                                              .secondaryBackground),
+                                                  style:
+                                                      AppTextStyles.headlineLarge(color: appColors.secondaryBackground),
                                                 ),
                                               ),
                                             ),
@@ -141,10 +139,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                       TextSpan(
                                                         text:
                                                             'Your personal AI coach helps you understand your shot. \nTrack your ',
-                                                        style: AppTextStyles
-                                                            .labelLarge(context,
-                                                                color: appColors
-                                                                    .secondaryBackground),
+                                                        style: AppTextStyles.labelLarge(
+                                                            color: appColors.secondaryBackground),
                                                       ),
                                                       TextSpan(
                                                         text:
@@ -181,10 +177,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                         ),
                                                       )
                                                     ],
-                                                    style: AppTextStyles.labelLarge(
-                                                        context,
-                                                        color: appColors
-                                                            .secondaryBackground),
+                                                    style:
+                                                        AppTextStyles.labelLarge(color: appColors.secondaryBackground),
                                                   ),
                                                 ),
                                               ),
@@ -236,10 +230,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                 label: 'Second page title',
                                                 child: Text(
                                                   'Keep It Straight',
-                                                  style: AppTextStyles
-                                                      .headlineLarge(context,
-                                                          color: appColors
-                                                              .secondaryBackground),
+                                                  style:
+                                                      AppTextStyles.headlineLarge(color: appColors.secondaryBackground),
                                                 ),
                                               ),
                                             ),
@@ -259,10 +251,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                     children: [
                                                       TextSpan(
                                                         text: 'Use the ',
-                                                        style: AppTextStyles
-                                                            .labelLarge(context,
-                                                                color: appColors
-                                                                    .secondaryBackground),
+                                                        style: AppTextStyles.labelLarge(
+                                                            color: appColors.secondaryBackground),
                                                       ),
                                                       TextSpan(
                                                         text: 'front view ',
@@ -302,7 +292,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                       )
                                                     ],
                                                     style: AppTextStyles.labelLarge(
-                                                        context,
                                                         color: appColors
                                                             .secondaryBackground),
                                                   ),
@@ -356,9 +345,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                 label: 'Third page title',
                                                 child: Text(
                                                   'Perfect the Flow',
-                                                  style: AppTextStyles
-                                                      .headlineLarge(context,
-                                                          color: appColors
+                                                  style: AppTextStyles.headlineLarge(color: appColors
                                                               .secondaryBackground),
                                                 ),
                                               ),
@@ -380,9 +367,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                       TextSpan(
                                                         text:
                                                             'See your shot in full motion. The ',
-                                                        style: AppTextStyles
-                                                            .labelLarge(context,
-                                                                color: appColors
+                                                        style: AppTextStyles.labelLarge(
+                                                            color: appColors
                                                                     .secondaryBackground),
                                                       ),
                                                       TextSpan(
@@ -443,7 +429,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                       )
                                                     ],
                                                     style: AppTextStyles.labelLarge(
-                                                        context,
                                                         color: appColors
                                                             .secondaryBackground),
                                                   ),

@@ -1,8 +1,8 @@
 import 'package:SwishLab/functions/load_credits.dart';
 import 'package:SwishLab/models/credit_item.dart';
 import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/dynamic_asset.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +41,7 @@ class _CreditsState extends ConsumerState<Credits> {
   @override
   Widget build(BuildContext context) {
     final appState = ref.watch(appStateProvider);
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return GestureDetector(
       onTap: () {
@@ -98,42 +98,42 @@ class _CreditsState extends ConsumerState<Credits> {
                                         TextSpan(
                                           text:
                                               'This project uses a mix of freely available icons, illustrations, and animations created by ',
-                                          style: AppTextStyles.bodyMedium(context),
+                                          style: AppTextStyles.bodyMedium(),
                                         ),
                                         TextSpan(
                                           text: 'amazing designers and developers around the world.\n\n',
-                                          style: AppTextStyles.bodyMedium(context),
+                                          style: AppTextStyles.bodyMedium(),
                                         ),
                                         TextSpan(
                                           text: 'I’ve done my best to give ',
-                                          style: AppTextStyles.bodyMedium(context),
+                                          style: AppTextStyles.bodyMedium(),
                                         ),
                                         TextSpan(
                                           text: 'proper credit',
-                                          style: AppTextStyles.bodyMedium(context),
+                                          style: AppTextStyles.bodyMedium(),
                                         ),
                                         TextSpan(
                                           text: ' to everyone whose work helped bring this project to life. You can',
-                                          style: AppTextStyles.bodyMedium(context),
+                                          style: AppTextStyles.bodyMedium(),
                                         ),
                                         TextSpan(
                                           text: ' click on any item ',
-                                          style: AppTextStyles.bodyMedium(context),
+                                          style: AppTextStyles.bodyMedium(),
                                         ),
                                         TextSpan(
                                           text: 'to visit the author\'s page.\n\n',
-                                          style: AppTextStyles.bodyMedium(context),
+                                          style: AppTextStyles.bodyMedium(),
                                         ),
                                         TextSpan(
                                           text: 'If I’ve missed anyone or got something wrong, please let me know - ',
-                                          style: AppTextStyles.bodyMedium(context),
+                                          style: AppTextStyles.bodyMedium(),
                                         ),
                                         TextSpan(
                                           text: 'any correction or contribution is always appreciated!',
-                                          style: AppTextStyles.bodyMedium(context),
+                                          style: AppTextStyles.bodyMedium(),
                                         )
                                       ],
-                                      style: AppTextStyles.bodyMedium(context),
+                                      style: AppTextStyles.bodyMedium(),
                                     ),
                                   ),
                                 ),
@@ -215,7 +215,7 @@ class _CreditsState extends ConsumerState<Credits> {
                                             child: Text(
                                               creditsItem.author,
                                               textAlign: TextAlign.center,
-                                              style: AppTextStyles.titleSmall(context),
+                                              style: AppTextStyles.titleSmall(),
                                             ),
                                           ),
                                         ],

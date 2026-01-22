@@ -1,5 +1,5 @@
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/dynamic_icon_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -20,7 +20,7 @@ class StatsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return Container(
       width: MediaQuery.sizeOf(context).width * 0.4,
@@ -47,14 +47,14 @@ class StatsContainer extends StatelessWidget {
           // Title for the section
           Text(
             title,
-            style: AppTextStyles.titleMedium(context),
+            style: AppTextStyles.titleMedium(),
             textAlign: TextAlign.center,
           ),
 
           // Latest score
           Text(
             text ?? '0',
-            style: AppTextStyles.headlineMedium(context),
+            style: AppTextStyles.headlineMedium(),
             textAlign: TextAlign.center,
           ),
         ],

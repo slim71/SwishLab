@@ -2,8 +2,8 @@ import 'package:SwishLab/models/users_row.dart';
 import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/input_field.dart';
 import 'package:SwishLab/widgets/light_button.dart';
@@ -61,7 +61,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
     firstnameValidator = (context, value) {
       if (value == null || value.isEmpty) return 'First name required';
       if (value.length < 2) return 'First name too short';
-      if (!RegExp(r"^[a-zA-ZÀ-ÿ \'-]+$").hasMatch(value)) {
+      if (!RegExp(r"^[a-zA-ZÀ-ÿ '-]+$").hasMatch(value)) {
         return 'Invalid characters';
       }
       return null;
@@ -72,7 +72,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
     lastnameValidator = (context, value) {
       if (value == null || value.isEmpty) return 'Last name required';
       if (value.length < 2) return 'Last name too short';
-      if (!RegExp(r"^[a-zA-ZÀ-ÿ \'-]+$").hasMatch(value)) {
+      if (!RegExp(r"^[a-zA-ZÀ-ÿ '-]+$").hasMatch(value)) {
         return 'Invalid characters';
       }
       return null;
@@ -119,7 +119,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return GestureDetector(
       onTap: () {
@@ -223,9 +223,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                               child: Text(
                                                 'Get Started',
                                                 textAlign: TextAlign.center,
-                                                style:
-                                                    AppTextStyles.displaySmall(
-                                                        context),
+                                                style: AppTextStyles.displaySmall(),
                                               ),
                                             ),
 
@@ -238,9 +236,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                 child: Text(
                                                   'Fill out the data below',
                                                   textAlign: TextAlign.center,
-                                                  style:
-                                                      AppTextStyles.labelLarge(
-                                                          context),
+                                                  style: AppTextStyles.labelLarge(),
                                                 ),
                                               ),
                                             ),
@@ -467,9 +463,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                 child: Text(
                                                   'Or',
                                                   textAlign: TextAlign.center,
-                                                  style:
-                                                      AppTextStyles.labelLarge(
-                                                          context),
+                                                  style: AppTextStyles.labelLarge(),
                                                 ),
                                               ),
                                             ),
@@ -523,13 +517,10 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                         ),
                                                         TextSpan(
                                                           text: 'Login here',
-                                                          style: AppTextStyles
-                                                              .bodyMedium(
-                                                                  context),
+                                                          style: AppTextStyles.bodyMedium(),
                                                         )
                                                       ],
-                                                      style: AppTextStyles
-                                                          .bodyMedium(context),
+                                                      style: AppTextStyles.bodyMedium(),
                                                     ),
                                                   ),
                                                 ),

@@ -4,8 +4,8 @@ import 'package:SwishLab/models/users_row.dart';
 import 'package:SwishLab/providers/statistics_provider.dart';
 import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +34,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     final appState = ref.watch(appStateProvider);
     final hasShootingHand =
         (appState.userData?.shootingHand?.isNotEmpty ?? false);
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
     final userInfoAsync = ref.watch(appUserProvider);
     final UsersRow? userInfo = userInfoAsync.value;
     final statsAsync = ref.watch(userStatisticsProvider);
@@ -120,13 +120,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                           // User greeting
                           Text(
                             'Welcome Back,',
-                            style: AppTextStyles.headlineMedium(context),
+                            style: AppTextStyles.headlineMedium(),
                           ),
 
                           // User name
                           Text(
                             userInfo?.firstName ?? '<User>',
-                            style: AppTextStyles.headlineSmall(context),
+                            style: AppTextStyles.headlineSmall(),
                           ),
 
                           // Divider
@@ -150,14 +150,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     // "Forms checked" text
                                     Text(
                                       'Forms checked',
-                                      style: AppTextStyles.bodyMedium(context),
+                                      style: AppTextStyles.bodyMedium(),
                                     ),
 
                                     // Forms checked number
                                     Text(
                                       checkedForms.length.toString(),
-                                      style:
-                                          AppTextStyles.displaySmall(context),
+                                      style: AppTextStyles.displaySmall(),
                                     ),
                                   ],
                                 ),
@@ -172,14 +171,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     // "Latest score" text
                                     Text(
                                       'Latest score',
-                                      style: AppTextStyles.bodyMedium(context),
+                                      style: AppTextStyles.bodyMedium(),
                                     ),
 
                                     // Latest score
                                     Text(
                                       avgScore.toStringAsFixed(1), // 1 decimal
-                                      style:
-                                          AppTextStyles.displaySmall(context),
+                                      style: AppTextStyles.displaySmall(),
                                     ),
                                   ],
                                 ),
@@ -197,7 +195,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   padding: EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
                   child: Text(
                     'Available checks',
-                    style: AppTextStyles.titleMedium(context),
+                    style: AppTextStyles.titleMedium(),
                   ),
                 ),
                 if (!hasShootingHand)
@@ -213,8 +211,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                             child: Text(
                               'You can\'t use these yet - tell us your shooting hand first!',
-                              style: AppTextStyles.titleMedium(context,
-                                  color: Colors.red),
+                              style: AppTextStyles.titleMedium(color: Colors.red),
                             ),
                           ),
                         ),
@@ -301,15 +298,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                                         // "Front view" text
                                         Text(
                                           'Front view',
-                                          style:
-                                              AppTextStyles.titleLarge(context),
+                                          style: AppTextStyles.titleLarge(),
                                         ),
 
                                         // Front View functionality overview
                                         Text(
                                           'Helps identify lateral deviations in the shot path and arm alignment ("chicken wing")',
-                                          style:
-                                              AppTextStyles.bodyMedium(context),
+                                          style: AppTextStyles.bodyMedium(),
                                         ),
                                       ],
                                     ),
@@ -393,15 +388,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                                         // "Side view" text
                                         Text(
                                           'Side view',
-                                          style:
-                                              AppTextStyles.titleLarge(context),
+                                          style: AppTextStyles.titleLarge(),
                                         ),
 
                                         // Side View functionality overview
                                         Text(
                                           'Focuses on ball motion toward/away from the body - useful for refining release consistency',
-                                          style:
-                                              AppTextStyles.bodyMedium(context),
+                                          style: AppTextStyles.bodyMedium(),
                                         ),
                                       ],
                                     ),

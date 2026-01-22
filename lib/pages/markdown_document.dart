@@ -1,5 +1,5 @@
 import 'package:SwishLab/functions/load_markdown.dart';
-import 'package:SwishLab/styles/colors.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_md/flutter_md.dart';
@@ -41,7 +41,7 @@ class _MarkdownDocumentState extends State<MarkdownDocument> {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return Scaffold(
       backgroundColor: appColors.primaryBackground,

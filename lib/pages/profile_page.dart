@@ -1,8 +1,8 @@
 import 'package:SwishLab/constants.dart';
 import 'package:SwishLab/models/statistics_row.dart';
 import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/stats_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -29,7 +29,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
   @override
   Widget build(BuildContext context) {
     final appState = ref.watch(appStateProvider);
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return GestureDetector(
       onTap: () {
@@ -149,7 +149,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                               '${appState.userData?.firstName} ${appState.userData?.lastName}',
                               // "null null" if data missing
                               textAlign: TextAlign.center,
-                              style: AppTextStyles.headlineSmall(context)),
+                              style: AppTextStyles.headlineSmall()),
                         ),
                       ),
 
@@ -167,7 +167,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                             },
                             child: Text(
                               appState.userData?.eMail ?? "user@email.com",
-                              style: AppTextStyles.labelSmall(context).copyWith(
+                              style: AppTextStyles.labelSmall().copyWith(
                                 color: Colors
                                     .white, // required, actual color comes from shader
                               ),
@@ -221,8 +221,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                         child: Text(
                                           'Latest Stats',
                                           textAlign: TextAlign.start,
-                                          style: AppTextStyles.headlineMedium(
-                                              context),
+                                          style: AppTextStyles.headlineMedium(),
                                         ),
                                       ),
                                     ),

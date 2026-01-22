@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,7 +25,7 @@ class _PastActivityState extends ConsumerState<PastActivity> {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return Scaffold(
       backgroundColor: appColors.secondaryBackground,
@@ -80,7 +80,7 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                     '"All activity from this past month." text',
                                 child: Text(
                                   'All activity from this past month.',
-                                  style: AppTextStyles.titleSmall(context),
+                                  style: AppTextStyles.titleSmall(),
                                 ),
                               ),
                             ),
@@ -207,9 +207,7 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                                     'Activity item timestamp',
                                                                 child: Text(
                                                                   '15, Jan. 2026',
-                                                                  style: AppTextStyles
-                                                                      .labelMedium(
-                                                                          context),
+                                                                  style: AppTextStyles.labelMedium(),
                                                                 ),
                                                               ),
 
@@ -244,9 +242,7 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                                     'Activity example text',
                                                                 child: Text(
                                                                   'Created New User',
-                                                                  style: AppTextStyles
-                                                                      .bodyLarge(
-                                                                          context),
+                                                                  style: AppTextStyles.bodyLarge(),
                                                                 ),
                                                               ),
 
@@ -265,9 +261,7 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                                       'Activity example text part 2',
                                                                   child: Text(
                                                                     '<User>',
-                                                                    style: AppTextStyles
-                                                                        .titleMedium(
-                                                                            context),
+                                                                    style: AppTextStyles.titleMedium(),
                                                                   ),
                                                                 ),
                                                               ),
@@ -328,9 +322,7 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                                         'Activity description example',
                                                                     child: Text(
                                                                       '<User>',
-                                                                      style: AppTextStyles
-                                                                          .labelMedium(
-                                                                              context),
+                                                                      style: AppTextStyles.labelMedium(),
                                                                     ),
                                                                   ),
                                                                 ),
@@ -436,7 +428,7 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                 label: '"Beginning of Activity" text',
                                 child: Text(
                                   'Beginning of Activity',
-                                  style: AppTextStyles.bodyLarge(context),
+                                  style: AppTextStyles.bodyLarge(),
                                 ),
                               ),
                             ),

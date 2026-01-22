@@ -1,5 +1,5 @@
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 class TransparentButton extends StatelessWidget {
@@ -22,7 +22,7 @@ class TransparentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return ElevatedButton(
       onPressed: onPressed,
@@ -51,7 +51,6 @@ class TransparentButton extends StatelessWidget {
           Text(
             text,
             style: AppTextStyles.titleLarge(
-              context,
               color: appColors.transparentButtonTextColor,
             ),
           ),

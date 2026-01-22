@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/input_field.dart';
@@ -124,7 +124,7 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
     // Check file format
     if (!isValidImageFormat(pickedFile.path)) {
       if (!mounted) return;
-      final appColors = Theme.of(context).extension<AppColorSet>()!;
+      final appColors = AppThemeManager.currentColors;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -159,7 +159,7 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
   @override
   Widget build(BuildContext context) {
     final appState = ref.watch(appStateProvider);
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return GestureDetector(
       onTap: () {
@@ -289,7 +289,7 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                               child: Text(
                                 'Tap to select a picture',
                                 textAlign: TextAlign.center,
-                                style: AppTextStyles.bodyMedium(context),
+                                style: AppTextStyles.bodyMedium(),
                               ),
                             ),
                           ],
@@ -330,7 +330,7 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                           label: 'Text to guide picture selection',
                                           child: Text(
                                             'Select Image Source',
-                                            style: AppTextStyles.labelMedium(context),
+                                            style: AppTextStyles.labelMedium(),
                                           ),
                                         ),
                                         const SizedBox(height: 12),
@@ -413,7 +413,7 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                             label: 'Text to guide the URL insertion',
                                             child: Text(
                                               'Enter Image URL',
-                                              style: AppTextStyles.labelMedium(context),
+                                              style: AppTextStyles.labelMedium(),
                                             ),
                                           ),
                                           const SizedBox(height: 12),

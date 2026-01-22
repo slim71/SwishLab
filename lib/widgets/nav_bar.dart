@@ -1,4 +1,4 @@
-import 'package:SwishLab/styles/colors.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -36,7 +36,7 @@ class NavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentIndex = _locationToIndex(context);
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return Scaffold(
       body: child,

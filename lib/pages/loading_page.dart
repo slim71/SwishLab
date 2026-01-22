@@ -1,7 +1,7 @@
 import 'package:SwishLab/models/analysis_state.dart';
 import 'package:SwishLab/providers/shooting_analysis_provider.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/transparent_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -23,7 +23,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     ref.listen<AnalysisState>(
       shootingAnalysisProvider,
@@ -106,7 +106,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                           label: '"Processing Video" text',
                           child: Text(
                             'Processing Video',
-                            style: AppTextStyles.headlineLarge(context),
+                            style: AppTextStyles.headlineLarge(),
                           ),
                         ),
                       ),
@@ -119,7 +119,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                           child: Text(
                             'Please wait while we prepare your video',
                             textAlign: TextAlign.center,
-                            style: AppTextStyles.labelLarge(context),
+                            style: AppTextStyles.labelLarge(),
                           ),
                         ),
                       ),
@@ -161,7 +161,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                           child: Text(
                             'This may take a moment depending on the video size',
                             textAlign: TextAlign.center,
-                            style: AppTextStyles.labelLarge(context),
+                            style: AppTextStyles.labelLarge(),
                           ),
                         ),
                       ),

@@ -1,6 +1,6 @@
 import 'package:SwishLab/controllers/dropdown_controller.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 class Dropdown<T> extends StatefulWidget {
@@ -32,7 +32,7 @@ class _DropdownState<T> extends State<Dropdown<T>> {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return DropdownButtonFormField<T>(
       initialValue: widget.controller.value,
@@ -40,7 +40,7 @@ class _DropdownState<T> extends State<Dropdown<T>> {
           .map(
             (opt) => DropdownMenuItem<T>(
               value: opt,
-              child: Text(opt.toString(), style: AppTextStyles.bodyMedium(context)),
+              child: Text(opt.toString(), style: AppTextStyles.bodyMedium()),
             ),
           )
           .toList(),
@@ -69,7 +69,7 @@ class _DropdownState<T> extends State<Dropdown<T>> {
         color: appColors.secondaryText,
         size: 24,
       ),
-      style: AppTextStyles.bodyMedium(context),
+      style: AppTextStyles.bodyMedium(),
       elevation: 10,
     );
   }

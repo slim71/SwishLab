@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/styles.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/icon_action_button.dart';
 import 'package:flutter/gestures.dart';
@@ -27,7 +27,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = Theme.of(context).extension<AppColorSet>()!;
+    final appColors = AppThemeManager.currentColors;
 
     return GestureDetector(
       onTap: () {
@@ -99,9 +99,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                           children: [
                                             Text(
                                               'Simone Vollaro',
-                                              style:
-                                                  AppTextStyles.headlineMedium(
-                                                      context),
+                                              style: AppTextStyles.headlineMedium(),
                                             ),
                                           ],
                                         ),
@@ -214,7 +212,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                     children: [
                       Text(
                         'Who am I?',
-                        style: AppTextStyles.titleLarge(context),
+                        style: AppTextStyles.titleLarge(),
                       ),
                     ],
                   ),
@@ -252,8 +250,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                     children: [
                                       TextSpan(
                                         text: 'Hi, I’m Simone.\n',
-                                        style:
-                                            AppTextStyles.bodyMedium(context),
+                                        style: AppTextStyles.bodyMedium(),
                                       ),
                                       TextSpan(
                                         text:
@@ -273,7 +270,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                         style: TextStyle(),
                                       )
                                     ],
-                                    style: AppTextStyles.bodyMedium(context),
+                                    style: AppTextStyles.bodyMedium(),
                                   ),
                                 ),
                               ),
@@ -338,9 +335,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                                                     0, 1),
                                                             child: Text(
                                                               'Basketball has been part of my life since I was a kid. I played throughout my childhood and teenage years, and it had a huge impact on me. It made me more social, helped me find confidence around people, and gave me a way to stay in shape. ',
-                                                              style: AppTextStyles
-                                                                  .bodyMedium(
-                                                                      context),
+                                                              style: AppTextStyles.bodyMedium(),
                                                             ),
                                                           ),
                                                         ),
@@ -378,8 +373,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                           TextSpan(
                                             text:
                                                 'I was never a professional player, but I did reach some moments I’m still proud of, like being selected for the ',
-                                            style: AppTextStyles.bodyMedium(
-                                                context),
+                                            style: AppTextStyles.bodyMedium(),
                                           ),
                                           TextSpan(
                                             text: 'All-Star Toscana game',
@@ -393,8 +387,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                             style: TextStyle(),
                                           )
                                         ],
-                                        style:
-                                            AppTextStyles.bodyMedium(context),
+                                        style: AppTextStyles.bodyMedium(),
                                       ),
                                     ),
                                   ),
@@ -426,7 +419,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                 padding: EdgeInsets.all(10),
                                 child: Text(
                                   'When I moved to Pisa for university, life changed a bit and basketball slipped more into the background. I still kept in touch with it, just not as much as before. But in 2020 I found my way back, and even joined an amateur team in Rome for a year — and it reminded me how much I had missed it.',
-                                  style: AppTextStyles.bodyMedium(context),
+                                  style: AppTextStyles.bodyMedium(),
                                 ),
                               ),
                             ),
@@ -457,8 +450,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                       TextSpan(
                                         text:
                                             'Over the last couple of years, I’ve been trying to return to the form I had in my younger days… or maybe even better. I also joined the  ',
-                                        style:
-                                            AppTextStyles.bodyMedium(context),
+                                        style: AppTextStyles.bodyMedium(),
                                       ),
                                       TextSpan(
                                         text:
@@ -480,7 +472,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                         style: TextStyle(),
                                       )
                                     ],
-                                    style: AppTextStyles.bodyMedium(context),
+                                    style: AppTextStyles.bodyMedium(),
                                   ),
                                 ),
                               ),
@@ -504,8 +496,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                         TextSpan(
                                           text:
                                               'That’s when the idea for this app started to form: ',
-                                          style:
-                                              AppTextStyles.bodyMedium(context),
+                                          style: AppTextStyles.bodyMedium(),
                                         ),
                                         TextSpan(
                                           text:
@@ -528,7 +519,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                           ),
                                         )
                                       ],
-                                      style: AppTextStyles.bodyMedium(context),
+                                      style: AppTextStyles.bodyMedium(),
                                     ),
                                   ),
                                 ),

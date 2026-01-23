@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
+import 'package:SwishLab/widgets/custom_text_span.dart';
 import 'package:SwishLab/widgets/icon_action_button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -246,31 +247,22 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                 padding: EdgeInsets.all(10),
                                 child: RichText(
                                   textScaler: MediaQuery.of(context).textScaler,
-                                  text: TextSpan(
+                                  text: CustomTextSpan(
                                     children: [
-                                      TextSpan(
+                                      CustomTextSpan(
                                         text: 'Hi, I’m Simone.\n',
-                                        style: AppTextStyles.bodyMedium(),
                                       ),
-                                      TextSpan(
+                                      CustomTextSpan(
                                         text:
                                             'I’m a software engineer with a background in robotics, automation, and programming — and someone who',
-                                        style: TextStyle(),
                                       ),
-                                      TextSpan(
-                                        text:
-                                            ' has always loved building things. ',
-                                        style: TextStyle(
-                                          fontStyle: FontStyle.italic,
-                                        ),
-                                      ),
-                                      TextSpan(
+                                      CustomTextSpan(text:
+                                            ' has always loved building things. ', italic: true),
+                                      CustomTextSpan(
                                         text:
                                             'Over the years I’ve worked on all kinds of personal projects, from drones to 3D printers, and this app is simply the latest creation that grew from that same curiosity.\n\nI’ve also been wanting to give something back to the community for a while. Working on an open-source project felt like the right way to do that — something useful, but also something personal.',
-                                        style: TextStyle(),
                                       )
                                     ],
-                                    style: AppTextStyles.bodyMedium(),
                                   ),
                                 ),
                               ),
@@ -368,26 +360,17 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                     child: RichText(
                                       textScaler:
                                           MediaQuery.of(context).textScaler,
-                                      text: TextSpan(
+                                      text: CustomTextSpan(
                                         children: [
-                                          TextSpan(
+                                          CustomTextSpan(
                                             text:
                                                 'I was never a professional player, but I did reach some moments I’m still proud of, like being selected for the ',
-                                            style: AppTextStyles.bodyMedium(),
                                           ),
-                                          TextSpan(
-                                            text: 'All-Star Toscana game',
-                                            style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontStyle: FontStyle.italic,
-                                            ),
-                                          ),
-                                          TextSpan(
+                                          CustomTextSpan(text: 'All-Star Toscana game', italic: true, bold: true),
+                                          CustomTextSpan(
                                             text: ' when I was 14.',
-                                            style: TextStyle(),
                                           )
                                         ],
-                                        style: AppTextStyles.bodyMedium(),
                                       ),
                                     ),
                                   ),
@@ -445,20 +428,17 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                 padding: EdgeInsets.all(10),
                                 child: RichText(
                                   textScaler: MediaQuery.of(context).textScaler,
-                                  text: TextSpan(
+                                  text: CustomTextSpan(
                                     children: [
-                                      TextSpan(
+                                      CustomTextSpan(
                                         text:
                                             'Over the last couple of years, I’ve been trying to return to the form I had in my younger days… or maybe even better. I also joined the  ',
-                                        style: AppTextStyles.bodyMedium(),
                                       ),
-                                      TextSpan(
+                                      CustomTextSpan(
                                         text:
                                             'r/BasketballTips community on Reddit, ',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          decoration: TextDecoration.underline,
-                                        ),
+                                        bold: true,
+                                        underline: true,
                                         mouseCursor: SystemMouseCursors.click,
                                         recognizer: TapGestureRecognizer()
                                           ..onTap = () async {
@@ -466,10 +446,9 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                                 'https://www.reddit.com/r/BasketballTips/'));
                                           },
                                       ),
-                                      TextSpan(
+                                      CustomTextSpan(
                                         text:
                                             'where I saw many people asking for feedback on their shooting form, footwork, and general technique.',
-                                        style: TextStyle(),
                                       )
                                     ],
                                     style: AppTextStyles.bodyMedium(),
@@ -491,14 +470,14 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                   child: RichText(
                                     textScaler:
                                         MediaQuery.of(context).textScaler,
-                                    text: TextSpan(
+                                    text: CustomTextSpan(
                                       children: [
-                                        TextSpan(
+                                        CustomTextSpan(
                                           text:
                                               'That’s when the idea for this app started to form: ',
                                           style: AppTextStyles.bodyMedium(),
                                         ),
-                                        TextSpan(
+                                        CustomTextSpan(
                                           text:
                                               'a simple tool to help people understand their movement and improve, even if they don’t have a coach watching them all the time.',
                                           style: TextStyle(
@@ -506,12 +485,12 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                             fontStyle: FontStyle.italic,
                                           ),
                                         ),
-                                        TextSpan(
+                                        CustomTextSpan(
                                           text:
                                               '\n\nThis project is my way of combining the things I care about — technology, learning, and basketball — and hopefully',
                                           style: TextStyle(),
                                         ),
-                                        TextSpan(
+                                        CustomTextSpan(
                                           text:
                                               ' making something that can help others along the way.',
                                           style: TextStyle(

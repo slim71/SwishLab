@@ -2,6 +2,7 @@ import 'package:SwishLab/models/users_row.dart';
 import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
+import 'package:SwishLab/widgets/custom_text_span.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -340,33 +341,22 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                                     textScaler:
                                                         MediaQuery.of(context)
                                                             .textScaler,
-                                                    text: TextSpan(
+                                                    text: CustomTextSpan(
                                                       children: [
-                                                        TextSpan(
+                                                        CustomTextSpan(
                                                           text: 'Navigate to ',
-                                                          style:
-                                                              AppTextStyles.labelMedium(color: appColors
-                                                                      .secondaryText),
+                                                          style: AppTextStyles.labelMedium(),
+                                                          color: appColors.secondaryText,
                                                         ),
-                                                        TextSpan(
-                                                          text:
-                                                              'Settings > User Info',
-                                                          style: TextStyle(
-                                                            color: appColors
-                                                                .secondaryText,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            fontStyle: FontStyle
-                                                                .italic,
-                                                          ),
+                                                        CustomTextSpan(
+                                                          text: 'Settings > User Info',
+                                                          color: appColors.secondaryText,
+                                                          bold: true,
+                                                          italic: true,
                                                         ),
-                                                        TextSpan(
-                                                          text:
-                                                              ' page to customize your profile',
-                                                          style: TextStyle(
-                                                            color: appColors
-                                                                .secondaryText,
-                                                          ),
+                                                        CustomTextSpan(
+                                                          text: ' page to customize your profile',
+                                                          color: appColors.secondaryText,
                                                         )
                                                       ],
                                                       style: AppTextStyles.labelMedium(),

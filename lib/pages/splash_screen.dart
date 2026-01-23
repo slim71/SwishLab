@@ -1,12 +1,12 @@
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
+import 'package:SwishLab/widgets/custom_text_span.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/light_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart'
-    as smooth_page_indicator;
+import 'package:smooth_page_indicator/smooth_page_indicator.dart' as smooth_page_indicator;
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -134,51 +134,37 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                   textScaler:
                                                       MediaQuery.of(context)
                                                           .textScaler,
-                                                  text: TextSpan(
+                                                  text: CustomTextSpan(
                                                     children: [
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text:
                                                             'Your personal AI coach helps you understand your shot. \nTrack your ',
-                                                        style: AppTextStyles.labelLarge(
-                                                            color: appColors.secondaryBackground),
+                                                        style: AppTextStyles.labelLarge(),
+                                                        color: appColors.secondaryBackground,
                                                       ),
-                                                      TextSpan(
-                                                        text:
-                                                            'form, ball path,',
-                                                        style: TextStyle(
-                                                          fontStyle:
-                                                              FontStyle.italic,
-                                                        ),
+                                                      CustomTextSpan(
+                                                        text: 'form, ball path,',
+                                                        italic: true,
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text: ' and ',
-                                                        style: TextStyle(),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text: 'movement ',
-                                                        style: TextStyle(
-                                                          fontStyle:
-                                                              FontStyle.italic,
-                                                        ),
+                                                        italic: true,
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text:
                                                             'to get simple, actionable insights that make ',
-                                                        style: TextStyle(),
                                                       ),
-                                                      TextSpan(
-                                                        text:
-                                                            'every rep count.',
-                                                        style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontStyle:
-                                                              FontStyle.italic,
-                                                        ),
+                                                      CustomTextSpan(
+                                                        text: 'every rep count.',
+                                                        bold: true,
+                                                        italic: true,
                                                       )
                                                     ],
-                                                    style:
-                                                        AppTextStyles.labelLarge(color: appColors.secondaryBackground),
+                                                    style: AppTextStyles.labelLarge(),
+                                                    color: appColors.secondaryBackground,
                                                   ),
                                                 ),
                                               ),
@@ -247,26 +233,26 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                   textScaler:
                                                       MediaQuery.of(context)
                                                           .textScaler,
-                                                  text: TextSpan(
+                                                  text: CustomTextSpan(
                                                     children: [
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text: 'Use the ',
                                                         style: AppTextStyles.labelLarge(
                                                             color: appColors.secondaryBackground),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text: 'front view ',
                                                         style: TextStyle(
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text:
                                                             'to keep your shot straight and balanced. Spot',
                                                         style: TextStyle(),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text:
                                                             ' side drift, arm flare',
                                                         style: TextStyle(
@@ -274,18 +260,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                               FontStyle.italic,
                                                         ),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text: ', or ',
                                                         style: TextStyle(),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text: '“chicken wing” ',
                                                         style: TextStyle(
                                                           fontStyle:
                                                               FontStyle.italic,
                                                         ),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text:
                                                             'motion, and build a clean, consistent shooting line every time.',
                                                         style: TextStyle(),
@@ -362,16 +348,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                   textScaler:
                                                       MediaQuery.of(context)
                                                           .textScaler,
-                                                  text: TextSpan(
+                                                  text: CustomTextSpan(
                                                     children: [
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text:
                                                             'See your shot in full motion. The ',
                                                         style: AppTextStyles.labelLarge(
                                                             color: appColors
                                                                     .secondaryBackground),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text: 'side view',
                                                         style: TextStyle(
                                                           fontWeight:
@@ -380,46 +366,46 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                               FontStyle.normal,
                                                         ),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text: ' shows ',
                                                         style: TextStyle(),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text: 'how close',
                                                         style: TextStyle(
                                                           fontStyle:
                                                               FontStyle.italic,
                                                         ),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text:
                                                             ' the ball stays to your body, your ',
                                                         style: TextStyle(),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text: 'set ',
                                                         style: TextStyle(
                                                           fontStyle:
                                                               FontStyle.italic,
                                                         ),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text: 'and ',
                                                         style: TextStyle(),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text: 'release points',
                                                         style: TextStyle(
                                                           fontStyle:
                                                               FontStyle.italic,
                                                         ),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text:
                                                             ', and whether your shot follows a ',
                                                         style: TextStyle(),
                                                       ),
-                                                      TextSpan(
+                                                      CustomTextSpan(
                                                         text:
                                                             'smooth forward path.',
                                                         style: TextStyle(

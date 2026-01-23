@@ -4,6 +4,7 @@ import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
+import 'package:SwishLab/widgets/custom_text_span.dart';
 import 'package:SwishLab/widgets/dynamic_asset.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -93,47 +94,37 @@ class _CreditsState extends ConsumerState<Credits> {
                                   label: 'Small page introduction',
                                   child: RichText(
                                     textScaler: MediaQuery.of(context).textScaler,
-                                    text: TextSpan(
+                                    text: CustomTextSpan(
                                       children: [
-                                        TextSpan(
+                                        CustomTextSpan(
                                           text:
                                               'This project uses a mix of freely available icons, illustrations, and animations created by ',
-                                          style: AppTextStyles.bodyMedium(),
                                         ),
-                                        TextSpan(
+                                        CustomTextSpan(
                                           text: 'amazing designers and developers around the world.\n\n',
-                                          style: AppTextStyles.bodyMedium(),
                                         ),
-                                        TextSpan(
+                                        CustomTextSpan(
                                           text: 'I’ve done my best to give ',
-                                          style: AppTextStyles.bodyMedium(),
                                         ),
-                                        TextSpan(
+                                        CustomTextSpan(
                                           text: 'proper credit',
-                                          style: AppTextStyles.bodyMedium(),
                                         ),
-                                        TextSpan(
+                                        CustomTextSpan(
                                           text: ' to everyone whose work helped bring this project to life. You can',
-                                          style: AppTextStyles.bodyMedium(),
                                         ),
-                                        TextSpan(
+                                        CustomTextSpan(
                                           text: ' click on any item ',
-                                          style: AppTextStyles.bodyMedium(),
                                         ),
-                                        TextSpan(
+                                        CustomTextSpan(
                                           text: 'to visit the author\'s page.\n\n',
-                                          style: AppTextStyles.bodyMedium(),
                                         ),
-                                        TextSpan(
+                                        CustomTextSpan(
                                           text: 'If I’ve missed anyone or got something wrong, please let me know - ',
-                                          style: AppTextStyles.bodyMedium(),
                                         ),
-                                        TextSpan(
+                                        CustomTextSpan(
                                           text: 'any correction or contribution is always appreciated!',
-                                          style: AppTextStyles.bodyMedium(),
                                         )
                                       ],
-                                      style: AppTextStyles.bodyMedium(),
                                     ),
                                   ),
                                 ),

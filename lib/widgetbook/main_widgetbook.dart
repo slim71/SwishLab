@@ -1,3 +1,4 @@
+import 'package:SwishLab/widgets/custom_text_span.dart';
 import 'package:SwishLab/widgets/icon_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
@@ -24,37 +25,6 @@ class WidgetbookApp extends StatelessWidget {
               name: 'Icon buttons comparison',
               useCases: [
                 WidgetbookUseCase(
-                  name: 'IconButton (plain)',
-                  builder: (context) => Center(
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.paypal,
-                        color: Color(0xFF1E273B),
-                        size: 30,
-                      ),
-                      onPressed: () async {},
-                    ),
-                  ),
-                ),
-                WidgetbookUseCase(
-                  name: 'IconButton (wrapped)',
-                  builder: (context) => Center(
-                    child: Container(
-                      width: 50,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(),
-                      ),
-                      child: IconButton(
-                        icon: const Icon(Icons.paypal),
-                        iconSize: 30,
-                        onPressed: () {},
-                      ),
-                    ),
-                  ),
-                ),
-                WidgetbookUseCase(
                   name: 'Custom IconActionButton',
                   builder: (context) => Center(
                     child: IconActionButton(
@@ -67,6 +37,22 @@ class WidgetbookApp extends StatelessWidget {
                       iconSize: 30,
                       onPressed: () async {},
                     ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        WidgetbookCategory(
+          name: 'Text',
+          children: [
+            WidgetbookComponent(
+              name: 'Text Span',
+              useCases: [
+                WidgetbookUseCase(
+                  name: 'Custom TextSpan',
+                  builder: (context) => Center(
+                    child: RichText(text: CustomTextSpan(text: "Sample")),
                   ),
                 ),
               ],

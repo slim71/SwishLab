@@ -4,6 +4,7 @@ import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
+import 'package:SwishLab/widgets/custom_text_span.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/input_field.dart';
 import 'package:SwishLab/widgets/light_button.dart';
@@ -508,19 +509,16 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                     textScaler:
                                                         MediaQuery.of(context)
                                                             .textScaler,
-                                                    text: TextSpan(
+                                                    text: CustomTextSpan(
                                                       children: [
-                                                        TextSpan(
+                                                        CustomTextSpan(
                                                           text:
                                                               'Already have an account?  ',
-                                                          style: TextStyle(),
                                                         ),
-                                                        TextSpan(
+                                                        CustomTextSpan(
                                                           text: 'Login here',
-                                                          style: AppTextStyles.bodyMedium(),
                                                         )
                                                       ],
-                                                      style: AppTextStyles.bodyMedium(),
                                                     ),
                                                   ),
                                                 ),

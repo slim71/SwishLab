@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
+import 'package:SwishLab/widgets/background.dart';
 import 'package:SwishLab/widgets/custom_text_span.dart';
 import 'package:SwishLab/widgets/icon_action_button.dart';
 import 'package:flutter/gestures.dart';
@@ -36,16 +37,12 @@ class _AboutUsState extends ConsumerState<AboutUs> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: appColors.secondaryBackground,
-        appBar: MyAppBar(
-          style: MyAppBarStyle.backButtonTitleLeft,
-          title: 'About Us',
-        ),
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: appColors.gradientBackground(),
+          appBar: MyAppBar(
+            style: MyAppBarStyle.backButtonTitleLeft,
+            title: 'About Us',
           ),
-          child: SingleChildScrollView(
+          body: Background(
+            child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -86,16 +83,14 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                   color: Color(0x7F1D428A),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      15, 0, 15, 0),
-                                  child: Column(
+                                    padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
+                                    child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 8, 0, 0),
-                                        child: Row(
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                                          child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
                                             Text(
@@ -106,34 +101,28 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 4, 0, 0),
-                                        child: Row(
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                          child: Row(
                                           mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 12, 0),
-                                              child: IconActionButton(
+                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                                                child: IconActionButton(
                                                 icon: Icons.paypal,
-                                                iconColor:
-                                                    appColors.secondaryText,
-                                                onPressed: () async {
+                                                  iconColor: appColors.secondaryText,
+                                                  onPressed: () async {
                                                   await launchUrl(Uri.parse(
                                                       'https://www.paypal.com/donate/?hosted_button_id=TCJL6TZHSYJU8'));
                                                 },
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 12, 0),
-                                              child: IconActionButton(
+                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                                                child: IconActionButton(
                                                 icon: Icons.email,
-                                                iconColor:
-                                                    appColors.secondaryText,
-                                                onPressed: () async {
+                                                  iconColor: appColors.secondaryText,
+                                                  onPressed: () async {
                                                   await launchUrl(Uri(
                                                       scheme: 'mailto',
                                                       path:
@@ -153,40 +142,33 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 12, 0),
-                                              child: IconActionButton(
+                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                                                child: IconActionButton(
                                                 icon: FontAwesomeIcons.github,
-                                                iconColor:
-                                                    appColors.secondaryText,
-                                                onPressed: () async {
+                                                  iconColor: appColors.secondaryText,
+                                                  onPressed: () async {
                                                   await launchUrl(Uri.parse(
                                                       'https://github.com/slim71/'));
                                                 },
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 12, 0),
-                                              child: IconActionButton(
-                                                icon:
-                                                    FontAwesomeIcons.linkedinIn,
-                                                iconColor:
-                                                    appColors.secondaryText,
-                                                onPressed: () async {
+                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                                                child: IconActionButton(
+                                                  icon: FontAwesomeIcons.linkedinIn,
+                                                  iconColor: appColors.secondaryText,
+                                                  onPressed: () async {
                                                   await launchUrl(Uri.parse(
                                                       'https://www.linkedin.com/in/simone-vollaro-325185152/'));
                                                 },
                                               ),
                                             ),
                                             Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 12, 0),
-                                              child: IconActionButton(
+                                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
+                                                child: IconActionButton(
                                                 icon: Icons.reddit_sharp,
-                                                iconColor:
-                                                    appColors.secondaryText,
-                                                onPressed: () async {
+                                                  iconColor: appColors.secondaryText,
+                                                  onPressed: () async {
                                                   await launchUrl(Uri.parse(
                                                       'https://www.reddit.com/user/feller94/'));
                                                 },
@@ -227,11 +209,8 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                         BoxShadow(
                           blurRadius: 4,
                           color: Color(0x301D2429),
-                          offset: Offset(
-                            0.0,
-                            1,
-                          ),
-                        )
+                            offset: Offset(0.0, 1),
+                          )
                       ],
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -284,9 +263,8 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                       Padding(
                                         padding: EdgeInsets.all(4),
                                         child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          child: Image.asset(
+                                            borderRadius: BorderRadius.circular(8),
+                                            child: Image.asset(
                                             'assets/images/team_pic.jpg',
                                             width: double.infinity,
                                             fit: BoxFit.cover,
@@ -298,34 +276,28 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                         child: Padding(
                                           padding: EdgeInsets.all(5),
                                           child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            child: BackdropFilter(
+                                              borderRadius: BorderRadius.circular(8),
+                                              child: BackdropFilter(
                                               filter: ImageFilter.blur(
                                                 sigmaX: 4,
                                                 sigmaY: 10,
                                               ),
                                               child: Container(
                                                 width: double.infinity,
-                                                decoration: BoxDecoration(
-                                                  color: Color(0x330C0C0C),
-                                                ),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
+                                                  decoration: BoxDecoration(
+                                                    color: Color(0x330C0C0C),
+                                                  ),
+                                                  child: Column(
+                                                    mainAxisSize: MainAxisSize.max,
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
                                                     Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      children: [
+                                                        mainAxisSize: MainAxisSize.max,
+                                                        children: [
                                                         Expanded(
                                                           child: Align(
-                                                            alignment:
-                                                                AlignmentDirectional(
-                                                                    0, 1),
-                                                            child: Text(
+                                                              alignment: AlignmentDirectional(0, 1),
+                                                              child: Text(
                                                               'Basketball has been part of my life since I was a kid. I played throughout my childhood and teenage years, and it had a huge impact on me. It made me more social, helped me find confidence around people, and gave me a way to stay in shape. ',
                                                               style: AppTextStyles.bodyMedium(),
                                                             ),
@@ -384,9 +356,8 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                   borderRadius: BorderRadius.circular(8),
                                   child: Image.asset(
                                     'assets/images/trophy.jpg',
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 0.2,
-                                    fit: BoxFit.cover,
+                                      width: MediaQuery.sizeOf(context).width * 0.2,
+                                      fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
@@ -417,9 +388,8 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                 borderRadius: BorderRadius.circular(8),
                                 child: Image.asset(
                                   'assets/gifs/me_shooting.gif',
-                                  width:
-                                      MediaQuery.sizeOf(context).width * 0.25,
-                                  fit: BoxFit.cover,
+                                    width: MediaQuery.sizeOf(context).width * 0.25,
+                                    fit: BoxFit.cover,
                                 ),
                               ),
                             ),
@@ -435,9 +405,8 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                             'Over the last couple of years, I’ve been trying to return to the form I had in my younger days… or maybe even better. I also joined the  ',
                                       ),
                                       CustomTextSpan(
-                                        text:
-                                            'r/BasketballTips community on Reddit, ',
-                                        bold: true,
+                                          text: 'r/BasketballTips community on Reddit, ',
+                                          bold: true,
                                         underline: true,
                                         mouseCursor: SystemMouseCursors.click,
                                         recognizer: TapGestureRecognizer()
@@ -468,9 +437,8 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                 child: Padding(
                                   padding: EdgeInsets.all(10),
                                   child: RichText(
-                                    textScaler:
-                                        MediaQuery.of(context).textScaler,
-                                    text: CustomTextSpan(
+                                      textScaler: MediaQuery.of(context).textScaler,
+                                      text: CustomTextSpan(
                                       children: [
                                         CustomTextSpan(
                                           text:
@@ -513,8 +481,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
               ],
             ),
           ),
-        ),
-      ),
+          )),
     );
   }
 }

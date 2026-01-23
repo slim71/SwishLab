@@ -7,6 +7,7 @@ import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
+import 'package:SwishLab/widgets/background.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/drop_down.dart';
 import 'package:SwishLab/widgets/input_field.dart';
@@ -160,322 +161,322 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
       ),
       body: SafeArea(
         top: true,
-        child: Container(
-          height: double.infinity,
-          decoration: BoxDecoration(
-            gradient: appColors.gradientBackground(),
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 24, 16, 0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                      child: Text(
-                        'Your information',
-                        style: AppTextStyles.headlineMedium(),
-                      ),
+          child: Background(
+            child: SizedBox(
+              height: double.infinity,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 24, 16, 0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                          child: Text(
+                            'Your information',
+                            style: AppTextStyles.headlineMedium(),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Container(
-                  height: MediaQuery.sizeOf(context).height,
-                  decoration: BoxDecoration(),
-                  child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Column(
+                  ),
+                  Expanded(
+                    child: Container(
+                      height: MediaQuery.sizeOf(context).height,
+                      decoration: BoxDecoration(),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
+                        child: SingleChildScrollView(
+                          child: Column(
                             mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Row containing the error message for the first name in case it is invalid
-                              Semantics(
-                                label: 'First Name error row',
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    // "Valid First Name required" text
-                                    if (!validationStruct!.firstNameValid)
-                                      Semantics(
-                                        label: '"Valid First Name required" text',
-                                        child: Text(
-                                          'Valid First Name required',
-                                          textAlign: TextAlign.end,
-                                          style: AppTextStyles.labelMedium(),
-                                        ),
-                                      ),
-                                  ],
-                                ),
-                              ),
-                              Row(
+                              Column(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  Flexible(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                      child: InputField(
-                                        label: 'First Name',
-                                        controller: firstNameFieldTextController,
-                                        focusNode: firstNameFieldFocusNode,
-                                        autofillHints: [AutofillHints.name],
-                                        textCapitalization: TextCapitalization.words,
-                                        obscureText: false,
-                                        validator: (value) =>
-                                            firstNameFieldTextControllerValidator.call(context, value),
-                                        allowRegex: RegExp('^[A-Za-z\' -]+\$'),
-                                      ).animate(controller: firstNameAnim).shake(
-                                            duration: 1000.ms,
-                                            hz: 5,
-                                            rotation: 0.017,
-                                            curve: Curves.easeInOut,
+                                  // Row containing the error message for the first name in case it is invalid
+                                  Semantics(
+                                    label: 'First Name error row',
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        // "Valid First Name required" text
+                                        if (!validationStruct!.firstNameValid)
+                                          Semantics(
+                                            label: '"Valid First Name required" text',
+                                            child: Text(
+                                              'Valid First Name required',
+                                              textAlign: TextAlign.end,
+                                              style: AppTextStyles.labelMedium(),
+                                            ),
                                           ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
-
-                              // Row containing the error message for the last name in case it is invalid
-                              Semantics(
-                                label: 'Last Name error row',
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    // "Valid Last Name required" text
-                                    if (!validationStruct!.lastNameValid)
-                                      Semantics(
-                                        label: '"Valid Last Name required" text',
-                                        child: Text(
-                                          'Valid Last Name required',
-                                          textAlign: TextAlign.end,
-                                          style: AppTextStyles.labelMedium(),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Flexible(
+                                        child: Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                          child: InputField(
+                                            label: 'First Name',
+                                            controller: firstNameFieldTextController,
+                                            focusNode: firstNameFieldFocusNode,
+                                            autofillHints: [AutofillHints.name],
+                                            textCapitalization: TextCapitalization.words,
+                                            obscureText: false,
+                                            validator: (value) =>
+                                                firstNameFieldTextControllerValidator.call(context, value),
+                                            allowRegex: RegExp('^[A-Za-z\' -]+\$'),
+                                          ).animate(controller: firstNameAnim).shake(
+                                                duration: 1000.ms,
+                                                hz: 5,
+                                                rotation: 0.017,
+                                                curve: Curves.easeInOut,
+                                              ),
                                         ),
                                       ),
-                                  ],
-                                ),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Flexible(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                      child: InputField(
-                                        label: 'Last Name',
-                                        controller: lastNameFieldTextController,
-                                        focusNode: lastNameFieldFocusNode,
-                                        autofillHints: [AutofillHints.name],
-                                        textCapitalization: TextCapitalization.words,
-                                        obscureText: false,
-                                        validator: (value) => lastNameFieldTextControllerValidator.call(context, value),
-                                      ).animate(controller: lastNameAnim).shake(
-                                            duration: 1000.ms,
-                                            hz: 5,
-                                            rotation: 0.017,
-                                            curve: Curves.easeInOut,
+                                    ],
+                                  ),
+
+                                  // Row containing the error message for the last name in case it is invalid
+                                  Semantics(
+                                    label: 'Last Name error row',
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        // "Valid Last Name required" text
+                                        if (!validationStruct!.lastNameValid)
+                                          Semantics(
+                                            label: '"Valid Last Name required" text',
+                                            child: Text(
+                                              'Valid Last Name required',
+                                              textAlign: TextAlign.end,
+                                              style: AppTextStyles.labelMedium(),
+                                            ),
                                           ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
-
-                              // Row containing the error message for the email in case it is invalid
-                              Semantics(
-                                label: 'Email error row',
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    // "Valid Email required" text
-                                    if (!validationStruct!.emailValid)
-                                      Semantics(
-                                        label: '"Valid Email required" text',
-                                        child: Text(
-                                          'Valid Email required',
-                                          textAlign: TextAlign.end,
-                                          style: AppTextStyles.labelMedium(),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Flexible(
+                                        child: Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                          child: InputField(
+                                            label: 'Last Name',
+                                            controller: lastNameFieldTextController,
+                                            focusNode: lastNameFieldFocusNode,
+                                            autofillHints: [AutofillHints.name],
+                                            textCapitalization: TextCapitalization.words,
+                                            obscureText: false,
+                                            validator: (value) =>
+                                                lastNameFieldTextControllerValidator.call(context, value),
+                                          ).animate(controller: lastNameAnim).shake(
+                                                duration: 1000.ms,
+                                                hz: 5,
+                                                rotation: 0.017,
+                                                curve: Curves.easeInOut,
+                                              ),
                                         ),
                                       ),
-                                  ],
-                                ),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Flexible(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                      child: InputField(
-                                        label: 'Email',
-                                        controller: emailFieldTextController,
-                                        focusNode: emailFieldFocusNode,
-                                        autofillHints: [AutofillHints.email],
-                                        textCapitalization: TextCapitalization.none,
-                                        obscureText: false,
-                                        validator: (value) => emailFieldTextControllerValidator.call(context, value),
-                                      ).animate(controller: emailAnim).shake(
-                                            duration: 1000.ms,
-                                            hz: 5,
-                                            rotation: 0.017,
-                                            curve: Curves.easeInOut,
+                                    ],
+                                  ),
+
+                                  // Row containing the error message for the email in case it is invalid
+                                  Semantics(
+                                    label: 'Email error row',
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        // "Valid Email required" text
+                                        if (!validationStruct!.emailValid)
+                                          Semantics(
+                                            label: '"Valid Email required" text',
+                                            child: Text(
+                                              'Valid Email required',
+                                              textAlign: TextAlign.end,
+                                              style: AppTextStyles.labelMedium(),
+                                            ),
                                           ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
-
-                              // Row containing the error message for the shooting han in case it is invalid
-                              Semantics(
-                                label: 'Shooting Hand error row',
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    // "Please select a valid Shooting Hand" text
-                                    if (!validationStruct!.shootingHandValid)
-                                      Semantics(
-                                        label: '"Please select a valid Shooting Hand" text',
-                                        child: Text(
-                                          'Please select a valid Shooting Hand',
-                                          textAlign: TextAlign.end,
-                                          style: AppTextStyles.labelMedium(),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Flexible(
+                                        child: Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                          child: InputField(
+                                            label: 'Email',
+                                            controller: emailFieldTextController,
+                                            focusNode: emailFieldFocusNode,
+                                            autofillHints: [AutofillHints.email],
+                                            textCapitalization: TextCapitalization.none,
+                                            obscureText: false,
+                                            validator: (value) =>
+                                                emailFieldTextControllerValidator.call(context, value),
+                                          ).animate(controller: emailAnim).shake(
+                                                duration: 1000.ms,
+                                                hz: 5,
+                                                rotation: 0.017,
+                                                curve: Curves.easeInOut,
+                                              ),
                                         ),
                                       ),
-                                  ],
-                                ),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Flexible(
-                                    child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                        child: Dropdown<String>(
-                                          controller: shootingHandDropDownValueController ??=
-                                              DropdownController<String>(
-                                            value: appState.userData?.shootingHand,
+                                    ],
+                                  ),
+
+                                  // Row containing the error message for the shooting han in case it is invalid
+                                  Semantics(
+                                    label: 'Shooting Hand error row',
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        // "Please select a valid Shooting Hand" text
+                                        if (!validationStruct!.shootingHandValid)
+                                          Semantics(
+                                            label: '"Please select a valid Shooting Hand" text',
+                                            child: Text(
+                                              'Please select a valid Shooting Hand',
+                                              textAlign: TextAlign.end,
+                                              style: AppTextStyles.labelMedium(),
+                                            ),
                                           ),
-                                          options: ['Left', 'Right'],
-                                          onChanged: (val) => setState(() => shootingHandDropDownValue = val),
-                                          hintText: 'Select your shooting hand',
-                                        ).animate(controller: shootingHandAnim).shake(
-                                              duration: 1000.ms,
-                                              hz: 5,
-                                              rotation: 0.017,
-                                              curve: Curves.easeInOut,
-                                            )),
+                                      ],
+                                    ),
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Flexible(
+                                        child: Padding(
+                                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                            child: Dropdown<String>(
+                                              controller: shootingHandDropDownValueController ??=
+                                                  DropdownController<String>(
+                                                value: appState.userData?.shootingHand,
+                                              ),
+                                              options: ['Left', 'Right'],
+                                              onChanged: (val) => setState(() => shootingHandDropDownValue = val),
+                                              hintText: 'Select your shooting hand',
+                                            ).animate(controller: shootingHandAnim).shake(
+                                                  duration: 1000.ms,
+                                                  hz: 5,
+                                                  rotation: 0.017,
+                                                  curve: Curves.easeInOut,
+                                                )),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                child: DarkButton(
-                  onPressed: () async {
-                    validationStruct = UserInfoValidation(
-                      firstNameValid: firstNameFieldTextController.text.isNotEmpty &&
-                          isFieldValid(
-                            firstNameFieldTextController.text,
-                            r"^[A-Za-z' -]+$",
-                          ),
-                      lastNameValid: lastNameFieldTextController.text.isNotEmpty &&
-                          isFieldValid(
-                            lastNameFieldTextController.text,
-                            r"^[A-Za-z' -]+$",
-                          ),
-                      emailValid: emailFieldTextController.text.isNotEmpty &&
-                          isFieldValid(
-                            emailFieldTextController.text,
-                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[A-Za-z]{2,}$',
-                          ),
-                      shootingHandValid: shootingHandDropDownValue != null && shootingHandDropDownValue!.isNotEmpty,
-                    );
-
-                    setState(() {});
-
-                    if (!validationStruct!.isAllValid) return;
-
-                    if ((validationStruct?.firstNameValid == true) &&
-                        (validationStruct?.lastNameValid == true) &&
-                        (validationStruct?.emailValid == true) &&
-                        (validationStruct?.shootingHandValid == true)) {
-                      // Update the user's info in the DB
-                      updatedRow = await ref.read(updateUserProvider).execute(
-                        userId: userId!,
-                        data: {
-                          'first_name': firstNameFieldTextController.text,
-                          'last_name': lastNameFieldTextController.text,
-                          'email': emailFieldTextController.text,
-                          'shooting_hand': shootingHandDropDownValue,
-                        },
-                      );
-
-                      // Update the related app state
-                      ref.read(appStateProvider.notifier).setUserData(
-                            appState.userData!.copyWith(
-                              firstName: updatedRow.firstName,
-                              lastName: updatedRow.lastName,
-                              eMail: updatedRow.email,
-                              shootingHand: updatedRow.shootingHand,
-                            ),
-                          );
-
-                      setState(() {});
-
-                      // Show success
-                      if (!context.mounted) return;
-                      await showDialog(
-                        context: context,
-                        builder: (alertDialogContext) {
-                          return AlertDialog(
-                            title: Text('Success'),
-                            content: Text('New data has been set successfully'),
-                            actions: [
-                              TextButton(
-                                onPressed: () => Navigator.pop(alertDialogContext),
-                                child: Text('Ok'),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                    child: DarkButton(
+                      onPressed: () async {
+                        validationStruct = UserInfoValidation(
+                          firstNameValid: firstNameFieldTextController.text.isNotEmpty &&
+                              isFieldValid(
+                                firstNameFieldTextController.text,
+                                r"^[A-Za-z' -]+$",
                               ),
-                            ],
+                          lastNameValid: lastNameFieldTextController.text.isNotEmpty &&
+                              isFieldValid(
+                                lastNameFieldTextController.text,
+                                r"^[A-Za-z' -]+$",
+                              ),
+                          emailValid: emailFieldTextController.text.isNotEmpty &&
+                              isFieldValid(
+                                emailFieldTextController.text,
+                                r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[A-Za-z]{2,}$',
+                              ),
+                          shootingHandValid: shootingHandDropDownValue != null && shootingHandDropDownValue!.isNotEmpty,
+                        );
+
+                        setState(() {});
+
+                        if (!validationStruct!.isAllValid) return;
+
+                        if ((validationStruct?.firstNameValid == true) &&
+                            (validationStruct?.lastNameValid == true) &&
+                            (validationStruct?.emailValid == true) &&
+                            (validationStruct?.shootingHandValid == true)) {
+                          // Update the user's info in the DB
+                          updatedRow = await ref.read(updateUserProvider).execute(
+                            userId: userId!,
+                            data: {
+                              'first_name': firstNameFieldTextController.text,
+                              'last_name': lastNameFieldTextController.text,
+                              'email': emailFieldTextController.text,
+                              'shooting_hand': shootingHandDropDownValue,
+                            },
                           );
-                        },
-                      );
-                    } else {
-                      HapticFeedback.lightImpact();
 
-                      await Future.wait([
-                        if (!validationStruct!.firstNameValid) firstNameAnim.forward(from: 0),
-                        if (!validationStruct!.lastNameValid) lastNameAnim.forward(from: 0),
-                        if (!validationStruct!.emailValid) emailAnim.forward(from: 0),
-                        if (!validationStruct!.shootingHandValid) shootingHandAnim.forward(from: 0),
-                      ]);
-                    }
+                          // Update the related app state
+                          ref.read(appStateProvider.notifier).setUserData(
+                                appState.userData!.copyWith(
+                                  firstName: updatedRow.firstName,
+                                  lastName: updatedRow.lastName,
+                                  eMail: updatedRow.email,
+                                  shootingHand: updatedRow.shootingHand,
+                                ),
+                              );
 
-                    setState(() {});
-                  },
-                  text: 'Save Changes',
-                ),
+                          setState(() {});
+
+                          // Show success
+                          if (!context.mounted) return;
+                          await showDialog(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: Text('Success'),
+                                content: Text('New data has been set successfully'),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(alertDialogContext),
+                                    child: Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        } else {
+                          HapticFeedback.lightImpact();
+
+                          await Future.wait([
+                            if (!validationStruct!.firstNameValid) firstNameAnim.forward(from: 0),
+                            if (!validationStruct!.lastNameValid) lastNameAnim.forward(from: 0),
+                            if (!validationStruct!.emailValid) emailAnim.forward(from: 0),
+                            if (!validationStruct!.shootingHandValid) shootingHandAnim.forward(from: 0),
+                          ]);
+                        }
+
+                        setState(() {});
+                      },
+                      text: 'Save Changes',
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
+          )),
     );
   }
 }

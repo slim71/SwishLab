@@ -4,6 +4,7 @@ import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
+import 'package:SwishLab/widgets/background.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/faq_item.dart';
 import 'package:SwishLab/widgets/input_field.dart';
@@ -92,7 +93,6 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: appColors.secondaryBackground,
         appBar: MyAppBar(
           style: MyAppBarStyle.backButtonTitleLeft,
           title: 'Help',
@@ -103,41 +103,36 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
               // Background container
               Semantics(
             label: 'Background container',
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: appColors.gradientBackground(),
-              ),
-              child:
-                  // Column containing the content for the page
-                  Semantics(
-                label: 'Main content column',
+                  child: Background(
+                    child: Semantics(
+                      label: 'Main content column',
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    // Column used to scroll the page
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                        child: Semantics(
-                          label: 'Scrolling column',
-                          child: SingleChildScrollView(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // "How can we help you?" text
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                                  child: Semantics(
-                                    label: '"How can we help you?" text',
-                                    child: Text(
-                                      'How can we help you?',
-                                      style: AppTextStyles.headlineMedium(),
-                                    ),
-                                  ),
-                                ),
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          // Column used to scroll the page
+                          Expanded(
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                              child: Semantics(
+                                label: 'Scrolling column',
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      // "How can we help you?" text
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                        child: Semantics(
+                                          label: '"How can we help you?" text',
+                                          child: Text(
+                                            'How can we help you?',
+                                            style: AppTextStyles.headlineMedium(),
+                                          ),
+                                        ),
+                                      ),
 
-                                // Row to place the functionality widgets
+                                      // Row to place the functionality widgets
                                 Semantics(
                                   label: 'Functionality widgets row',
                                   child: Row(
@@ -159,7 +154,7 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                                   }
                                                       .entries
                                                       .map((MapEntry<String, String> e) =>
-                                                          '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                                                  '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
                                                       .join('&')));
                                             },
                                             text: 'Email Us',
@@ -171,17 +166,17 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                         )
                                             .animate()
                                             .fade(
-                                              begin: 0,
-                                              end: 1,
-                                              duration: 600.ms,
-                                              curve: Curves.easeInOut,
-                                            )
+                                          begin: 0,
+                                          end: 1,
+                                          duration: 600.ms,
+                                          curve: Curves.easeInOut,
+                                        )
                                             .move(
-                                              begin: const Offset(0, 110),
-                                              end: Offset.zero,
-                                              duration: 600.ms,
-                                              curve: Curves.easeInOut,
-                                            ),
+                                          begin: const Offset(0, 110),
+                                          end: Offset.zero,
+                                          duration: 600.ms,
+                                          curve: Curves.easeInOut,
+                                        ),
                                       ),
                                       const SizedBox(width: 12),
                                       // Container to simulate a button for the search filter
@@ -203,82 +198,82 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                                   faqSearchQuery = '';
                                                 });
 
-                                                // Delay
-                                                await Future.delayed(Duration(milliseconds: 300));
-                                                if (!mounted) return;
+                                                      // Delay
+                                                      await Future.delayed(Duration(milliseconds: 300));
+                                                      if (!mounted) return;
 
-                                                // Async computation
+                                                      // Async computation
                                                 final result = await filterFaqs(
                                                   appState.loadedFaqs!.toList(),
                                                   faqSearchQuery!,
                                                 );
                                                 if (!mounted) return;
 
-                                                // Apply result
-                                                setState(() {
-                                                  filteredFaqsActionContainer = result;
-                                                  filteredFaqsPageState = result.toList().cast<dynamic>();
-                                                });
-                                              },
-                                              child: Material(
-                                                color: Colors.transparent,
-                                                elevation: 10,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(12),
-                                                ),
-                                                child: Container(
-                                                  width: 190,
-                                                  height: 80,
-                                                  constraints: BoxConstraints(
-                                                    maxWidth: 500,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color: appColors.darkButtonBackground,
-                                                    borderRadius: BorderRadius.circular(12),
-                                                    border: Border.all(
-                                                      color: appColors.darkButtonBorders,
-                                                      width: 2,
-                                                    ),
-                                                  ),
-                                                  child:
-                                                      // Column to place the search button content
-                                                      Semantics(
-                                                    label: 'Search button content column',
-                                                    child: Column(
-                                                      mainAxisSize: MainAxisSize.max,
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      children: [
-                                                        // Column to place the search button content
-                                                        Semantics(
-                                                          label: 'Search button content row',
-                                                          child: Row(
+                                                      // Apply result
+                                                      setState(() {
+                                                        filteredFaqsActionContainer = result;
+                                                        filteredFaqsPageState = result.toList().cast<dynamic>();
+                                                      });
+                                                    },
+                                                    child: Material(
+                                                      color: Colors.transparent,
+                                                      elevation: 10,
+                                                      shape: RoundedRectangleBorder(
+                                                        borderRadius: BorderRadius.circular(12),
+                                                      ),
+                                                      child: Container(
+                                                        width: 190,
+                                                        height: 80,
+                                                        constraints: BoxConstraints(
+                                                          maxWidth: 500,
+                                                        ),
+                                                        decoration: BoxDecoration(
+                                                          color: appColors.darkButtonBackground,
+                                                          borderRadius: BorderRadius.circular(12),
+                                                          border: Border.all(
+                                                            color: appColors.darkButtonBorders,
+                                                            width: 2,
+                                                          ),
+                                                        ),
+                                                        child:
+                                                            // Column to place the search button content
+                                                            Semantics(
+                                                          label: 'Search button content column',
+                                                          child: Column(
                                                             mainAxisSize: MainAxisSize.max,
                                                             mainAxisAlignment: MainAxisAlignment.center,
                                                             children: [
-                                                              // Toggle search icon
+                                                              // Column to place the search button content
                                                               Semantics(
-                                                                label: 'Toggle search icon',
-                                                                child: ToggleIcon(
-                                                                  onPressed: () {
-                                                                    setState(() {
-                                                                      searchActive = !searchActive;
-                                                                    });
-                                                                  },
-                                                                  value: searchActive,
-                                                                  onIcon: Icon(
-                                                                    Icons.search,
-                                                                    color: appColors.darkButtonTextColor,
-                                                                    size: 30,
-                                                                  ),
-                                                                  offIcon: Icon(
-                                                                    Icons.search_off,
-                                                                    color: appColors.darkButtonTextColor,
-                                                                    size: 30,
-                                                                  ),
-                                                                ),
-                                                              ),
+                                                                label: 'Search button content row',
+                                                                child: Row(
+                                                                  mainAxisSize: MainAxisSize.max,
+                                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                                  children: [
+                                                                    // Toggle search icon
+                                                                    Semantics(
+                                                                      label: 'Toggle search icon',
+                                                                      child: ToggleIcon(
+                                                                        onPressed: () {
+                                                                          setState(() {
+                                                                            searchActive = !searchActive;
+                                                                          });
+                                                                        },
+                                                                        value: searchActive,
+                                                                        onIcon: Icon(
+                                                                          Icons.search,
+                                                                          color: appColors.darkButtonTextColor,
+                                                                          size: 30,
+                                                                        ),
+                                                                        offIcon: Icon(
+                                                                          Icons.search_off,
+                                                                          color: appColors.darkButtonTextColor,
+                                                                          size: 30,
+                                                                        ),
+                                                                      ),
+                                                                    ),
 
-                                                              // "Search FAQs" text
+                                                                    // "Search FAQs" text
                                                               Semantics(
                                                                 label: '"Search FAQs" text',
                                                                 child: Text(
@@ -300,81 +295,81 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                           )
                                               .animate()
                                               .fade(
-                                                begin: 0,
-                                                end: 1,
-                                                duration: 600.ms,
-                                                curve: Curves.easeInOut,
-                                              )
+                                            begin: 0,
+                                            end: 1,
+                                            duration: 600.ms,
+                                            curve: Curves.easeInOut,
+                                          )
                                               .move(
-                                                begin: const Offset(0, 110),
-                                                end: Offset.zero,
-                                                duration: 600.ms,
-                                                curve: Curves.easeInOut,
-                                              ),
+                                            begin: const Offset(0, 110),
+                                            end: Offset.zero,
+                                            duration: 600.ms,
+                                            curve: Curves.easeInOut,
+                                          ),
                                         ),
                                       ),
                                     ],
                                   ),
                                 ),
 
-                                // Row to put the search bar into
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                                  child: Semantics(
-                                    label: 'Search bar row',
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        // Container to put the search bar into
-                                        Expanded(
-                                          child: Semantics(
-                                            label: 'Search bar container',
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(12),
-                                              ),
-                                              child:
-                                                  // Search bar input field
-                                                  Visibility(
-                                                visible: searchActive,
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                                  child: Semantics(
-                                                    label: 'Search bar input field',
-                                                    child: InputField(
-                                                      controller: searchFieldTextController,
-                                                      focusNode: searchFieldFocusNode,
-                                                      onChanged: (_) => EasyDebounce.debounce(
-                                                        'searchFieldTextController',
-                                                        const Duration(milliseconds: 2000),
-                                                        () async {
-                                                          if (!mounted) return;
+                                      // Row to put the search bar into
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                                        child: Semantics(
+                                          label: 'Search bar row',
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              // Container to put the search bar into
+                                              Expanded(
+                                                child: Semantics(
+                                                  label: 'Search bar container',
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(12),
+                                                    ),
+                                                    child:
+                                                        // Search bar input field
+                                                        Visibility(
+                                                      visible: searchActive,
+                                                      child: Padding(
+                                                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                                        child: Semantics(
+                                                          label: 'Search bar input field',
+                                                          child: InputField(
+                                                            controller: searchFieldTextController,
+                                                            focusNode: searchFieldFocusNode,
+                                                            onChanged: (_) => EasyDebounce.debounce(
+                                                              'searchFieldTextController',
+                                                              const Duration(milliseconds: 2000),
+                                                              () async {
+                                                                if (!mounted) return;
 
-                                                          await Future.delayed(
-                                                            Duration(
-                                                              milliseconds: 300,
-                                                            ),
-                                                          );
-                                                          // Update the query from the controller
-                                                          final query = searchFieldTextController.text;
-                                                          setState(() {
-                                                            faqSearchQuery = query;
-                                                          });
+                                                                await Future.delayed(
+                                                                Duration(
+                                                                  milliseconds: 300,
+                                                                ),
+                                                              );
+                                                              // Update the query from the controller
+                                                              final query = searchFieldTextController.text;
+                                                              setState(() {
+                                                                faqSearchQuery = query;
+                                                              });
 
-                                                          // Perform the async filtering
-                                                          final result = await filterFaqs(
-                                                            appState.loadedFaqs!.toList(),
-                                                            faqSearchQuery!,
-                                                          );
-                                                          if (!mounted) return;
+                                                                // Perform the async filtering
+                                                                final result = await filterFaqs(
+                                                                  appState.loadedFaqs!.toList(),
+                                                                  faqSearchQuery!,
+                                                                );
+                                                                if (!mounted) return;
 
-                                                          // Update the filtered list
-                                                          setState(() {
-                                                            filteredFaqsActionOnChange = result;
-                                                            filteredFaqsPageState = result.toList();
-                                                          });
-                                                        },
-                                                      ),
+                                                                // Update the filtered list
+                                                              setState(() {
+                                                                filteredFaqsActionOnChange = result;
+                                                                filteredFaqsPageState = result.toList();
+                                                              });
+                                                            },
+                                                          ),
                                                       textCapitalization: TextCapitalization.none,
                                                       label: 'Search filter',
                                                       validator: null,
@@ -391,19 +386,19 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                   ),
                                 ),
 
-                                // "Frequently Asked Questions" text
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 4),
-                                  child: Semantics(
-                                    label: '"Frequently Asked Questions" text',
-                                    child: Text(
-                                      'Frequently Asked Questions',
-                                      style: AppTextStyles.headlineSmall(),
-                                    ),
-                                  ),
-                                ),
+                                      // "Frequently Asked Questions" text
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 4),
+                                        child: Semantics(
+                                          label: '"Frequently Asked Questions" text',
+                                          child: Text(
+                                            'Frequently Asked Questions',
+                                            style: AppTextStyles.headlineSmall(),
+                                          ),
+                                        ),
+                                      ),
 
-                                // "No results found." text
+                                      // "No results found." text
                                 if (!(filteredFaqsPageState.isNotEmpty))
                                   Semantics(
                                     label: '"No results found." text',
@@ -413,12 +408,12 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                     ),
                                   ),
 
-                                // Wrap containing all FAQs
-                                Builder(
-                                  builder: (context) {
-                                    final faqsList = sortByOrder(filteredFaqsPageState.toList()).toList();
+                                      // Wrap containing all FAQs
+                                      Builder(
+                                        builder: (context) {
+                                          final faqsList = sortByOrder(filteredFaqsPageState.toList()).toList();
 
-                                    return Semantics(
+                                          return Semantics(
                                       label: 'FAQs wrap',
                                       child: Wrap(
                                         spacing: 0,
@@ -432,24 +427,24 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                         children: List.generate(faqsList.length, (faqsListIndex) {
                                           final faqsListItem = faqsList[faqsListIndex];
                                           return
-                                              // Dynamically generated item containing each FAQ
-                                              Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                            child: Semantics(
-                                              label: 'FAQ item',
-                                              child: FaqItem(
-                                                key: Key('faq_$faqsListIndex'),
-                                                isOpen: openIndex == faqsListIndex,
-                                                title: faqsListItem['question'].toString(),
-                                                description: faqsListItem['answer'].toString(),
-                                                onPressed: () async {
-                                                  setState(() {
-                                                    openIndex = openIndex == faqsListIndex ? -1 : faqsListIndex;
-                                                  });
-                                                },
+                                            // Dynamically generated item containing each FAQ
+                                            Padding(
+                                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                                              child: Semantics(
+                                                label: 'FAQ item',
+                                                child: FaqItem(
+                                                  key: Key('faq_$faqsListIndex'),
+                                                  isOpen: openIndex == faqsListIndex,
+                                                  title: faqsListItem['question'].toString(),
+                                                  description: faqsListItem['answer'].toString(),
+                                                  onPressed: () async {
+                                                    setState(() {
+                                                      openIndex = openIndex == faqsListIndex ? -1 : faqsListIndex;
+                                                    });
+                                                  },
+                                                ),
                                               ),
-                                            ),
-                                          );
+                                            );
                                         }),
                                       ),
                                     );
@@ -464,8 +459,7 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                   ],
                 ),
               ),
-            ),
-          ),
+                  )),
         ),
       ),
     );

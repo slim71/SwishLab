@@ -5,6 +5,7 @@ import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
+import 'package:SwishLab/widgets/background.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/input_field.dart';
 import 'package:SwishLab/widgets/light_button.dart';
@@ -167,7 +168,6 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: appColors.secondaryBackground,
         appBar: MyAppBar(
           title: 'Profile Picture',
           style: MyAppBarStyle.backButtonTitleCentered,
@@ -178,73 +178,68 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
               // Container used to have a colored background
               Semantics(
             label: 'Background container',
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: appColors.gradientBackground(),
-              ),
-              child:
-                  // Column containing the whole content for the profile picture page
-                  Padding(
-                padding: EdgeInsets.all(24),
+                  child: Background(
+                    child: Padding(
+                      padding: EdgeInsets.all(24),
                 child: Semantics(
                   label: 'Profile picture content',
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // Column containing the profile picture
-                      Semantics(
-                        label: 'Column containing the profile picture',
-                        child: Column(
                           mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // Container for the profile picture
+                            // Column containing the profile picture
                             Semantics(
-                              label: 'Container for the profile picture',
-                              child: Container(
-                                width: 200,
-                                height: 200,
-                                decoration: BoxDecoration(
-                                  color: appColors.primaryBackground,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: appColors.alternateTwo,
-                                    width: 3,
-                                  ),
-                                ),
-                                child:
-                                    // Stack to have multiple image uploads widgets together
-                                    Semantics(
-                                  label: 'Stack to have multiple image uploads widgets together ',
-                                  child: Stack(
-                                    children: [
-                                      // Circle image for local file
-                                      if (imgNetwork == null || imgNetwork == '')
-                                        Semantics(
-                                          label: 'Local circle image',
-                                          child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: pickLocalImage,
-                                            child: Container(
-                                              width: 200,
-                                              height: 200,
-                                              clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: Image.memory(
-                                                imgLocalBytes!,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
+                              label: 'Column containing the profile picture',
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  // Container for the profile picture
+                                  Semantics(
+                                    label: 'Container for the profile picture',
+                                    child: Container(
+                                      width: 200,
+                                      height: 200,
+                                      decoration: BoxDecoration(
+                                        color: appColors.primaryBackground,
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: appColors.alternateTwo,
+                                          width: 3,
                                         ),
+                                      ),
+                                      child:
+                                          // Stack to have multiple image uploads widgets together
+                                          Semantics(
+                                        label: 'Stack to have multiple image uploads widgets together ',
+                                        child: Stack(
+                                          children: [
+                                            // Circle image for local file
+                                            if (imgNetwork == null || imgNetwork == '')
+                                              Semantics(
+                                                label: 'Local circle image',
+                                                child: InkWell(
+                                                  splashColor: Colors.transparent,
+                                                  focusColor: Colors.transparent,
+                                                  hoverColor: Colors.transparent,
+                                                  highlightColor: Colors.transparent,
+                                                  onTap: pickLocalImage,
+                                                  child: Container(
+                                                    width: 200,
+                                                    height: 200,
+                                                    clipBehavior: Clip.antiAlias,
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    child: Image.memory(
+                                                      imgLocalBytes!,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
 
-                                      // Circle image for a remote image
+                                            // Circle image for a remote image
                                       if (imgNetwork != null && imgNetwork != '')
                                         Semantics(
                                           label: 'Network circle image',
@@ -268,10 +263,11 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                                   if (loadingProgress == null) return child;
                                                   return const Center(child: CircularProgressIndicator());
                                                 },
-                                                errorBuilder: (_, __, ___) => Image.asset(
-                                                  'assets/images/error_image.jpg',
-                                                  fit: BoxFit.cover,
-                                                ),
+                                                errorBuilder: (_, __, ___) =>
+                                                    Image.asset(
+                                                      'assets/images/error_image.jpg',
+                                                      fit: BoxFit.cover,
+                                                    ),
                                               ),
                                             ),
                                           ),
@@ -283,21 +279,21 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                             ),
                             const SizedBox(height: 24),
 
-                            // Instructions on how to select a picture
-                            Semantics(
-                              label: 'Instructions on how to select a picture',
-                              child: Text(
-                                'Tap to select a picture',
-                                textAlign: TextAlign.center,
-                                style: AppTextStyles.bodyMedium(),
+                                  // Instructions on how to select a picture
+                                  Semantics(
+                                    label: 'Instructions on how to select a picture',
+                                    child: Text(
+                                      'Tap to select a picture',
+                                      textAlign: TextAlign.center,
+                                      style: AppTextStyles.bodyMedium(),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 32),
+                            const SizedBox(height: 32),
 
-                      // Options to choose a profile picture
+                            // Options to choose a profile picture
                       Semantics(
                         label: 'Options to choose a profile picture',
                         child: Column(
@@ -317,8 +313,8 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                   ),
                                 ),
                                 child:
-                                    // Column to have a structure for picture selection options
-                                    Padding(
+                                // Column to have a structure for picture selection options
+                                Padding(
                                   padding: EdgeInsets.all(16),
                                   child: Semantics(
                                     label: 'Structure column for selection options',
@@ -335,29 +331,29 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                         ),
                                         const SizedBox(height: 12),
 
-                                        // Row containing selection options
-                                        Semantics(
-                                          label: 'Row containing selection options',
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              // Button to choose a local picture
-                                              Expanded(
-                                                child: Semantics(
-                                                  label: 'Button to choose a local picture',
-                                                  child: TransparentButton(
-                                                    onPressed: pickLocalImage,
-                                                    text: 'From Device',
-                                                    icon: Icon(
-                                                      Icons.photo_library_outlined,
-                                                      size: 15,
+                                              // Row containing selection options
+                                              Semantics(
+                                                label: 'Row containing selection options',
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                  children: [
+                                                    // Button to choose a local picture
+                                                    Expanded(
+                                                      child: Semantics(
+                                                        label: 'Button to choose a local picture',
+                                                        child: TransparentButton(
+                                                          onPressed: pickLocalImage,
+                                                          text: 'From Device',
+                                                          icon: Icon(
+                                                            Icons.photo_library_outlined,
+                                                            size: 15,
+                                                          ),
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
-                                              ),
 
-                                              // Button to show the URL field for a remote picture
+                                                    // Button to show the URL field for a remote picture
                                               Expanded(
                                                 child: Semantics(
                                                   label: 'Button to show the URL field',
@@ -385,40 +381,40 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                             ),
                             const SizedBox(height: 16),
 
-                            // Container with the URL field
-                            if (showUrlField == true)
-                              Semantics(
-                                label: 'Container with the URL field',
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color: appColors.primaryBackground,
-                                    borderRadius: BorderRadius.circular(12),
-                                    border: Border.all(
-                                      color: appColors.altContBorders,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child:
-                                      // Column with the URL field
-                                      Padding(
-                                    padding: EdgeInsets.all(16),
-                                    child: Semantics(
-                                      label: 'Column with the URL field',
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          // Text to guide the URL insertion
-                                          Semantics(
-                                            label: 'Text to guide the URL insertion',
-                                            child: Text(
-                                              'Enter Image URL',
-                                              style: AppTextStyles.labelMedium(),
-                                            ),
+                                  // Container with the URL field
+                                  if (showUrlField == true)
+                                    Semantics(
+                                      label: 'Container with the URL field',
+                                      child: Container(
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                          color: appColors.primaryBackground,
+                                          borderRadius: BorderRadius.circular(12),
+                                          border: Border.all(
+                                            color: appColors.altContBorders,
+                                            width: 1,
                                           ),
-                                          const SizedBox(height: 12),
+                                        ),
+                                        child:
+                                            // Column with the URL field
+                                            Padding(
+                                          padding: EdgeInsets.all(16),
+                                          child: Semantics(
+                                            label: 'Column with the URL field',
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                // Text to guide the URL insertion
+                                                Semantics(
+                                                  label: 'Text to guide the URL insertion',
+                                                  child: Text(
+                                                    'Enter Image URL',
+                                                    style: AppTextStyles.labelMedium(),
+                                                  ),
+                                                ),
+                                                const SizedBox(height: 12),
 
-                                          // Field where to put the image URL
+                                                // Field where to put the image URL
                                           Padding(
                                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                                             child: Semantics(
@@ -435,44 +431,44 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                           ),
                                           const SizedBox(height: 12),
 
-                                          // Button to load the image pointed by the URL
-                                          Semantics(
-                                            label: 'Button to load the image pointed by the URL',
-                                            child: DarkButton(
-                                              onPressed: () async {
-                                                final url = urlFieldTextController.text.trim();
+                                                // Button to load the image pointed by the URL
+                                                Semantics(
+                                                  label: 'Button to load the image pointed by the URL',
+                                                  child: DarkButton(
+                                                    onPressed: () async {
+                                                      final url = urlFieldTextController.text.trim();
 
-                                                if (!isValidImageUrl(url)) {
+                                                      if (!isValidImageUrl(url)) {
                                                   // optionally show a SnackBar
                                                   return;
                                                 }
 
-                                                setState(() {
-                                                  imgNetwork = url;
-                                                  imgLocal = null;
-                                                  imgLocalBytes = null;
-                                                });
-                                              },
-                                              text: 'Load Image From URL',
+                                                      setState(() {
+                                                        imgNetwork = url;
+                                                        imgLocal = null;
+                                                        imgLocalBytes = null;
+                                                      });
+                                                    },
+                                                    text: 'Load Image From URL',
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              ).animate().move(
-                                    begin: const Offset(0, -20),
-                                    end: Offset.zero,
-                                    duration: 600.ms,
-                                    curve: Curves.bounceOut,
-                                  ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 32),
+                                    ).animate().move(
+                                          begin: const Offset(0, -20),
+                                          end: Offset.zero,
+                                          duration: 600.ms,
+                                          curve: Curves.bounceOut,
+                                        ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 32),
 
-                      // Row with action buttons
+                            // Row with action buttons
                       Semantics(
                         label: 'Row with action buttons',
                         child: Row(
@@ -493,62 +489,61 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                             ),
                             const SizedBox(width: 16),
 
-                            // Button to confirm the choice and upload the profile picture
-                            Expanded(
-                              child: Semantics(
-                                label: 'Button to confirm the choice and upload the profile picture',
-                                child: DarkButton(
-                                  onPressed: () async {
-                                    final userInfoAsync = ref.read(appUserProvider);
-                                    final user = userInfoAsync.value;
+                                  // Button to confirm the choice and upload the profile picture
+                                  Expanded(
+                                    child: Semantics(
+                                      label: 'Button to confirm the choice and upload the profile picture',
+                                      child: DarkButton(
+                                        onPressed: () async {
+                                          final userInfoAsync = ref.read(appUserProvider);
+                                          final user = userInfoAsync.value;
 
-                                    if (user == null) return;
+                                          if (user == null) return;
 
-                                    setState(() => isDataUploading = true);
+                                          setState(() => isDataUploading = true);
 
-                                    try {
+                                          try {
                                       final useCase = ref.read(changeProfilePictureProvider);
 
-                                      final newUrl = await useCase.execute(
-                                        userId: user.id,
-                                        localFile: imgLocal,
-                                        networkUrl: imgNetwork,
+                                            final newUrl = await useCase.execute(
+                                              userId: user.id,
+                                              localFile: imgLocal,
+                                              networkUrl: imgNetwork,
+                                            );
+
+                                            ref.read(appStateProvider.notifier).setUserData(
+                                        appState.userData!.copyWith(profilePicture: newUrl),
                                       );
 
-                                      ref.read(appStateProvider.notifier).setUserData(
-                                            appState.userData!.copyWith(profilePicture: newUrl),
-                                          );
-
-                                      if (!context.mounted) return;
-                                      context.goNamed('home');
-                                    } catch (e) {
-                                      ScaffoldMessenger.of(context)
-                                        ..hideCurrentSnackBar()
-                                        ..showSnackBar(
-                                          const SnackBar(
-                                            content: Text('Error uploading profile picture'),
-                                            backgroundColor: Colors.red,
-                                          ),
-                                        );
-                                    } finally {
-                                      if (mounted) {
-                                        setState(() => isDataUploading = false);
-                                      }
-                                    }
-                                  },
-                                  text: 'Save Picture',
-                                ),
+                                            if (!context.mounted) return;
+                                            context.goNamed('home');
+                                          } catch (e) {
+                                            ScaffoldMessenger.of(context)
+                                              ..hideCurrentSnackBar()
+                                              ..showSnackBar(
+                                                const SnackBar(
+                                                  content: Text('Error uploading profile picture'),
+                                                  backgroundColor: Colors.red,
+                                                ),
+                                              );
+                                          } finally {
+                                            if (mounted) {
+                                              setState(() => isDataUploading = false);
+                                            }
+                                          }
+                                        },
+                                        text: 'Save Picture',
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
               ),
-            ),
-          ),
+                  )),
         ),
       ),
     );

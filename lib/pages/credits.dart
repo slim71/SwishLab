@@ -4,6 +4,7 @@ import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
+import 'package:SwishLab/widgets/background.dart';
 import 'package:SwishLab/widgets/custom_text_span.dart';
 import 'package:SwishLab/widgets/dynamic_asset.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,6 @@ class _CreditsState extends ConsumerState<Credits> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: appColors.secondaryBackground,
         appBar: MyAppBar(
           style: MyAppBarStyle.backButtonTitleCentered,
           title: 'Credits',
@@ -61,85 +61,82 @@ class _CreditsState extends ConsumerState<Credits> {
               // Container with all the Credits page content
               Semantics(
             label: 'Main container content',
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: appColors.gradientBackground(),
-              ),
-              child:
-                  // Column to place the whole Credits page content
-                  Semantics(
-                label: 'Main column content',
+                  child: Background(
+                    child: Semantics(
+                      label: 'Main column content',
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Container for a small introduction
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Semantics(
-                        label: 'Container for a small introduction',
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: appColors.primaryBackground,
-                            borderRadius: BorderRadius.circular(25),
-                            shape: BoxShape.rectangle,
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              // Small page introduction
-                              Padding(
-                                padding: EdgeInsets.all(10),
-                                child: Semantics(
-                                  label: 'Small page introduction',
-                                  child: RichText(
-                                    textScaler: MediaQuery.of(context).textScaler,
-                                    text: CustomTextSpan(
-                                      children: [
-                                        CustomTextSpan(
-                                          text:
-                                              'This project uses a mix of freely available icons, illustrations, and animations created by ',
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Container for a small introduction
+                          Padding(
+                            padding: EdgeInsets.all(10),
+                            child: Semantics(
+                              label: 'Container for a small introduction',
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: appColors.primaryBackground,
+                                  borderRadius: BorderRadius.circular(25),
+                                  shape: BoxShape.rectangle,
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    // Small page introduction
+                                    Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Semantics(
+                                        label: 'Small page introduction',
+                                        child: RichText(
+                                          textScaler: MediaQuery.of(context).textScaler,
+                                          text: CustomTextSpan(
+                                            children: [
+                                              CustomTextSpan(
+                                                text:
+                                                    'This project uses a mix of freely available icons, illustrations, and animations created by ',
+                                              ),
+                                              CustomTextSpan(
+                                                text: 'amazing designers and developers around the world.\n\n',
+                                              ),
+                                              CustomTextSpan(
+                                                text: 'I’ve done my best to give ',
+                                              ),
+                                              CustomTextSpan(
+                                                text: 'proper credit',
+                                              ),
+                                              CustomTextSpan(
+                                                text:
+                                                    ' to everyone whose work helped bring this project to life. You can',
+                                              ),
+                                              CustomTextSpan(
+                                                text: ' click on any item ',
+                                              ),
+                                              CustomTextSpan(
+                                                text: 'to visit the author\'s page.\n\n',
+                                              ),
+                                              CustomTextSpan(
+                                                text:
+                                                    'If I’ve missed anyone or got something wrong, please let me know - ',
+                                              ),
+                                              CustomTextSpan(
+                                                text: 'any correction or contribution is always appreciated!',
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                        CustomTextSpan(
-                                          text: 'amazing designers and developers around the world.\n\n',
-                                        ),
-                                        CustomTextSpan(
-                                          text: 'I’ve done my best to give ',
-                                        ),
-                                        CustomTextSpan(
-                                          text: 'proper credit',
-                                        ),
-                                        CustomTextSpan(
-                                          text: ' to everyone whose work helped bring this project to life. You can',
-                                        ),
-                                        CustomTextSpan(
-                                          text: ' click on any item ',
-                                        ),
-                                        CustomTextSpan(
-                                          text: 'to visit the author\'s page.\n\n',
-                                        ),
-                                        CustomTextSpan(
-                                          text: 'If I’ve missed anyone or got something wrong, please let me know - ',
-                                        ),
-                                        CustomTextSpan(
-                                          text: 'any correction or contribution is always appreciated!',
-                                        )
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ),
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Builder(
-                        builder: (context) {
-                          final List<Credit> creditsList = appState.credits;
+                          Expanded(
+                            child: Builder(
+                              builder: (context) {
+                                final List<Credit> creditsList = appState.credits;
 
-                          return GridView.builder(
+                                return GridView.builder(
                             padding: EdgeInsets.zero,
                             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3,
@@ -156,75 +153,74 @@ class _CreditsState extends ConsumerState<Credits> {
                               }
                               final Credit creditsItem = creditsList[creditsListIndex]; // now non-null
 
-                              return Padding(
-                                padding: EdgeInsets.all(10),
-                                child: Material(
-                                  color: Colors.transparent,
-                                  elevation: 10,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(25),
-                                  ),
-                                  child: Container(
-                                    width: 100,
-                                    height: 100,
-                                    decoration: BoxDecoration(
-                                      color: appColors.secondaryBackground,
-                                      borderRadius: BorderRadius.circular(25),
-                                      shape: BoxShape.rectangle,
-                                      border: Border.all(
-                                        color: appColors.containersBorders,
-                                      ),
-                                    ),
-                                    alignment: AlignmentDirectional(0, 1),
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        await launchUrl(creditsItem.url as Uri);
-                                      },
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          SizedBox(
-                                            width: 50,
-                                            height: 50,
-                                            child: DynamicAsset(
-                                              width: 50,
-                                              height: 50,
-                                              name: creditsItem.asset,
-                                              type: creditsItem.type,
+                                    return Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: Material(
+                                        color: Colors.transparent,
+                                        elevation: 10,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(25),
+                                        ),
+                                        child: Container(
+                                          width: 100,
+                                          height: 100,
+                                          decoration: BoxDecoration(
+                                            color: appColors.secondaryBackground,
+                                            borderRadius: BorderRadius.circular(25),
+                                            shape: BoxShape.rectangle,
+                                            border: Border.all(
+                                              color: appColors.containersBorders,
                                             ),
                                           ),
-                                          Divider(
-                                            thickness: 2,
-                                            color: appColors.alternateOne,
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                                            child: Text(
-                                              creditsItem.author,
-                                              textAlign: TextAlign.center,
-                                              style: AppTextStyles.titleSmall(),
+                                          alignment: AlignmentDirectional(0, 1),
+                                          child: InkWell(
+                                            splashColor: Colors.transparent,
+                                            focusColor: Colors.transparent,
+                                            hoverColor: Colors.transparent,
+                                            highlightColor: Colors.transparent,
+                                            onTap: () async {
+                                              await launchUrl(creditsItem.url as Uri);
+                                            },
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                SizedBox(
+                                                  width: 50,
+                                                  height: 50,
+                                                  child: DynamicAsset(
+                                                    width: 50,
+                                                    height: 50,
+                                                    name: creditsItem.asset,
+                                                    type: creditsItem.type,
+                                                  ),
+                                                ),
+                                                Divider(
+                                                  thickness: 2,
+                                                  color: appColors.alternateOne,
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                                                  child: Text(
+                                                    creditsItem.author,
+                                                    textAlign: TextAlign.center,
+                                                    style: AppTextStyles.titleSmall(),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
               ),
-            ),
-          ),
+                  )),
         ),
       ),
     );

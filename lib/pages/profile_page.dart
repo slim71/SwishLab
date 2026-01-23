@@ -3,6 +3,7 @@ import 'package:SwishLab/models/statistics_row.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
+import 'package:SwishLab/widgets/background.dart';
 import 'package:SwishLab/widgets/stats_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -43,14 +44,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
           alignment: AlignmentDirectional(0, 0),
           child: Semantics(
             label: 'Container used for background purposes',
-            child: Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                gradient: appColors.gradientBackground(),
-              ),
-              child:
-                  // Column containing the whole content on screen
+              child: Background(
+                child: SizedBox(
+                  width: double.infinity,
+                  height: double.infinity,
+                  child:
+                      // Column containing the whole content on screen
                   Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                 child: Semantics(
@@ -432,8 +431,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                   ),
                 ),
               ),
-            ),
-          ),
+                ),
+              )),
         ),
       ),
     );

@@ -1,6 +1,7 @@
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
+import 'package:SwishLab/widgets/background.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/icon_action_button.dart';
 import 'package:flutter/material.dart';
@@ -72,14 +73,9 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
             // Background container
             Semantics(
           label: 'Background container',
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: appColors.gradientBackground(),
-            ),
-            child:
-                // Page view depicting the basic steps to use the app
-                Semantics(
-              label: 'Basic steps pages',
+                child: Background(
+                  child: Semantics(
+                    label: 'Basic steps pages',
               child: SizedBox(
                 width: double.infinity,
                 height: double.infinity,
@@ -586,8 +582,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                 ),
               ),
             ),
-          ),
-        ),
+                )),
       ),
     );
   }

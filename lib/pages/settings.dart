@@ -4,6 +4,7 @@ import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
+import 'package:SwishLab/widgets/background.dart';
 import 'package:SwishLab/widgets/light_button.dart';
 import 'package:SwishLab/widgets/settings_item.dart';
 import 'package:SwishLab/widgets/settings_row.dart';
@@ -160,63 +161,59 @@ class _SettingsState extends ConsumerState<Settings>
           // Container used to have a colored background
           Semantics(
         label: 'Background container',
-        child: Container(
-          decoration: BoxDecoration(gradient: appColors.gradientBackground()),
-          child:
-              // Main column with the settings page content
-              Semantics(
-            label: 'Main column content',
+              child: Background(
+                child: Semantics(
+                  label: 'Main column content',
             child: SingleChildScrollView(
               child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // List of available settings
-                  Semantics(
-                    label: 'List of available settings',
-                    child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      primary: false,
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                        return animatedItem(
-                          SettingsRow(
-                            item: items[index],
-                          ),
-                          index,
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
-                    child: Container(
-                      decoration: BoxDecoration(),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            // "Follow us on" text
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 4, 0, 8),
-                              child: Semantics(
-                                label: '"Follow us on" text',
-                                child: Text(
-                                  'Follow us on',
-                                  style: AppTextStyles.labelMedium(),
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // List of available settings
+                        Semantics(
+                          label: 'List of available settings',
+                          child: ListView.builder(
+                            padding: EdgeInsets.zero,
+                            primary: false,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: items.length,
+                            itemBuilder: (context, index) {
+                              return animatedItem(
+                                SettingsRow(
+                                  item: items[index],
                                 ),
-                              ),
-                            ),
+                                index,
+                              );
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+                          child: Container(
+                            decoration: BoxDecoration(),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  // "Follow us on" text
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 8),
+                                    child: Semantics(
+                                      label: '"Follow us on" text',
+                                      child: Text(
+                                        'Follow us on',
+                                        style: AppTextStyles.labelMedium(),
+                                      ),
+                                    ),
+                                  ),
 
-                            // Row with socials buttons
+                                  // Row with socials buttons
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                              EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                               child: Semantics(
                                 label: 'Row with socials buttons',
                                 child: Row(
@@ -227,7 +224,7 @@ class _SettingsState extends ConsumerState<Settings>
                                     SocialIconButton(
                                       borderColor: appColors.primaryBackground,
                                       backgroundColor:
-                                          appColors.secondaryBackground,
+                                      appColors.secondaryBackground,
                                       icon: FontAwesomeIcons.twitter,
                                       iconColor: appColors.secondaryText,
                                       onTap: () {
@@ -236,24 +233,23 @@ class _SettingsState extends ConsumerState<Settings>
                                     ),
                                     const SizedBox(width: 8),
 
-                                    // Instagram button
-                                    SocialIconButton(
-                                      borderColor: appColors.primaryBackground,
-                                      backgroundColor:
-                                          appColors.secondaryBackground,
-                                      icon: FontAwesomeIcons.instagram,
-                                      iconColor: appColors.secondaryText,
-                                      onTap: () {
-                                        print('instagramButton pressed ...');
-                                      },
-                                    ),
-                                    const SizedBox(width: 8),
+                                          // Instagram button
+                                          SocialIconButton(
+                                            borderColor: appColors.primaryBackground,
+                                            backgroundColor: appColors.secondaryBackground,
+                                            icon: FontAwesomeIcons.instagram,
+                                            iconColor: appColors.secondaryText,
+                                            onTap: () {
+                                              print('instagramButton pressed ...');
+                                            },
+                                          ),
+                                          const SizedBox(width: 8),
 
-                                    // Facebook button
+                                          // Facebook button
                                     SocialIconButton(
                                       borderColor: appColors.primaryBackground,
                                       backgroundColor:
-                                          appColors.secondaryBackground,
+                                      appColors.secondaryBackground,
                                       icon: FontAwesomeIcons.facebookF,
                                       iconColor: appColors.secondaryText,
                                       onTap: () {
@@ -283,7 +279,7 @@ class _SettingsState extends ConsumerState<Settings>
                             // "App version" text
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                              EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                               child: Semantics(
                                 label: '"App version" text',
                                 child: Text(
@@ -293,23 +289,22 @@ class _SettingsState extends ConsumerState<Settings>
                               ),
                             ),
 
-                            // App version
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
-                              child: Semantics(
-                                label: 'App version',
-                                child: Text(
-                                  'v0.0.1',
-                                  style: AppTextStyles.labelMedium(),
-                                ),
-                              ),
-                            ),
+                                  // App version
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
+                                    child: Semantics(
+                                      label: 'App version',
+                                      child: Text(
+                                        'v0.0.1',
+                                        style: AppTextStyles.labelMedium(),
+                                      ),
+                                    ),
+                                  ),
 
-                            // Logout button
+                                  // Logout button
                             Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 0, 0),
+                              EdgeInsetsDirectional.fromSTEB(16, 16, 0, 0),
                               child: Semantics(
                                 label: 'Logout button',
                                 child: LightButton(
@@ -337,8 +332,7 @@ class _SettingsState extends ConsumerState<Settings>
               ),
             ),
           ),
-        ),
-      ),
+              )),
     );
   }
 }

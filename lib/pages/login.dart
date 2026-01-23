@@ -279,10 +279,6 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                             child: Semantics(
                                               label: 'Text redirecting to signup page',
                                               child: InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor: Colors.transparent,
                                                 onTap: () async {
                                                   context.goNamed('signup');
                                                 },
@@ -308,7 +304,8 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                   ),
                                 ),
                               ),
-                            )..animate()
+                            )
+                                .animate()
                                 // Fade in
                                 .fade(
                                   duration: 300.ms,

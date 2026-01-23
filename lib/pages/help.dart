@@ -186,10 +186,6 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                           child: Semantics(
                                             label: 'Search button container',
                                             child: InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor: Colors.transparent,
                                               onTap: () async {
                                                 // Immediate UI state changes
                                                 setState(() {

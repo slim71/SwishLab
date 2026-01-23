@@ -45,10 +45,6 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
       child: Semantics(
         label: 'Main container',
         child: InkWell(
-          splashColor: Colors.transparent,
-          focusColor: Colors.transparent,
-          hoverColor: Colors.transparent,
-          highlightColor: Colors.transparent,
           onTap: () async {
             _controller.forward(from: 0.0);
             await widget.onPressed?.call();

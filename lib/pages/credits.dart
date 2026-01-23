@@ -174,10 +174,6 @@ class _CreditsState extends ConsumerState<Credits> {
                                           ),
                                           alignment: AlignmentDirectional(0, 1),
                                           child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
                                             onTap: () async {
                                               await launchUrl(creditsItem.url as Uri);
                                             },

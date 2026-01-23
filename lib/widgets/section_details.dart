@@ -98,10 +98,6 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                     Semantics(
                                   label: 'Bottom sheet top bar row',
                                   child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
                                     onTap: () async {
                                       Navigator.pop(context);
                                     },

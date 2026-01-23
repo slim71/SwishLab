@@ -72,10 +72,6 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                               sigmaY: 10,
                             ),
                             child: InkWell(
-                              splashColor: Colors.transparent,
-                              focusColor: Colors.transparent,
-                              hoverColor: Colors.transparent,
-                              highlightColor: Colors.transparent,
                               child: Container(
                                 width: double.infinity,
                                 height: 105,

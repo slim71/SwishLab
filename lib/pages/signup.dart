@@ -431,10 +431,6 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                   child: Semantics(
                                                     label: 'Redirect to login text',
                                                     child: InkWell(
-                                                      splashColor: Colors.transparent,
-                                                      focusColor: Colors.transparent,
-                                                      hoverColor: Colors.transparent,
-                                                      highlightColor: Colors.transparent,
                                                       onTap: () async {
                                                         context.goNamed('login');
                                                       },

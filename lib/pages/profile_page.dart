@@ -100,11 +100,6 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                             child: Semantics(
                                               label: 'Actual profile picture',
                                               child: InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
                                                 onTap: () async {
                                                   context.pushNamed('pic');
                                                 },

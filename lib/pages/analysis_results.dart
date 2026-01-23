@@ -155,10 +155,6 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                     Semantics(
                                                       label: 'Scores column',
                                                       child: InkWell(
-                                                        splashColor: Colors.transparent,
-                                                        focusColor: Colors.transparent,
-                                                        hoverColor: Colors.transparent,
-                                                        highlightColor: Colors.transparent,
                                                         onTap: () async {
                                                           await showModalBottomSheet(
                                                             isScrollControlled: true,

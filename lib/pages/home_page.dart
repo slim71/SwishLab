@@ -229,10 +229,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                           child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
                             onTap: () async {
                               if (hasShootingHand) {
                                 context.pushNamed('front');
@@ -314,10 +310,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                           child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
                             onTap: () async {
                               if (hasShootingHand) {
                                 context.pushNamed("side");

@@ -219,10 +219,6 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                               Semantics(
                                                 label: 'Local circle image',
                                                 child: InkWell(
-                                                  splashColor: Colors.transparent,
-                                                  focusColor: Colors.transparent,
-                                                  hoverColor: Colors.transparent,
-                                                  highlightColor: Colors.transparent,
                                                   onTap: pickLocalImage,
                                                   child: Container(
                                                     width: 200,
@@ -244,10 +240,6 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                         Semantics(
                                           label: 'Network circle image',
                                           child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
                                             onTap: pickLocalImage,
                                             child: Container(
                                               width: 200,

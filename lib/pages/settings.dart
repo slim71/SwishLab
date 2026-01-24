@@ -15,6 +15,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 
+class _SettingsItemData {
+  final String title;
+  final Future<void> Function(BuildContext context) onTap;
+
+  const _SettingsItemData({
+    required this.title,
+    required this.onTap,
+  });
+}
+
 /// Settings page
 class Settings extends ConsumerStatefulWidget {
   const Settings({super.key});
@@ -27,95 +37,95 @@ class _SettingsState extends ConsumerState<Settings>
     with TickerProviderStateMixin {
   List<Map<String, dynamic>>? faqsJsonList;
 
-  List<SettingsItem> get items => [
-        SettingsItem(
+  late final List<_SettingsItemData> _settingsData = [
+    _SettingsItemData(
         title: 'User Info',
-        background: const Color(0x33FFC72C),
         onTap: (context) async {
-              context.pushNamed('user');
-            }),
-    SettingsItem(
+          context.pushNamed('user');
+        }),
+    _SettingsItemData(
       title: 'Getting Started',
-      background: const Color(0x340C0C0C),
       onTap: (context) async {
-            context.pushNamed('getting-started');
-          },
+        context.pushNamed('getting-started');
+      },
     ),
-    SettingsItem(
+    _SettingsItemData(
       title: 'About Us',
-      background: const Color(0x35BE3A34),
       onTap: (context) async {
         context.pushNamed('about');
       },
     ),
-    SettingsItem(
+    _SettingsItemData(
       title: 'Help',
-      background: const Color(0x33FFC72C),
       onTap: (context) async {
-            final appStateNotifier = ref.read(appStateProvider.notifier);
+        final appStateNotifier = ref.read(appStateProvider.notifier);
 
-            faqsJsonList = await loadJsonRemoteOrAppState(
-              'faqs',
-              kDefaultFaqsJson,
-            );
-            appStateNotifier.setLoadedFaqs(faqsJsonList!);
+        faqsJsonList = await loadJsonRemoteOrAppState(
+          'faqs',
+          kDefaultFaqsJson,
+        );
+        appStateNotifier.setLoadedFaqs(faqsJsonList!);
 
-            if (!context.mounted) return;
-            context.pushNamed('help');
+        if (!context.mounted) return;
+        context.pushNamed('help');
 
-            setState(() {});
-          },
+        setState(() {});
+      },
     ),
-    SettingsItem(
+    _SettingsItemData(
       title: 'Privacy Policy',
-      background: const Color(0x340C0C0C),
       onTap: (context) async {
         context.pushNamed('document', pathParameters: {'name': 'PRIVACY'});
       },
     ),
-    SettingsItem(
+    _SettingsItemData(
       title: 'Terms & Conditions',
-      background: const Color(0x35BE3A34),
       onTap: (context) async {
         context.pushNamed('document', pathParameters: {'name': 'TAC'});
       },
     ),
-    SettingsItem(
+    _SettingsItemData(
       title: 'EULA',
-      background: const Color(0x33FFC72C),
       onTap: (context) async {
         context.pushNamed('document', pathParameters: {'name': 'EULA'});
       },
     ),
-    SettingsItem(
+    _SettingsItemData(
       title: 'Disclaimer',
-      background: const Color(0x340C0C0C),
       onTap: (context) async {
         context.pushNamed('document', pathParameters: {'name': 'DISCLAIMER'});
       },
     ),
-    SettingsItem(
+    _SettingsItemData(
       title: 'Acceptable Use Policy',
-      background: const Color(0x35BE3A34),
       onTap: (context) async {
         context.pushNamed('document', pathParameters: {'name': 'USE'});
       },
     ),
-    SettingsItem(
+    _SettingsItemData(
       title: 'Credits',
-      background: const Color(0x33FFC72C),
       onTap: (context) async {
-            context.pushNamed('credits');
-          },
+        context.pushNamed('credits');
+      },
     ),
-    SettingsItem(
+    _SettingsItemData(
       title: 'Debug utilities',
-      background: const Color(0x340C0C0C),
       onTap: (context) async {
-            context.pushNamed('debug');
-          },
+        context.pushNamed('debug');
+      },
     ),
   ];
+
+  List<SettingsItem> get items => List.generate(_settingsData.length, (index) {
+        final data = _settingsData[index];
+        final color = settingsItemBackgrounds[index % settingsItemBackgrounds.length];
+
+        return SettingsItem(
+          title: data.title,
+          background: color,
+          onTap: data.onTap,
+        );
+      });
 
   @override
   void initState() {

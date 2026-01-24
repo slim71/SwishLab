@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:SwishLab/models/custom_enums.dart';
 import 'package:SwishLab/styles/styles.dart';
@@ -205,37 +206,42 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                             label: 'Text background container',
                             child: Container(
                               decoration: BoxDecoration(
-                                color: Color(0x800C0C0C),
-                                shape: BoxShape.rectangle,
-                              ),
-                              child:
-                                  // Section title
-                                  Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
-                                child: Semantics(
-                                    label: 'Section title',
-                                    child: ShaderMask(
-                                      shaderCallback: (bounds) => appColors.gradientText().createShader(bounds),
-                                      blendMode: BlendMode.srcIn,
-                                      child: Text(
-                                        'Side view analysis',
-                                        style: AppTextStyles.displaySmall(),
-                                      ),
-                                    )
-                                        .animate()
-                                        .fadeIn(
-                                          duration: 600.ms,
-                                          curve: Curves.easeInOut,
-                                        )
-                                        .move(
-                                          begin: const Offset(0, 60),
-                                          end: Offset.zero,
-                                          duration: 600.ms,
-                                          curve: Curves.easeInOut,
-                                        )),
-                              ),
-                            ),
-                          ),
+                                  color: Colors.black.withValues(alpha: 0.3), // subtle semi-transparent overlay
+                                  borderRadius: BorderRadius.circular(8), // rounded corners
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: BackdropFilter(
+                                    filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4), // soft blur behind text
+                                    child:
+                                        // Section title
+                                        Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                                      child: Semantics(
+                                          label: 'Section title',
+                                          child: ShaderMask(
+                                            shaderCallback: (bounds) => appColors.gradientText().createShader(bounds),
+                                            blendMode: BlendMode.srcIn,
+                                            child: Text(
+                                              'Side view analysis',
+                                              style: AppTextStyles.displaySmall(),
+                                            ),
+                                          )
+                                              .animate()
+                                              .fadeIn(
+                                                duration: 600.ms,
+                                                curve: Curves.easeInOut,
+                                              )
+                                              .move(
+                                                begin: const Offset(0, 60),
+                                                end: Offset.zero,
+                                                duration: 600.ms,
+                                                curve: Curves.easeInOut,
+                                              )),
+                                    ),
+                                  ),
+                                ),
+                              )),
 
                           // Section overview
                           Padding(

@@ -1,4 +1,5 @@
 import 'package:SwishLab/constants.dart';
+import 'package:SwishLab/functions/shadow_from_color.dart';
 import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/state/persisted_states.dart';
@@ -130,8 +131,8 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                               boxShadow: [
                                 BoxShadow(
                                   blurRadius: 4,
-                                  color: Color(0x33000000),
-                                  offset: Offset(
+                                      color: shadowFromColor(appColors.primaryBackground),
+                                      offset: Offset(
                                     0,
                                     2,
                                   ),

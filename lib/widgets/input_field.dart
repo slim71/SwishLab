@@ -110,7 +110,7 @@ class _InputField extends State<InputField> {
                   _isVisible
                       ? Icons.visibility_outlined
                       : Icons.visibility_off_outlined,
-                  color: const Color(0xFF757575),
+                  color: appColors.textFieldLabelText.withAlpha(0xCC), // ~80% opacity
                   size: 22,
                 ),
               )

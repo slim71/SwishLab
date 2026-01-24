@@ -1,3 +1,4 @@
+import 'package:SwishLab/functions/shadow_from_color.dart';
 import 'package:SwishLab/models/users_row.dart';
 import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/providers/users_provider.dart';
@@ -194,7 +195,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                         boxShadow: [
                                           BoxShadow(
                                             blurRadius: 4,
-                                            color: Color(0x33000000),
+                                            color: shadowFromColor(appColors.secondaryBackground),
                                             offset: Offset(
                                               0,
                                               2,

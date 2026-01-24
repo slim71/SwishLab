@@ -1,4 +1,5 @@
 import 'package:SwishLab/constants.dart';
+import 'package:SwishLab/functions/shadow_from_color.dart';
 import 'package:SwishLab/models/statistics_row.dart';
 import 'package:SwishLab/models/users_row.dart';
 import 'package:SwishLab/providers/statistics_provider.dart';
@@ -95,7 +96,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                           boxShadow: [
                             BoxShadow(
                               blurRadius: 4,
-                              color: Color(0x25090F13),
+                              color: shadowFromColor(appColors.secondaryBackground),
                               offset: Offset(
                                 0.0,
                                 2,
@@ -242,7 +243,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 boxShadow: [
                                   BoxShadow(
                                     blurRadius: 3,
-                                    color: Color(0x411D2429),
+                                    color: shadowFromColor(appColors.secondaryBackground),
                                     offset: Offset(
                                       0.0,
                                       1,
@@ -324,7 +325,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                 boxShadow: [
                                   BoxShadow(
                                     blurRadius: 3,
-                                    color: Color(0x411D2429),
+                                    color: shadowFromColor(appColors.secondaryBackground),
                                     offset: Offset(
                                       0.0,
                                       1,

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:SwishLab/functions/shadow_from_color.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
@@ -76,8 +77,8 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                 width: double.infinity,
                                 height: 105,
                                 decoration: BoxDecoration(
-                                  color: Color(0x7F1D428A),
-                                ),
+                                    color: shadowFromColor(Colors.indigo),
+                                  ),
                                 child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
                                     child: Column(
@@ -204,10 +205,10 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                       boxShadow: [
                         BoxShadow(
                           blurRadius: 4,
-                          color: Color(0x301D2429),
+                            color: shadowFromColor(appColors.primaryBackground),
                             offset: Offset(0.0, 1),
                           )
-                      ],
+                        ],
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Column(
@@ -281,26 +282,26 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                               child: Container(
                                                 width: double.infinity,
                                                   decoration: BoxDecoration(
-                                                    color: Color(0x330C0C0C),
+                                                    color: shadowFromColor(Colors.black),
                                                   ),
                                                   child: Column(
                                                     mainAxisSize: MainAxisSize.max,
                                                     mainAxisAlignment: MainAxisAlignment.center,
                                                     children: [
-                                                    Row(
+                                                      Row(
                                                         mainAxisSize: MainAxisSize.max,
                                                         children: [
-                                                        Expanded(
-                                                          child: Align(
+                                                          Expanded(
+                                                            child: Align(
                                                               alignment: AlignmentDirectional(0, 1),
                                                               child: Text(
-                                                              'Basketball has been part of my life since I was a kid. I played throughout my childhood and teenage years, and it had a huge impact on me. It made me more social, helped me find confidence around people, and gave me a way to stay in shape. ',
-                                                              style: AppTextStyles.bodyMedium(),
+                                                                'Basketball has been part of my life since I was a kid. I played throughout my childhood and teenage years, and it had a huge impact on me. It made me more social, helped me find confidence around people, and gave me a way to stay in shape. ',
+                                                                style: AppTextStyles.bodyMedium(),
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                      ],
-                                                    ),
+                                                        ],
+                                                      ),
                                                   ],
                                                 ),
                                               ),

@@ -1,5 +1,6 @@
 import 'dart:core';
 
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 const String kDefaultResultsJson = '''
@@ -112,15 +113,21 @@ const String kFieldsLookupTableJson = '''
 }
 ''';
 
-const List<Color> kMyColors = [
-  Color(0xFF1F7A82),
-  Color(0xFFFFCDD2),
-  Color(0xFF3B6A6A),
-  Color(0xFF8A9C94),
-  Color(0xFF1E5F6C),
-  Color(0xFF164A52),
-  Color(0xFF6F8F88),
-  Color(0xFFFFFFFF),
+final List<Color> kMyColors = [
+  AppThemeManager.currentColors.primaryOne,
+  AppThemeManager.currentColors.primaryTwo,
+  AppThemeManager.currentColors.alternateOne,
+  AppThemeManager.currentColors.alternateTwo,
+  AppThemeManager.currentColors.retroOne,
+  AppThemeManager.currentColors.retroTwo,
+  if (AppThemeManager.currentColors.primaryThree != null) AppThemeManager.currentColors.primaryThree!,
+  if (AppThemeManager.currentColors.alternateThree != null) AppThemeManager.currentColors.alternateThree!,
+  if (AppThemeManager.currentColors.retroThree != null) AppThemeManager.currentColors.retroThree!,
+];
+final List<Color> settingsItemBackgrounds = [
+  AppThemeManager.currentColors.alternateTwo,
+  AppThemeManager.currentColors.primaryOne,
+  AppThemeManager.currentColors.retroThree ?? AppThemeManager.currentColors.retroOne,
 ];
 
 const String kDefaultFaqsJson = '''

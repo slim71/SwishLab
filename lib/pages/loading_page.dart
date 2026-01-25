@@ -64,7 +64,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: appColors.primaryBackground,
+        backgroundColor: appColors.secondaryBackground,
         body: SafeArea(
           top: true,
           child:

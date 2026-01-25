@@ -38,9 +38,9 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: appColors.primaryBackground,
+        backgroundColor: appColors.secondaryBackground,
         appBar: AppBar(
-          backgroundColor: appColors.primaryBackground,
+          backgroundColor: appColors.secondaryBackground,
           automaticallyImplyLeading: false,
           actions: [],
           centerTitle: false,

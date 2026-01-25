@@ -60,7 +60,7 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
               curve: Curves.easeInOut,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: appColors.secondaryBackground,
+                color: appColors.primaryBackground,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color: appColors.containersBorders,

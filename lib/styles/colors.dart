@@ -13,15 +13,15 @@ const airForceBlue = Color(0xFF41729F);
 const oxfordBlue = Color(0xFF001F4D);
 const transparentGold = Color(0x45ffc72c);
 
-const primaryBackgroundLight = Color(0xFFF9E2AF);
-const primaryBackgroundDark = Color(0xFF404E68);
+const primaryBackgroundLight = Color(0xFFF5F3EE);
 const secondaryBackgroundLight = Color(0xFFFFFFFF);
-const secondaryBackgroundDark = Color(0xFF1E273B);
+const primaryBackgroundDark = Color(0xFF1E273B);
+const secondaryBackgroundDark = Color(0xFF404E68);
 
-const primaryTextLight = Color(0xFF000000);
-const primaryTextDark = Color(0xFFFFFFFF);
-const secondaryTextLight = Color(0xFF777777);
-const secondaryTextDark = Color(0xFF999999);
+const primaryTextLight = Color(0xFF1A1A1A);
+const primaryTextDark = Color(0xFFF5F5F5);
+const secondaryTextLight = Color(0xFF6B6B6B);
+const secondaryTextDark = Color(0xFFB0B0B0);
 
 @immutable
 class AppColorSet extends ThemeExtension<AppColorSet> {
@@ -107,12 +107,10 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
 
   bool get isDark => brightness == Brightness.dark;
 
-  // TODO: double check these, as i don't always like them
+  Color get secondaryBackground => isDark ? secondaryBackgroundDark : secondaryBackgroundLight;
+
   Color get primaryBackground =>
       isDark ? primaryBackgroundDark : primaryBackgroundLight;
-
-  Color get secondaryBackground =>
-      isDark ? secondaryBackgroundDark : secondaryBackgroundLight;
 
   Color get primaryText => isDark ? primaryTextDark : primaryTextLight;
 
@@ -359,15 +357,14 @@ const theBay = AppColorSet(
     lightButtonTextColor: white,
     transparentButtonTextColor: oxfordBlue,
     actionButtonBorders: persianRed,
-    actionButtonBackground: primaryBackgroundDark,
-    // TODO: might need to be changed
+    actionButtonBackground: secondaryBackgroundDark,
     actionButtonIconColor: primaryTextDark,
     textFieldBorders: marianBlue,
-    textFieldBackground: primaryBackgroundDark,
+    textFieldBackground: secondaryBackgroundDark,
     textFieldText: primaryTextDark,
     textFieldLabelText: secondaryTextDark,
     dropDownBorders: marianBlue,
-    dropDownBackground: primaryBackgroundDark,
+    dropDownBackground: secondaryBackgroundDark,
     dropDownIconColor: secondaryTextDark,
     dropDownTextColor: primaryTextDark,
     labelSelectedBackground: pictonBlue,

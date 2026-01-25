@@ -154,7 +154,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
     final userId = userInfo?.id;
 
     return Scaffold(
-      backgroundColor: appColors.secondaryBackground,
+      backgroundColor: appColors.primaryBackground,
       appBar: MyAppBar(
         style: MyAppBarStyle.backButtonTitleLeft,
         title: 'User info',

@@ -142,8 +142,8 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                   label: 'Item colors container',
                                                   child: Container(
                                                     decoration: BoxDecoration(
-                                                      color: appColors.primaryBackground,
-                                                      borderRadius: BorderRadius.circular(24),
+                                                          color: appColors.secondaryBackground,
+                                                          borderRadius: BorderRadius.circular(24),
                                                       border: Border.all(
                                                             color: getBorderColor(
                                                                 kMyColors.toList(), analysisResultListedIndex),

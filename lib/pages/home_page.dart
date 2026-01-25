@@ -62,8 +62,8 @@ class _HomePageState extends ConsumerState<HomePage> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: appColors.primaryBackground,
-        appBar: MyAppBar(
+          backgroundColor: appColors.secondaryBackground,
+          appBar: MyAppBar(
           style: MyAppBarStyle.titleWithProfileImage,
           title: 'Home',
           height: 100,
@@ -120,7 +120,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                               Divider(
                                 height: 24,
                                 thickness: 2,
-                                color: appColors.primaryBackground,
+                                color: appColors.secondaryBackground,
                               ),
 
                               // Row with user statistics

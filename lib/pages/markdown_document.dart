@@ -44,7 +44,7 @@ class _MarkdownDocumentState extends State<MarkdownDocument> {
     final appColors = AppThemeManager.currentColors;
 
     return Scaffold(
-      backgroundColor: appColors.primaryBackground,
+      backgroundColor: appColors.secondaryBackground,
       appBar: MyAppBar(
         style: MyAppBarStyle.backButtonTitleCentered,
         title: widget.title,

@@ -53,7 +53,7 @@ class _DropdownState<T> extends State<Dropdown<T>> {
       decoration: InputDecoration(
         hintText: widget.hintText,
         filled: true,
-        fillColor: appColors.primaryBackground,
+        fillColor: appColors.secondaryBackground,
         contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),

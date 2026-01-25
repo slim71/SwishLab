@@ -41,7 +41,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: appColors.primaryBackground,
+        backgroundColor: appColors.secondaryBackground,
         body: SafeArea(
           top: true,
           child:
@@ -106,9 +106,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                 label: 'First page title',
                                                 child: Text(
                                                   'Understand Your Form',
-                                                  style:
-                                                  AppTextStyles.headlineLarge(color: appColors.secondaryBackground),
-                                                ),
+                                                  style: AppTextStyles.headlineLarge(
+                                                            color: appColors.primaryBackground),
+                                                      ),
                                               ),
                                             ),
 
@@ -125,7 +125,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                               text:
                                                                   'Your personal AI coach helps you understand your shot. \nTrack your ',
                                                               style: AppTextStyles.labelLarge(),
-                                                              color: appColors.secondaryBackground,
+                                                              color: appColors.primaryBackground,
                                                             ),
                                                             CustomTextSpan(
                                                               text: 'form, ball path,',
@@ -148,7 +148,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                             )
                                                           ],
                                                           style: AppTextStyles.labelLarge(),
-                                                          color: appColors.secondaryBackground,
+                                                          color: appColors.primaryBackground,
                                                         ),
                                                       ),
                                                     ),
@@ -200,7 +200,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                       child: Text(
                                                         'Keep It Straight',
                                                         style: AppTextStyles.headlineLarge(
-                                                            color: appColors.secondaryBackground),
+                                                            color: appColors.primaryBackground),
                                                       ),
                                                     ),
                                                   ),
@@ -222,8 +222,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                       CustomTextSpan(
                                                         text: 'Use the ',
                                                         style: AppTextStyles.labelLarge(
-                                                            color: appColors.secondaryBackground),
-                                                      ),
+                                                                  color: appColors.primaryBackground),
+                                                            ),
                                                       CustomTextSpan(
                                                         text: 'front view ',
                                                         style: TextStyle(
@@ -262,9 +262,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                       )
                                                     ],
                                                     style: AppTextStyles.labelLarge(
-                                                        color: appColors
-                                                            .secondaryBackground),
-                                                  ),
+                                                        color: appColors.primaryBackground),
+                                                        ),
                                                 ),
                                               ),
                                             ),
@@ -310,9 +309,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                 label: 'Third page title',
                                                 child: Text(
                                                   'Perfect the Flow',
-                                                  style: AppTextStyles.headlineLarge(color: appColors
-                                                      .secondaryBackground),
-                                                ),
+                                                  style: AppTextStyles.headlineLarge(color: appColors.primaryBackground),
+                                                      ),
                                               ),
                                             ),
 
@@ -328,7 +326,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                             CustomTextSpan(
                                                               text: 'See your shot in full motion. The ',
                                                               style: AppTextStyles.labelLarge(
-                                                                  color: appColors.secondaryBackground),
+                                                                  color: appColors.primaryBackground),
                                                             ),
                                                             CustomTextSpan(
                                                               text: 'side view',
@@ -379,7 +377,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                             )
                                                           ],
                                                           style: AppTextStyles.labelLarge(
-                                                              color: appColors.secondaryBackground),
+                                                              color: appColors.primaryBackground),
                                                         ),
                                                       ),
                                                     ),

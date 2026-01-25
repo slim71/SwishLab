@@ -64,7 +64,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: appColors.primaryBackground,
+        backgroundColor: appColors.secondaryBackground,
         appBar: MyAppBar(
           style: MyAppBarStyle.backButtonTitleLeft,
           title: 'Getting started',

@@ -162,7 +162,7 @@ class _SettingsState extends ConsumerState<Settings>
     final appColors = AppThemeManager.currentColors;
 
     return Scaffold(
-      backgroundColor: appColors.secondaryBackground,
+      backgroundColor: appColors.primaryBackground,
       appBar: MyAppBar(
         style: MyAppBarStyle.titleOnly,
         title: 'Settings',
@@ -232,10 +232,9 @@ class _SettingsState extends ConsumerState<Settings>
                                   children: [
                                     // Twitter button
                                     SocialIconButton(
-                                      borderColor: appColors.primaryBackground,
-                                      backgroundColor:
-                                      appColors.secondaryBackground,
-                                      icon: FontAwesomeIcons.twitter,
+                                            borderColor: appColors.secondaryBackground,
+                                            backgroundColor: appColors.primaryBackground,
+                                            icon: FontAwesomeIcons.twitter,
                                       iconColor: appColors.secondaryText,
                                       onTap: () {
                                         print('twitterButton pressed ...');
@@ -245,8 +244,8 @@ class _SettingsState extends ConsumerState<Settings>
 
                                           // Instagram button
                                           SocialIconButton(
-                                            borderColor: appColors.primaryBackground,
-                                            backgroundColor: appColors.secondaryBackground,
+                                            borderColor: appColors.secondaryBackground,
+                                            backgroundColor: appColors.primaryBackground,
                                             icon: FontAwesomeIcons.instagram,
                                             iconColor: appColors.secondaryText,
                                             onTap: () {
@@ -257,10 +256,9 @@ class _SettingsState extends ConsumerState<Settings>
 
                                           // Facebook button
                                     SocialIconButton(
-                                      borderColor: appColors.primaryBackground,
-                                      backgroundColor:
-                                      appColors.secondaryBackground,
-                                      icon: FontAwesomeIcons.facebookF,
+                                            borderColor: appColors.secondaryBackground,
+                                            backgroundColor: appColors.primaryBackground,
+                                            icon: FontAwesomeIcons.facebookF,
                                       iconColor: appColors.secondaryText,
                                       onTap: () {
                                         print('facebookButton pressed ...');

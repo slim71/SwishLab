@@ -52,7 +52,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                   width: double.infinity,
                   height: sheetHeight,
                   decoration: BoxDecoration(
-                    color: appColors.secondaryBackground,
+                    color: appColors.primaryBackground,
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(0),
                       bottomRight: Radius.circular(0),
@@ -473,7 +473,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                           ),
                                                                           child: Container(
                                                                             decoration: BoxDecoration(
-                                                                              color: appColors.secondaryBackground,
+                                                                              color: appColors.primaryBackground,
                                                                               borderRadius: BorderRadius.circular(8),
                                                                               border: Border.all(
                                                                                 color: appColors.altContBorders,

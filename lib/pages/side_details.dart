@@ -39,7 +39,7 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: appColors.primaryBackground,
+        backgroundColor: appColors.secondaryBackground,
         body:
             // Container with all content on the Front Details page
             Semantics(
@@ -48,7 +48,7 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
             width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
-              color: appColors.primaryBackground,
+              color: appColors.secondaryBackground,
               image: DecorationImage(
                 fit: BoxFit.cover,
                 alignment: AlignmentDirectional(0.3, 0),
@@ -86,7 +86,7 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                   child: IconActionButton(
                                     borderColor: appColors.containersBorders,
                                     size: 60,
-                                    backgroundColor: appColors.primaryBackground,
+                                    backgroundColor: appColors.secondaryBackground,
                                     icon: Icons.arrow_back_rounded,
                                     iconColor: appColors.primaryText,
                                     iconSize: 25,
@@ -124,7 +124,7 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                     child: IconActionButton(
                                       borderColor: appColors.containersBorders,
                                       size: 60,
-                                      backgroundColor: appColors.primaryBackground,
+                                      backgroundColor: appColors.secondaryBackground,
                                       icon: FontAwesomeIcons.upload,
                                       iconColor: appColors.primaryText,
                                       iconSize: 25,

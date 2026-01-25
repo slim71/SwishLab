@@ -133,7 +133,7 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
             style: TextStyle(color: appColors.primaryText),
           ),
           duration: Duration(milliseconds: 4000),
-          backgroundColor: appColors.secondaryBackground,
+          backgroundColor: appColors.primaryBackground,
         ),
       );
       return;
@@ -201,7 +201,7 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                       width: 200,
                                       height: 200,
                                       decoration: BoxDecoration(
-                                        color: appColors.primaryBackground,
+                                        color: appColors.secondaryBackground,
                                         shape: BoxShape.circle,
                                         border: Border.all(
                                           color: appColors.alternateTwo,
@@ -297,8 +297,8 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                               child: Container(
                                 width: double.infinity,
                                 decoration: BoxDecoration(
-                                  color: appColors.primaryBackground,
-                                  borderRadius: BorderRadius.circular(12),
+                                        color: appColors.secondaryBackground,
+                                        borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
                                     color: appColors.altContBorders,
                                     width: 1,
@@ -380,7 +380,7 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                       child: Container(
                                         width: double.infinity,
                                         decoration: BoxDecoration(
-                                          color: appColors.primaryBackground,
+                                          color: appColors.secondaryBackground,
                                           borderRadius: BorderRadius.circular(12),
                                           border: Border.all(
                                             color: appColors.altContBorders,

@@ -26,7 +26,7 @@ class StatsContainer extends StatelessWidget {
       width: MediaQuery.sizeOf(context).width * 0.4,
       height: 160,
       decoration: BoxDecoration(
-        color: appColors.primaryBackground,
+        color: appColors.secondaryBackground,
         borderRadius: BorderRadius.circular(24),
         border: Border.all(color: borderColor, width: 3),
       ),

@@ -101,7 +101,7 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                                             style: TextStyle(color: appColors.primaryText),
                                           ),
                                           duration: Duration(milliseconds: 4000),
-                                          backgroundColor: appColors.secondaryBackground,
+                                          backgroundColor: appColors.primaryBackground,
                                         ),
                                       );
                                     },

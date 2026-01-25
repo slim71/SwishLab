@@ -75,7 +75,7 @@ class _CreditsState extends ConsumerState<Credits> {
                               label: 'Container for a small introduction',
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: appColors.primaryBackground,
+                                  color: appColors.secondaryBackground,
                                   borderRadius: BorderRadius.circular(25),
                                   shape: BoxShape.rectangle,
                                 ),
@@ -165,7 +165,7 @@ class _CreditsState extends ConsumerState<Credits> {
                                           width: 100,
                                           height: 100,
                                           decoration: BoxDecoration(
-                                            color: appColors.secondaryBackground,
+                                            color: appColors.primaryBackground,
                                             borderRadius: BorderRadius.circular(25),
                                             shape: BoxShape.rectangle,
                                             border: Border.all(

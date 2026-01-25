@@ -1,10 +1,10 @@
 import 'package:SwishLab/constants.dart';
-import 'package:SwishLab/functions/shadow_from_color.dart';
 import 'package:SwishLab/models/statistics_row.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/background.dart';
+import 'package:SwishLab/widgets/box_with_shadow.dart';
 import 'package:SwishLab/widgets/stats_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -180,21 +180,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                             child: Container(
                               width: double.infinity,
                               height: 400,
-                              decoration: BoxDecoration(
-                                color: appColors.secondaryBackground,
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 3,
-                                        color: shadowFromColor(appColors.secondaryBackground),
-                                        offset: Offset(
-                                      0,
-                                      -1,
-                                    ),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(0),
-                                  bottomRight: Radius.circular(0),
+                                  decoration: BoxWithShadow(
+                                    shadowOffset: Offset(0, -10),
+                                    borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(16),
                                   topRight: Radius.circular(16),
                                 ),

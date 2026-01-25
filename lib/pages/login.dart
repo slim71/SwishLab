@@ -1,11 +1,11 @@
 import 'package:SwishLab/constants.dart';
-import 'package:SwishLab/functions/shadow_from_color.dart';
 import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/state/persisted_states.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/background.dart';
+import 'package:SwishLab/widgets/box_with_shadow.dart';
 import 'package:SwishLab/widgets/custom_text_span.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/input_field.dart';
@@ -126,21 +126,8 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                             constraints: BoxConstraints(
                               maxWidth: 570,
                             ),
-                            decoration: BoxDecoration(
-                              color: appColors.primaryBackground,
-                              boxShadow: [
-                                BoxShadow(
-                                  blurRadius: 4,
-                                      color: shadowFromColor(appColors.primaryBackground),
-                                      offset: Offset(
-                                    0,
-                                    2,
-                                  ),
-                                )
-                              ],
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child:
+                                decoration: BoxWithShadow(),
+                                child:
                             // Column containing the login form
                             Align(
                               alignment: AlignmentDirectional(0, 0),

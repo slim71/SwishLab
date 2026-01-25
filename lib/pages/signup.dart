@@ -1,4 +1,3 @@
-import 'package:SwishLab/functions/shadow_from_color.dart';
 import 'package:SwishLab/models/users_row.dart';
 import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/providers/users_provider.dart';
@@ -6,6 +5,7 @@ import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/background.dart';
+import 'package:SwishLab/widgets/box_with_shadow.dart';
 import 'package:SwishLab/widgets/custom_text_span.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/input_field.dart';
@@ -190,20 +190,7 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                       constraints: BoxConstraints(
                                         maxWidth: 570,
                                       ),
-                                      decoration: BoxDecoration(
-                                        color: appColors.secondaryBackground,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 4,
-                                            color: shadowFromColor(appColors.secondaryBackground),
-                                            offset: Offset(
-                                              0,
-                                              2,
-                                            ),
-                                          )
-                                        ],
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
+                                      decoration: BoxWithShadow(),
                                       child:
                                           // Column with the signup form
                                           Align(

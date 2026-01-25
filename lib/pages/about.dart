@@ -5,6 +5,7 @@ import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/background.dart';
+import 'package:SwishLab/widgets/box_with_shadow.dart';
 import 'package:SwishLab/widgets/custom_text_span.dart';
 import 'package:SwishLab/widgets/icon_action_button.dart';
 import 'package:flutter/gestures.dart';
@@ -200,18 +201,8 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 44),
                   child: Container(
-                    decoration: BoxDecoration(
-                      color: appColors.primaryBackground,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 4,
-                            color: shadowFromColor(appColors.primaryBackground),
-                            offset: Offset(0.0, 1),
-                          )
-                        ],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
+                      decoration: BoxWithShadow(),
+                      child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisSize: MainAxisSize.max,
                       children: [

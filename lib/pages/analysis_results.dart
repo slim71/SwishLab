@@ -145,14 +145,14 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                       color: appColors.primaryBackground,
                                                       borderRadius: BorderRadius.circular(24),
                                                       border: Border.all(
-                                                        color:
-                                                        getBorderColor(kMyColors.toList(), analysisResultListedIndex),
-                                                        width: 3,
+                                                            color: getBorderColor(
+                                                                kMyColors.toList(), analysisResultListedIndex),
+                                                            width: 3,
                                                       ),
                                                     ),
                                                     child:
-                                                    // Column containing scores for each category of the analized video
-                                                    Semantics(
+                                                            // Column containing scores for each category of the analyzed video
+                                                            Semantics(
                                                       label: 'Scores column',
                                                       child: InkWell(
                                                         onTap: () async {

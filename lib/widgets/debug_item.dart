@@ -1,5 +1,6 @@
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
+import 'package:SwishLab/widgets/box_with_shadow.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:flutter/material.dart';
 
@@ -25,16 +26,7 @@ class DebugItem extends StatelessWidget {
         label: 'Debug item container',
         child: Container(
           width: double.infinity,
-          decoration: BoxDecoration(
-            color: appColors.secondaryBackground,
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 0,
-                color: appColors.containersBorders,
-                offset: const Offset(0, 1),
-              ),
-            ],
-            borderRadius: BorderRadius.circular(10),
+          decoration: BoxWithShadow(
             border: Border.all(
               color: appColors.primaryText,
             ),

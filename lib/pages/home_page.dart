@@ -1,5 +1,4 @@
 import 'package:SwishLab/constants.dart';
-import 'package:SwishLab/functions/shadow_from_color.dart';
 import 'package:SwishLab/models/statistics_row.dart';
 import 'package:SwishLab/models/users_row.dart';
 import 'package:SwishLab/providers/statistics_provider.dart';
@@ -9,6 +8,7 @@ import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/background.dart';
+import 'package:SwishLab/widgets/box_with_shadow.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -91,19 +91,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                       child: Container(
                         width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: appColors.secondaryBackground,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 4,
-                              color: shadowFromColor(appColors.secondaryBackground),
-                              offset: Offset(
-                                0.0,
-                                2,
-                              ),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(12),
+                        decoration: BoxWithShadow(
                           border: Border.all(
                             color: appColors.containersBorders,
                           ),
@@ -238,19 +226,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                             child: Container(
                               width: double.infinity,
                               height: 120,
-                              decoration: BoxDecoration(
-                                color: appColors.secondaryBackground,
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 3,
-                                    color: shadowFromColor(appColors.secondaryBackground),
-                                    offset: Offset(
-                                      0.0,
-                                      1,
-                                    ),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(12),
+                              decoration: BoxWithShadow(
                                 border: Border.all(
                                   color: appColors.altContBorders,
                                 ),
@@ -320,19 +296,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                               // width: MediaQuery.sizeOf(context).width,
                               width: double.infinity,
                               height: 120,
-                              decoration: BoxDecoration(
-                                color: appColors.secondaryBackground,
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 3,
-                                    color: shadowFromColor(appColors.secondaryBackground),
-                                    offset: Offset(
-                                      0.0,
-                                      1,
-                                    ),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(12),
+                              decoration: BoxWithShadow(
                                 border: Border.all(
                                   color: appColors.altContBorders,
                                 ),

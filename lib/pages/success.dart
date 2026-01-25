@@ -2,6 +2,7 @@ import 'package:SwishLab/models/users_row.dart';
 import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
+import 'package:SwishLab/widgets/box_with_shadow.dart';
 import 'package:SwishLab/widgets/custom_text_span.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:flutter/material.dart';
@@ -67,21 +68,9 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                           constraints: BoxConstraints(
                             maxWidth: 770,
                           ),
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                blurRadius: 3,
-                                color: appColors.containersBorders,
-                                offset: Offset(1, 1),
-                                spreadRadius: 3,
-                              )
-                            ],
+                          decoration: BoxWithShadow(
                             gradient: appColors.gradientBackground(),
-                            borderRadius: BorderRadius.circular(12),
-                            shape: BoxShape.rectangle,
-                            border: Border.all(
-                              color: appColors.secondaryText,
-                            ),
+                            border: Border.all(color: appColors.secondaryText),
                           ),
                           child:
                               // Column to place the page content

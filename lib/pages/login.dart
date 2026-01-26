@@ -3,7 +3,6 @@ import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/state/persisted_states.dart';
 import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/background.dart';
 import 'package:SwishLab/widgets/box_with_shadow.dart';
 import 'package:SwishLab/widgets/custom_text_span.dart';
@@ -68,8 +67,6 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
-    final appColors = AppThemeManager.currentColors;
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -78,51 +75,39 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
       child: Scaffold(
         body:
             // Container used for background purposes
-            Semantics(
-          label: 'Page container with background',
-                child: Background(
-                  child: Container(
+            Background(
+          child: Container(
                     height: double.infinity,
                     alignment: AlignmentDirectional(0, -1),
                     child:
                         // Column containing all content for the login page
-                Semantics(
-                      label: 'Column with login form',
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
+                Column(
+              mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           // Container to allow padding around the page title
-                          Semantics(
-                            label: 'Spacing container around title',
-                            child: Container(
-                              width: double.infinity,
+                Container(
+                  width: double.infinity,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               alignment: AlignmentDirectional(0, 0),
                               child:
                                   // App logo
-                                  Semantics(
-                                label: 'App logo',
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
+                      ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
                                   child: Image.asset(
                                     'assets/images/SwishLab_logo.png',
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                              ),
-                            ),
-                          ),
+                ),
 
-                          // Container with the login form
+                // Container with the login form
                       Padding(
                         padding: EdgeInsets.all(16),
-                        child: Semantics(
-                          label: 'Login form container',
-                          child: Container(
-                            width: double.infinity,
+                  child: Container(
+                    width: double.infinity,
                             constraints: BoxConstraints(
                               maxWidth: 570,
                             ),
@@ -133,43 +118,33 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                               alignment: AlignmentDirectional(0, 0),
                               child: Padding(
                                 padding: EdgeInsets.all(32),
-                                child: Semantics(
-                                  label: 'Login form',
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment: CrossAxisAlignment.center,
                                     children: [
                                       // Simple text to greet the user
-                                      Semantics(
-                                        label: 'Welcome greet',
-                                        child: Text(
-                                          'Welcome Back',
+                            Text(
+                              'Welcome Back',
                                           textAlign: TextAlign.center,
                                           style: AppTextStyles.displaySmall(),
                                         ),
-                                      ),
 
                                           // Text telling the user to insert their credential below
                                           Padding(
                                             padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 24),
-                                            child: Semantics(
-                                              label: 'Login instructions',
-                                              child: Text(
-                                                'Insert credentials to login',
+                              child: Text(
+                                'Insert credentials to login',
                                                 textAlign: TextAlign.center,
                                                 style: AppTextStyles.labelMedium(),
                                               ),
-                                            ),
                                           ),
 
                                           // Email field
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 0, 0, 16),
-                                        child: Semantics(
-                                          label: 'Email field',
-                                          child: SizedBox(
-                                            width: double.infinity,
+                              child: SizedBox(
+                                width: double.infinity,
                                             child: InputField(
                                               controller:
                                               emailAddressTextController,
@@ -182,16 +157,13 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                               allowRegex: RegExp(r'[a-zA-Z0-9@._%+-]'),
                                             ),
                                           ),
-                                        ),
                                       ),
 
                                           // Password field
                                           Padding(
                                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                            child: Semantics(
-                                              label: 'Password field',
-                                              child: SizedBox(
-                                                width: double.infinity,
+                              child: SizedBox(
+                                width: double.infinity,
                                                 child: InputField(
                                                   controller: passwordTextController,
                                                   focusNode: passwordFocusNode,
@@ -202,14 +174,11 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                                   denyRegex: RegExp(r'\s'),
                                                 ),
                                               ),
-                                            ),
                                           ),
 
                                           // Button to sign in with provided email and password
-                                      Semantics(
-                                        label: 'Sign in with email and password',
-                                        child: DarkButton(
-                                          onPressed: () async {
+                            DarkButton(
+                              onPressed: () async {
                                             final user = await ref
                                                 .read(authServiceProvider)
                                                 .signInWithEmail(
@@ -227,26 +196,20 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                           },
                                           text: 'Log In',
                                         ),
-                                      ),
 
                                           // Brief text to point the user to the Google login button
                                           Padding(
                                             padding: EdgeInsetsDirectional.fromSTEB(16, 15, 16, 15),
-                                            child: Semantics(
-                                              label: 'Text for Google login button',
-                                              child: Text(
-                                                'Or sign in with',
+                              child: Text(
+                                'Or sign in with',
                                                 textAlign: TextAlign.center,
                                                 style: AppTextStyles.labelMedium(),
                                               ),
-                                            ),
                                           ),
 
                                           // Google login button
-                                      Semantics(
-                                        label: 'Google login button',
-                                        child: LightButton(
-                                          onPressed: () async {
+                            LightButton(
+                              onPressed: () async {
                                             await ref
                                                 .read(authServiceProvider)
                                                 .signInWithGoogle();
@@ -259,15 +222,12 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                             size: 15,
                                           ),
                                         ),
-                                      ),
 
                                           // Text redirecting to signup page
                                           Padding(
                                             padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
-                                            child: Semantics(
-                                              label: 'Text redirecting to signup page',
-                                              child: InkWell(
-                                                onTap: () async {
+                              child: InkWell(
+                                onTap: () async {
                                                   context.goNamed('signup');
                                                 },
                                                 child: RichText(
@@ -284,16 +244,13 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                                   ),
                                                 ),
                                               ),
-                                            ),
                                           ),
                                         ],
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                                .animate()
+                      ),
+                    ),
+                  )
+                      .animate()
                                 // Fade in
                                 .fade(
                                   duration: 300.ms,
@@ -325,9 +282,8 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                )),
+          ),
+        ),
       ),
     );
   }

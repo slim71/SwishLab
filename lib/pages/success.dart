@@ -50,10 +50,8 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
           top: true,
           child:
               // Column with content for the whole Success page
-              Semantics(
-            label: 'Main column content',
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
+              Column(
+            mainAxisSize: MainAxisSize.max,
               children: [
                 // Container with content for the whole Success page
                 Expanded(
@@ -61,10 +59,8 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                     alignment: AlignmentDirectional(0, -1),
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 12),
-                      child: Semantics(
-                        label: 'Main container content',
-                        child: Container(
-                          width: double.infinity,
+                    child: Container(
+                      width: double.infinity,
                           constraints: BoxConstraints(
                             maxWidth: 770,
                           ),
@@ -77,10 +73,8 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                               Padding(
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(16, 16, 16, 12),
-                            child: Semantics(
-                              label: 'Column to place the page content',
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -90,11 +84,8 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                     child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 44, 0, 0),
-                                        child: Semantics(
-                                          label:
-                                              'Container used to place the success bubble',
-                                          child: Container(
-                                            width: 120,
+                                  child: Container(
+                                    width: 120,
                                             height: 120,
                                             decoration: BoxDecoration(
                                               color: appColors.altContBorders,
@@ -108,11 +99,8 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                                 // Actual container with the success icon
                                                 Padding(
                                               padding: EdgeInsets.all(8),
-                                              child: Semantics(
-                                                label:
-                                                    'Actual container with the success icon',
-                                                child: Container(
-                                                  width: 140,
+                                      child: Container(
+                                        width: 140,
                                                   height: 140,
                                                   decoration: BoxDecoration(
                                                     color: appColors
@@ -126,21 +114,16 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                                   ),
                                                   child:
                                                       // Success Icon
-                                                      Semantics(
-                                                    label: 'Success Icon',
-                                                    child: Icon(
-                                                      Icons.check_rounded,
+                                            Icon(
+                                          Icons.check_rounded,
                                                       color: appColors
                                                           .containersBorders,
                                                       size: 64,
                                                     ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                            .animate()
+                                      ),
+                                    ),
+                                  )
+                                      .animate()
                                             .fade(
                                               begin: 0,
                                               end: 1,
@@ -171,15 +154,12 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                   // "Success!" text
                                   Align(
                                       alignment: AlignmentDirectional(0, -1),
-                                      child: Semantics(
-                                        label: '"Success!" text',
-                                        child: Text(
-                                          'Success!',
+                                child: Text(
+                                  'Success!',
                                           style: AppTextStyles.displaySmall(
                                               color: appColors.secondaryText),
-                                        ),
-                                      )
-                                          .animate()
+                                )
+                                    .animate()
                                           .fade(
                                             begin: 0,
                                             end: 1,
@@ -197,15 +177,12 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                   // "Account created" text
                                   Align(
                                       alignment: AlignmentDirectional(0, -1),
-                                      child: Semantics(
-                                        label: '"Account created" text',
-                                        child: Text(
-                                          'Account created',
+                                child: Text(
+                                  'Account created',
                                           style: AppTextStyles.labelMedium(
                                               color: appColors.secondaryText),
-                                        ),
-                                      )
-                                          .animate()
+                                )
+                                    .animate()
                                           .fade(
                                             begin: 0,
                                             end: 1,
@@ -237,15 +214,12 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                   const SizedBox(width: 8),
 
                                   // Simple divider
-                                  Semantics(
-                                    label: 'Simple divider',
-                                    child: Divider(
-                                      height: 44,
+                            Divider(
+                              height: 44,
                                       thickness: 2,
                                       color: appColors.alternateOne,
-                                    ),
-                                  )
-                                      .animate()
+                            )
+                                .animate()
                                       .fade(
                                         begin: 0,
                                         end: 1,
@@ -281,34 +255,26 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                     child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             12, 0, 12, 0),
-                                        child: Semantics(
-                                          label: 'New user data column',
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.max,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
                                               // "Your new user ID is" text
-                                              Semantics(
-                                                label:
-                                                    '"Your new user ID is" text',
-                                                child: Text(
-                                                  'Your registered email is',
+                                      Text(
+                                        'Your registered email is',
                                                   style:
                                                       AppTextStyles.labelMedium(
                                                           color: appColors
                                                               .secondaryText),
                                                 ),
-                                              ),
                                               const SizedBox(width: 4),
 
                                               // User email
-                                              Semantics(
-                                                label: 'User email',
-                                                child: Text(
-                                                  userInfo?.email ??
+                                      Text(
+                                        userInfo?.email ??
                                                       'na@email.com',
                                                   textAlign: TextAlign.end,
                                                   style:
@@ -316,18 +282,14 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                                           color: appColors
                                                               .secondaryText),
                                                 ),
-                                              ),
                                               const SizedBox(width: 4),
 
                                               // Instructions in profile customization
                                               Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(0, 50, 0, 0),
-                                                child: Semantics(
-                                                  label:
-                                                      'Instructions in profile customization',
-                                                  child: RichText(
-                                                    textScaler:
+                                        child: RichText(
+                                          textScaler:
                                                         MediaQuery.of(context)
                                                             .textScaler,
                                                     text: CustomTextSpan(
@@ -352,13 +314,11 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                                     ),
                                                     textAlign: TextAlign.center,
                                                   ),
-                                                ),
                                               ),
                                               const SizedBox(width: 12),
                                             ],
-                                          ),
-                                        )
-                                            .animate()
+                                  )
+                                      .animate()
                                             .fade(
                                               begin: 0,
                                               end: 1,
@@ -391,16 +351,13 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                   const SizedBox(width: 8),
 
                                   // Home button
-                                  Semantics(
-                                    label: 'Home button',
-                                    child: DarkButton(
-                                      onPressed: () async {
+                            DarkButton(
+                              onPressed: () async {
                                         context.goNamed('home');
                                       },
                                       text: 'Go Home',
-                                    ),
-                                  )
-                                      .animate()
+                            )
+                                .animate()
                                       .fade(
                                         begin: 0,
                                         end: 1,
@@ -432,16 +389,13 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                   const SizedBox(width: 8),
                                 ],
                               ),
-                            ),
-                          ),
-                        ),
                       ),
                     ),
+                  ),
                   ),
                 ),
               ],
             ),
-          ),
         ),
       ),
     );

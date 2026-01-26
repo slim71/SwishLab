@@ -197,25 +197,19 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   // Row containing the error message for the first name in case it is invalid
-                                  Semantics(
-                                    label: 'First Name error row',
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         // "Valid First Name required" text
                                         if (!validationStruct!.firstNameValid)
-                                          Semantics(
-                                            label: '"Valid First Name required" text',
-                                            child: Text(
-                                              'Valid First Name required',
+                                        Text(
+                                          'Valid First Name required',
                                               textAlign: TextAlign.end,
                                               style: AppTextStyles.labelMedium(),
                                             ),
-                                          ),
                                       ],
                                     ),
-                                  ),
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -244,25 +238,19 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                   ),
 
                                   // Row containing the error message for the last name in case it is invalid
-                                  Semantics(
-                                    label: 'Last Name error row',
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         // "Valid Last Name required" text
                                         if (!validationStruct!.lastNameValid)
-                                          Semantics(
-                                            label: '"Valid Last Name required" text',
-                                            child: Text(
-                                              'Valid Last Name required',
+                                        Text(
+                                          'Valid Last Name required',
                                               textAlign: TextAlign.end,
                                               style: AppTextStyles.labelMedium(),
                                             ),
-                                          ),
                                       ],
                                     ),
-                                  ),
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -290,25 +278,19 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                   ),
 
                                   // Row containing the error message for the email in case it is invalid
-                                  Semantics(
-                                    label: 'Email error row',
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         // "Valid Email required" text
                                         if (!validationStruct!.emailValid)
-                                          Semantics(
-                                            label: '"Valid Email required" text',
-                                            child: Text(
-                                              'Valid Email required',
+                                        Text(
+                                          'Valid Email required',
                                               textAlign: TextAlign.end,
                                               style: AppTextStyles.labelMedium(),
                                             ),
-                                          ),
                                       ],
                                     ),
-                                  ),
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -336,25 +318,19 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                   ),
 
                                   // Row containing the error message for the shooting han in case it is invalid
-                                  Semantics(
-                                    label: 'Shooting Hand error row',
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       children: [
                                         // "Please select a valid Shooting Hand" text
                                         if (!validationStruct!.shootingHandValid)
-                                          Semantics(
-                                            label: '"Please select a valid Shooting Hand" text',
-                                            child: Text(
-                                              'Please select a valid Shooting Hand',
+                                        Text(
+                                          'Please select a valid Shooting Hand',
                                               textAlign: TextAlign.end,
                                               style: AppTextStyles.labelMedium(),
                                             ),
-                                          ),
                                       ],
                                     ),
-                                  ),
                                   Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [

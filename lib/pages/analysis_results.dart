@@ -62,47 +62,35 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
           top: true,
           child:
               // Container used to have a colored background
-              Semantics(
-            label: 'Background container',
-                  child: Background(
-                    child: Padding(
+              Background(
+            child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                child: Semantics(
-                  label: 'Main column content',
-                  child: Column(
-                          mainAxisSize: MainAxisSize.max,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
                           children: [
                             // Column containing the Analysis results content
                             Expanded(
                               child: Padding(
                                 padding: EdgeInsets.all(12),
-                                child: Semantics(
-                                  label: 'Page content column',
-                                  child: SingleChildScrollView(
-                                    child: Column(
+                      child: SingleChildScrollView(
+                        child: Column(
                                       mainAxisSize: MainAxisSize.max,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         // Player to view the annotated video with analysis data
-                                        Semantics(
-                                          label: 'Annotated video preview',
-                                          child: VideoPreview(
-                                            source: NetworkVideoSource(
+                            VideoPreview(
+                              source: NetworkVideoSource(
                                                 'https://www.pexels.com/video/low-angle-view-of-a-man-playing-basketball-5192077/'),
                                           ),
-                                        ),
 
                                         // Divider between the video preview and the scores
-                                  Semantics(
-                                    label: 'Simple divider',
-                                    child: Divider(
-                                      height: 32,
+                            Divider(
+                              height: 32,
                                       thickness: 1,
                                       color: appColors.alternateOne,
-                                    ),
-                                  )
-                                      .animate()
-                                      .fadeIn(
+                            )
+                                .animate()
+                                .fadeIn(
                                     duration: 600.ms,
                                     curve: Curves.easeInOut,
                                   )
@@ -119,10 +107,8 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                             final analysisResultListed =
                                                 processAnalysisResults(widget.videoDataJson['analysis']).toList();
 
-                                            return Semantics(
-                                        label: 'Analysis results generator',
-                                        child: Wrap(
-                                          spacing: 20,
+                                return Wrap(
+                                  spacing: 20,
                                           runSpacing: 0,
                                           alignment: WrapAlignment.start,
                                           crossAxisAlignment: WrapCrossAlignment.start,
@@ -138,10 +124,8 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                               // Container used to customize the item's colors
                                               Padding(
                                                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                                child: Semantics(
-                                                  label: 'Item colors container',
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
+                                      child: Container(
+                                        decoration: BoxDecoration(
                                                           color: appColors.secondaryBackground,
                                                           borderRadius: BorderRadius.circular(24),
                                                       border: Border.all(
@@ -152,10 +136,8 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                     ),
                                                     child:
                                                             // Column containing scores for each category of the analyzed video
-                                                            Semantics(
-                                                      label: 'Scores column',
-                                                      child: InkWell(
-                                                        onTap: () async {
+                                            InkWell(
+                                          onTap: () async {
                                                           await showModalBottomSheet(
                                                             isScrollControlled: true,
                                                             backgroundColor: Colors.transparent,
@@ -187,10 +169,8 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                             // Icon related to the category in focus, dynamically generated from its name
                                                             Padding(
                                                               padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                                                              child: Semantics(
-                                                                label: 'Category icon',
-                                                                child: SizedBox(
-                                                                  width: 50,
+                                                child: SizedBox(
+                                                  width: 50,
                                                                   height: 50,
                                                                   child: DynamicIconImage(
                                                                     width: 50,
@@ -199,16 +179,13 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                                     analysisResultListedItem['section'].toString(),
                                                                   ),
                                                                 ),
-                                                              ),
                                                             ),
 
                                                                 // Category name
                                                                 Padding(
                                                                   padding: EdgeInsets.all(10),
-                                                                  child: Semantics(
-                                                                    label: 'Category name',
-                                                                    child: Text(
-                                                                      scoreToRating(
+                                                child: Text(
+                                                  scoreToRating(
                                                                         (((analysisResultListedItem['scores'] as List?)
                                                                                     ?.firstWhere(
                                                                               (e) => e['name'] == 'Total',
@@ -219,16 +196,13 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                                       ),
                                                                       style: AppTextStyles.bodyLarge(),
                                                                     ),
-                                                                  ),
                                                                 ),
 
                                                                 // Category score
                                                             Padding(
                                                               padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                                              child: Semantics(
-                                                                label: 'Category score',
-                                                                child: Text(
-                                                                  (((analysisResultListedItem['scores'] as List?)
+                                                child: Text(
+                                                  (((analysisResultListedItem['scores'] as List?)
                                                                       ?.firstWhere(
                                                                         (e) => e['name'] == 'Total',
                                                                     orElse: () => null,
@@ -237,17 +211,13 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                                       ''),
                                                                   style: AppTextStyles.bodySmall(),
                                                                 ),
-                                                              ),
                                                             ),
                                                           ],
                                                         ),
                                                       ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
+                                      ),
+                                    );
                                           }),
-                                        ),
                                       ).animate().move(
                                         begin: const Offset(0, 100),
                                         end: Offset.zero,
@@ -259,14 +229,12 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                 ],
                               ),
                             ),
-                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
-              ),
-                  )),
+            ),
+          ),
         ),
       ),
     );

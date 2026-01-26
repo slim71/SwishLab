@@ -46,20 +46,14 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           top: true,
           child:
               // Container to have a colored background
-              Semantics(
-                  label: 'Background container',
-                  child: Background(
-                    child: Semantics(
-                      label: 'Main column content',
-                child: Column(
-                        mainAxisSize: MainAxisSize.max,
+              Background(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
                         children: [
                           // Page view with different pages and content
                           Expanded(
-                            child: Semantics(
-                              label: 'Page view',
-                              child: SizedBox(
-                                width: double.infinity,
+                  child: SizedBox(
+                    width: double.infinity,
                                 height: 500,
                                 child: Stack(
                                   children: [
@@ -72,10 +66,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                           // Column to place the content for the first page
                                           Padding(
                                             padding: EdgeInsets.all(12),
-                                            child: Semantics(
-                                              label: 'First page content column',
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
@@ -83,10 +75,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                   Expanded(
                                                     child: Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
-                                                      child: Semantics(
-                                                        label: 'First page image',
-                                                        child: ClipRRect(
-                                                          borderRadius: BorderRadius.circular(12),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(12),
                                                           child: Image.asset(
                                                             'assets/images/ai_general.jpg',
                                                             width: double.infinity,
@@ -94,7 +84,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                             fit: BoxFit.cover,
                                                           ),
                                                         ),
-                                                      ),
                                                     ),
                                                   ),
 
@@ -102,23 +91,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                             Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(12, 0, 0, 0),
-                                              child: Semantics(
-                                                label: 'First page title',
-                                                child: Text(
-                                                  'Understand Your Form',
+                                      child: Text(
+                                        'Understand Your Form',
                                                   style: AppTextStyles.headlineLarge(
                                                             color: appColors.primaryBackground),
                                                       ),
-                                              ),
                                             ),
 
                                                   // Introduction on the first page
                                                   Padding(
                                                     padding: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 0),
-                                                    child: Semantics(
-                                                      label: 'First page introduction',
-                                                      child: RichText(
-                                                        textScaler: MediaQuery.of(context).textScaler,
+                                      child: RichText(
+                                        textScaler: MediaQuery.of(context).textScaler,
                                                         text: CustomTextSpan(
                                                           children: [
                                                             CustomTextSpan(
@@ -151,20 +135,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                           color: appColors.primaryBackground,
                                                         ),
                                                       ),
-                                                    ),
                                                   ),
                                                 ],
                                               ),
-                                            ),
                                           ),
 
                                           // Column to place the content for the second page
                                     Padding(
                                       padding: EdgeInsets.all(12),
-                                      child: Semantics(
-                                        label: 'Second page content column',
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
                                           MainAxisAlignment.center,
                                           crossAxisAlignment:
@@ -175,10 +155,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(0, 0, 0, 12),
-                                                child: Semantics(
-                                                  label: 'Second page image',
-                                                  child: ClipRRect(
-                                                    borderRadius:
+                                        child: ClipRRect(
+                                          borderRadius:
                                                     BorderRadius.circular(
                                                         12),
                                                     child: Image.asset(
@@ -188,32 +166,25 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                       fit: BoxFit.cover,
                                                     ),
                                                   ),
-                                                ),
                                               ),
                                             ),
 
                                                   // Second page title
                                                   Padding(
                                                     padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                                                    child: Semantics(
-                                                      label: 'Second page title',
-                                                      child: Text(
-                                                        'Keep It Straight',
+                                      child: Text(
+                                        'Keep It Straight',
                                                         style: AppTextStyles.headlineLarge(
                                                             color: appColors.primaryBackground),
                                                       ),
-                                                    ),
                                                   ),
 
                                                   // Introduction on the second page
                                             Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(12, 4, 12, 0),
-                                              child: Semantics(
-                                                label:
-                                                'Second page introduction',
-                                                child: RichText(
-                                                  textScaler:
+                                      child: RichText(
+                                        textScaler:
                                                   MediaQuery
                                                       .of(context)
                                                       .textScaler,
@@ -265,20 +236,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                         color: appColors.primaryBackground),
                                                         ),
                                                 ),
-                                              ),
                                             ),
                                           ],
                                         ),
-                                      ),
                                     ),
 
                                           // Column to place the content for the third page
                                           Padding(
                                             padding: EdgeInsets.all(12),
-                                            child: Semantics(
-                                              label: 'Third page content column',
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
@@ -286,10 +253,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                   Expanded(
                                                     child: Padding(
                                                       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
-                                                      child: Semantics(
-                                                        label: 'Third page image',
-                                                        child: ClipRRect(
-                                                          borderRadius: BorderRadius.circular(12),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(12),
                                                           child: Image.asset(
                                                             'assets/images/ai_side.png',
                                                             width: double.infinity,
@@ -297,7 +262,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                             fit: BoxFit.cover,
                                                           ),
                                                         ),
-                                                      ),
                                                     ),
                                                   ),
 
@@ -305,22 +269,17 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                             Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(12, 0, 0, 0),
-                                              child: Semantics(
-                                                label: 'Third page title',
-                                                child: Text(
-                                                  'Perfect the Flow',
+                                      child: Text(
+                                        'Perfect the Flow',
                                                   style: AppTextStyles.headlineLarge(color: appColors.primaryBackground),
                                                       ),
-                                              ),
                                             ),
 
                                                   // Introduction on the third page
                                                   Padding(
                                                     padding: EdgeInsetsDirectional.fromSTEB(12, 4, 12, 0),
-                                                    child: Semantics(
-                                                      label: 'Third page introduction',
-                                                      child: RichText(
-                                                        textScaler: MediaQuery.of(context).textScaler,
+                                      child: RichText(
+                                        textScaler: MediaQuery.of(context).textScaler,
                                                         text: CustomTextSpan(
                                                           children: [
                                                             CustomTextSpan(
@@ -380,11 +339,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                               color: appColors.primaryBackground),
                                                         ),
                                                       ),
-                                                    ),
                                                   ),
                                                 ],
                                               ),
-                                            ),
                                           ),
                                         ],
                                       ),
@@ -420,16 +377,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                   ],
                                 ),
                               ),
-                            ),
                           ),
 
                           // Wrap to place the login and register buttons
                     Padding(
                       padding: EdgeInsets.all(24),
-                      child: Semantics(
-                        label: 'Buttons wrap',
-                        child: Wrap(
-                          spacing: 16,
+                  child: Wrap(
+                    spacing: 16,
                           runSpacing: 16,
                           alignment: WrapAlignment.start,
                           crossAxisAlignment: WrapCrossAlignment.start,
@@ -439,34 +393,26 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                           clipBehavior: Clip.none,
                           children: [
                             // Login button
-                            Semantics(
-                              label: 'Login button',
-                              child: LightButton(
-                                onPressed: () async {
+                      LightButton(
+                        onPressed: () async {
                                   context.goNamed('login');
                                 },
                                 text: 'Login',
                               ),
-                            ),
 
                                   // Register button
-                                  Semantics(
-                                    label: 'Register button',
-                                    child: DarkButton(
-                                      onPressed: () async {
+                      DarkButton(
+                        onPressed: () async {
                                         context.goNamed('signup');
                                       },
                                       text: 'Register',
                                     ),
-                                  ),
                                 ],
                               ),
-                            ),
                           ),
                         ],
                       ),
-              ),
-                  )),
+          ),
         ),
       ),
     );

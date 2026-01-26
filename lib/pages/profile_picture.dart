@@ -176,29 +176,21 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
           top: true,
           child:
               // Container used to have a colored background
-              Semantics(
-            label: 'Background container',
-                  child: Background(
-                    child: Padding(
+              Background(
+            child: Padding(
                       padding: EdgeInsets.all(24),
-                child: Semantics(
-                  label: 'Profile picture content',
-                  child: Column(
-                          mainAxisSize: MainAxisSize.max,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             // Column containing the profile picture
-                            Semantics(
-                              label: 'Column containing the profile picture',
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
                                 children: [
                                   // Container for the profile picture
-                                  Semantics(
-                                    label: 'Container for the profile picture',
-                                    child: Container(
-                                      width: 200,
+                      Container(
+                        width: 200,
                                       height: 200,
                                       decoration: BoxDecoration(
                                         color: appColors.secondaryBackground,
@@ -210,16 +202,12 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                       ),
                                       child:
                                           // Stack to have multiple image uploads widgets together
-                                          Semantics(
-                                        label: 'Stack to have multiple image uploads widgets together ',
-                                        child: Stack(
-                                          children: [
+                            Stack(
+                          children: [
                                             // Circle image for local file
                                             if (imgNetwork == null || imgNetwork == '')
-                                              Semantics(
-                                                label: 'Local circle image',
-                                                child: InkWell(
-                                                  onTap: pickLocalImage,
+                              InkWell(
+                                onTap: pickLocalImage,
                                                   child: Container(
                                                     width: 200,
                                                     height: 200,
@@ -233,14 +221,11 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                                     ),
                                                   ),
                                                 ),
-                                              ),
 
                                             // Circle image for a remote image
                                       if (imgNetwork != null && imgNetwork != '')
-                                        Semantics(
-                                          label: 'Network circle image',
-                                          child: InkWell(
-                                            onTap: pickLocalImage,
+                              InkWell(
+                                onTap: pickLocalImage,
                                             child: Container(
                                               width: 200,
                                               height: 200,
@@ -263,39 +248,28 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                               ),
                                             ),
                                           ),
-                                        ),
                                     ],
                                   ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 24),
+                      ),
+                      const SizedBox(height: 24),
 
                                   // Instructions on how to select a picture
-                                  Semantics(
-                                    label: 'Instructions on how to select a picture',
-                                    child: Text(
-                                      'Tap to select a picture',
+                      Text(
+                        'Tap to select a picture',
                                       textAlign: TextAlign.center,
                                       style: AppTextStyles.bodyMedium(),
                                     ),
-                                  ),
                                 ],
                               ),
-                            ),
                             const SizedBox(height: 32),
 
                             // Options to choose a profile picture
-                      Semantics(
-                        label: 'Options to choose a profile picture',
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
                           children: [
                             // Container with picture selection options
-                            Semantics(
-                              label: 'Container with picture selection options',
-                              child: Container(
-                                width: double.infinity,
+                      Container(
+                        width: double.infinity,
                                 decoration: BoxDecoration(
                                         color: appColors.secondaryBackground,
                                         borderRadius: BorderRadius.circular(12),
@@ -308,49 +282,37 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                 // Column to have a structure for picture selection options
                                 Padding(
                                   padding: EdgeInsets.all(16),
-                                  child: Semantics(
-                                    label: 'Structure column for selection options',
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.max,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
                                       children: [
                                         // Simple text to guide picture selection
-                                        Semantics(
-                                          label: 'Text to guide picture selection',
-                                          child: Text(
-                                            'Select Image Source',
+                              Text(
+                                'Select Image Source',
                                             style: AppTextStyles.labelMedium(),
                                           ),
-                                        ),
                                         const SizedBox(height: 12),
 
                                               // Row containing selection options
-                                              Semantics(
-                                                label: 'Row containing selection options',
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.max,
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
                                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                   children: [
                                                     // Button to choose a local picture
                                                     Expanded(
-                                                      child: Semantics(
-                                                        label: 'Button to choose a local picture',
-                                                        child: TransparentButton(
-                                                          onPressed: pickLocalImage,
+                                    child: TransparentButton(
+                                      onPressed: pickLocalImage,
                                                           text: 'From Device',
                                                           icon: Icon(
                                                             Icons.photo_library_outlined,
                                                             size: 15,
                                                           ),
                                                         ),
-                                                      ),
                                                     ),
 
                                                     // Button to show the URL field for a remote picture
                                               Expanded(
-                                                child: Semantics(
-                                                  label: 'Button to show the URL field',
-                                                  child: TransparentButton(
-                                                    onPressed: () async {
+                                    child: TransparentButton(
+                                      onPressed: () async {
                                                       showUrlField = !showUrlField;
                                                       setState(() {});
                                                     },
@@ -360,25 +322,19 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                                       size: 15,
                                                     ),
                                                   ),
-                                                ),
                                               ),
                                             ],
                                           ),
-                                        ),
                                       ],
                                     ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 16),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
 
                                   // Container with the URL field
                                   if (showUrlField == true)
-                                    Semantics(
-                                      label: 'Container with the URL field',
-                                      child: Container(
-                                        width: double.infinity,
+                        Container(
+                          width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: appColors.secondaryBackground,
                                           borderRadius: BorderRadius.circular(12),
@@ -391,43 +347,33 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                             // Column with the URL field
                                             Padding(
                                           padding: EdgeInsets.all(16),
-                                          child: Semantics(
-                                            label: 'Column with the URL field',
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
                                               children: [
                                                 // Text to guide the URL insertion
-                                                Semantics(
-                                                  label: 'Text to guide the URL insertion',
-                                                  child: Text(
-                                                    'Enter Image URL',
+                                Text(
+                                  'Enter Image URL',
                                                     style: AppTextStyles.labelMedium(),
                                                   ),
-                                                ),
                                                 const SizedBox(height: 12),
 
                                                 // Field where to put the image URL
                                           Padding(
                                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                            child: Semantics(
-                                              label: 'Image URL field',
-                                              child: InputField(
-                                                label: 'https://example.com/image.jpg',
+                                  child: InputField(
+                                    label: 'https://example.com/image.jpg',
                                                 controller: urlFieldTextController,
                                                 focusNode: urlFieldFocusNode,
                                                 autofillHints: [AutofillHints.url],
                                                 validator: (value) =>
                                                     urlFieldTextControllerValidator.call(context, value),
                                               ),
-                                            ),
                                           ),
                                           const SizedBox(height: 12),
 
                                                 // Button to load the image pointed by the URL
-                                                Semantics(
-                                                  label: 'Button to load the image pointed by the URL',
-                                                  child: DarkButton(
-                                                    onPressed: () async {
+                                DarkButton(
+                                  onPressed: () async {
                                                       final url = urlFieldTextController.text.trim();
 
                                                       if (!isValidImageUrl(url)) {
@@ -443,50 +389,39 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                                     },
                                                     text: 'Load Image From URL',
                                                   ),
-                                                ),
                                               ],
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                    ).animate().move(
-                                          begin: const Offset(0, -20),
+                          ),
+                        ).animate().move(
+                              begin: const Offset(0, -20),
                                           end: Offset.zero,
                                           duration: 600.ms,
                                           curve: Curves.bounceOut,
                                         ),
                                 ],
                               ),
-                            ),
                             const SizedBox(height: 32),
 
                             // Row with action buttons
-                      Semantics(
-                        label: 'Row with action buttons',
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             // Button to cancel the operation and navigate back
                             Expanded(
-                              child: Semantics(
-                                label: 'Button to cancel the operation and navigate back',
-                                child: LightButton(
-                                  onPressed: () async {
+                        child: LightButton(
+                          onPressed: () async {
                                     context.pop();
                                   },
                                   text: 'Cancel',
                                 ),
-                              ),
                             ),
                             const SizedBox(width: 16),
 
                                   // Button to confirm the choice and upload the profile picture
                                   Expanded(
-                                    child: Semantics(
-                                      label: 'Button to confirm the choice and upload the profile picture',
-                                      child: DarkButton(
-                                        onPressed: () async {
+                        child: DarkButton(
+                          onPressed: () async {
                                           final userInfoAsync = ref.read(appUserProvider);
                                           final user = userInfoAsync.value;
 
@@ -526,16 +461,13 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                         },
                                         text: 'Save Picture',
                                       ),
-                                    ),
                                   ),
                                 ],
                               ),
-                            ),
                           ],
                         ),
-                      ),
-              ),
-                  )),
+            ),
+          ),
         ),
       ),
     );

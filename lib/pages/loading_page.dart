@@ -69,67 +69,52 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
           top: true,
           child:
               // Container with the content for the loading page
-              Semantics(
-            label: 'Main container content',
-                  child: Background(
-                    child: SizedBox(
+              Background(
+            child: SizedBox(
                       width: double.infinity,
                       height: double.infinity,
                       child:
                           // Column to place the content for the loading page
                           Padding(
                         padding: EdgeInsets.all(16),
-                        child: Semantics(
-                          label: 'Main column content',
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               // Loading animation
-                              Semantics(
-                                label: 'Loading animation',
-                                child: Lottie.asset(
-                                  'assets/jsons/Loader_basketball.json',
+                    Lottie.asset(
+                      'assets/jsons/Loader_basketball.json',
                                   width: 400,
                                   height: 400,
                                   fit: BoxFit.contain,
                                   animate: true,
                                 ),
-                              ),
 
                               // "Processing Video" text
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
-                                child: Semantics(
-                                  label: '"Processing Video" text',
-                                  child: Text(
-                                    'Processing Video',
+                      child: Text(
+                        'Processing Video',
                                     style: AppTextStyles.headlineLarge(),
                                   ),
-                                ),
                               ),
 
                               // Text to ask the user to wait a bit
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(32, 8, 32, 0),
-                                child: Semantics(
-                                  label: '"Please wait" text',
-                                  child: Text(
-                                    'Please wait while we prepare your video',
+                      child: Text(
+                        'Please wait while we prepare your video',
                                     textAlign: TextAlign.center,
                                     style: AppTextStyles.labelLarge(),
                                   ),
-                                ),
                               ),
 
                               // Container used to place a custom divider
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
-                                child: Semantics(
-                                  label: 'Container used to place a custom divider',
-                                  child: Container(
-                                    width: 240,
+                      child: Container(
+                        width: 240,
                                     height: 8,
                                     decoration: BoxDecoration(
                                       color: appColors.alternateOne,
@@ -137,53 +122,42 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                                     ),
                                     child:
                                         // Container used as colored divider
-                                        Semantics(
-                                      label: 'Container used as colored divider',
-                                      child: Container(
-                                        width: 120,
+                            Container(
+                          width: 120,
                                         height: 8,
                                         decoration: BoxDecoration(
                                           gradient: appColors.gradientLinear(),
                                           borderRadius: BorderRadius.circular(12),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              ),
+                      ),
+                    ),
 
                               // Text stating that the loading might take a while
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(32, 24, 32, 0),
-                                child: Semantics(
-                                  label: '"Might take a while" text',
-                                  child: Text(
-                                    'This may take a moment depending on the video size',
+                      child: Text(
+                        'This may take a moment depending on the video size',
                                     textAlign: TextAlign.center,
                                     style: AppTextStyles.labelLarge(),
                                   ),
-                                ),
                               ),
 
                               // Back button to stop waiting and discard results
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(0, 48, 0, 0),
-                                child: Semantics(
-                                  label: 'Back button',
-                                  child: TransparentButton(
-                                    onPressed: () async {
+                      child: TransparentButton(
+                        onPressed: () async {
                                       context.pop();
                                     },
                                     text: 'Go back',
                                   ),
-                                ),
                               ),
                             ],
                           ),
-                        ),
-                      ),
-                    ),
-                  )),
+              ),
+            ),
+          ),
         ),
       ),
     );

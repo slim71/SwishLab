@@ -22,10 +22,8 @@ class DebugItem extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 5, 16, 5),
-      child: Semantics(
-        label: 'Debug item container',
-        child: Container(
-          width: double.infinity,
+      child: Container(
+        width: double.infinity,
           decoration: BoxWithShadow(
             border: Border.all(
               color: appColors.primaryText,
@@ -33,22 +31,17 @@ class DebugItem extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 12),
-            child: Semantics(
-              label: 'Debug item row',
-              child: Row(
-                children: [
+          child: Row(
+            children: [
                   /// Title
                   Expanded(
                     flex: 4,
                     child: Align(
                       alignment: const AlignmentDirectional(-1, 0),
-                      child: Semantics(
-                        label: 'Debug item title',
-                        child: Text(
-                          title,
+                  child: Text(
+                    title,
                           style: AppTextStyles.bodyMedium(),
                         ),
-                      ),
                     ),
                   ),
 
@@ -58,20 +51,15 @@ class DebugItem extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Semantics(
-                          label: 'Debug item action button',
-                          child: DarkButton(
-                            onPressed: onPressed,
+                    DarkButton(
+                      onPressed: onPressed,
                             text: buttonText,
                           ),
-                        ),
                       ],
                     ),
                   ),
                 ],
               ),
-            ),
-          ),
         ),
       ),
     );

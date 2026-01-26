@@ -101,50 +101,37 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
           top: true,
           child:
               // Background container
-              Semantics(
-            label: 'Background container',
-                  child: Background(
-                    child: Semantics(
-                      label: 'Main content column',
-                child: Column(
-                        mainAxisSize: MainAxisSize.max,
+              Background(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
                         children: [
                           // Column used to scroll the page
                           Expanded(
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                              child: Semantics(
-                                label: 'Scrolling column',
-                                child: SingleChildScrollView(
-                                  child: Column(
+                    child: SingleChildScrollView(
+                      child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       // "How can we help you?" text
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                                        child: Semantics(
-                                          label: '"How can we help you?" text',
-                                          child: Text(
-                                            'How can we help you?',
+                            child: Text(
+                              'How can we help you?',
                                             style: AppTextStyles.headlineMedium(),
                                           ),
-                                        ),
                                       ),
 
                                       // Row to place the functionality widgets
-                                Semantics(
-                                  label: 'Functionality widgets row',
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
                                     children: [
                                       // Button to send an email
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                                        child: Semantics(
-                                          label: 'Button to send an email',
-                                          child: DarkButton(
-                                            onPressed: () async {
+                                child: DarkButton(
+                                  onPressed: () async {
                                               await launchUrl(Uri(
                                                   scheme: 'mailto',
                                                   path: 'slim71sv@gmail.com',
@@ -162,9 +149,8 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                               Icons.email,
                                               size: 30,
                                             ), // TODO: what about the size?
-                                          ),
-                                        )
-                                            .animate()
+                                )
+                                    .animate()
                                             .fade(
                                           begin: 0,
                                           end: 1,
@@ -183,10 +169,8 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                       Expanded(
                                         child: Padding(
                                           padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                                          child: Semantics(
-                                            label: 'Search button container',
-                                            child: InkWell(
-                                              onTap: () async {
+                                  child: InkWell(
+                                    onTap: () async {
                                                 // Immediate UI state changes
                                                 setState(() {
                                                   searchActive = !searchActive;
@@ -233,24 +217,18 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                                         ),
                                                         child:
                                                             // Column to place the search button content
-                                                            Semantics(
-                                                          label: 'Search button content column',
-                                                          child: Column(
-                                                            mainAxisSize: MainAxisSize.max,
+                                            Column(
+                                          mainAxisSize: MainAxisSize.max,
                                                             mainAxisAlignment: MainAxisAlignment.center,
                                                             children: [
                                                               // Column to place the search button content
-                                                              Semantics(
-                                                                label: 'Search button content row',
-                                                                child: Row(
-                                                                  mainAxisSize: MainAxisSize.max,
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
                                                                   mainAxisAlignment: MainAxisAlignment.center,
                                                                   children: [
                                                                     // Toggle search icon
-                                                                    Semantics(
-                                                                      label: 'Toggle search icon',
-                                                                      child: ToggleIcon(
-                                                                        onPressed: () {
+                                                ToggleIcon(
+                                                  onPressed: () {
                                                                           setState(() {
                                                                             searchActive = !searchActive;
                                                                           });
@@ -267,29 +245,22 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                                                           size: 30,
                                                                         ),
                                                                       ),
-                                                                    ),
 
                                                                     // "Search FAQs" text
-                                                              Semantics(
-                                                                label: '"Search FAQs" text',
-                                                                child: Text(
-                                                                  'Search FAQs',
+                                                Text(
+                                                  'Search FAQs',
                                                                   textAlign: TextAlign.center,
                                                                   style: AppTextStyles.titleLarge(
                                                                       color: appColors.darkButtonTextColor),
                                                                 ),
-                                                              ),
                                                             ],
                                                           ),
-                                                        ),
                                                       ],
                                                     ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )
-                                              .animate()
+                                      ),
+                                    ),
+                                  )
+                                      .animate()
                                               .fade(
                                             begin: 0,
                                             end: 1,
@@ -306,22 +277,17 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                       ),
                                     ],
                                   ),
-                                ),
 
                                       // Row to put the search bar into
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                                        child: Semantics(
-                                          label: 'Search bar row',
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
                                             children: [
                                               // Container to put the search bar into
                                               Expanded(
-                                                child: Semantics(
-                                                  label: 'Search bar container',
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
+                                  child: Container(
+                                    decoration: BoxDecoration(
                                                       borderRadius: BorderRadius.circular(12),
                                                     ),
                                                     child:
@@ -330,10 +296,8 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                                       visible: searchActive,
                                                       child: Padding(
                                                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                                        child: Semantics(
-                                                          label: 'Search bar input field',
-                                                          child: InputField(
-                                                            controller: searchFieldTextController,
+                                        child: InputField(
+                                          controller: searchFieldTextController,
                                                             focusNode: searchFieldFocusNode,
                                                             onChanged: (_) => EasyDebounce.debounce(
                                                               'searchFieldTextController',
@@ -371,48 +335,37 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                                       validator: null,
                                                       denyRegex: RegExp(r'[\x00-\x1F\x7F]'), // control characters only
                                                     ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
+                                ),
+                                      ],
+                                    ),
                                 ),
 
                                       // "Frequently Asked Questions" text
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 4),
-                                        child: Semantics(
-                                          label: '"Frequently Asked Questions" text',
-                                          child: Text(
-                                            'Frequently Asked Questions',
+                            child: Text(
+                              'Frequently Asked Questions',
                                             style: AppTextStyles.headlineSmall(),
                                           ),
-                                        ),
                                       ),
 
                                       // "No results found." text
                                 if (!(filteredFaqsPageState.isNotEmpty))
-                                  Semantics(
-                                    label: '"No results found." text',
-                                    child: Text(
-                                      'No results found.',
+                            Text(
+                              'No results found.',
                                       style: AppTextStyles.titleLarge(),
                                     ),
-                                  ),
 
                                       // Wrap containing all FAQs
                                       Builder(
                                         builder: (context) {
                                           final faqsList = sortByOrder(filteredFaqsPageState.toList()).toList();
 
-                                          return Semantics(
-                                      label: 'FAQs wrap',
-                                      child: Wrap(
-                                        spacing: 0,
+                              return Wrap(
+                                spacing: 0,
                                         runSpacing: 0,
                                         alignment: WrapAlignment.start,
                                         crossAxisAlignment: WrapCrossAlignment.start,
@@ -426,10 +379,8 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                             // Dynamically generated item containing each FAQ
                                             Padding(
                                               padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                              child: Semantics(
-                                                label: 'FAQ item',
-                                                child: FaqItem(
-                                                  key: Key('faq_$faqsListIndex'),
+                                    child: FaqItem(
+                                      key: Key('faq_$faqsListIndex'),
                                                   isOpen: openIndex == faqsListIndex,
                                                   title: faqsListItem['question'].toString(),
                                                   description: faqsListItem['answer'].toString(),
@@ -439,23 +390,19 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                                     });
                                                   },
                                                 ),
-                                              ),
                                             );
                                         }),
-                                      ),
-                                    );
-                                  },
+                              );
+                            },
                                 ),
                               ],
                             ),
                           ),
-                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-                  )),
+          ),
         ),
       ),
     );

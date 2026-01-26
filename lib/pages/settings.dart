@@ -169,21 +169,15 @@ class _SettingsState extends ConsumerState<Settings>
       ),
       body:
           // Container used to have a colored background
-          Semantics(
-        label: 'Background container',
-              child: Background(
-                child: Semantics(
-                  label: 'Main column content',
-            child: SingleChildScrollView(
-              child: Column(
+          Background(
+        child: SingleChildScrollView(
+          child: Column(
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // List of available settings
-                        Semantics(
-                          label: 'List of available settings',
-                          child: ListView.builder(
-                            padding: EdgeInsets.zero,
+              ListView.builder(
+                padding: EdgeInsets.zero,
                             primary: false,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
@@ -197,7 +191,6 @@ class _SettingsState extends ConsumerState<Settings>
                               );
                             },
                           ),
-                        ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                           child: Container(
@@ -211,23 +204,18 @@ class _SettingsState extends ConsumerState<Settings>
                                   // "Follow us on" text
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 8),
-                                    child: Semantics(
-                                      label: '"Follow us on" text',
-                                      child: Text(
-                                        'Follow us on',
+                          child: Text(
+                            'Follow us on',
                                         style: AppTextStyles.labelMedium(),
                                       ),
-                                    ),
                                   ),
 
                                   // Row with socials buttons
                             Padding(
                               padding:
                               EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                              child: Semantics(
-                                label: 'Row with socials buttons',
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
                                     // Twitter button
@@ -266,7 +254,6 @@ class _SettingsState extends ConsumerState<Settings>
                                     ),
                                   ],
                                 ),
-                              ),
                             ),
                           ],
                         ),
@@ -288,35 +275,27 @@ class _SettingsState extends ConsumerState<Settings>
                             Padding(
                               padding:
                               EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                              child: Semantics(
-                                label: '"App version" text',
-                                child: Text(
-                                  'App Versions',
+                          child: Text(
+                            'App Versions',
                                   style: AppTextStyles.titleLarge(),
                                 ),
-                              ),
                             ),
 
                                   // App version
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
-                                    child: Semantics(
-                                      label: 'App version',
-                                      child: Text(
-                                        'v0.0.1',
+                          child: Text(
+                            'v0.0.1',
                                         style: AppTextStyles.labelMedium(),
                                       ),
-                                    ),
                                   ),
 
                                   // Logout button
                             Padding(
                               padding:
                               EdgeInsetsDirectional.fromSTEB(16, 16, 0, 0),
-                              child: Semantics(
-                                label: 'Logout button',
-                                child: LightButton(
-                                  onPressed: () async {
+                          child: LightButton(
+                            onPressed: () async {
                                     // GoRouter.of(context).prepareAuthEvent();
                                     // await authManager.signOut();
                                     // GoRouter.of(context)
@@ -329,7 +308,6 @@ class _SettingsState extends ConsumerState<Settings>
                                   },
                                   text: 'Log Out',
                                 ),
-                              ),
                             ),
                           ],
                         ),
@@ -339,8 +317,7 @@ class _SettingsState extends ConsumerState<Settings>
                 ],
               ),
             ),
-          ),
-              )),
+      ),
     );
   }
 }

@@ -38,19 +38,13 @@ class _PastActivityState extends ConsumerState<PastActivity> {
         top: true,
         child:
             // Column to place actual content
-            Semantics(
-          label: 'Actual content column',
-          child: SingleChildScrollView(
-            child: Column(
+            SingleChildScrollView(
+          child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
                 // Container to have a colored background
-                Semantics(
-                  label: 'Background container',
-                    child: Background(
-                      child: Semantics(
-                        label: 'Main column content',
-                      child: GestureDetector(
+              Background(
+                child: GestureDetector(
                         onVerticalDragStart: (details) async {
                           unawaited(
                             () async {
@@ -70,23 +64,18 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                               // "All Activity from this past month." text
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
-                                child: Semantics(
-                                  label: '"All activity from this past month." text',
-                                  child: Text(
-                                    'All activity from this past month.',
+                        child: Text(
+                          'All activity from this past month.',
                                     style: AppTextStyles.titleSmall(),
                                   ),
-                                ),
                               ),
 
                               // List of activities to show
                             Padding(
                               padding:
                               EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                              child: Semantics(
-                                label: 'List of activities',
-                                child: ListView(
-                                  padding: EdgeInsets.zero,
+                        child: ListView(
+                          padding: EdgeInsets.zero,
                                   shrinkWrap: true,
                                   scrollDirection: Axis.vertical,
                                   controller: activityListScrollController,
@@ -95,10 +84,8 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           16, 0, 0, 0),
-                                      child: Semantics(
-                                        label: 'General list item row',
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment:
                                           MainAxisAlignment.start,
                                           children: [
@@ -106,21 +93,15 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                             Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0, 0, 12, 0),
-                                              child: Semantics(
-                                                label:
-                                                'Activity timeline column',
-                                                child: Column(
-                                                  mainAxisSize:
+                                    child: Column(
+                                      mainAxisSize:
                                                   MainAxisSize.max,
                                                   mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                                   children: [
                                                     // Container to create a dot as starting point of the timeline
-                                                    Semantics(
-                                                      label:
-                                                      'Timeline dot container',
-                                                      child: Container(
-                                                        width: 16,
+                                        Container(
+                                          width: 16,
                                                         height: 16,
                                                         decoration:
                                                         BoxDecoration(
@@ -130,33 +111,25 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                           BoxShape.circle,
                                                         ),
                                                       ),
-                                                    ),
 
                                                       // Timeline for a general activity
-                                                      Semantics(
-                                                        label: 'General activity timeline',
-                                                        child: Container(
-                                                          width: 2,
+                                        Container(
+                                          width: 2,
                                                           height: 110,
                                                           decoration: BoxDecoration(
                                                             color: appColors.alternateOne,
                                                           ),
                                                         ),
-                                                      ),
                                                     ],
                                                   ),
-                                                ),
                                               ),
 
                                               // Container to show activity related data
                                             Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(0, 12, 0, 0),
-                                              child: Semantics(
-                                                label:
-                                                'Activity data container',
-                                                child: Container(
-                                                  width:
+                                    child: Container(
+                                      width:
                                                   MediaQuery
                                                       .sizeOf(context)
                                                       .width *
@@ -168,11 +141,8 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                   ),
                                                   child:
                                                   // Column to place activity related data
-                                                  Semantics(
-                                                    label:
-                                                    'Activity data column',
-                                                    child: Column(
-                                                      mainAxisSize:
+                                          Column(
+                                        mainAxisSize:
                                                       MainAxisSize.max,
                                                       mainAxisAlignment:
                                                       MainAxisAlignment
@@ -182,11 +152,8 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                           .start,
                                                       children: [
                                                         // Row to place the activity timestamp and the access icon
-                                                        Semantics(
-                                                          label:
-                                                          'Timestamp and icon row',
-                                                          child: Row(
-                                                            mainAxisSize:
+                                          Row(
+                                            mainAxisSize:
                                                             MainAxisSize
                                                                 .max,
                                                             mainAxisAlignment:
@@ -194,61 +161,42 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                                 .spaceBetween,
                                                             children: [
                                                               // Timestamp related to the activity item
-                                                              Semantics(
-                                                                label:
-                                                                'Activity item timestamp',
-                                                                child: Text(
-                                                                  '15, Jan. 2026',
+                                              Text(
+                                                '15, Jan. 2026',
                                                                   style: AppTextStyles.labelMedium(),
                                                                 ),
-                                                              ),
 
                                                                 // Icon to show the activity
-                                                                Semantics(
-                                                                  label: 'Show activity icon',
-                                                                  child: Icon(
-                                                                    Icons.chevron_right_rounded,
+                                              Icon(
+                                                Icons.chevron_right_rounded,
                                                                     color: Colors.black,
                                                                     size: 24,
                                                                   ),
-                                                                ),
                                                               ],
                                                             ),
-                                                          ),
 
                                                           // Row to place the activity information
-                                                        Semantics(
-                                                          label:
-                                                          'Row to place the activity information',
-                                                          child: Row(
-                                                            mainAxisSize:
+                                          Row(
+                                            mainAxisSize:
                                                             MainAxisSize
                                                                 .max,
                                                             children: [
                                                               // Example test for an activity
-                                                              Semantics(
-                                                                label:
-                                                                'Activity example text',
-                                                                child: Text(
-                                                                  'Created New User',
+                                              Text(
+                                                'Created New User',
                                                                   style: AppTextStyles.bodyLarge(),
                                                                 ),
-                                                              ),
 
                                                                 // Example test for an activity, part 2
                                                                 Padding(
                                                                   padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                                                                  child: Semantics(
-                                                                    label: 'Activity example text part 2',
-                                                                    child: Text(
-                                                                      '<User>',
+                                                child: Text(
+                                                  '<User>',
                                                                       style: AppTextStyles.titleMedium(),
                                                                     ),
-                                                                  ),
                                                                 ),
                                                               ],
                                                             ),
-                                                          ),
 
                                                           // Row to place activity data
                                                         Padding(
@@ -256,11 +204,8 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(0,
                                                               4, 0, 0),
-                                                          child: Semantics(
-                                                            label:
-                                                            'Activity data row',
-                                                            child: Row(
-                                                              mainAxisSize:
+                                            child: Row(
+                                              mainAxisSize:
                                                               MainAxisSize
                                                                   .max,
                                                               mainAxisAlignment:
@@ -268,12 +213,8 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                                   .start,
                                                               children: [
                                                                 // Example of an image related to the activity
-                                                                Semantics(
-                                                                  label:
-                                                                  'Activity related image',
-                                                                  child:
-                                                                  Container(
-                                                                    width: 30,
+                                                Container(
+                                                  width: 30,
                                                                     height: 30,
                                                                     clipBehavior:
                                                                     Clip.antiAlias,
@@ -287,47 +228,35 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                                       'assets/icons/default_icon.png',
                                                                     ),
                                                                   ),
-                                                                ),
 
                                                                   // Example description of an activity
                                                                   Padding(
                                                                     padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-                                                                    child: Semantics(
-                                                                      label: 'Activity description example',
-                                                                      child: Text(
-                                                                        '<User>',
+                                                  child: Text(
+                                                    '<User>',
                                                                         style: AppTextStyles.labelMedium(),
                                                                       ),
-                                                                    ),
                                                                   ),
                                                                 ],
                                                               ),
-                                                            ),
                                                           ),
                                                         ],
                                                       ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
+                                    ),
+                                  ),
                                             ],
                                           ),
-                                        ),
                                       ),
 
                                       // Row for the first item in the list in temporal order
-                                    Semantics(
-                                      label: 'First item row',
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                         MainAxisAlignment.start,
                                         children: [
                                           // Column to place the timeline for the first item
-                                          Semantics(
-                                            label: 'First item timeline column',
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
                                               mainAxisAlignment:
                                               MainAxisAlignment.center,
                                               children: [
@@ -335,98 +264,74 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                 Padding(
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(23, 0, 0, 0),
-                                                  child: Semantics(
-                                                    label:
-                                                    'Earliest item timeline',
-                                                    child: Container(
-                                                      width: 2,
+                                      child: Container(
+                                        width: 2,
                                                       height: 152,
                                                       decoration: BoxDecoration(
                                                         color: appColors
                                                             .alternateOne,
                                                       ),
                                                     ),
-                                                  ),
                                                 ),
                                               ],
                                             ),
-                                          ),
 
                                             // Container for the activity image
                                             Padding(
                                               padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
-                                              child: Semantics(
-                                                label: 'Activity section image container',
-                                                child: Container(
-                                                  width: MediaQuery.sizeOf(context).width * 0.9,
+                                  child: Container(
+                                    width: MediaQuery.sizeOf(context).width * 0.9,
                                                   decoration: BoxDecoration(
                                                     borderRadius: BorderRadius.circular(0),
                                                   ),
                                                   alignment: AlignmentDirectional(0, 0),
                                                   child:
                                                       // Image to showcase the activity section
-                                                      Semantics(
-                                                    label: 'Activity section image',
-                                                    child: Image.asset(
-                                                      'assets/images/tasks.png',
+                                        Image.asset(
+                                      'assets/images/tasks.png',
                                                       width: 300,
                                                       height: 100,
                                                       fit: BoxFit.fitHeight,
                                                     ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
                                   ),
                                 ),
+                                          ],
+                                        ),
+                                    ],
+                                  ),
                               ),
 
                               // "Beginning of Activity" text
                             Padding(
                               padding:
                               EdgeInsetsDirectional.fromSTEB(16, 24, 0, 0),
-                              child: Semantics(
-                                label: '"Beginning of Activity" text',
-                                child: Text(
-                                  'Beginning of Activity',
+                        child: Text(
+                          'Beginning of Activity',
                                   style: AppTextStyles.bodyLarge(),
                                 ),
-                              ),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    )),
 
                 // Column to place the WIP image
-                Semantics(
-                  label: 'WIP image column',
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
+              Column(
+                mainAxisSize: MainAxisSize.max,
                     children: [
                       // Work in progress image
-                      Semantics(
-                        label: 'Work in progress image',
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
                           child: Image.asset(
                             'assets/images/wip.png',
                             fit: BoxFit.cover,
                           ),
                         ),
-                      ),
                     ],
                   ),
-                ),
               ],
             ),
           ),
-        ),
       ),
     );
   }

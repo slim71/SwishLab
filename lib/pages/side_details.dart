@@ -42,10 +42,8 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
         backgroundColor: appColors.secondaryBackground,
         body:
             // Container with all content on the Front Details page
-            Semantics(
-          label: 'Container with all content on the Front Details page',
-          child: Container(
-            width: double.infinity,
+            Container(
+          width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
               color: appColors.secondaryBackground,
@@ -59,32 +57,24 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
             ),
             child:
                 // Column with all content on the Side Details page
-                Semantics(
-              label: 'Column with all content on the Side Details page',
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
+              Column(
+            mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // Row to place action buttons
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(16, 44, 16, 0),
-                    child: Semantics(
-                      label: 'Action buttons row',
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           // Back button row
-                          Semantics(
-                            label: 'Back button row',
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
                               children: [
                                 // Back button
-                                Semantics(
-                                  label: 'Back button',
-                                  child: IconActionButton(
-                                    borderColor: appColors.containersBorders,
+                        IconActionButton(
+                          borderColor: appColors.containersBorders,
                                     size: 60,
                                     backgroundColor: appColors.secondaryBackground,
                                     icon: Icons.arrow_back_rounded,
@@ -93,9 +83,8 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                     onPressed: () async {
                                       context.pop();
                                     },
-                                  ),
-                                )
-                                    .animate()
+                        )
+                            .animate()
                                     .fadeIn(
                                       duration: 300.ms,
                                       curve: Curves.easeInOut,
@@ -108,21 +97,16 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                     ),
                               ],
                             ),
-                          ),
 
                           // Upload button row
-                          Semantics(
-                            label: 'Upload button row',
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
                               children: [
                                 // Upload button
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
-                                  child: Semantics(
-                                    label: 'Upload button',
-                                    child: IconActionButton(
-                                      borderColor: appColors.containersBorders,
+                          child: IconActionButton(
+                            borderColor: appColors.containersBorders,
                                       size: 60,
                                       backgroundColor: appColors.secondaryBackground,
                                       icon: FontAwesomeIcons.upload,
@@ -169,9 +153,8 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                           },
                                         );
                                       },
-                                    ),
-                                  )
-                                      .animate()
+                          )
+                              .animate()
                                       .fadeIn(
                                         duration: 300.ms,
                                         curve: Curves.easeInOut,
@@ -185,27 +168,21 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                 ),
                               ],
                             ),
-                          ),
                         ],
                       ),
-                    ),
                   ),
 
                   // Column to place the overview of the side functionality
                   Padding(
                     padding: EdgeInsets.all(16),
-                    child: Semantics(
-                      label: 'Column to place the overview of the side functionality',
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Container to have a colored background for some text
-                          Semantics(
-                            label: 'Text background container',
-                            child: Container(
-                              decoration: BoxDecoration(
+                    Container(
+                      decoration: BoxDecoration(
                                   color: Colors.black.withValues(alpha: 0.3), // subtle semi-transparent overlay
                                   borderRadius: BorderRadius.circular(8), // rounded corners
                                 ),
@@ -217,10 +194,8 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                         // Section title
                                         Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
-                                      child: Semantics(
-                                          label: 'Section title',
-                                          child: ShaderMask(
-                                            shaderCallback: (bounds) => appColors.gradientText().createShader(bounds),
+                            child: ShaderMask(
+                              shaderCallback: (bounds) => appColors.gradientText().createShader(bounds),
                                             blendMode: BlendMode.srcIn,
                                             child: Text(
                                               'Side view analysis',
@@ -237,23 +212,20 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                                 end: Offset.zero,
                                                 duration: 600.ms,
                                                 curve: Curves.easeInOut,
-                                              )),
-                                    ),
+                                ),
+                          ),
                                   ),
                                 ),
-                              )),
+                    ),
 
-                          // Section overview
+                    // Section overview
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 24),
-                            child: Semantics(
-                              label: 'Section overview',
-                              child: Text(
-                                'Take a video with the camera on either side.\nThis will analyze your body posture and flow when shooting.\nUseful to detect incorrect ball paths, flow ruptures, etc...',
+                      child: Text(
+                        'Take a video with the camera on either side.\nThis will analyze your body posture and flow when shooting.\nUseful to detect incorrect ball paths, flow ruptures, etc...',
                                 style: AppTextStyles.titleSmall(),
-                              ),
-                            )
-                                .animate()
+                      )
+                          .animate()
                                 .fadeIn(
                                   duration: 600.ms,
                                   curve: Curves.easeInOut,
@@ -267,12 +239,9 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                           ),
                         ],
                       ),
-                    ),
                   ),
                 ],
               ),
-            ),
-          ),
         ),
       ),
     );

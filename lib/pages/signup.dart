@@ -3,7 +3,6 @@ import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/background.dart';
 import 'package:SwishLab/widgets/box_with_shadow.dart';
 import 'package:SwishLab/widgets/custom_text_span.dart';
@@ -122,8 +121,6 @@ class _SignupPageState extends ConsumerState<SignupPage>
 
   @override
   Widget build(BuildContext context) {
-    final appColors = AppThemeManager.currentColors;
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -132,61 +129,47 @@ class _SignupPageState extends ConsumerState<SignupPage>
       child: Scaffold(
         body:
             // Row used to locate the whole signup page content
-            Semantics(
-          label: 'Main content row',
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
+            Row(
+          mainAxisSize: MainAxisSize.max,
             children: [
               // Container with the whole signup page form
               Expanded(
                 flex: 6,
-                child: Semantics(
-                  label: 'Main container content',
-                    child: Background(
-                      child: Container(
+              child: Background(
+                child: Container(
                         width: 100,
                         height: double.infinity,
                         alignment: AlignmentDirectional(0, -1),
                         child:
                             // Scrolling column to allow scrolling for smaller devices
-                        Semantics(
-                          label: 'Scrolling column',
-                          child: SingleChildScrollView(
-                            child: Column(
+                      SingleChildScrollView(
+                    child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 // Container to allow padding around the page title
-                                Semantics(
-                                  label: 'Spacing container around title',
-                                  child: Container(
-                                    width: double.infinity,
+                        Container(
+                          width: double.infinity,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     alignment: AlignmentDirectional(0, 0),
                                     child:
                                         // App logo
-                                        Semantics(
-                                      label: 'App logo',
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(8),
+                              ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
                                         child: Image.asset(
                                           'assets/images/SwishLab_logo.png',
                                           fit: BoxFit.cover,
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                ),
+                        ),
 
-                                // Container with the signup form
+                        // Container with the signup form
                                 Padding(
                                   padding: EdgeInsets.all(16),
-                                  child: Semantics(
-                                    label: 'Signup form container',
-                                    child: Container(
-                                      width: double.infinity,
+                          child: Container(
+                            width: double.infinity,
                                       constraints: BoxConstraints(
                                         maxWidth: 570,
                                       ),
@@ -197,40 +180,30 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                         alignment: AlignmentDirectional(0, 0),
                                         child: Padding(
                                           padding: EdgeInsets.all(32),
-                                          child: Semantics(
-                                            label: 'Signup form column',
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
                                                 // Greeting text
-                                                Semantics(
-                                                  label: 'Greeting text',
-                                                  child: Text(
-                                                    'Get Started',
+                                    Text(
+                                      'Get Started',
                                                     textAlign: TextAlign.center,
                                                     style: AppTextStyles.displaySmall(),
                                                   ),
-                                                ),
 
                                                 // Text to guide signup
                                                 Padding(
                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 24),
-                                                  child: Semantics(
-                                                    label: 'Signup instructions',
-                                                    child: Text(
-                                                      'Fill out the data below',
+                                      child: Text(
+                                        'Fill out the data below',
                                                       textAlign: TextAlign.center,
                                                       style: AppTextStyles.labelLarge(),
                                                     ),
-                                                  ),
                                                 ),
                                                 Padding(
                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                                  child: Semantics(
-                                                    label: 'First name field',
-                                                    child: SizedBox(
-                                                      width: double.infinity,
+                                      child: SizedBox(
+                                        width: double.infinity,
                                                       child: InputField(
                                                           controller: firstnameController,
                                                           focusNode: firstnameFocusNode,
@@ -240,16 +213,13 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                           validator: (value) => firstnameValidator.call(context, value),
                                                           allowRegex: RegExp('^[A-Za-z\' -]+\$')),
                                                     ),
-                                                  ),
                                                 ),
 
                                                 // Last name field
                                                 Padding(
                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                                  child: Semantics(
-                                                    label: 'Last name field',
-                                                    child: SizedBox(
-                                                      width: double.infinity,
+                                      child: SizedBox(
+                                        width: double.infinity,
                                                       child: InputField(
                                                           controller: lastnameController,
                                                           focusNode: lastnameFocusNode,
@@ -259,16 +229,13 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                           validator: (value) => lastnameValidator.call(context, value),
                                                           allowRegex: RegExp('^[A-Za-z\' -]+\$')),
                                                     ),
-                                                  ),
                                                 ),
 
                                                 // Email address field
                                                 Padding(
                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                                  child: Semantics(
-                                                    label: 'Email address field',
-                                                    child: SizedBox(
-                                                      width: double.infinity,
+                                      child: SizedBox(
+                                        width: double.infinity,
                                                       child: InputField(
                                                         controller: emailAddressController,
                                                         focusNode: emailAddressFocusNode,
@@ -278,16 +245,13 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                         allowRegex: RegExp(r'[a-zA-Z0-9@._%+-]'),
                                                       ),
                                                     ),
-                                                  ),
                                                 ),
 
                                                 // Password field
                                                 Padding(
                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                                  child: Semantics(
-                                                    label: 'Password field',
-                                                    child: SizedBox(
-                                                      width: double.infinity,
+                                      child: SizedBox(
+                                        width: double.infinity,
                                                       child: InputField(
                                                         controller: passwordController,
                                                         focusNode: passwordFocusNode,
@@ -297,16 +261,13 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                         validator: (value) => passwordValidator.call(context, value),
                                                       ),
                                                     ),
-                                                  ),
                                                 ),
 
                                                 // Confirm password field
                                                 Padding(
                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                                  child: Semantics(
-                                                    label: 'Confirm password field',
-                                                    child: SizedBox(
-                                                      width: double.infinity,
+                                      child: SizedBox(
+                                        width: double.infinity,
                                                       child: InputField(
                                                         controller: confpswdController,
                                                         focusNode: confpswdFocusNode,
@@ -316,14 +277,11 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                         validator: (value) => confpswdValidator.call(context, value),
                                                       ),
                                                     ),
-                                                  ),
                                                 ),
 
                                                 // Button to create an account with inserted data
-                                                Semantics(
-                                                  label: 'Manual signup',
-                                                  child: DarkButton(
-                                                    onPressed: () async {
+                                    DarkButton(
+                                      onPressed: () async {
                                                       // Check all required fields are filled
                                                       if (emailAddressController.text.isEmpty ||
                                                           passwordController.text.isEmpty ||
@@ -382,26 +340,20 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                     },
                                                     text: 'Create Account',
                                                   ),
-                                                ),
 
                                                 // Or
                                                 Padding(
                                                   padding: EdgeInsetsDirectional.fromSTEB(16, 15, 16, 15),
-                                                  child: Semantics(
-                                                    label: 'Or',
-                                                    child: Text(
-                                                      'Or',
+                                      child: Text(
+                                        'Or',
                                                       textAlign: TextAlign.center,
                                                       style: AppTextStyles.labelLarge(),
                                                     ),
-                                                  ),
                                                 ),
 
                                                 // Button to create an account using Google
-                                                Semantics(
-                                                  label: 'Google signup button',
-                                                  child: LightButton(
-                                                    onPressed: () async {
+                                    LightButton(
+                                      onPressed: () async {
                                                       final authService = ref.read(authServiceProvider);
                                                       await authService.signInWithGoogle();
                                                     },
@@ -411,15 +363,12 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                       size: 15,
                                                     ),
                                                   ),
-                                                ),
 
                                                 // Instructions to redirect to login
                                                 Padding(
                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
-                                                  child: Semantics(
-                                                    label: 'Redirect to login text',
-                                                    child: InkWell(
-                                                      onTap: () async {
+                                      child: InkWell(
+                                        onTap: () async {
                                                         context.goNamed('login');
                                                       },
                                                       child: RichText(
@@ -436,16 +385,13 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
                                                 ),
                                               ],
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                      .animate()
+                              ),
+                            ),
+                          )
+                              .animate()
                                       // Fade
                                       .fade(
                                         begin: 0,
@@ -479,13 +425,11 @@ class _SignupPageState extends ConsumerState<SignupPage>
                               ],
                             ),
                           ),
-                        ),
-                      ),
-                    )),
+                ),
               ),
+            ),
             ],
           ),
-        ),
       ),
     );
   }

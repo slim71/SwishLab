@@ -52,12 +52,9 @@ class _MarkdownDocumentState extends State<MarkdownDocument> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
-          child: Semantics(
-            label: widget.semanticsLabel,
-            child: MarkdownWidget(
-              markdown: Markdown.fromString(_markdownSource),
+          child: MarkdownWidget(
+            markdown: Markdown.fromString(_markdownSource),
             ),
-          ),
         ),
       ),
     );

@@ -47,10 +47,8 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
               // Main container containing the debug utilities page content
               Align(
             alignment: AlignmentDirectional(0, -1),
-            child: Semantics(
-              label: 'Main container content',
-                child: Background(
-                  child: Container(
+            child: Background(
+              child: Container(
                     width: double.infinity,
                     height: double.infinity,
                     constraints: BoxConstraints(
@@ -60,29 +58,22 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                         // Column to place debug utilities
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
-                      child: Semantics(
-                        label: 'Column to place debug utilities',
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             // "Available debug functionalities" text
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(16, 10, 0, 10),
-                              child: Semantics(
-                                label: '"Available debug functionalities" text',
-                                child: Text(
-                                  'Available debug functionalities',
+                        child: Text(
+                          'Available debug functionalities',
                                   style: AppTextStyles.titleSmall(),
                                 ),
-                              ),
                             ),
 
                             // List of available debug utilities
-                            Semantics(
-                              label: 'List of available debug utilities',
-                              child: ListView(
-                                padding: EdgeInsets.fromLTRB(0, 0, 0, 44),
+                      ListView(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 44),
                                 shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
                                 children: [
@@ -124,13 +115,11 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                                   ),
                                 ],
                               ),
-                            ),
                           ],
                         ),
-                      ),
-                    ),
-                  ),
-                )),
+                ),
+              ),
+            ),
           ),
         ),
       ),

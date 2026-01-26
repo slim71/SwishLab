@@ -43,33 +43,25 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
             // Container used for background purposes
             Align(
           alignment: AlignmentDirectional(0, 0),
-          child: Semantics(
-            label: 'Container used for background purposes',
-              child: Background(
-                child: SizedBox(
+          child: Background(
+            child: SizedBox(
                   width: double.infinity,
                   height: double.infinity,
                   child:
                       // Column containing the whole content on screen
                   Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                child: Semantics(
-                  label: 'Main column with content',
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
                     children: [
                       // Row to place the profile picture
-                      Semantics(
-                        label: 'Profile picture row',
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             // Colored border around the profile picture
-                            Semantics(
-                              label: 'Border around the profile picture',
-                              child: Container(
-                                width: 200,
+                        Container(
+                          width: 200,
                                 height: 200,
                                 decoration: BoxDecoration(
                                   gradient: appColors.gradientBackground(
@@ -84,10 +76,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                   alignment: AlignmentDirectional(0, 0),
                                   child: Padding(
                                     padding: EdgeInsets.all(4),
-                                    child: Semantics(
-                                      label: 'Profile picture container',
-                                      child: ClipOval(
-                                        child: Container(
+                              child: ClipOval(
+                                child: Container(
                                           width: 200,
                                           height: 200,
                                           decoration: BoxDecoration(
@@ -98,10 +88,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                               // Actual profile picture
                                               Padding(
                                             padding: EdgeInsets.all(4),
-                                            child: Semantics(
-                                              label: 'Actual profile picture',
-                                              child: InkWell(
-                                                onTap: () async {
+                                    child: InkWell(
+                                      onTap: () async {
                                                   context.pushNamed('pic');
                                                 },
                                                 child: ClipRRect(
@@ -117,44 +105,34 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
                                   ),
                                 ),
                               ),
-                            ).animate().moveY(
-                                  begin: 100,
+                            ),
+                          ),
+                        ).animate().moveY(
+                              begin: 100,
                                   end: 0,
                                   curve: Curves.bounceOut,
                                   duration: 1.seconds,
                                 ),
                           ],
                         ),
-                      ),
 
                       // Complete user name
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                        child: Semantics(
-                          label: 'Complete user name',
-                          child: Text(
-                              '${appState.userData?.firstName} ${appState.userData?.lastName}',
+                      child: Text('${appState.userData?.firstName} ${appState.userData?.lastName}',
                               // "null null" if data missing
                               textAlign: TextAlign.center,
                               style: AppTextStyles.headlineSmall()),
-                        ),
                       ),
 
                       // User email address
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 0),
-                        child: Semantics(
-                          label: 'User email address',
-                          child: ShaderMask(
-                            shaderCallback: (bounds) {
+                      child: ShaderMask(
+                        shaderCallback: (bounds) {
                               return appColors.gradientText().createShader(
                                     Rect.fromLTWH(
                                         0, 0, bounds.width, bounds.height),
@@ -168,17 +146,14 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                               ),
                             ),
                           ),
-                        ),
                       ),
 
                       // Container with user statistics
                       Expanded(
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 44, 0, 0),
-                          child: Semantics(
-                            label: 'Container with user statistics',
-                            child: Container(
-                              width: double.infinity,
+                        child: Container(
+                          width: double.infinity,
                               height: 400,
                                   decoration: BoxWithShadow(
                                     shadowOffset: Offset(0, -10),
@@ -189,44 +164,33 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                               ),
                               child:
                                   // Column with user statistics
-                                  Semantics(
-                                label: 'Column with user statistics',
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
+                              Column(
+                            mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     // Statistics section title
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           20, 20, 0, 0),
-                                      child: Semantics(
-                                        label: 'Statistics section title',
-                                        child: Text(
-                                          'Latest Stats',
+                                child: Text(
+                                  'Latest Stats',
                                           textAlign: TextAlign.start,
                                           style: AppTextStyles.headlineMedium(),
                                         ),
-                                      ),
                                     ),
 
                                     // Expanded container to allow inner column to scroll on its own
                                     Expanded(
-                                      child: Semantics(
-                                        label:
-                                            'Container allowing scrollable action',
-                                        child: Container(
-                                          decoration: BoxDecoration(),
+                                child: Container(
+                                  decoration: BoxDecoration(),
                                           child:
                                               // Low-level column where user statistics are shown
                                               Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     16, 0, 16, 16),
-                                            child: Semantics(
-                                              label:
-                                                  'Column where user statistics are shown',
-                                              child: SingleChildScrollView(
-                                                child: Column(
+                                    child: SingleChildScrollView(
+                                      child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   crossAxisAlignment:
@@ -242,11 +206,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(0, 16,
                                                                     0, 0),
-                                                        child: Semantics(
-                                                          label:
-                                                              'Wrap to show stats cleanly',
-                                                          child: Wrap(
-                                                            spacing: 16,
+                                              child: Wrap(
+                                                spacing: 16,
                                                             runSpacing: 16,
                                                             alignment:
                                                                 WrapAlignment
@@ -266,12 +227,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                                                 Clip.none,
                                                             children: [
                                                               // Container for setpoint statistics
-                                                              Semantics(
-                                                                label:
-                                                                    'Container for setpoint statistics',
-                                                                child:
-                                                                    StatsContainer(
-                                                                  borderColor:
+                                                  StatsContainer(
+                                                    borderColor:
                                                                       appColors
                                                                           .alternateOne,
                                                                   title:
@@ -283,15 +240,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                                                       ?.setPointTotalScore
                                                                       ?.toString(),
                                                                 ),
-                                                              ),
 
                                                               // Container for jump statistics
-                                                              Semantics(
-                                                                label:
-                                                                    'Container for jump statistics',
-                                                                child:
-                                                                    StatsContainer(
-                                                                  borderColor:
+                                                  StatsContainer(
+                                                    borderColor:
                                                                       appColors
                                                                           .alternateTwo,
                                                                   title: 'Jump',
@@ -302,15 +254,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                                                       ?.jumpTotalScore
                                                                       ?.toString(),
                                                                 ),
-                                                              ),
 
                                                               // Container for elbow position statistics
-                                                              Semantics(
-                                                                label:
-                                                                    'Container for elbow position statistics',
-                                                                child:
-                                                                    StatsContainer(
-                                                                  borderColor: appColors
+                                                  StatsContainer(
+                                                    borderColor: appColors
                                                                           .alternateThree ??
                                                                       Colors
                                                                           .white,
@@ -323,15 +270,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                                                       ?.elbowPositionTotalScore
                                                                       ?.toString(),
                                                                 ),
-                                                              ),
 
                                                               // Container for feet direction statistics
-                                                              Semantics(
-                                                                label:
-                                                                    'Container for feet direction statistics',
-                                                                child:
-                                                                    StatsContainer(
-                                                                  borderColor:
+                                                  StatsContainer(
+                                                    borderColor:
                                                                       appColors
                                                                           .retroOne,
                                                                   title:
@@ -343,15 +285,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                                                       ?.feetDirectionTotalScore
                                                                       ?.toString(),
                                                                 ),
-                                                              ),
 
                                                               // Container for shot path statistics
-                                                              Semantics(
-                                                                label:
-                                                                    'Container for shot path statistics',
-                                                                child:
-                                                                    StatsContainer(
-                                                                  borderColor:
+                                                  StatsContainer(
+                                                    borderColor:
                                                                       appColors
                                                                           .retroTwo,
                                                                   title:
@@ -363,15 +300,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                                                       ?.shotPathTotalScore
                                                                       ?.toString(),
                                                                 ),
-                                                              ),
 
                                                               // Container for follow through statistics
-                                                              Semantics(
-                                                                label:
-                                                                    'Container for follow through statistics',
-                                                                child:
-                                                                    StatsContainer(
-                                                                  borderColor:
+                                                  StatsContainer(
+                                                    borderColor:
                                                                       appColors
                                                                               .retroThree ??
                                                                           Colors
@@ -385,38 +317,31 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                                                       ?.followThroughTotalScore
                                                                       ?.toString(),
                                                                 ),
-                                                              ),
                                                             ],
                                                           ),
-                                                        ),
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
-                              ).animate().moveY(
-                                        begin: 100,
+                              ),
+                                  ],
+                          ).animate().moveY(
+                                    begin: 100,
                                         end: 0,
                                         curve: Curves.bounceOut,
                                         duration: 1.seconds,
                                       ),
                             ),
-                          ),
                         ),
                       ),
                     ],
                   ),
-                ),
               ),
-                ),
-              )),
+            ),
+          ),
         ),
       ),
     );

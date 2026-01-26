@@ -42,10 +42,8 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
         // Main container for the whole content of the widget
         Padding(
       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
-      child: Semantics(
-        label: 'Main container',
-        child: InkWell(
-          onTap: () async {
+      child: InkWell(
+        onTap: () async {
             _controller.forward(from: 0.0);
             await widget.onPressed?.call();
           },
@@ -70,65 +68,46 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
                   // Main column for the whole content of the widget
                   Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 16),
-                child: Semantics(
-                  label: 'Main column',
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Row containing the title or header of the item, always shown
-                      Semantics(
-                        label: 'Title row',
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             // Container for the item title, always shown
                             Expanded(
-                              child: Semantics(
-                                label: 'Title container',
-                                child: Container(
-                                  decoration: BoxDecoration(),
+                        child: Container(
+                          decoration: BoxDecoration(),
                                   child:
                                       // Item title, always shown
-                                      Semantics(
-                                    label: 'Item title',
-                                    child: Text(
-                                      widget.title,
+                              Text(
+                            widget.title,
                                       style: AppTextStyles.bodyLarge(),
                                     ),
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            // Transform widget to rotate the underlying icon
-                            Semantics(
-                              label: 'Transform to rotate icon',
-                              child: Transform.rotate(
-                                angle: (widget.isOpen == true ? 180.0 : 0.0) * (math.pi / 180),
-                                child:
-                                    // Arrow icon
-                                    Semantics(
-                                  label: 'Arrow icon',
-                                  child: Icon(
-                                    Icons.arrow_drop_down,
-                                    color: appColors.primaryText,
-                                    size: 24,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
                       ),
 
+                            // Transform widget to rotate the underlying icon
+                      Transform.rotate(
+                        angle: (widget.isOpen == true ? 180.0 : 0.0) * (math.pi / 180),
+                                child:
+                                    // Arrow icon
+                            Icon(
+                          Icons.arrow_drop_down,
+                                    color: appColors.primaryText,
+                                    size: 24,
+                                  ),
+                      ),
+                    ],
+                        ),
+
                       // Container for the description text, hideable
                       if (widget.isOpen == true)
-                        Semantics(
-                          label: 'Description container',
-                          child: Material(
-                            color: Colors.transparent,
+                    Material(
+                      color: Colors.transparent,
                             elevation: widget.isOpen == true ? 10.0 : 0.0,
                             child: Container(
                               decoration: BoxDecoration(),
@@ -138,14 +117,11 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
                                 visible: widget.isOpen == true,
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                                  child: Semantics(
-                                    label: 'Description text',
-                                    child: Text(
-                                      widget.description,
+                            child: Text(
+                              widget.description,
                                       style: AppTextStyles.labelMedium(),
-                                    ),
-                                  ).animate(controller: _controller).fade(
-                                        begin: 0,
+                            ).animate(controller: _controller).fade(
+                                  begin: 0,
                                         end: 1,
                                         duration: 600.ms,
                                         curve: Curves.easeInOut,
@@ -154,11 +130,8 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
                               ),
                             ),
                           ),
-                        ),
                     ],
                   ),
-                ),
-              ),
             ),
           ),
         ),

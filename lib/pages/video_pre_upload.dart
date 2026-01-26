@@ -9,7 +9,6 @@ import 'package:SwishLab/models/video_source.dart';
 import 'package:SwishLab/providers/shooting_analysis_provider.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/background.dart';
 import 'package:SwishLab/widgets/choice_chips_group.dart';
@@ -102,8 +101,6 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
 
   @override
   Widget build(BuildContext context) {
-    final appColors = AppThemeManager.currentColors;
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -118,20 +115,14 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
           top: true,
           child:
               // Container to have a colored background
-              Semantics(
-            label: 'Background container',
-                  child: Background(
-                    child: Semantics(
-                      label: 'Main form content',
-                child: Form(
-                        key: formKey,
+              Background(
+            child: Form(
+              key: formKey,
                         autovalidateMode: AutovalidateMode.disabled,
                         child:
                             // Column to place the content on the Upload Video page
-                            Semantics(
-                          label: 'Main column content',
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
+                  Column(
+                mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -139,19 +130,15 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
                               Expanded(
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                                  child: Semantics(
-                                    label: 'Content column',
-                                    child: SingleChildScrollView(
-                                      child: Column(
+                      child: SingleChildScrollView(
+                        child: Column(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           // Wrap to gracefully organize content
                                           Padding(
                                             padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                                            child: Semantics(
-                                              label: 'Content wrap',
-                                              child: Wrap(
-                                                spacing: 16,
+                              child: Wrap(
+                                spacing: 16,
                                                 runSpacing: 16,
                                                 alignment: WrapAlignment.start,
                                                 crossAxisAlignment: WrapCrossAlignment.start,
@@ -161,113 +148,85 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
                                                 clipBehavior: Clip.none,
                                                 children: [
                                                   // Column to place video and related info
-                                                  Semantics(
-                                                    label: 'Video column',
-                                                    child: Column(
-                                                      mainAxisSize: MainAxisSize.max,
+                                  Column(
+                                    mainAxisSize: MainAxisSize.max,
                                                       children: [
                                                         // Player to preview the chosen video
-                                                        Semantics(
-                                                            label: 'Video player',
-                                                            child: VideoPreview(
-                                                              source: FileVideoSource(widget.videoFile),
-                                                            )),
-                                                        const SizedBox(height: 12),
+                                      VideoPreview(
+                                        source: FileVideoSource(widget.videoFile),
+                                      ),
+                                      const SizedBox(height: 12),
 
                                                         // Video name - TODO: change
-                                                  Semantics(
-                                                    label: 'Video name',
-                                                    child: InputField(
-                                                      label: 'Video name',
+                                      InputField(
+                                        label: 'Video name',
                                                       controller: videoNameTextController,
                                                       focusNode: videoNameFocusNode,
                                                       textCapitalization: TextCapitalization.words,
                                                       obscureText: false,
                                                     ),
-                                                  ),
                                                   const SizedBox(height: 12),
 
                                                         // Video description - TODO: not used for now
-                                                        Semantics(
-                                                          label: 'Video description',
-                                                          child: InputField(
-                                                            label: 'Description...',
+                                      InputField(
+                                        label: 'Description...',
                                                             controller: videoDescriptionTextController,
                                                             focusNode: videoDescriptionFocusNode,
                                                             textCapitalization: TextCapitalization.words,
                                                             obscureText: false,
                                                           ),
-                                                        ),
                                                       ],
                                                     ),
-                                                  ),
 
                                                   // Container to show labels
-                                            Semantics(
-                                              label: 'Labels container',
-                                              child: Container(
-                                                constraints: BoxConstraints(
+                                  Container(
+                                    constraints: BoxConstraints(
                                                   maxWidth: 570,
                                                 ),
                                                 decoration: BoxDecoration(),
                                                 child:
                                                 // Column to place labels
-                                                Semantics(
-                                                  label: 'Labels column',
-                                                  child: Column(
-                                                    mainAxisSize: MainAxisSize.max,
+                                        Column(
+                                      mainAxisSize: MainAxisSize.max,
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       // "Category" text
-                                                      Semantics(
-                                                        label: '"Category" text',
-                                                        child: Text(
-                                                          'Category',
+                                        Text(
+                                          'Category',
                                                           style: AppTextStyles.labelMedium(),
                                                         ),
-                                                      ),
                                                       const SizedBox(height: 12),
 
                                                             // Label to differentiate the functionality chosen, which is
                                                             // related to the video perspective
-                                                            Semantics(
-                                                                label: 'Perspective label',
-                                                                child: ChoiceChipsGroup(
-                                                                  labels: OriginFunc.values.map((e) => e.name).toList(),
+                                        ChoiceChipsGroup(
+                                          labels: OriginFunc.values.map((e) => e.name).toList(),
                                                                   selectedIndex: widget.perspective!.index,
                                                                   // preselect "side"
                                                                   onChanged: (_) {}, // no interaction
-                                                                )),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                                               ),
-                                            ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                  ),
                                 ),
                               ),
 
                               // Column to place the upload button
-                        Semantics(
-                          label: 'Button column',
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
+                  Column(
+                    mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               // Button to upload the video and start the analysis
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 12),
-                                child: Semantics(
-                                  label: 'Upload and analyze button',
-                                  child: DarkButton(
-                                    text: 'Upload and Analyze',
+                        child: DarkButton(
+                          text: 'Upload and Analyze',
                                     onPressed: () async {
                                       final appState = ref.watch(appStateProvider);
 
@@ -303,9 +262,8 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
                                             if (!context.mounted) return;
                                             context.pushNamed('loading');
                                           },
-                                        ),
-                                      ).animate().scale(
-                                            begin: const Offset(1.0, 1.0),
+                        ).animate().scale(
+                              begin: const Offset(1.0, 1.0),
                                             end: const Offset(1.1, 1.1),
                                             duration: 600.ms,
                                             curve: Curves.easeIn,
@@ -314,16 +272,13 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
                                     ),
                                   ],
                                 ),
-                              ),
                             ],
-                          ),
-                        ).animate().fadeIn(
-                                  duration: 600.ms,
+              ).animate().fadeIn(
+                        duration: 600.ms,
                                   curve: Curves.easeIn,
                                 ),
                       ),
-              ),
-                  )),
+          ),
         ),
       ),
     );

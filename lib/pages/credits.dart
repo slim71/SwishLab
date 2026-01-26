@@ -59,22 +59,16 @@ class _CreditsState extends ConsumerState<Credits> {
           top: true,
           child:
               // Container with all the Credits page content
-              Semantics(
-            label: 'Main container content',
-                  child: Background(
-                    child: Semantics(
-                      label: 'Main column content',
-                child: Column(
-                        mainAxisSize: MainAxisSize.max,
+              Background(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Container for a small introduction
                           Padding(
                             padding: EdgeInsets.all(10),
-                            child: Semantics(
-                              label: 'Container for a small introduction',
-                              child: Container(
-                                decoration: BoxDecoration(
+                  child: Container(
+                    decoration: BoxDecoration(
                                   color: appColors.secondaryBackground,
                                   borderRadius: BorderRadius.circular(25),
                                   shape: BoxShape.rectangle,
@@ -85,10 +79,8 @@ class _CreditsState extends ConsumerState<Credits> {
                                     // Small page introduction
                                     Padding(
                                       padding: EdgeInsets.all(10),
-                                      child: Semantics(
-                                        label: 'Small page introduction',
-                                        child: RichText(
-                                          textScaler: MediaQuery.of(context).textScaler,
+                          child: RichText(
+                            textScaler: MediaQuery.of(context).textScaler,
                                           text: CustomTextSpan(
                                             children: [
                                               CustomTextSpan(
@@ -124,12 +116,10 @@ class _CreditsState extends ConsumerState<Credits> {
                                             ],
                                           ),
                                         ),
-                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                            ),
                           ),
                           Expanded(
                             child: Builder(
@@ -215,8 +205,7 @@ class _CreditsState extends ConsumerState<Credits> {
                           ),
                         ],
                       ),
-              ),
-                  )),
+          ),
         ),
       ),
     );

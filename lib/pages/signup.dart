@@ -1,3 +1,4 @@
+import 'package:SwishLab/functions/add_animation.dart';
 import 'package:SwishLab/models/users_row.dart';
 import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/providers/users_provider.dart';
@@ -11,7 +12,6 @@ import 'package:SwishLab/widgets/input_field.dart';
 import 'package:SwishLab/widgets/light_button.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -168,8 +168,9 @@ class _SignupPageState extends ConsumerState<SignupPage>
                         // Container with the signup form
                                 Padding(
                                   padding: EdgeInsets.all(16),
-                          child: Container(
-                            width: double.infinity,
+                          child: addAnimation(
+                            widget: Container(
+                              width: double.infinity,
                                       constraints: BoxConstraints(
                                         maxWidth: 570,
                                       ),
@@ -390,37 +391,11 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                             ),
                               ),
                             ),
-                          )
-                              .animate()
-                                      // Fade
-                                      .fade(
-                                        begin: 0,
-                                        end: 1,
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      )
-                                      // Move up
-                                      .move(
-                                        begin: const Offset(0, 140),
-                                        end: Offset.zero,
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      )
-                                      // Scale
-                                      .scale(
-                                        begin: const Offset(0.9, 1.0),
-                                        end: const Offset(1.0, 1.0),
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      )
-                                      // Approximate TiltEffect (2D)
-                                      .rotate(
-                                        begin: -0.05,
-                                        // visual approximation of -0.349 tilt
-                                        end: 0,
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      ),
+                            ),
+                            move: const MoveConfig(begin: Offset(0, 140)),
+                            scale: const ScaleConfig(begin: Offset(0.9, 1.0)),
+                            rotate: const RotateConfig(begin: -0.05), // visual approximation of -0.349 tilt
+                          ),
                                 ),
                               ],
                             ),

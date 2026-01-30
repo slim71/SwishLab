@@ -1,4 +1,5 @@
 import 'package:SwishLab/constants.dart';
+import 'package:SwishLab/functions/add_animation.dart';
 import 'package:SwishLab/functions/get_border_color.dart';
 import 'package:SwishLab/functions/process_analysis_results.dart';
 import 'package:SwishLab/functions/score_to_rating.dart';
@@ -14,7 +15,6 @@ import 'package:SwishLab/widgets/dynamic_icon_image.dart';
 import 'package:SwishLab/widgets/section_details.dart';
 import 'package:SwishLab/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AnalysisResults extends ConsumerStatefulWidget {
@@ -84,22 +84,14 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                           ),
 
                                         // Divider between the video preview and the scores
-                            Divider(
-                              height: 32,
+                            addAnimation(
+                              widget: Divider(
+                                height: 32,
                                       thickness: 1,
                                       color: appColors.alternateOne,
-                            )
-                                .animate()
-                                .fadeIn(
-                                    duration: 600.ms,
-                                    curve: Curves.easeInOut,
-                                  )
-                                      .move(
-                                    begin: const Offset(50, 0),
-                                    end: Offset.zero,
-                                    duration: 600.ms,
-                                    curve: Curves.easeInOut,
-                                  ),
+                              ),
+                              move: const MoveConfig(begin: Offset(50, 0)),
+                            ),
 
                                         // Wrap to dynamically generate scores and data from the analysis results
                                         Builder(
@@ -107,8 +99,9 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                             final analysisResultListed =
                                                 processAnalysisResults(widget.videoDataJson['analysis']).toList();
 
-                                return Wrap(
-                                  spacing: 20,
+                                return addAnimation(
+                                  widget: Wrap(
+                                    spacing: 20,
                                           runSpacing: 0,
                                           alignment: WrapAlignment.start,
                                           crossAxisAlignment: WrapCrossAlignment.start,
@@ -218,12 +211,10 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                       ),
                                     );
                                           }),
-                                      ).animate().move(
-                                        begin: const Offset(0, 100),
-                                        end: Offset.zero,
-                                        duration: 600.ms,
-                                        curve: Curves.easeInOut,
-                                      );
+                                  ),
+                                  withFade: false,
+                                  move: const MoveConfig(begin: Offset(0, 100)),
+                                );
                                     },
                                   ),
                                 ],

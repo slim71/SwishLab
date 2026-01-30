@@ -1,4 +1,5 @@
 import 'package:SwishLab/constants.dart';
+import 'package:SwishLab/functions/add_animation.dart';
 import 'package:SwishLab/providers/auth_providers.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/state/persisted_states.dart';
@@ -10,7 +11,6 @@ import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/input_field.dart';
 import 'package:SwishLab/widgets/light_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -106,8 +106,9 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                 // Container with the login form
                       Padding(
                         padding: EdgeInsets.all(16),
-                  child: Container(
-                    width: double.infinity,
+                  child: addAnimation(
+                    widget: Container(
+                      width: double.infinity,
                             constraints: BoxConstraints(
                               maxWidth: 570,
                             ),
@@ -249,36 +250,11 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                       ),
                       ),
                     ),
-                  )
-                      .animate()
-                                // Fade in
-                                .fade(
-                                  duration: 300.ms,
-                                  curve: Curves.easeInOut,
-                                  begin: 0,
-                                  end: 1,
-                                )
-                                // Slide from bottom
-                                .move(
-                                  begin: const Offset(0, 140), // absolute pixels
-                                  end: Offset.zero,
-                                  duration: 300.ms,
-                                  curve: Curves.easeInOut,
-                                )
-                                // Scale
-                                .scale(
-                                  begin: const Offset(0.9, 1.0),
-                                  end: const Offset(1.0, 1.0),
-                                  duration: 300.ms,
-                                  curve: Curves.easeInOut,
-                                )
-                                // Tilt simulation: small rotation around X axis
-                                .rotate(
-                                  begin: -0.05, // radians ~ small tilt
-                                  end: 0,
-                                  duration: 300.ms,
-                                  curve: Curves.easeInOut,
-                                ),
+                    ),
+                    scale: const ScaleConfig(begin: Offset(0.9, 1.0)),
+                    move: const MoveConfig(begin: Offset(0, 140)),
+                    rotate: const RotateConfig(begin: -0.05), // radians ~ small tilt
+                  ),
                           ),
                         ],
                       ),

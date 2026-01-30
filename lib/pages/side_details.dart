@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:SwishLab/functions/add_animation.dart';
 import 'package:SwishLab/models/custom_enums.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/icon_action_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -73,8 +73,9 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                       mainAxisSize: MainAxisSize.max,
                               children: [
                                 // Back button
-                        IconActionButton(
-                          borderColor: appColors.containersBorders,
+                        addAnimation(
+                            widget: IconActionButton(
+                              borderColor: appColors.containersBorders,
                                     size: 60,
                                     backgroundColor: appColors.secondaryBackground,
                                     icon: Icons.arrow_back_rounded,
@@ -83,18 +84,8 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                     onPressed: () async {
                                       context.pop();
                                     },
-                        )
-                            .animate()
-                                    .fadeIn(
-                                      duration: 300.ms,
-                                      curve: Curves.easeInOut,
-                                    )
-                                    .scale(
-                                      begin: const Offset(0.5, 1.0),
-                                      end: const Offset(1.0, 1.0),
-                                      duration: 300.ms,
-                                      curve: Curves.easeInOut,
-                                    ),
+                            ),
+                            scale: const ScaleConfig(begin: Offset(0.5, 1.0))),
                               ],
                             ),
 
@@ -105,8 +96,9 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                 // Upload button
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
-                          child: IconActionButton(
-                            borderColor: appColors.containersBorders,
+                          child: addAnimation(
+                              widget: IconActionButton(
+                                borderColor: appColors.containersBorders,
                                       size: 60,
                                       backgroundColor: appColors.secondaryBackground,
                                       icon: FontAwesomeIcons.upload,
@@ -153,18 +145,8 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                           },
                                         );
                                       },
-                          )
-                              .animate()
-                                      .fadeIn(
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      )
-                                      .scale(
-                                        begin: const Offset(0.5, 1.0),
-                                        end: const Offset(1.0, 1.0),
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      ),
+                              ),
+                              scale: const ScaleConfig(begin: Offset(0.5, 1.0))),
                                 ),
                               ],
                             ),
@@ -194,25 +176,17 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                         // Section title
                                         Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
-                            child: ShaderMask(
-                              shaderCallback: (bounds) => appColors.gradientText().createShader(bounds),
+                            child: addAnimation(
+                              widget: ShaderMask(
+                                shaderCallback: (bounds) => appColors.gradientText().createShader(bounds),
                                             blendMode: BlendMode.srcIn,
                                             child: Text(
                                               'Side view analysis',
                                               style: AppTextStyles.displaySmall(),
                                             ),
-                                          )
-                                              .animate()
-                                              .fadeIn(
-                                                duration: 600.ms,
-                                                curve: Curves.easeInOut,
-                                              )
-                                              .move(
-                                                begin: const Offset(0, 60),
-                                                end: Offset.zero,
-                                                duration: 600.ms,
-                                                curve: Curves.easeInOut,
-                                ),
+                              ),
+                              move: const MoveConfig(begin: Offset(0, 60)),
+                            ),
                           ),
                                   ),
                                 ),
@@ -221,21 +195,13 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                     // Section overview
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 24),
-                      child: Text(
-                        'Take a video with the camera on either side.\nThis will analyze your body posture and flow when shooting.\nUseful to detect incorrect ball paths, flow ruptures, etc...',
+                      child: addAnimation(
+                        widget: Text(
+                          'Take a video with the camera on either side.\nThis will analyze your body posture and flow when shooting.\nUseful to detect incorrect ball paths, flow ruptures, etc...',
                                 style: AppTextStyles.titleSmall(),
-                      )
-                          .animate()
-                                .fadeIn(
-                                  duration: 600.ms,
-                                  curve: Curves.easeInOut,
-                                )
-                                .move(
-                                  begin: const Offset(0, 120),
-                                  end: Offset.zero,
-                                  duration: 600.ms,
-                                  curve: Curves.easeInOut,
-                                ),
+                        ),
+                        move: const MoveConfig(begin: Offset(0, 120)),
+                      ),
                           ),
                         ],
                       ),

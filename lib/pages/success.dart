@@ -1,3 +1,4 @@
+import 'package:SwishLab/functions/add_animation.dart';
 import 'package:SwishLab/models/users_row.dart';
 import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/styles/styles.dart';
@@ -84,8 +85,9 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                     child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 44, 0, 0),
-                                  child: Container(
-                                    width: 120,
+                                  child: addAnimation(
+                                    widget: Container(
+                                      width: 120,
                                             height: 120,
                                             decoration: BoxDecoration(
                                               color: appColors.altContBorders,
@@ -122,132 +124,55 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                                     ),
                                       ),
                                     ),
-                                  )
-                                      .animate()
-                                            .fade(
-                                              begin: 0,
-                                              end: 1,
-                                              duration: 300.ms,
-                                              curve: Curves.easeInOut,
-                                            )
-                                            .scale(
-                                              begin: const Offset(0.8, 0.8),
-                                              end: const Offset(1.0, 1.0),
-                                              duration: 300.ms,
-                                              curve: Curves.easeInOut,
-                                            )
-                                            .move(
-                                              begin: const Offset(0, 40),
-                                              end: Offset.zero,
-                                              duration: 300.ms,
-                                              curve: Curves.easeInOut,
-                                            )
-                                            .rotate(
-                                              begin: -0.08,
-                                              end: 0,
-                                              duration: 300.ms,
-                                              curve: Curves.easeInOut,
-                                            )),
-                                  ),
+                                    ),
+                                    fade: FadeConfig(duration: 300.ms),
+                                    scale: const ScaleConfig(begin: Offset(0.8, 0.8)),
+                                    move: const MoveConfig(begin: Offset(0, 40)),
+                                    rotate: const RotateConfig(begin: -0.08),
+                                  )),
+                            ),
                                   const SizedBox(width: 8),
 
                                   // "Success!" text
                                   Align(
                                       alignment: AlignmentDirectional(0, -1),
-                                child: Text(
-                                  'Success!',
-                                          style: AppTextStyles.displaySmall(
-                                              color: appColors.secondaryText),
-                                )
-                                    .animate()
-                                          .fade(
-                                            begin: 0,
-                                            end: 1,
-                                            duration: 300.ms,
-                                            curve: Curves.easeInOut,
-                                          )
-                                          .move(
-                                            begin: const Offset(0, 20),
-                                            end: Offset.zero,
-                                            duration: 300.ms,
-                                            curve: Curves.easeInOut,
-                                          )),
-                                  const SizedBox(width: 8),
+                                child: addAnimation(
+                                  widget: Text(
+                                    'Success!',
+                                    style: AppTextStyles.displaySmall(color: appColors.secondaryText),
+                                  ),
+                                  fade: FadeConfig(duration: 300.ms),
+                                  move: const MoveConfig(begin: Offset(0, 20)),
+                                )),
+                            const SizedBox(width: 8),
 
                                   // "Account created" text
                                   Align(
-                                      alignment: AlignmentDirectional(0, -1),
-                                child: Text(
-                                  'Account created',
-                                          style: AppTextStyles.labelMedium(
-                                              color: appColors.secondaryText),
-                                )
-                                    .animate()
-                                          .fade(
-                                            begin: 0,
-                                            end: 1,
-                                            delay: 150.ms,
-                                            duration: 300.ms,
-                                            curve: Curves.easeInOut,
-                                          )
-                                          .scale(
-                                            begin: const Offset(0.8, 0.8),
-                                            end: const Offset(1.0, 1.0),
-                                            delay: 150.ms,
-                                            duration: 300.ms,
-                                            curve: Curves.easeInOut,
-                                          )
-                                          .move(
-                                            begin: const Offset(0, 40),
-                                            end: Offset.zero,
-                                            delay: 150.ms,
-                                            duration: 300.ms,
-                                            curve: Curves.easeInOut,
-                                          )
-                                          .rotate(
-                                            begin: -0.08,
-                                            end: 0,
-                                            delay: 150.ms,
-                                            duration: 300.ms,
-                                            curve: Curves.easeInOut,
-                                          )),
-                                  const SizedBox(width: 8),
+                                alignment: AlignmentDirectional(0, -1),
+                                child: addAnimation(
+                                  widget: Text(
+                                    'Account created',
+                                    style: AppTextStyles.labelMedium(color: appColors.secondaryText),
+                                  ),
+                                  fade: FadeConfig(delay: 150.ms, duration: 300.ms),
+                                  scale: const ScaleConfig(begin: Offset(0.8, 0.8)),
+                                  move: const MoveConfig(begin: Offset(0, 40)),
+                                  rotate: const RotateConfig(begin: -0.08),
+                                )),
+                            const SizedBox(width: 8),
 
                                   // Simple divider
-                            Divider(
-                              height: 44,
+                            addAnimation(
+                              widget: Divider(
+                                height: 44,
                                       thickness: 2,
                                       color: appColors.alternateOne,
-                            )
-                                .animate()
-                                      .fade(
-                                        begin: 0,
-                                        end: 1,
-                                        delay: 200.ms,
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      )
-                                      .scale(
-                                        begin: const Offset(0.8, 0.8),
-                                        end: const Offset(1.0, 1.0),
-                                        delay: 200.ms,
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      )
-                                      .move(
-                                        begin: const Offset(0, 40),
-                                        end: Offset.zero,
-                                        delay: 200.ms,
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      )
-                                      .rotate(
-                                        begin: -0.08,
-                                        end: 0,
-                                        delay: 200.ms,
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      ),
+                              ),
+                              fade: FadeConfig(delay: 200.ms, duration: 300.ms),
+                              scale: const ScaleConfig(begin: Offset(0.8, 0.8)),
+                              move: const MoveConfig(begin: Offset(0, 40)),
+                              rotate: const RotateConfig(begin: -0.08),
+                            ),
                                   const SizedBox(width: 8),
 
                                   // Column used to place the newly created user data
@@ -255,8 +180,9 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                     child: Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             12, 0, 12, 0),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
+                                  child: addAnimation(
+                                    widget: Column(
+                                      mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             crossAxisAlignment:
@@ -317,75 +243,28 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                               ),
                                               const SizedBox(width: 12),
                                             ],
-                                  )
-                                      .animate()
-                                            .fade(
-                                              begin: 0,
-                                              end: 1,
-                                              delay: 250.ms,
-                                              duration: 300.ms,
-                                              curve: Curves.easeInOut,
-                                            )
-                                            .scale(
-                                              begin: const Offset(0.8, 0.8),
-                                              end: const Offset(1.0, 1.0),
-                                              delay: 250.ms,
-                                              duration: 300.ms,
-                                              curve: Curves.easeInOut,
-                                            )
-                                            .move(
-                                              begin: const Offset(0, 40),
-                                              end: Offset.zero,
-                                              delay: 250.ms,
-                                              duration: 300.ms,
-                                              curve: Curves.easeInOut,
-                                            )
-                                            .rotate(
-                                              begin: -0.08,
-                                              end: 0,
-                                              delay: 250.ms,
-                                              duration: 300.ms,
-                                              curve: Curves.easeInOut,
-                                            )),
+                                    ),
+                                    fade: FadeConfig(delay: 250.ms, duration: 300.ms),
+                                    scale: const ScaleConfig(begin: Offset(0.8, 0.8)),
+                                    move: const MoveConfig(begin: Offset(0, 40)),
+                                    rotate: const RotateConfig(begin: -0.08),
+                                  )),
                                   ),
                                   const SizedBox(width: 8),
 
                                   // Home button
-                            DarkButton(
-                              onPressed: () async {
+                            addAnimation(
+                              widget: DarkButton(
+                                onPressed: () async {
                                         context.goNamed('home');
                                       },
                                       text: 'Go Home',
-                            )
-                                .animate()
-                                      .fade(
-                                        begin: 0,
-                                        end: 1,
-                                        delay: 350.ms,
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      )
-                                      .scale(
-                                        begin: const Offset(0.8, 0.8),
-                                        end: const Offset(1.0, 1.0),
-                                        delay: 350.ms,
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      )
-                                      .move(
-                                        begin: const Offset(0, 40),
-                                        end: Offset.zero,
-                                        delay: 350.ms,
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      )
-                                      .rotate(
-                                        begin: 0.08,
-                                        end: 0,
-                                        delay: 350.ms,
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      ),
+                              ),
+                              fade: FadeConfig(delay: 350.ms, duration: 300.ms),
+                              scale: const ScaleConfig(begin: Offset(0.8, 0.8)),
+                              move: const MoveConfig(begin: Offset(0, 40)),
+                              rotate: const RotateConfig(begin: 0.08),
+                            ),
                                   const SizedBox(width: 8),
                                 ],
                               ),

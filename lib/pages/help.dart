@@ -1,3 +1,4 @@
+import 'package:SwishLab/functions/add_animation.dart';
 import 'package:SwishLab/functions/filter_faqs.dart';
 import 'package:SwishLab/functions/sort_by_order.dart';
 import 'package:SwishLab/state/app_state.dart';
@@ -11,7 +12,6 @@ import 'package:SwishLab/widgets/input_field.dart';
 import 'package:SwishLab/widgets/toggle_icon.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -130,8 +130,9 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                       // Button to send an email
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                                child: DarkButton(
-                                  onPressed: () async {
+                                child: addAnimation(
+                                  widget: DarkButton(
+                                    onPressed: () async {
                                               await launchUrl(Uri(
                                                   scheme: 'mailto',
                                                   path: 'slim71sv@gmail.com',
@@ -149,28 +150,18 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                               Icons.email,
                                               size: 30,
                                             ), // TODO: what about the size?
-                                )
-                                    .animate()
-                                            .fade(
-                                          begin: 0,
-                                          end: 1,
-                                          duration: 600.ms,
-                                          curve: Curves.easeInOut,
-                                        )
-                                            .move(
-                                          begin: const Offset(0, 110),
-                                          end: Offset.zero,
-                                          duration: 600.ms,
-                                          curve: Curves.easeInOut,
-                                        ),
+                                  ),
+                                  move: const MoveConfig(begin: Offset(0, 110)),
+                                ),
                                       ),
                                       const SizedBox(width: 12),
                                       // Container to simulate a button for the search filter
                                       Expanded(
                                         child: Padding(
                                           padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                                  child: InkWell(
-                                    onTap: () async {
+                                  child: addAnimation(
+                                    widget: InkWell(
+                                      onTap: () async {
                                                 // Immediate UI state changes
                                                 setState(() {
                                                   searchActive = !searchActive;
@@ -259,20 +250,9 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                                     ),
                                       ),
                                     ),
-                                  )
-                                      .animate()
-                                              .fade(
-                                            begin: 0,
-                                            end: 1,
-                                            duration: 600.ms,
-                                            curve: Curves.easeInOut,
-                                          )
-                                              .move(
-                                            begin: const Offset(0, 110),
-                                            end: Offset.zero,
-                                            duration: 600.ms,
-                                            curve: Curves.easeInOut,
-                                          ),
+                                    ),
+                                    move: const MoveConfig(begin: Offset(0, 110)),
+                                  ),
                                         ),
                                       ),
                                     ],

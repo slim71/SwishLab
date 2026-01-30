@@ -1,4 +1,5 @@
 import 'package:SwishLab/constants.dart';
+import 'package:SwishLab/functions/add_animation.dart';
 import 'package:SwishLab/models/statistics_row.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
@@ -7,7 +8,6 @@ import 'package:SwishLab/widgets/background.dart';
 import 'package:SwishLab/widgets/box_with_shadow.dart';
 import 'package:SwishLab/widgets/stats_container.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -60,8 +60,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             // Colored border around the profile picture
-                        Container(
-                          width: 200,
+                        addAnimation(
+                            widget: Container(
+                              width: 200,
                                 height: 200,
                                 decoration: BoxDecoration(
                                   gradient: appColors.gradientBackground(
@@ -110,12 +111,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                               ),
                             ),
                           ),
-                        ).animate().moveY(
-                              begin: 100,
-                                  end: 0,
-                                  curve: Curves.bounceOut,
-                                  duration: 1.seconds,
-                                ),
+                            ),
+                            withFade: false,
+                            moveY: const MoveYConfig(begin: 100, duration: Duration(seconds: 1))),
                           ],
                         ),
 
@@ -164,8 +162,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                               ),
                               child:
                                   // Column with user statistics
-                              Column(
-                            mainAxisSize: MainAxisSize.max,
+                              addAnimation(
+                            widget: Column(
+                              mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     // Statistics section title
@@ -328,12 +327,10 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                 ),
                               ),
                                   ],
-                          ).animate().moveY(
-                                    begin: 100,
-                                        end: 0,
-                                        curve: Curves.bounceOut,
-                                        duration: 1.seconds,
-                                      ),
+                            ),
+                            withFade: false,
+                            moveY: const MoveYConfig(begin: 100, duration: Duration(seconds: 1)),
+                          ),
                             ),
                         ),
                       ),

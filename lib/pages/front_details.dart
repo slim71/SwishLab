@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:SwishLab/functions/add_animation.dart';
 import 'package:SwishLab/models/custom_enums.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
@@ -73,29 +74,22 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                       mainAxisSize: MainAxisSize.max,
                               children: [
                                 // Back button
-                        IconActionButton(
-                          borderColor: appColors.containersBorders,
-                                    size: 60,
-                                    backgroundColor: appColors.secondaryBackground,
-                                    icon: Icons.arrow_back_rounded,
-                                    iconColor: appColors.primaryText,
-                                    iconSize: 25,
-                                    onPressed: () async {
-                                      context.pop();
-                                    },
-                        )
-                            .animate()
-                                    .fadeIn(
-                                      duration: 300.ms,
-                                      curve: Curves.easeInOut,
-                                    )
-                                    .scale(
-                                      begin: const Offset(0.5, 1.0),
-                                      end: const Offset(1.0, 1.0),
-                                      duration: 300.ms,
-                                      curve: Curves.easeInOut,
-                                    ),
-                              ],
+                        addAnimation(
+                          widget: IconActionButton(
+                            borderColor: appColors.containersBorders,
+                            size: 60,
+                            backgroundColor: appColors.secondaryBackground,
+                            icon: Icons.arrow_back_rounded,
+                            iconColor: appColors.primaryText,
+                            iconSize: 25,
+                            onPressed: () async {
+                              context.pop();
+                            },
+                          ),
+                          fade: FadeConfig(duration: 300.ms),
+                          scale: const ScaleConfig(begin: Offset(0.5, 1.0)),
+                        ),
+                      ],
                             ),
 
                           // Upload button row
@@ -105,8 +99,9 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                                 // Upload button
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
-                          child: IconActionButton(
-                            borderColor: appColors.containersBorders,
+                          child: addAnimation(
+                              widget: IconActionButton(
+                                borderColor: appColors.containersBorders,
                                       size: 60,
                                       backgroundColor: appColors.secondaryBackground,
                                       icon: FontAwesomeIcons.upload,
@@ -153,19 +148,10 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                                           },
                                         );
                                       },
-                          )
-                              .animate()
-                                      .fadeIn(
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      )
-                                      .scale(
-                                        begin: const Offset(0.5, 1.0),
-                                        end: const Offset(1.0, 1.0),
-                                        duration: 300.ms,
-                                        curve: Curves.easeInOut,
-                                      ),
-                                ),
+                              ),
+                              fade: FadeConfig(duration: 300.ms),
+                              scale: const ScaleConfig(begin: Offset(0.5, 1.0))),
+                        ),
                               ],
                             ),
                         ],
@@ -196,25 +182,17 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                                         padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                                         child:
                                             // Section title
-                                  ShaderMask(
-                                shaderCallback: (bounds) => appColors.gradientText().createShader(bounds),
+                                  addAnimation(
+                                widget: ShaderMask(
+                                  shaderCallback: (bounds) => appColors.gradientText().createShader(bounds),
                                             blendMode: BlendMode.srcIn,
                                             child: Text(
                                               'Front view analysis',
                                               style: AppTextStyles.displaySmall(),
                                             ),
-                                          )
-                                              .animate()
-                                              .fadeIn(
-                                                duration: 600.ms,
-                                                curve: Curves.easeInOut,
-                                              )
-                                              .move(
-                                                begin: const Offset(0, 60),
-                                                end: Offset.zero,
-                                                duration: 600.ms,
-                                                curve: Curves.easeInOut,
-                                              ),
+                                ),
+                                move: const MoveConfig(begin: Offset(0, 60)),
+                              ),
                             ),
                           ),
                         )),
@@ -222,21 +200,13 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                     // Section overview
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 24),
-                      child: Text(
-                        'Take a video with the camera facing you while you shoot.\nThis will analyze how you jump and release the ball.\nUseful to detect inefficient release points, power loss do to ball swings, etc...',
+                      child: addAnimation(
+                        widget: Text(
+                          'Take a video with the camera facing you while you shoot.\nThis will analyze how you jump and release the ball.\nUseful to detect inefficient release points, power loss do to ball swings, etc...',
                                 style: AppTextStyles.titleSmall(),
-                      )
-                          .animate()
-                                .fadeIn(
-                                  duration: 600.ms,
-                                  curve: Curves.easeInOut,
-                                )
-                                .move(
-                                  begin: const Offset(0, 120),
-                                  end: Offset.zero,
-                                  duration: 600.ms,
-                                  curve: Curves.easeInOut,
-                                ),
+                        ),
+                        move: const MoveConfig(begin: Offset(0, 120)),
+                      ),
                           ),
                         ],
                       ),

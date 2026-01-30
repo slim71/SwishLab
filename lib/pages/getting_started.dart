@@ -1,3 +1,4 @@
+import 'package:SwishLab/functions/add_animation.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
@@ -5,7 +6,6 @@ import 'package:SwishLab/widgets/background.dart';
 import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:SwishLab/widgets/icon_action_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart' as smooth_page_indicator;
 
@@ -28,30 +28,6 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
   @override
   void initState() {
     super.initState();
-  }
-
-  Widget addAnimation({required Widget widget, Offset? scaleOffset, Offset? moveOffset}) {
-    Animate anim = widget.animate().fadeIn(duration: 600.ms, curve: Curves.easeInOut);
-
-    if (scaleOffset != null) {
-      anim = anim.scale(
-        begin: scaleOffset,
-        end: const Offset(1.0, 1.0),
-        duration: 600.ms,
-        curve: Curves.easeInOut,
-      );
-    }
-
-    if (moveOffset != null) {
-      anim = anim.move(
-        begin: moveOffset,
-        end: Offset.zero,
-        duration: 600.ms,
-        curve: Curves.easeInOut,
-      );
-    }
-
-    return anim;
   }
 
   @override
@@ -93,9 +69,9 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                       height: 500,
                                       fit: BoxFit.contain,
                                     ),
-                                    scaleOffset: Offset(1.2, 1.2)),
+                            scale: const ScaleConfig(begin: Offset(1.2, 1.2))),
 
-                              // Column to place the text for the choose angle page
+                        // Column to place the text for the choose angle page
                               Padding(
                                 padding: EdgeInsets.all(24),
                           child: Column(
@@ -108,7 +84,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                     'Pick your angle',
                                     style: AppTextStyles.headlineMedium(),
                                   ),
-                                  moveOffset: Offset(0, 60)),
+                                  move: const MoveConfig(begin: Offset(0, 60))),
 
                               // Step description
                                     Padding(
@@ -118,8 +94,8 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                             'Every angle gives you a new way to level up your shot with SwishLab.\nUse the Front view to spot and eliminate any sideways movement holding you back.\nSwitch to the Side view to understand your ball path and fine-tune your shooting form with confidence.',
                                             style: AppTextStyles.labelMedium(),
                                           ),
-                                          moveOffset: Offset(0, 80)),
-                                    ),
+                                    move: const MoveConfig(begin: Offset(0, 80))),
+                              ),
 
                               // Row to place the next button
                               Padding(
@@ -144,7 +120,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                             );
                                           },
                                         ),
-                                        scaleOffset: Offset(0.4, 0.4)),
+                                        scale: const ScaleConfig(begin: Offset(0.4, 0.4))),
                                   ],
                                 ),
                               ),
@@ -166,7 +142,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                               height: 540,
                               fit: BoxFit.contain,
                             ),
-                            scaleOffset: Offset(1.2, 1.2)),
+                            scale: const ScaleConfig(begin: Offset(1.2, 1.2))),
 
                         // Column to place the text for the upload video page
                             Padding(
@@ -181,7 +157,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                         'Upload a video',
                                         style: AppTextStyles.headlineMedium(),
                                       ),
-                                      moveOffset: Offset(0, 60)),
+                                  move: const MoveConfig(begin: Offset(0, 60))),
 
                               // Step description
                               Padding(
@@ -191,7 +167,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                       'Shoot a new clip or pick one straight from your gallery - whatever works best for you.\nFor tips on getting the most out of your shots, check out the Help section and learn what makes a great video for SwishLab.',
                                       style: AppTextStyles.labelMedium(),
                                     ),
-                                    moveOffset: Offset(0, 80)),
+                                    move: const MoveConfig(begin: Offset(0, 80))),
                               ),
 
                               // Row to place the next button
@@ -217,8 +193,8 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                                 );
                                               },
                                             ),
-                                            scaleOffset: Offset(0.5, 0.5)),
-                                      ],
+                                        scale: const ScaleConfig(begin: Offset(0.5, 0.5))),
+                                  ],
                                     ),
                                   ),
                                 ],
@@ -239,7 +215,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                               height: 540,
                               fit: BoxFit.cover,
                             ),
-                            scaleOffset: Offset(1.2, 1.2)),
+                            scale: const ScaleConfig(begin: Offset(1.2, 1.2))),
 
                         // Column to place the text for the make your clip page
                             Padding(
@@ -254,7 +230,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                         'Make your clip yours',
                                         style: AppTextStyles.headlineMedium(),
                                       ),
-                                      moveOffset: Offset(0, 60)),
+                                  move: const MoveConfig(begin: Offset(0, 60))),
 
                               // Step description
                               Padding(
@@ -264,7 +240,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                       'Add a few quick details about your video - like a name and a short description - to keep everything organized.\nDon’t worry, SwishLab takes care of the rest and fills in the remaining info automatically.',
                                       style: AppTextStyles.labelMedium(),
                                     ),
-                                    moveOffset: Offset(0, 80)),
+                                    move: const MoveConfig(begin: Offset(0, 80))),
                               ),
 
                               // Row to place the next button
@@ -290,8 +266,8 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                                 );
                                               },
                                             ),
-                                            scaleOffset: Offset(0.5, 0.5)),
-                                      ],
+                                        scale: const ScaleConfig(begin: Offset(0.5, 0.5))),
+                                  ],
                                     ),
                                   ),
                                 ],
@@ -312,7 +288,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                               height: 540,
                               fit: BoxFit.contain,
                             ),
-                            scaleOffset: Offset(1.2, 1.2)),
+                            scale: const ScaleConfig(begin: Offset(1.2, 1.2))),
 
                         // Column to place the text for the processing page
                             Padding(
@@ -327,7 +303,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                         'Processing your shot',
                                         style: AppTextStyles.headlineMedium(),
                                       ),
-                                      moveOffset: Offset(0, 60)),
+                                  move: const MoveConfig(begin: Offset(0, 60))),
 
                               // Step title
                               Padding(
@@ -337,7 +313,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                       'The magic is happening!\nThis is a perfect moment to breathe, stretch, or dive right into the rest of your training session while SwishLab works for you.',
                                       style: AppTextStyles.labelMedium(),
                                     ),
-                                    moveOffset: Offset(0, 80)),
+                                    move: const MoveConfig(begin: Offset(0, 80))),
                               ),
 
                               // Row to place the next button
@@ -363,8 +339,8 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                                 );
                                               },
                                             ),
-                                            scaleOffset: Offset(0.5, 0.5)),
-                                      ],
+                                        scale: const ScaleConfig(begin: Offset(0.5, 0.5))),
+                                  ],
                                         ),
                               ),
                             ],
@@ -385,9 +361,9 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                       height: 500,
                                       fit: BoxFit.contain,
                                     ),
-                                    scaleOffset: Offset(1.2, 1.2)),
+                            scale: const ScaleConfig(begin: Offset(1.2, 1.2))),
 
-                              // Column to place the text for the review performance page
+                        // Column to place the text for the review performance page
                               Padding(
                                 padding: EdgeInsets.all(24),
                           child: Column(
@@ -400,9 +376,9 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                               'Review your performance',
                                               style: AppTextStyles.headlineMedium(),
                                             ),
-                                            moveOffset: Offset(0, 60)),
+                                  move: const MoveConfig(begin: Offset(0, 60))),
 
-                                      // Step description
+                              // Step description
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                                 child: addAnimation(
@@ -410,8 +386,8 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                                 'Your breakdown is ready!\nExplore your performance data and read personalized feedback to help you sharpen your form and grow your game.\nStay consistent - every rep moves you forward!',
                                                 style: AppTextStyles.labelMedium(),
                                               ),
-                                              moveOffset: Offset(0, 80)),
-                                      ),
+                                    move: const MoveConfig(begin: Offset(0, 80))),
+                              ),
 
                                       // Row to place the next button
                                       Padding(
@@ -428,9 +404,9 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                                       },
                                                       text: 'Get Started',
                                                     ),
-                                                    scaleOffset: Offset(0.8, 0.8),
-                                                    moveOffset: Offset(0, 100)),
-                                            ],
+                                        scale: const ScaleConfig(begin: Offset(0.8, 0.8)),
+                                        move: const MoveConfig(begin: Offset(0, 100))),
+                                  ],
                                           ),
                                       ),
                                     ],

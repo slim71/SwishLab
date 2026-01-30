@@ -1,8 +1,8 @@
+import 'package:SwishLab/functions/add_animation.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/dynamic_icon_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 
 class StatsContainer extends StatelessWidget {
   final Color borderColor;
@@ -22,8 +22,9 @@ class StatsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     final appColors = AppThemeManager.currentColors;
 
-    return Container(
-      width: MediaQuery.sizeOf(context).width * 0.4,
+    return addAnimation(
+        widget: Container(
+          width: MediaQuery.sizeOf(context).width * 0.4,
       height: 160,
       decoration: BoxDecoration(
         color: appColors.secondaryBackground,
@@ -59,6 +60,8 @@ class StatsContainer extends StatelessWidget {
           ),
         ],
       ),
-    ).animate().shake(rotation: 0.087, hz: 3);
+        ),
+        withFade: false,
+        shake: const ShakeConfig(rotation: 0.087, hz: 3));
   }
 }

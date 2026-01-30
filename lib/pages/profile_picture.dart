@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:SwishLab/functions/add_animation.dart';
 import 'package:SwishLab/providers/users_provider.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
@@ -13,7 +14,6 @@ import 'package:SwishLab/widgets/transparent_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -333,8 +333,9 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
 
                                   // Container with the URL field
                                   if (showUrlField == true)
-                        Container(
-                          width: double.infinity,
+                        addAnimation(
+                          widget: Container(
+                            width: double.infinity,
                                         decoration: BoxDecoration(
                                           color: appColors.secondaryBackground,
                                           borderRadius: BorderRadius.circular(12),
@@ -392,12 +393,10 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                               ],
                                             ),
                           ),
-                        ).animate().move(
-                              begin: const Offset(0, -20),
-                                          end: Offset.zero,
-                                          duration: 600.ms,
-                                          curve: Curves.bounceOut,
-                                        ),
+                          ),
+                          withFade: false,
+                          move: const MoveConfig(begin: Offset(0, -20)),
+                        ),
                                 ],
                               ),
                             const SizedBox(height: 32),

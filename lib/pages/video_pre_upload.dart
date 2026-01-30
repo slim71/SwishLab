@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:SwishLab/functions/add_animation.dart';
 import 'package:SwishLab/functions/upload_video_to_gradio.dart';
 import 'package:SwishLab/models/analysis_response.dart';
 import 'package:SwishLab/models/custom_enums.dart';
@@ -121,8 +122,9 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
                         autovalidateMode: AutovalidateMode.disabled,
                         child:
                             // Column to place the content on the Upload Video page
-                  Column(
-                mainAxisSize: MainAxisSize.max,
+                  addAnimation(
+                widget: Column(
+                  mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
@@ -225,8 +227,9 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
                               // Button to upload the video and start the analysis
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 12),
-                        child: DarkButton(
-                          text: 'Upload and Analyze',
+                            child: addAnimation(
+                              widget: DarkButton(
+                                text: 'Upload and Analyze',
                                     onPressed: () async {
                                       final appState = ref.watch(appStateProvider);
 
@@ -262,22 +265,21 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
                                             if (!context.mounted) return;
                                             context.pushNamed('loading');
                                           },
-                        ).animate().scale(
-                              begin: const Offset(1.0, 1.0),
-                                            end: const Offset(1.1, 1.1),
-                                            duration: 600.ms,
-                                            curve: Curves.easeIn,
-                                            delay: 500.ms,
-                                          ),
-                                    ),
-                                  ],
-                                ),
-                            ],
-              ).animate().fadeIn(
-                        duration: 600.ms,
-                                  curve: Curves.easeIn,
-                                ),
-                      ),
+                              ),
+                              withFade: false,
+                              scale: ScaleConfig(
+                                begin: const Offset(1.0, 1.0),
+                                end: const Offset(1.1, 1.1),
+                                delay: 500.ms,
+                                curve: Curves.easeIn,
+                              ),
+                            ))
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),

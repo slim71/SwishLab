@@ -1,4 +1,5 @@
 import 'package:SwishLab/constants.dart';
+import 'package:SwishLab/functions/add_animation.dart';
 import 'package:SwishLab/functions/load_json_remote_or_app_state.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
@@ -10,10 +11,13 @@ import 'package:SwishLab/widgets/settings_item.dart';
 import 'package:SwishLab/widgets/settings_row.dart';
 import 'package:SwishLab/widgets/social_icon_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+
+const slideDurationMs = 500; // [ms]
+const settleDurationMs = 250; // [ms]
+const singleDelayMs = 100; // [ms]
 
 class _SettingsItemData {
   final String title;
@@ -132,31 +136,6 @@ class _SettingsState extends ConsumerState<Settings>
     super.initState();
   }
 
-  Widget animatedItem(Widget child, int index) {
-    const slideDuration = 500;
-    const settleDuration = 250;
-    const delaySingle = 100;
-
-    return child
-        .animate()
-        // Enter from bottom (no bounce)
-        .slide(
-          begin: const Offset(0, 100),
-          end: Offset.zero,
-          delay: (delaySingle * index).ms,
-          duration: slideDuration.ms,
-          curve: Curves.easeOutCubic,
-        )
-        // Small elastic settle
-        .moveY(
-          begin: 100,
-          end: 0,
-          delay: (delaySingle * index).ms + slideDuration.ms,
-          curve: Curves.bounceOut,
-          duration: settleDuration.ms,
-        );
-  }
-
   @override
   Widget build(BuildContext context) {
     final appColors = AppThemeManager.currentColors;
@@ -183,12 +162,20 @@ class _SettingsState extends ConsumerState<Settings>
                             scrollDirection: Axis.vertical,
                             itemCount: items.length,
                             itemBuilder: (context, index) {
-                              return animatedItem(
-                                SettingsRow(
-                                  item: items[index],
+                  return addAnimation(
+                    widget: SettingsRow(
+                      item: items[index],
                                 ),
-                                index,
-                              );
+                    withFade: false,
+                    slide: SlideConfig(
+                        begin: const Offset(0, 100),
+                        delay: Duration(milliseconds: singleDelayMs * index),
+                        duration: const Duration(milliseconds: slideDurationMs)),
+                    moveY: MoveYConfig(
+                        begin: 100,
+                        delay: Duration(milliseconds: (singleDelayMs * index) + slideDurationMs),
+                        duration: const Duration(milliseconds: settleDurationMs)),
+                  );
                             },
                           ),
                         Padding(

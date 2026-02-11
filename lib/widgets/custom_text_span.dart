@@ -1,5 +1,6 @@
 import 'package:SwishLab/styles/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 
 class CustomTextSpan extends TextSpan {
   CustomTextSpan({
@@ -17,7 +18,7 @@ class CustomTextSpan extends TextSpan {
             fontWeight: bold ? FontWeight.bold : null,
             fontStyle: italic ? FontStyle.italic : null,
             decoration: underline ? TextDecoration.underline : null,
-            color: color, // TODO: default?
+            color: color ?? AppThemeManager.currentColors.primaryText,
           ),
         );
 }

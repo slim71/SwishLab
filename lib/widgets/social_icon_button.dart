@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 
 class SocialIconButton extends StatelessWidget {
   final IconData icon;
@@ -10,17 +11,10 @@ class SocialIconButton extends StatelessWidget {
   final double borderRadius;
   final double borderWidth;
 
-  final Color backgroundColor;
-  final Color borderColor;
-  final Color iconColor;
-
   const SocialIconButton({
     super.key,
     required this.icon,
     required this.onTap,
-    required this.backgroundColor,
-    required this.borderColor,
-    required this.iconColor,
     this.size = 48,
     this.iconSize = 24,
     this.borderRadius = 12,
@@ -29,6 +23,8 @@ class SocialIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = AppThemeManager.currentColors;
+
     return InkWell(
       borderRadius: BorderRadius.circular(borderRadius),
       onTap: onTap,
@@ -36,10 +32,10 @@ class SocialIconButton extends StatelessWidget {
         width: size,
         height: size,
         decoration: BoxDecoration(
-          color: backgroundColor,
+          color: appColors.primaryBackground,
           borderRadius: BorderRadius.circular(borderRadius),
           border: Border.all(
-            color: borderColor,
+            color: appColors.secondaryBackground,
             width: borderWidth,
           ),
         ),
@@ -47,7 +43,7 @@ class SocialIconButton extends StatelessWidget {
           child: FaIcon(
             icon,
             size: iconSize,
-            color: iconColor,
+            color: appColors.secondaryText,
           ),
         ),
       ),

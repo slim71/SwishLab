@@ -80,8 +80,8 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                         // Player to view the annotated video with analysis data
                             VideoPreview(
                               source: NetworkVideoSource(
-                                                'https://www.pexels.com/video/low-angle-view-of-a-man-playing-basketball-5192077/'),
-                                          ),
+                                  'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
+                            ),
 
                                         // Divider between the video preview and the scores
                             addAnimation(

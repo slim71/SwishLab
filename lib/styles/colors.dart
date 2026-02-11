@@ -25,6 +25,7 @@ const secondaryTextDark = Color(0xFFB0B0B0);
 
 @immutable
 class AppColorSet extends ThemeExtension<AppColorSet> {
+  final String name;
   final Brightness brightness;
   final Color primaryOne;
   final Color primaryTwo;
@@ -65,6 +66,7 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
   final Color altContBorders;
 
   const AppColorSet({
+    required this.name,
     required this.brightness,
     required this.primaryOne,
     required this.primaryTwo,
@@ -182,6 +184,7 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
 
   @override
   AppColorSet copyWith({
+    String? name,
     Brightness? b,
     Color? pOne,
     Color? pTwo,
@@ -222,6 +225,7 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
     Color? contAltBorders,
   }) {
     return AppColorSet(
+      name: name ?? "NotValid",
       brightness: b ?? brightness,
       primaryOne: pOne ?? primaryOne,
       primaryTwo: pTwo ?? primaryTwo,
@@ -268,6 +272,7 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
   AppColorSet lerp(ThemeExtension<AppColorSet>? other, double t) {
     if (other is! AppColorSet) return this;
     return AppColorSet(
+      name: other.name,
       brightness: t < 0.5 ? brightness : other.brightness,
       primaryOne: Color.lerp(primaryOne, other.primaryOne, t)!,
       primaryTwo: Color.lerp(primaryTwo, other.primaryTwo, t)!,
@@ -336,6 +341,7 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
 }
 
 const theBay = AppColorSet(
+    name: "theBay",
     brightness: Brightness.dark,
     // TODO: might need to be changed
     primaryOne: royalBlue,
@@ -377,3 +383,5 @@ const theBay = AppColorSet(
     altContBorders: pictonBlue // or airForceBlue
     // TODO: specific AppBar colors?
     );
+
+const List<AppColorSet> themeList = [theBay];

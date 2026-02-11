@@ -57,8 +57,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   bool get _isTitleCentered => style == MyAppBarStyle.backButtonTitleCentered;
 
   Widget? _buildLeading(BuildContext context) {
-    if (style == MyAppBarStyle.backButtonTitleLeft ||
-        style == MyAppBarStyle.backButtonTitleCentered) {
+    if (style == MyAppBarStyle.backButtonTitleLeft || style == MyAppBarStyle.backButtonTitleCentered) {
       return Padding(
         padding: const EdgeInsets.all(8),
         child: IconActionButton(

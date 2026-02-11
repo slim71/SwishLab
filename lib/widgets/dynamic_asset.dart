@@ -1,8 +1,6 @@
-import 'dart:async';
-
 import 'package:SwishLab/constants.dart';
 import 'package:SwishLab/models/custom_enums.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 /// Widget to upload an asset based on the supplied string.
@@ -28,15 +26,16 @@ class DynamicAsset extends StatefulWidget {
 }
 
 class _DynamicAssetState extends State<DynamicAsset> {
-  String? _resolvedPath;
-
   static const String supabaseRoot = '$supabaseDomain/storage/v1/object/public/';
   static const String iconNetworkPath = "Icons";
   static const String iconLocalPath = "assets/icons";
   static const String imagePath = "assets/images";
   static const String jsonPath = "assets/json";
   static const String gifPath = "assets/gifs";
-  static const String animationPath = "assets/animations";
+  static const String animationPath = "assets/lottie";
+
+  List<String> _candidates = const [];
+  int _currentIndex = 0;
 
   late final String normalizedName;
   late final AssetType typeEnum;
@@ -64,157 +63,87 @@ class _DynamicAssetState extends State<DynamicAsset> {
         }[widget.type.toLowerCase()] ??
         AssetType.icon;
 
-    _resolveAsset();
+    _candidates = _buildCandidates();
   }
 
-  /// Determines which asset path to use based on type and availability
-  Future<void> _resolveAsset() async {
+  List<String> _buildCandidates() {
     switch (typeEnum) {
       case AssetType.icon:
-        normalizedPlusExtension = fileExtension != null ? '$normalizedName.$fileExtension' : '$normalizedName.png';
-        // For icons, try: local -> network -> default local -> default network
-        await _tryLocal('$iconLocalPath/$normalizedPlusExtension') ||
-            await _tryNetwork('$supabaseRoot/$iconNetworkPath/$normalizedPlusExtension') ||
-            await _tryLocal('$iconLocalPath/default_icon.png') ||
-            await _tryNetwork('$supabaseRoot/$iconNetworkPath/default_icon.png');
-        break;
+        final ext = fileExtension ?? 'png';
+        return [
+          '$iconLocalPath/$normalizedName.$ext',
+          '$supabaseRoot/$iconNetworkPath/$normalizedName.$ext',
+          '$iconLocalPath/default_icon.png',
+          '$supabaseRoot/$iconNetworkPath/default_icon.png',
+        ];
 
       case AssetType.image:
-        normalizedPlusExtension = fileExtension != null ? '$normalizedName.$fileExtension' : '$normalizedName.png';
-        // For images, only local -> network fallback
-        await _tryLocal('$imagePath/$normalizedPlusExtension') ||
-            await _tryNetwork('$supabaseRoot/$imagePath/$normalizedPlusExtension');
-        break;
-
-      case AssetType.json:
-        normalizedPlusExtension = '$normalizedName.json';
-        await _tryLocal('$jsonPath/$normalizedPlusExtension') ||
-            await _tryNetwork('$supabaseRoot/$jsonPath/$normalizedPlusExtension');
-        break;
-
-      case AssetType.animation:
-        normalizedPlusExtension = fileExtension != null ? '$normalizedName.$fileExtension' : '$normalizedName.json';
-
-        final candidateLocal = '$animationPath/$normalizedPlusExtension';
-
-        // Store local first
-        _resolvedPath = candidateLocal;
-
-        break;
+        final ext = fileExtension ?? 'png';
+        return [
+          '$imagePath/$normalizedName.$ext',
+          '$supabaseRoot/$imagePath/$normalizedName.$ext',
+        ];
 
       case AssetType.gif:
-        normalizedPlusExtension = '$normalizedName.gif';
-        await _tryLocal('$gifPath/$normalizedPlusExtension') ||
-            await _tryNetwork('$supabaseRoot/$gifPath/$normalizedPlusExtension');
-        break;
-    }
+        return [
+          '$gifPath/$normalizedName.gif',
+          '$supabaseRoot/$gifPath/$normalizedName.gif',
+        ];
 
-    // Trigger rebuild after resolving asset
-    setState(() {});
+      case AssetType.json:
+        return [
+          '$jsonPath/$normalizedName.json',
+          '$supabaseRoot/$jsonPath/$normalizedName.json',
+        ];
+
+      case AssetType.animation:
+        final ext = fileExtension ?? 'json';
+        return [
+          '$animationPath/$normalizedName.$ext',
+          '$supabaseRoot/$animationPath/$normalizedName.$ext',
+        ];
+    }
   }
 
-  /// Tries to load a local asset. Returns true if successful.
-  Future<bool> _tryLocal(String path) async {
-    final completer = Completer<bool>();
-    try {
-      final img = Image.asset(path);
-      final stream = img.image.resolve(const ImageConfiguration());
-      late ImageStreamListener listener;
-
-      listener = ImageStreamListener(
-        (info, _) {
-          if (!completer.isCompleted) completer.complete(true);
-          stream.removeListener(listener);
-        },
-        onError: (error, stackTrace) {
-          if (!completer.isCompleted) completer.complete(false);
-          stream.removeListener(listener);
-        },
-      );
-
-      stream.addListener(listener);
-      await completer.future;
-
-      if (completer.isCompleted && completer.future == Future.value(true)) {
-        _resolvedPath = path;
-        debugPrint('DynamicAsset -> using local asset: $_resolvedPath');
+  Widget _next() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        setState(() => _currentIndex++);
       }
-      return await completer.future;
-    } catch (e) {
-      debugPrint('DynamicAsset -> local asset not found or invalid: $path ($e)');
-      return false;
-    }
-  }
-
-  Future<bool> _tryNetwork(String url) async {
-    final completer = Completer<bool>();
-    final cacheBustedUrl = "$url?v=${DateTime.now().millisecondsSinceEpoch}";
-    final img = Image.network(cacheBustedUrl);
-    final stream = img.image.resolve(const ImageConfiguration());
-    late ImageStreamListener listener;
-
-    listener = ImageStreamListener(
-      (info, _) {
-        if (!completer.isCompleted) completer.complete(true);
-        stream.removeListener(listener);
-      },
-      onError: (error, stackTrace) {
-        if (!completer.isCompleted) completer.complete(false);
-        stream.removeListener(listener);
-      },
-    );
-
-    stream.addListener(listener);
-    final success = await completer.future;
-
-    if (success) {
-      _resolvedPath = cacheBustedUrl;
-      debugPrint('DynamicAsset -> using network asset: $_resolvedPath');
-    } else {
-      debugPrint('DynamicAsset -> failed to load network image: $cacheBustedUrl');
-    }
-
-    return success;
+    });
+    return const SizedBox.shrink();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_resolvedPath == null) {
-      // Asset still being resolved
-      debugPrint('DynamicAsset -> resolving asset...');
-      return const SizedBox.shrink();
+    if (_currentIndex >= _candidates.length) {
+      return const Center(child: CircularProgressIndicator());
     }
 
-    // For Lottie animations
+    final path = _candidates[_currentIndex];
+
     if (typeEnum == AssetType.animation) {
-      final path = _resolvedPath!;
-
-      if (path.startsWith('http')) {
-        return Lottie.network(path, width: widget.width, height: widget.height);
-      } else {
-        return Lottie.asset(path, width: widget.width, height: widget.height);
-      }
+      return path.startsWith('http')
+          ? Lottie.network(
+              path,
+              width: widget.width,
+              height: widget.height,
+              errorBuilder: (_, __, ___) => _next(),
+            )
+          : Lottie.asset(
+              path,
+              width: widget.width,
+              height: widget.height,
+              package: 'SwishLab',
+              errorBuilder: (_, __, ___) => _next(),
+            );
     }
-
-    // For all other types: load as image or network
-    final imageProvider =
-        _resolvedPath!.startsWith('http') ? NetworkImage(_resolvedPath!) : AssetImage(_resolvedPath!) as ImageProvider;
 
     return Image(
-      image: imageProvider,
+      image: path.startsWith('http') ? NetworkImage(path) : AssetImage(path, package: 'SwishLab') as ImageProvider,
       width: widget.width,
       height: widget.height,
-      errorBuilder: _imageErrorBuilder,
-    );
-  }
-
-  /// Handles error while loading images: fallback to a default icon if needed
-  Widget _imageErrorBuilder(BuildContext context, Object error, StackTrace? stackTrace) {
-    debugPrint('DynamicAsset -> failed to load $_resolvedPath, showing default');
-    return Image.asset(
-      'assets/icons/default_icon.png',
-      width: widget.width,
-      height: widget.height,
+      errorBuilder: (_, __, ___) => _next(),
     );
   }
 }

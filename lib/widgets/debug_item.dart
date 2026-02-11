@@ -10,11 +10,13 @@ class DebugItem extends StatelessWidget {
     required this.title,
     required this.buttonText,
     required this.onPressed,
+    this.width,
   });
 
   final String title;
   final String buttonText;
   final VoidCallback onPressed;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -23,43 +25,30 @@ class DebugItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(16, 5, 16, 5),
       child: Container(
-        width: double.infinity,
-          decoration: BoxWithShadow(
-            border: Border.all(
-              color: appColors.primaryText,
-            ),
-          ),
-          child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 12),
-          child: Row(
-            children: [
-                  /// Title
-                  Expanded(
-                    flex: 4,
-                    child: Align(
-                      alignment: const AlignmentDirectional(-1, 0),
-                  child: Text(
-                    title,
-                          style: AppTextStyles.bodyMedium(),
-                        ),
-                    ),
-                  ),
-
-                  /// Button
-                  Expanded(
-                    flex: 2,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                    DarkButton(
-                      onPressed: onPressed,
-                            text: buttonText,
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
+        width: width ?? double.infinity,
+        height: 60,
+        decoration: BoxWithShadow(
+          border: Border.all(color: appColors.primaryText),
+        ),
+        padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 12),
+        child: Row(
+          children: [
+            // Title
+            Expanded(
+              child: Text(
+                title,
+                style: AppTextStyles.bodyMedium(),
               ),
+            ),
+
+            const SizedBox(width: 12),
+
+            // Button
+            DarkButton(
+              onPressed: onPressed,
+              text: buttonText,
+            ),
+          ],
         ),
       ),
     );

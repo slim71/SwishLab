@@ -207,10 +207,7 @@ class _SettingsState extends ConsumerState<Settings>
                                   children: [
                                     // Twitter button
                                     SocialIconButton(
-                                            borderColor: appColors.secondaryBackground,
-                                            backgroundColor: appColors.primaryBackground,
                                             icon: FontAwesomeIcons.twitter,
-                                      iconColor: appColors.secondaryText,
                                       onTap: () {
                                         print('twitterButton pressed ...');
                                       },
@@ -219,10 +216,7 @@ class _SettingsState extends ConsumerState<Settings>
 
                                           // Instagram button
                                           SocialIconButton(
-                                            borderColor: appColors.secondaryBackground,
-                                            backgroundColor: appColors.primaryBackground,
                                             icon: FontAwesomeIcons.instagram,
-                                            iconColor: appColors.secondaryText,
                                             onTap: () {
                                               print('instagramButton pressed ...');
                                             },
@@ -231,10 +225,7 @@ class _SettingsState extends ConsumerState<Settings>
 
                                           // Facebook button
                                     SocialIconButton(
-                                            borderColor: appColors.secondaryBackground,
-                                            backgroundColor: appColors.primaryBackground,
                                             icon: FontAwesomeIcons.facebookF,
-                                      iconColor: appColors.secondaryText,
                                       onTap: () {
                                         print('facebookButton pressed ...');
                                       },

@@ -33,6 +33,7 @@ class DynamicIconImage extends StatelessWidget {
           defaultPath,
           width: width,
           height: height,
+          package: 'SwishLab',
         );
       },
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 
 class IconActionButton extends StatelessWidget {
   final IconData icon;
@@ -34,6 +35,8 @@ class IconActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = AppThemeManager.currentColors;
+
     return Container(
       width: size,
       height: size,
@@ -49,11 +52,9 @@ class IconActionButton extends StatelessWidget {
       ),
       child: IconButton(
         onPressed: onPressed,
-        icon: Icon(
-          icon,
-          size: iconSize,
-          color: iconColor,
-        ),
+        iconSize: iconSize,
+        color: iconColor ?? appColors.primaryText,
+        icon: Icon(icon),
         padding: padding,
         alignment: alignment,
         splashRadius: size / 2,

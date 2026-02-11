@@ -84,8 +84,8 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                             children: [
                               // Loading animation
                     Lottie.asset(
-                      'assets/jsons/Loader_basketball.json',
-                                  width: 400,
+                      'assets/jsons/loader_basketball.json',
+                      width: 400,
                                   height: 400,
                                   fit: BoxFit.contain,
                                   animate: true,

@@ -13,7 +13,7 @@ class NavBar extends StatelessWidget {
     if (location.startsWith('/activity')) return 1;
     if (location.startsWith('/profile')) return 2;
     if (location.startsWith('/settings')) return 3;
-    return 0; // home
+    return 0;
   }
 
   void _onTap(BuildContext context, int index) {
@@ -35,7 +35,28 @@ class NavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentIndex = _locationToIndex(context);
+    return NavBarView(
+      currentIndex: _locationToIndex(context),
+      onTap: (i) => _onTap(context, i),
+      child: child,
+    );
+  }
+}
+
+class NavBarView extends StatelessWidget {
+  final Widget child;
+  final int currentIndex;
+  final ValueChanged<int>? onTap;
+
+  const NavBarView({
+    super.key,
+    required this.child,
+    required this.currentIndex,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     final appColors = AppThemeManager.currentColors;
 
     return Scaffold(
@@ -44,7 +65,7 @@ class NavBar extends StatelessWidget {
         type: BottomNavigationBarType.fixed,
         backgroundColor: appColors.primaryOne,
         currentIndex: currentIndex,
-        onTap: (i) => _onTap(context, i),
+        onTap: onTap,
         selectedItemColor: appColors.primaryTwo,
         unselectedItemColor: Colors.white,
         showSelectedLabels: false,

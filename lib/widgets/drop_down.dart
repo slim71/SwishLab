@@ -34,8 +34,17 @@ class _DropdownState<T> extends State<Dropdown<T>> {
   Widget build(BuildContext context) {
     final appColors = AppThemeManager.currentColors;
 
-    return DropdownButtonFormField<T>(
-      initialValue: widget.controller.value,
+    return Theme(
+        data: Theme.of(context).copyWith(
+          // Background of the dropdown menu
+          canvasColor: appColors.secondaryBackground,
+          // Default text style for menu items
+          dropdownMenuTheme: DropdownMenuThemeData(
+            textStyle: AppTextStyles.bodyMedium(),
+          ),
+        ),
+        child: DropdownButtonFormField<T>(
+          initialValue: widget.controller.value,
       items: widget.options
           .map(
             (opt) => DropdownMenuItem<T>(
@@ -50,7 +59,8 @@ class _DropdownState<T> extends State<Dropdown<T>> {
         });
         widget.onChanged?.call(val);
       },
-      decoration: InputDecoration(
+          // Style of the field itself
+          decoration: InputDecoration(
         hintText: widget.hintText,
         filled: true,
         fillColor: appColors.secondaryBackground,
@@ -71,6 +81,6 @@ class _DropdownState<T> extends State<Dropdown<T>> {
       ),
       style: AppTextStyles.bodyMedium(),
       elevation: 10,
-    );
+        ));
   }
 }

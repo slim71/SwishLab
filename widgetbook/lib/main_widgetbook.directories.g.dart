@@ -33,14 +33,6 @@ final directories = <_widgetbook.WidgetbookNode>[
             name: 'BoxWithShadow',
             builder: _widgetbook_ws_loader.buildBoxWithShadow,
           ),
-          _widgetbook.WidgetbookUseCase(
-            name: 'BoxWithShadow-Alternate',
-            builder: _widgetbook_ws_loader.buildBoxWithShadowAlternate,
-          ),
-          _widgetbook.WidgetbookUseCase(
-            name: 'BoxWithShadow-Color',
-            builder: _widgetbook_ws_loader.buildBoxWithShadowColor,
-          ),
         ],
       ),
       _widgetbook.WidgetbookComponent(
@@ -83,20 +75,8 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'DynamicAsset',
         useCases: [
           _widgetbook.WidgetbookUseCase(
-            name: 'DynamicAsset-Animation',
+            name: 'DynamicAsset',
             builder: _widgetbook_ws_loader.buildDynamicAssetAnimation,
-          ),
-          _widgetbook.WidgetbookUseCase(
-            name: 'DynamicAsset-Gif',
-            builder: _widgetbook_ws_loader.buildDynamicAssetGif,
-          ),
-          _widgetbook.WidgetbookUseCase(
-            name: 'DynamicAsset-Icon',
-            builder: _widgetbook_ws_loader.buildDynamicAssetIcon,
-          ),
-          _widgetbook.WidgetbookUseCase(
-            name: 'DynamicAsset-Image',
-            builder: _widgetbook_ws_loader.buildDynamicAssetImage,
           ),
         ],
       ),
@@ -149,20 +129,8 @@ final directories = <_widgetbook.WidgetbookNode>[
         name: 'MyAppBar',
         useCases: [
           _widgetbook.WidgetbookUseCase(
-            name: 'MyAppBar-BackButtonTitleCentered',
-            builder: _widgetbook_ws_loader.buildMyAppBarBackButtonTitleCentered,
-          ),
-          _widgetbook.WidgetbookUseCase(
-            name: 'MyAppBar-BackButtonTitleLeft',
-            builder: _widgetbook_ws_loader.buildMyAppBarBackButtonTitleLeft,
-          ),
-          _widgetbook.WidgetbookUseCase(
-            name: 'MyAppBar-TitleOnly',
+            name: 'MyAppBar',
             builder: _widgetbook_ws_loader.buildMyAppBarTitleOnly,
-          ),
-          _widgetbook.WidgetbookUseCase(
-            name: 'MyAppBar-TitleWithProfileImage',
-            builder: _widgetbook_ws_loader.buildMyAppBarTitleWithProfileImage,
           ),
         ],
       ),

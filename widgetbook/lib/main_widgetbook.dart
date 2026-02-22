@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
-import 'package:SwishLab/styles/themes.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
-import 'package:widgetbook_ws/widgetbook_theme_wrapper.dart';
 import 'package:widgetbook_ws/main_widgetbook.directories.g.dart';
+import 'package:widgetbook_ws/widgetbook_theme_wrapper.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,15 +17,9 @@ class WidgetbookApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Widgetbook.material(
       themeMode: ThemeMode.system,
-      addons: [
-        MaterialThemeAddon(
-          themes: [
-            WidgetbookTheme(name: 'Light', data: buildTheme(theBay, Brightness.light)),
-            WidgetbookTheme(name: 'Dark', data: buildTheme(theBay, Brightness.dark)),
-          ],
-        ),
-      ],
-      appBuilder: (context, child) => WidgetbookThemeWrapper(child: child),
+      appBuilder: (context, child) {
+        return WidgetbookThemeWrapper(child: child);
+      },
       directories: directories,
     );
   }

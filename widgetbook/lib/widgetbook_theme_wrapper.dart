@@ -1,50 +1,89 @@
-import 'package:flutter/material.dart';
 import 'package:SwishLab/styles/colors.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/styles/themes.dart';
+import 'package:flutter/material.dart';
 
-class WidgetbookThemeWrapper extends StatefulWidget {
+class WidgetbookThemeWrapper extends StatelessWidget {
   final Widget child;
 
-  const WidgetbookThemeWrapper({super.key, required this.child});
-
-  @override
-  State<WidgetbookThemeWrapper> createState() => _WidgetbookThemeWrapperState();
-}
-
-class _WidgetbookThemeWrapperState extends State<WidgetbookThemeWrapper> {
-  AppColorSet appColors = AppThemeManager.currentColors;
-  Brightness brightness = AppThemeManager.currentColors.brightness;
+  const WidgetbookThemeWrapper({
+    super.key,
+    required this.child,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(color: appColors.isDark ? Colors.black : Colors.white),
-      child: MaterialApp(
-        theme: buildTheme(appColors, brightness),
-        home: Scaffold(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          body: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: DropdownButton<AppColorSet>(
-                  value: appColors,
-                  onChanged: (newColors) {
-                    setState(() {
-                      appColors = newColors!;
-                      brightness = newColors.brightness;
-                      AppThemeManager.setColors(newColors);
-                    });
-                  },
-                  items: themeList.map((t) => DropdownMenuItem(value: t, child: Text(t.name))).toList(),
-                ),
-              ),
-              Expanded(child: widget.child),
-            ],
-          ),
-        ),
-      ),
+    return ValueListenableBuilder(
+      valueListenable: AppThemeManager.notifier,
+      builder: (_, _, _) {
+        final theme = buildTheme();
+
+        return Theme(
+            data: theme,
+            child: Material(
+                color: AppThemeManager.primaryBackground,
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          DropdownButton<AppColorSet>(
+                            value: AppThemeManager.currentColors,
+                            onChanged: (newColors) {
+                              if (newColors != null) {
+                                AppThemeManager.setColors(newColors);
+                              }
+                            },
+                            items: themeList
+                                .map(
+                                  (t) =>
+                                  DropdownMenuItem(
+                                    value: t,
+                                    child: Text(t.name),
+                                  ),
+                            )
+                                .toList(),
+                          ),
+                          const SizedBox(width: 16),
+                          DropdownButton<AppBrightness>(
+                            value: AppThemeManager.brightness,
+                            onChanged: (newBrightness) {
+                              if (newBrightness != null) {
+                                AppThemeManager.setBrightness(newBrightness);
+                              }
+                            },
+                            items: AppBrightness.values
+                                .map(
+                                  (b) =>
+                                  DropdownMenuItem(
+                                    value: b,
+                                    child: Text(b.name),
+                                  ),
+                            )
+                                .toList(),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    const Divider(height: 1),
+
+                    Expanded(
+                      child: Container(
+                        width: double.infinity,
+                        color: AppThemeManager.primaryBackground,
+                        child: Center(
+                          child: child,
+                        ),
+                      ),
+                    ),
+                  ],
+                )
+            )
+        );
+      },
     );
   }
 }

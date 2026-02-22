@@ -1,6 +1,6 @@
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
 
 class SocialIconButton extends StatelessWidget {
   final IconData icon;
@@ -23,30 +23,34 @@ class SocialIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = AppThemeManager.currentColors;
-
-    return InkWell(
-      borderRadius: BorderRadius.circular(borderRadius),
-      onTap: onTap,
-      child: Ink(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          color: appColors.primaryBackground,
-          borderRadius: BorderRadius.circular(borderRadius),
-          border: Border.all(
-            color: appColors.secondaryBackground,
-            width: borderWidth,
-          ),
-        ),
-        child: Center(
-          child: FaIcon(
-            icon,
-            size: iconSize,
-            color: appColors.secondaryText,
-          ),
-        ),
-      ),
-    );
+    return ValueListenableBuilder(
+        valueListenable: AppThemeManager.notifier,
+        builder: (_, __, ___) {
+          return Container(
+              color: AppThemeManager.primaryBackground,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(borderRadius),
+                onTap: onTap,
+                child: Ink(
+                  width: size,
+                  height: size,
+                  decoration: BoxDecoration(
+                    color: AppThemeManager.primaryBackground,
+                    borderRadius: BorderRadius.circular(borderRadius),
+                    border: Border.all(
+                      color: AppThemeManager.secondaryBackground,
+                      width: borderWidth,
+                    ),
+                  ),
+                  child: Center(
+                    child: FaIcon(
+                      icon,
+                      size: iconSize,
+                      color: AppThemeManager.secondaryText,
+                    ),
+                  ),
+                ),
+              ));
+        });
   }
 }

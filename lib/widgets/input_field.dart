@@ -46,76 +46,81 @@ class _InputField extends State<InputField> {
   Widget build(BuildContext context) {
     final appColors = AppThemeManager.currentColors;
 
-    return TextFormField(
-      controller: widget.controller,
-      focusNode: widget.focusNode,
-      autofocus: false,
-      keyboardType: widget.keyboardType,
-      autofillHints: widget.autofillHints,
-      textCapitalization: widget.textCapitalization,
-      obscureText: widget.obscureText && !_isVisible,
-      style: AppTextStyles.bodyLarge(color: appColors.textFieldText),
-      validator: widget.validator,
-      enableSuggestions: !widget.obscureText,
-      autocorrect: !widget.obscureText,
-      inputFormatters: [
-        // Optional regex filtering
-        if (widget.allowRegex != null) FilteringTextInputFormatter.allow(widget.allowRegex!),
-        if (widget.denyRegex != null) FilteringTextInputFormatter.deny(widget.denyRegex!),
+    return ValueListenableBuilder(
+        valueListenable: AppThemeManager.notifier,
+        builder: (_, __, ___) {
+          return Container(
+              color: AppThemeManager.primaryBackground,
+              child: TextFormField(
+                controller: widget.controller,
+                focusNode: widget.focusNode,
+                autofocus: false,
+                keyboardType: widget.keyboardType,
+                autofillHints: widget.autofillHints,
+                textCapitalization: widget.textCapitalization,
+                obscureText: widget.obscureText && !_isVisible,
+                style: AppTextStyles.bodyLarge(color: appColors.textFieldText),
+                validator: widget.validator,
+                enableSuggestions: !widget.obscureText,
+                autocorrect: !widget.obscureText,
+                inputFormatters: [
+                  // Optional regex filtering
+                  if (widget.allowRegex != null) FilteringTextInputFormatter.allow(widget.allowRegex!),
+                  if (widget.denyRegex != null) FilteringTextInputFormatter.deny(widget.denyRegex!),
 
-        ...widget.additionalFormatters,
-      ],
-      decoration: InputDecoration(
-        labelText: widget.label,
-        labelStyle: AppTextStyles.labelLarge(color: appColors.textFieldLabelText),
-        filled: true,
-        fillColor: appColors.textFieldBackground,
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: appColors.textFieldBorders,
-            width: 2,
-          ),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: appColors.textFieldBorders,
-            width: 2,
-          ),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: Colors.red,
-            width: 2,
-          ),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-            color: Colors.red,
-            width: 2,
-          ),
-        ),
-        suffixIcon: widget.obscureText
-            ? InkWell(
-                onTap: () {
-                  setState(() {
-                    _isVisible = !_isVisible;
-                  });
-                },
-                focusNode: FocusNode(skipTraversal: true),
-                child: Icon(
-                  _isVisible
-                      ? Icons.visibility_outlined
-                      : Icons.visibility_off_outlined,
-                  color: appColors.textFieldLabelText.withAlpha(0xCC), // ~80% opacity
-                  size: 22,
+                  ...widget.additionalFormatters,
+                ],
+                decoration: InputDecoration(
+                  labelText: widget.label,
+                  labelStyle: AppTextStyles.labelLarge(color: appColors.textFieldLabelText),
+                  filled: true,
+                  fillColor: AppThemeManager.primaryBackground,
+                  // appColors.textFieldBackground,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: appColors.textFieldBorders,
+                      width: 2,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: appColors.textFieldBorders,
+                      width: 2,
+                    ),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 2,
+                    ),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 2,
+                    ),
+                  ),
+                  suffixIcon: widget.obscureText
+                      ? InkWell(
+                          onTap: () {
+                            setState(() {
+                              _isVisible = !_isVisible;
+                            });
+                          },
+                          focusNode: FocusNode(skipTraversal: true),
+                          child: Icon(
+                            _isVisible ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                            color: appColors.textFieldLabelText.withAlpha(0xCC), // ~80% opacity
+                            size: 22,
+                          ),
+                        )
+                      : widget.suffixIcon,
                 ),
-              )
-            : widget.suffixIcon,
-      ),
-    );
+              ));
+        });
   }
 }

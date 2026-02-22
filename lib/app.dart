@@ -281,8 +281,8 @@ class _SwishLabState extends ConsumerState<SwishLab> {
     return MaterialApp.router(
       title: title,
       routerConfig: router,
-      theme: buildTheme(currentColors, Brightness.light),
-      darkTheme: buildTheme(currentColors, Brightness.dark),
+      theme: buildTheme(),
+      darkTheme: buildTheme(),
       themeMode: ThemeMode.system, // Auto-switch based on device
     );
   }

@@ -13,37 +13,41 @@ class SettingsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = AppThemeManager.currentColors;
-
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
-      child: InkWell(
-        onTap: () {
-          item.onTap?.call(context);
-        },
-        child: Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: item.background,
-          ),
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                item.title,
-                style: AppTextStyles.titleLarge(),
-              ),
-              Icon(
-                Icons.chevron_right_rounded,
-                color: appColors.secondaryText,
-                size: 24,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+    return ValueListenableBuilder(
+        valueListenable: AppThemeManager.notifier,
+        builder: (_, __, ___) {
+          return Container(
+              color: AppThemeManager.primaryBackground,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
+                child: InkWell(
+                  onTap: () {
+                    item.onTap?.call(context);
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: item.background,
+                    ),
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          item.title,
+                          style: AppTextStyles.titleLarge(),
+                        ),
+                        Icon(
+                          Icons.chevron_right_rounded,
+                          color: AppThemeManager.secondaryText,
+                          size: 24,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ));
+        });
   }
 }

@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
+import 'package:flutter/material.dart';
 
 class IconActionButton extends StatelessWidget {
   final IconData icon;
@@ -35,30 +35,34 @@ class IconActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = AppThemeManager.currentColors;
-
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        shape: shape,
-        border: wrapped
-            ? Border.all(
-                color: borderColor,
-                width: borderWidth,
-              )
-            : null,
-      ),
-      child: IconButton(
-        onPressed: onPressed,
-        iconSize: iconSize,
-        color: iconColor ?? appColors.primaryText,
-        icon: Icon(icon),
-        padding: padding,
-        alignment: alignment,
-        splashRadius: size / 2,
-      ),
-    );
+    return ValueListenableBuilder(
+        valueListenable: AppThemeManager.notifier,
+        builder: (_, __, ___) {
+          return Container(
+              color: Colors.transparent,
+              child: Container(
+                width: size,
+                height: size,
+                decoration: BoxDecoration(
+                  color: backgroundColor,
+                  shape: shape,
+                  border: wrapped
+                      ? Border.all(
+                          color: borderColor,
+                          width: borderWidth,
+                        )
+                      : null,
+                ),
+                child: IconButton(
+                  onPressed: onPressed,
+                  iconSize: iconSize,
+                  color: iconColor ?? AppThemeManager.primaryText,
+                  icon: Icon(icon),
+                  padding: padding,
+                  alignment: alignment,
+                  splashRadius: size / 2,
+                ),
+              ));
+        });
   }
 }

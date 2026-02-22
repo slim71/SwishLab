@@ -125,15 +125,14 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
     // Check file format
     if (!isValidImageFormat(pickedFile.path)) {
       if (!mounted) return;
-      final appColors = AppThemeManager.currentColors;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
             'Invalid image format. Please select another one',
-            style: TextStyle(color: appColors.primaryText),
+            style: TextStyle(color: AppThemeManager.primaryText),
           ),
           duration: Duration(milliseconds: 4000),
-          backgroundColor: appColors.primaryBackground,
+          backgroundColor: AppThemeManager.primaryBackground,
         ),
       );
       return;
@@ -193,8 +192,8 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                         width: 200,
                                       height: 200,
                                       decoration: BoxDecoration(
-                                        color: appColors.secondaryBackground,
-                                        shape: BoxShape.circle,
+                          color: AppThemeManager.secondaryBackground,
+                          shape: BoxShape.circle,
                                         border: Border.all(
                                           color: appColors.alternateTwo,
                                           width: 3,
@@ -271,8 +270,8 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                       Container(
                         width: double.infinity,
                                 decoration: BoxDecoration(
-                                        color: appColors.secondaryBackground,
-                                        borderRadius: BorderRadius.circular(12),
+                          color: AppThemeManager.secondaryBackground,
+                          borderRadius: BorderRadius.circular(12),
                                   border: Border.all(
                                     color: appColors.altContBorders,
                                     width: 1,
@@ -337,8 +336,8 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                           widget: Container(
                             width: double.infinity,
                                         decoration: BoxDecoration(
-                                          color: appColors.secondaryBackground,
-                                          borderRadius: BorderRadius.circular(12),
+                              color: AppThemeManager.secondaryBackground,
+                              borderRadius: BorderRadius.circular(12),
                                           border: Border.all(
                                             color: appColors.altContBorders,
                                             width: 1,

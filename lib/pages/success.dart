@@ -39,9 +39,9 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: appColors.secondaryBackground,
+        backgroundColor: AppThemeManager.secondaryBackground,
         appBar: AppBar(
-          backgroundColor: appColors.secondaryBackground,
+          backgroundColor: AppThemeManager.secondaryBackground,
           automaticallyImplyLeading: false,
           actions: [],
           centerTitle: false,
@@ -67,8 +67,8 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                           ),
                           decoration: BoxWithShadow(
                             gradient: appColors.gradientBackground(),
-                            border: Border.all(color: appColors.secondaryText),
-                          ),
+                        border: Border.all(color: AppThemeManager.secondaryText),
+                      ),
                           child:
                               // Column to place the page content
                               Padding(
@@ -139,7 +139,7 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                 child: addAnimation(
                                   widget: Text(
                                     'Success!',
-                                    style: AppTextStyles.displaySmall(color: appColors.secondaryText),
+                                    style: AppTextStyles.displaySmall(color: AppThemeManager.secondaryText),
                                   ),
                                   fade: FadeConfig(duration: 300.ms),
                                   move: const MoveConfig(begin: Offset(0, 20)),
@@ -152,7 +152,7 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                 child: addAnimation(
                                   widget: Text(
                                     'Account created',
-                                    style: AppTextStyles.labelMedium(color: appColors.secondaryText),
+                                    style: AppTextStyles.labelMedium(color: AppThemeManager.secondaryText),
                                   ),
                                   fade: FadeConfig(delay: 150.ms, duration: 300.ms),
                                   scale: const ScaleConfig(begin: Offset(0.8, 0.8)),
@@ -192,10 +192,8 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                       Text(
                                         'Your registered email is',
                                                   style:
-                                                      AppTextStyles.labelMedium(
-                                                          color: appColors
-                                                              .secondaryText),
-                                                ),
+                                                      AppTextStyles.labelMedium(color: AppThemeManager.secondaryText),
+                                        ),
                                               const SizedBox(width: 4),
 
                                               // User email
@@ -204,10 +202,8 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                                       'na@email.com',
                                                   textAlign: TextAlign.end,
                                                   style:
-                                                      AppTextStyles.labelMedium(
-                                                          color: appColors
-                                                              .secondaryText),
-                                                ),
+                                                      AppTextStyles.labelMedium(color: AppThemeManager.secondaryText),
+                                        ),
                                               const SizedBox(width: 4),
 
                                               // Instructions in profile customization
@@ -223,18 +219,18 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                                         CustomTextSpan(
                                                           text: 'Navigate to ',
                                                           style: AppTextStyles.labelMedium(),
-                                                          color: appColors.secondaryText,
-                                                        ),
+                                                  color: AppThemeManager.secondaryText,
+                                                ),
                                                         CustomTextSpan(
                                                           text: 'Settings > User Info',
-                                                          color: appColors.secondaryText,
-                                                          bold: true,
+                                                  color: AppThemeManager.secondaryText,
+                                                  bold: true,
                                                           italic: true,
                                                         ),
                                                         CustomTextSpan(
                                                           text: ' page to customize your profile',
-                                                          color: appColors.secondaryText,
-                                                        )
+                                                  color: AppThemeManager.secondaryText,
+                                                )
                                                       ],
                                                       style: AppTextStyles.labelMedium(),
                                                     ),

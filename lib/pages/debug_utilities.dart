@@ -29,8 +29,6 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = AppThemeManager.currentColors;
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -89,11 +87,11 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                                         SnackBar(
                                           content: Text(
                                             'Done',
-                                            style: TextStyle(color: appColors.primaryText),
-                                          ),
+                                    style: TextStyle(color: AppThemeManager.primaryText),
+                                  ),
                                           duration: Duration(milliseconds: 4000),
-                                          backgroundColor: appColors.primaryBackground,
-                                        ),
+                                  backgroundColor: AppThemeManager.primaryBackground,
+                                ),
                                       );
                                     },
                                   ),

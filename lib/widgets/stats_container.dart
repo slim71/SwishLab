@@ -20,48 +20,53 @@ class StatsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = AppThemeManager.currentColors;
+    return ValueListenableBuilder(
+        valueListenable: AppThemeManager.notifier,
+        builder: (_, __, ___) {
+          return Container(
+              color: AppThemeManager.primaryBackground,
+              child: addAnimation(
+                  widget: Container(
+                    width: MediaQuery.sizeOf(context).width * 0.4,
+                    height: 160,
+                    decoration: BoxDecoration(
+                      color: AppThemeManager.secondaryBackground,
+                      borderRadius: BorderRadius.circular(24),
+                      border: Border.all(color: borderColor, width: 3),
+                    ),
+                    padding: EdgeInsets.all(12),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Custom icon
+                        DynamicIconImage(
+                          outerColor: AppThemeManager.secondaryBackground,
+                          width: 50,
+                          height: 50,
+                          imageName: iconName,
+                        ),
 
-    return addAnimation(
-        widget: Container(
-          width: MediaQuery.sizeOf(context).width * 0.4,
-      height: 160,
-      decoration: BoxDecoration(
-        color: appColors.secondaryBackground,
-        borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: borderColor, width: 3),
-      ),
-      padding: EdgeInsets.all(12),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Custom icon
-          DynamicIconImage(
-            width: 50,
-            height: 50,
-            imageName: iconName,
-          ),
+                        // Some space
+                        const SizedBox(height: 8),
 
-          // Some space
-          const SizedBox(height: 8),
+                        // Title for the section
+                        Text(
+                          title,
+                          style: AppTextStyles.titleMedium(),
+                          textAlign: TextAlign.center,
+                        ),
 
-          // Title for the section
-          Text(
-            title,
-            style: AppTextStyles.titleMedium(),
-            textAlign: TextAlign.center,
-          ),
-
-          // Latest score
-          Text(
-            text ?? '0',
-            style: AppTextStyles.headlineMedium(),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
-        ),
-        withFade: false,
-        shake: const ShakeConfig(rotation: 0.087, hz: 3));
+                        // Latest score
+                        Text(
+                          text ?? '0',
+                          style: AppTextStyles.headlineMedium(),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  withFade: false,
+                  shake: const ShakeConfig(rotation: 0.087, hz: 3)));
+        });
   }
 }

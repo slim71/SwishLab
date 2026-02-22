@@ -119,8 +119,8 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                 padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                                          color: appColors.secondaryBackground,
-                                                          borderRadius: BorderRadius.circular(24),
+                                            color: AppThemeManager.secondaryBackground,
+                                            borderRadius: BorderRadius.circular(24),
                                                       border: Border.all(
                                                             color: getBorderColor(
                                                                 kMyColors.toList(), analysisResultListedIndex),

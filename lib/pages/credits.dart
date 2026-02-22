@@ -69,8 +69,8 @@ class _CreditsState extends ConsumerState<Credits> {
                             padding: EdgeInsets.all(10),
                   child: Container(
                     decoration: BoxDecoration(
-                                  color: appColors.secondaryBackground,
-                                  borderRadius: BorderRadius.circular(25),
+                      color: AppThemeManager.secondaryBackground,
+                      borderRadius: BorderRadius.circular(25),
                                   shape: BoxShape.rectangle,
                                 ),
                                 child: Column(
@@ -82,36 +82,46 @@ class _CreditsState extends ConsumerState<Credits> {
                           child: RichText(
                             textScaler: MediaQuery.of(context).textScaler,
                                           text: CustomTextSpan(
-                                            children: [
+                              context: context,
+                              children: [
                                               CustomTextSpan(
-                                                text:
+                                  context: context,
+                                  text:
                                                     'This project uses a mix of freely available icons, illustrations, and animations created by ',
                                               ),
                                               CustomTextSpan(
-                                                text: 'amazing designers and developers around the world.\n\n',
+                                  context: context,
+                                  text: 'amazing designers and developers around the world.\n\n',
                                               ),
                                               CustomTextSpan(
-                                                text: 'I’ve done my best to give ',
+                                  context: context,
+                                  text: 'I’ve done my best to give ',
                                               ),
                                               CustomTextSpan(
-                                                text: 'proper credit',
+                                  context: context,
+                                  text: 'proper credit',
                                               ),
                                               CustomTextSpan(
-                                                text:
+                                  context: context,
+                                  text:
                                                     ' to everyone whose work helped bring this project to life. You can',
                                               ),
                                               CustomTextSpan(
-                                                text: ' click on any item ',
+                                  context: context,
+                                  text: ' click on any item ',
                                               ),
                                               CustomTextSpan(
-                                                text: 'to visit the author\'s page.\n\n',
+                                  context: context,
+                                  text: 'to visit the author\'s page.\n\n',
                                               ),
                                               CustomTextSpan(
-                                                text:
+                                  context: context,
+                                  text:
                                                     'If I’ve missed anyone or got something wrong, please let me know - ',
                                               ),
                                               CustomTextSpan(
-                                                text: 'any correction or contribution is always appreciated!',
+                                  context: context,
+                                  text: 'any correction or contribution is always appreciated!',
                                               )
                                             ],
                                           ),
@@ -155,8 +165,8 @@ class _CreditsState extends ConsumerState<Credits> {
                                           width: 100,
                                           height: 100,
                                           decoration: BoxDecoration(
-                                            color: appColors.primaryBackground,
-                                            borderRadius: BorderRadius.circular(25),
+                                  color: AppThemeManager.primaryBackground,
+                                  borderRadius: BorderRadius.circular(25),
                                             shape: BoxShape.rectangle,
                                             border: Border.all(
                                               color: appColors.containersBorders,

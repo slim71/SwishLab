@@ -40,15 +40,15 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: appColors.secondaryBackground,
+        backgroundColor: AppThemeManager.secondaryBackground,
         body:
             // Container with all content on the Front Details page
             Container(
           width: double.infinity,
             height: double.infinity,
             decoration: BoxDecoration(
-              color: appColors.secondaryBackground,
-              image: DecorationImage(
+            color: AppThemeManager.secondaryBackground,
+            image: DecorationImage(
                 fit: BoxFit.cover,
                 alignment: AlignmentDirectional(-0.4, 0),
                 image: Image.asset(
@@ -78,9 +78,9 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                           widget: IconActionButton(
                             borderColor: appColors.containersBorders,
                             size: 60,
-                            backgroundColor: appColors.secondaryBackground,
+                            backgroundColor: AppThemeManager.secondaryBackground,
                             icon: Icons.arrow_back_rounded,
-                            iconColor: appColors.primaryText,
+                            iconColor: AppThemeManager.primaryText,
                             iconSize: 25,
                             onPressed: () async {
                               context.pop();
@@ -103,10 +103,10 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                               widget: IconActionButton(
                                 borderColor: appColors.containersBorders,
                                       size: 60,
-                                      backgroundColor: appColors.secondaryBackground,
-                                      icon: FontAwesomeIcons.upload,
-                                      iconColor: appColors.primaryText,
-                                      iconSize: 25,
+                                backgroundColor: AppThemeManager.secondaryBackground,
+                                icon: FontAwesomeIcons.upload,
+                                iconColor: AppThemeManager.primaryText,
+                                iconSize: 25,
                                       onPressed: () async {
                                         final picker = ImagePicker();
 

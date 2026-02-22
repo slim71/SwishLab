@@ -34,53 +34,59 @@ class _DropdownState<T> extends State<Dropdown<T>> {
   Widget build(BuildContext context) {
     final appColors = AppThemeManager.currentColors;
 
-    return Theme(
-        data: Theme.of(context).copyWith(
-          // Background of the dropdown menu
-          canvasColor: appColors.secondaryBackground,
-          // Default text style for menu items
-          dropdownMenuTheme: DropdownMenuThemeData(
-            textStyle: AppTextStyles.bodyMedium(),
-          ),
-        ),
-        child: DropdownButtonFormField<T>(
-          initialValue: widget.controller.value,
-      items: widget.options
-          .map(
-            (opt) => DropdownMenuItem<T>(
-              value: opt,
-              child: Text(opt.toString(), style: AppTextStyles.bodyMedium()),
-            ),
-          )
-          .toList(),
-      onChanged: (val) {
-        setState(() {
-          widget.controller.value = val;
+    return ValueListenableBuilder(
+        valueListenable: AppThemeManager.notifier,
+        builder: (_, __, ___) {
+          return Container(
+              color: AppThemeManager.primaryBackground,
+              child: Theme(
+                  data: Theme.of(context).copyWith(
+                    // Background of the dropdown menu
+                    canvasColor: AppThemeManager.secondaryBackground,
+                    // Default text style for menu items
+                    dropdownMenuTheme: DropdownMenuThemeData(
+                      textStyle: AppTextStyles.bodyMedium(),
+                    ),
+                  ),
+                  child: DropdownButtonFormField<T>(
+                    initialValue: widget.controller.value,
+                    items: widget.options
+                        .map(
+                          (opt) => DropdownMenuItem<T>(
+                            value: opt,
+                            child: Text(opt.toString(), style: AppTextStyles.bodyMedium()),
+                          ),
+                        )
+                        .toList(),
+                    onChanged: (val) {
+                      setState(() {
+                        widget.controller.value = val;
+                      });
+                      widget.onChanged?.call(val);
+                    },
+                    // Style of the field itself
+                    decoration: InputDecoration(
+                      hintText: widget.hintText,
+                      filled: true,
+                      fillColor: AppThemeManager.secondaryBackground,
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: appColors.altContBorders, width: 2),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: BorderSide(color: appColors.altContBorders, width: 2),
+                      ),
+                    ),
+                    icon: Icon(
+                      Icons.keyboard_arrow_down_rounded,
+                      color: AppThemeManager.secondaryText,
+                      size: 24,
+                    ),
+                    style: AppTextStyles.bodyMedium(),
+                    elevation: 10,
+                  )));
         });
-        widget.onChanged?.call(val);
-      },
-          // Style of the field itself
-          decoration: InputDecoration(
-        hintText: widget.hintText,
-        filled: true,
-        fillColor: appColors.secondaryBackground,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: appColors.altContBorders, width: 2),
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(8),
-          borderSide: BorderSide(color: appColors.altContBorders, width: 2),
-        ),
-      ),
-      icon: Icon(
-        Icons.keyboard_arrow_down_rounded,
-        color: appColors.secondaryText,
-        size: 24,
-      ),
-      style: AppTextStyles.bodyMedium(),
-      elevation: 10,
-        ));
   }
 }

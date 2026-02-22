@@ -20,37 +20,41 @@ class DebugItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = AppThemeManager.currentColors;
+    return ValueListenableBuilder(
+        valueListenable: AppThemeManager.notifier,
+        builder: (_, __, ___) {
+          return Container(
+              color: AppThemeManager.primaryBackground,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(16, 5, 16, 5),
+                child: Container(
+                  width: width ?? double.infinity,
+                  height: 60,
+                  decoration: BoxWithShadow(
+                    border: Border.all(color: AppThemeManager.primaryText),
+                  ),
+                  padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 12),
+                  child: Row(
+                    children: [
+                      // Title
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: AppTextStyles.bodyMedium(),
+                        ),
+                      ),
 
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(16, 5, 16, 5),
-      child: Container(
-        width: width ?? double.infinity,
-        height: 60,
-        decoration: BoxWithShadow(
-          border: Border.all(color: appColors.primaryText),
-        ),
-        padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 12),
-        child: Row(
-          children: [
-            // Title
-            Expanded(
-              child: Text(
-                title,
-                style: AppTextStyles.bodyMedium(),
-              ),
-            ),
+                      const SizedBox(width: 12),
 
-            const SizedBox(width: 12),
-
-            // Button
-            DarkButton(
-              onPressed: onPressed,
-              text: buttonText,
-            ),
-          ],
-        ),
-      ),
-    );
+                      // Button
+                      DarkButton(
+                        onPressed: onPressed,
+                        text: buttonText,
+                      ),
+                    ],
+                  ),
+                ),
+              ));
+        });
   }
 }

@@ -41,10 +41,8 @@ class _MarkdownDocumentState extends State<MarkdownDocument> {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = AppThemeManager.currentColors;
-
     return Scaffold(
-      backgroundColor: appColors.secondaryBackground,
+      backgroundColor: AppThemeManager.secondaryBackground,
       appBar: MyAppBar(
         style: MyAppBarStyle.backButtonTitleCentered,
         title: widget.title,

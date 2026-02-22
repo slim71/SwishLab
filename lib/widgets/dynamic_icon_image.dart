@@ -1,3 +1,4 @@
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 /// Widget to display an icon from local assets.
@@ -23,19 +24,25 @@ class DynamicIconImage extends StatelessWidget {
     final defaultPath = 'assets/icons/default_icon.png';
 
     // TODO: maybe add network fallback if dynamic in the future
-    return Image.asset(
-      assetPath,
-      width: width,
-      height: height,
-      errorBuilder: (_, __, ___) {
-        // Fallback to default icon
-        return Image.asset(
-          defaultPath,
-          width: width,
-          height: height,
-          package: 'SwishLab',
-        );
-      },
-    );
+    return ValueListenableBuilder(
+        valueListenable: AppThemeManager.notifier,
+        builder: (_, __, ___) {
+          return Container(
+              color: Colors.transparent,
+              child: Image.asset(
+                assetPath,
+                width: width,
+                height: height,
+                errorBuilder: (_, __, ___) {
+                  // Fallback to default icon
+                  return Image.asset(
+                    defaultPath,
+                    width: width,
+                    height: height,
+                    package: 'SwishLab',
+                  );
+                },
+              ));
+        });
   }
 }

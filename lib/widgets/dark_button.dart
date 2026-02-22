@@ -24,8 +24,13 @@ class DarkButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final appColors = AppThemeManager.currentColors;
 
-    return ElevatedButton(
-      onPressed: onPressed,
+    return ValueListenableBuilder(
+        valueListenable: AppThemeManager.notifier,
+        builder: (_, __, ___) {
+          return Container(
+              color: AppThemeManager.primaryBackground,
+              child: ElevatedButton(
+                onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: appColors.darkButtonBackground,
         elevation: 10,
@@ -51,6 +56,7 @@ class DarkButton extends StatelessWidget {
           style: AppTextStyles.titleLarge(color: appColors.darkButtonTextColor),
         ),
       ]),
-    );
+              ));
+        });
   }
 }

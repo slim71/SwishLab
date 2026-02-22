@@ -14,14 +14,14 @@ class BoxWithShadow extends BoxDecoration {
     double spreadRadius = 3,
     Color? shadowColor,
   }) : super(
-          color: color ?? AppThemeManager.currentColors.primaryBackground,
+          color: color ?? AppThemeManager.primaryBackground,
           borderRadius: shape == BoxShape.rectangle ? (borderRadius ?? _defaultBorderRadius) : null,
           boxShadow: [
             BoxShadow(
               offset: shadowOffset,
               blurRadius: blurRadius,
               spreadRadius: spreadRadius,
-              color: shadowFromColor(color ?? AppThemeManager.currentColors.primaryBackground),
+              color: shadowFromColor(color ?? AppThemeManager.primaryBackground),
             ),
           ],
         );

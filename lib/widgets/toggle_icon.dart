@@ -1,3 +1,4 @@
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 class ToggleIcon extends StatelessWidget {
@@ -18,43 +19,49 @@ class ToggleIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: onPressed,
-      icon: AnimatedSwitcher(
-        duration: duration,
-        switchInCurve: Curves.easeOutBack,
-        // bounce in
-        switchOutCurve: Curves.easeIn,
-        // switchInCurve: Curves.elasticOut // stronger
-        transitionBuilder: (child, animation) {
-          // Rotation: 180° → 0°
-          final rotate = Tween<double>(
-            begin: 0.75, //0.0 for more rotation
-            end: 1.0,
-          ).animate(animation);
+    return ValueListenableBuilder(
+        valueListenable: AppThemeManager.notifier,
+        builder: (_, __, ___) {
+          return Container(
+              color: AppThemeManager.primaryBackground,
+              child: IconButton(
+                onPressed: onPressed,
+                icon: AnimatedSwitcher(
+                  duration: duration,
+                  switchInCurve: Curves.easeOutBack,
+                  // bounce in
+                  switchOutCurve: Curves.easeIn,
+                  // switchInCurve: Curves.elasticOut // stronger
+                  transitionBuilder: (child, animation) {
+                    // Rotation: 180° → 0°
+                    final rotate = Tween<double>(
+                      begin: 0.75, //0.0 for more rotation
+                      end: 1.0,
+                    ).animate(animation);
 
-          // Bounce / scale overshoot
-          final scale = Tween<double>(
-            begin: 0.8,
-            end: 1.0,
-          ).animate(animation);
+                    // Bounce / scale overshoot
+                    final scale = Tween<double>(
+                      begin: 0.8,
+                      end: 1.0,
+                    ).animate(animation);
 
-          return RotationTransition(
-            turns: rotate,
-            child: ScaleTransition(
-              scale: scale,
-              child: FadeTransition(
-                opacity: animation,
-                child: child,
-              ),
-            ),
-          );
-        },
-        child: KeyedSubtree(
-          key: ValueKey(value),
-          child: value ? onIcon : offIcon,
-        ),
-      ),
-    );
+                    return RotationTransition(
+                      turns: rotate,
+                      child: ScaleTransition(
+                        scale: scale,
+                        child: FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        ),
+                      ),
+                    );
+                  },
+                  child: KeyedSubtree(
+                    key: ValueKey(value),
+                    child: value ? onIcon : offIcon,
+                  ),
+                ),
+              ));
+        });
   }
 }

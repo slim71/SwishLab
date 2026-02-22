@@ -148,13 +148,12 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     final appState = ref.watch(appStateProvider);
-    final appColors = AppThemeManager.currentColors;
     final userInfoAsync = ref.watch(appUserProvider);
     final UsersRow? userInfo = userInfoAsync.value;
     final userId = userInfo?.id;
 
     return Scaffold(
-      backgroundColor: appColors.primaryBackground,
+      backgroundColor: AppThemeManager.primaryBackground,
       appBar: MyAppBar(
         style: MyAppBarStyle.backButtonTitleLeft,
         title: 'User info',

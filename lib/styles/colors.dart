@@ -26,7 +26,6 @@ const secondaryTextDark = Color(0xFFB0B0B0);
 @immutable
 class AppColorSet extends ThemeExtension<AppColorSet> {
   final String name;
-  final Brightness brightness;
   final Color primaryOne;
   final Color primaryTwo;
   final Color? primaryThree;
@@ -67,7 +66,6 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
 
   const AppColorSet({
     required this.name,
-    required this.brightness,
     required this.primaryOne,
     required this.primaryTwo,
     this.primaryThree,
@@ -106,17 +104,6 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
     required this.containersBorders,
     required this.altContBorders,
   });
-
-  bool get isDark => brightness == Brightness.dark;
-
-  Color get secondaryBackground => isDark ? secondaryBackgroundDark : secondaryBackgroundLight;
-
-  Color get primaryBackground =>
-      isDark ? primaryBackgroundDark : primaryBackgroundLight;
-
-  Color get primaryText => isDark ? primaryTextDark : primaryTextLight;
-
-  Color get secondaryText => isDark ? secondaryTextDark : secondaryTextLight;
 
   LinearGradient gradientBackground({
     List<double>? stops,
@@ -185,7 +172,6 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
   @override
   AppColorSet copyWith({
     String? name,
-    Brightness? b,
     Color? pOne,
     Color? pTwo,
     Color? pThree,
@@ -226,7 +212,6 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
   }) {
     return AppColorSet(
       name: name ?? "NotValid",
-      brightness: b ?? brightness,
       primaryOne: pOne ?? primaryOne,
       primaryTwo: pTwo ?? primaryTwo,
       primaryThree: pThree ?? primaryThree,
@@ -273,7 +258,6 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
     if (other is! AppColorSet) return this;
     return AppColorSet(
       name: other.name,
-      brightness: t < 0.5 ? brightness : other.brightness,
       primaryOne: Color.lerp(primaryOne, other.primaryOne, t)!,
       primaryTwo: Color.lerp(primaryTwo, other.primaryTwo, t)!,
       primaryThree: Color.lerp(primaryThree, other.primaryThree, t),
@@ -342,7 +326,6 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
 
 const theBay = AppColorSet(
     name: "theBay",
-    brightness: Brightness.dark,
     // TODO: might need to be changed
     primaryOne: royalBlue,
     primaryTwo: goldenYellow,
@@ -367,6 +350,7 @@ const theBay = AppColorSet(
     actionButtonIconColor: primaryTextDark,
     textFieldBorders: marianBlue,
     textFieldBackground: secondaryBackgroundDark,
+    // TODO: dynamic with brightness?
     textFieldText: primaryTextDark,
     textFieldLabelText: secondaryTextDark,
     dropDownBorders: marianBlue,

@@ -38,104 +38,110 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final appColors = AppThemeManager.currentColors;
 
-    return
-        // Main container for the whole content of the widget
-        Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
-      child: InkWell(
-        onTap: () async {
-            _controller.forward(from: 0.0);
-            await widget.onPressed?.call();
-          },
-          child: Material(
-            color: Colors.transparent,
-            elevation: widget.isOpen == true ? 10.0 : 0.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: AnimatedContainer(
-              duration: Duration(milliseconds: 100),
-              curve: Curves.easeInOut,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: appColors.primaryBackground,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  color: appColors.containersBorders,
-                ),
-              ),
+    return ValueListenableBuilder(
+        valueListenable: AppThemeManager.notifier,
+        builder: (_, __, ___) {
+          return Container(
+              color: AppThemeManager.primaryBackground,
               child:
-                  // Main column for the whole content of the widget
+                  // Main container for the whole content of the widget
                   Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 16),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Row containing the title or header of the item, always shown
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
+                child: InkWell(
+                  onTap: () async {
+                    _controller.forward(from: 0.0);
+                    await widget.onPressed?.call();
+                  },
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: widget.isOpen == true ? 10.0 : 0.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: AnimatedContainer(
+                      duration: Duration(milliseconds: 100),
+                      curve: Curves.easeInOut,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: AppThemeManager.primaryBackground,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: appColors.containersBorders,
+                        ),
+                      ),
+                      child:
+                          // Main column for the whole content of the widget
+                          Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 16),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // Container for the item title, always shown
-                            Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(),
-                                  child:
-                                      // Item title, always shown
-                              Text(
-                            widget.title,
+                            // Row containing the title or header of the item, always shown
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // Container for the item title, always shown
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(),
+                                    child:
+                                        // Item title, always shown
+                                        Text(
+                                      widget.title,
                                       style: AppTextStyles.bodyLarge(),
                                     ),
-                        ),
-                      ),
+                                  ),
+                                ),
 
-                            // Transform widget to rotate the underlying icon
-                      Transform.rotate(
-                        angle: (widget.isOpen == true ? 180.0 : 0.0) * (math.pi / 180),
-                                child:
-                                    // Arrow icon
-                            Icon(
-                          Icons.arrow_drop_down,
-                                    color: appColors.primaryText,
+                                // Transform widget to rotate the underlying icon
+                                Transform.rotate(
+                                  angle: (widget.isOpen == true ? 180.0 : 0.0) * (math.pi / 180),
+                                  child:
+                                      // Arrow icon
+                                      Icon(
+                                    Icons.arrow_drop_down,
+                                    color: AppThemeManager.primaryText,
                                     size: 24,
                                   ),
-                      ),
-                    ],
-                        ),
+                                ),
+                              ],
+                            ),
 
-                      // Container for the description text, hideable
-                      if (widget.isOpen == true)
-                    Material(
-                      color: Colors.transparent,
-                            elevation: widget.isOpen == true ? 10.0 : 0.0,
-                            child: Container(
-                              decoration: BoxDecoration(),
-                              child:
-                                  // Description text, hideable
+                            // Container for the description text, hideable
+                            if (widget.isOpen == true)
+                              Material(
+                                color: Colors.transparent,
+                                elevation: widget.isOpen == true ? 10.0 : 0.0,
+                                child: Container(
+                                  decoration: BoxDecoration(),
+                                  child:
+                                      // Description text, hideable
                                   Visibility(
-                                visible: widget.isOpen == true,
-                                child: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                            child: Text(
-                              widget.description,
-                                      style: AppTextStyles.labelMedium(),
-                            ).animate(controller: _controller).fade(
-                                  begin: 0,
-                                        end: 1,
+                                    visible: widget.isOpen == true,
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                      child: Text(
+                                        widget.description,
+                                        style: AppTextStyles.labelMedium(),
+                                      ).animate(controller: _controller).fade(
+                                            begin: 0,
+                                            end: 1,
                                         duration: 600.ms,
                                         curve: Curves.easeInOut,
                                       ),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
-                          ),
-                    ],
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
-            ),
-          ),
-        ),
-      ),
-    );
+                ),
+              ));
+        });
   }
 }

@@ -29,7 +29,7 @@ class _PastActivityState extends ConsumerState<PastActivity> {
     final appColors = AppThemeManager.currentColors;
 
     return Scaffold(
-      backgroundColor: appColors.primaryBackground,
+      backgroundColor: AppThemeManager.primaryBackground,
       appBar: MyAppBar(
         style: MyAppBarStyle.titleOnly,
         title: 'Past activity',

@@ -41,7 +41,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: appColors.secondaryBackground,
+        backgroundColor: AppThemeManager.secondaryBackground,
         body: SafeArea(
           top: true,
           child:
@@ -93,9 +93,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                   .fromSTEB(12, 0, 0, 0),
                                       child: Text(
                                         'Understand Your Form',
-                                                  style: AppTextStyles.headlineLarge(
-                                                            color: appColors.primaryBackground),
-                                                      ),
+                                                  style: AppTextStyles.headlineLarge(color: AppThemeManager.primaryBackground),
+                                      ),
                                             ),
 
                                                   // Introduction on the first page
@@ -104,36 +103,43 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                       child: RichText(
                                         textScaler: MediaQuery.of(context).textScaler,
                                                         text: CustomTextSpan(
-                                                          children: [
+                                          context: context,
+                                          children: [
                                                             CustomTextSpan(
-                                                              text:
+                                              context: context,
+                                              text:
                                                                   'Your personal AI coach helps you understand your shot. \nTrack your ',
                                                               style: AppTextStyles.labelLarge(),
-                                                              color: appColors.primaryBackground,
-                                                            ),
+                                              color: AppThemeManager.primaryBackground,
+                                            ),
                                                             CustomTextSpan(
-                                                              text: 'form, ball path,',
+                                              context: context,
+                                              text: 'form, ball path,',
                                                               italic: true,
                                                             ),
                                                             CustomTextSpan(
-                                                              text: ' and ',
+                                              context: context,
+                                              text: ' and ',
                                                             ),
                                                             CustomTextSpan(
-                                                              text: 'movement ',
+                                              context: context,
+                                              text: 'movement ',
                                                               italic: true,
                                                             ),
                                                             CustomTextSpan(
-                                                              text: 'to get simple, actionable insights that make ',
+                                              context: context,
+                                              text: 'to get simple, actionable insights that make ',
                                                             ),
                                                             CustomTextSpan(
-                                                              text: 'every rep count.',
+                                              context: context,
+                                              text: 'every rep count.',
                                                               bold: true,
                                                               italic: true,
                                                             )
                                                           ],
                                                           style: AppTextStyles.labelLarge(),
-                                                          color: appColors.primaryBackground,
-                                                        ),
+                                          color: AppThemeManager.primaryBackground,
+                                        ),
                                                       ),
                                                   ),
                                                 ],
@@ -174,9 +180,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                     padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                                       child: Text(
                                         'Keep It Straight',
-                                                        style: AppTextStyles.headlineLarge(
-                                                            color: appColors.primaryBackground),
-                                                      ),
+                                                        style: AppTextStyles.headlineLarge(color: AppThemeManager.primaryBackground),
+                                      ),
                                                   ),
 
                                                   // Introduction on the second page
@@ -189,26 +194,30 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                       .of(context)
                                                       .textScaler,
                                                   text: CustomTextSpan(
-                                                    children: [
+                                          context: context,
+                                          children: [
                                                       CustomTextSpan(
-                                                        text: 'Use the ',
-                                                        style: AppTextStyles.labelLarge(
-                                                                  color: appColors.primaryBackground),
-                                                            ),
+                                              context: context,
+                                              text: 'Use the ',
+                                                        style: AppTextStyles.labelLarge(color: AppThemeManager.primaryBackground),
+                                            ),
                                                       CustomTextSpan(
-                                                        text: 'front view ',
+                                              context: context,
+                                              text: 'front view ',
                                                         style: TextStyle(
                                                           fontWeight:
                                                           FontWeight.bold,
                                                         ),
                                                       ),
                                                       CustomTextSpan(
-                                                        text:
+                                              context: context,
+                                              text:
                                                         'to keep your shot straight and balanced. Spot',
                                                         style: TextStyle(),
                                                       ),
                                                       CustomTextSpan(
-                                                        text:
+                                              context: context,
+                                              text:
                                                         ' side drift, arm flare',
                                                         style: TextStyle(
                                                           fontStyle:
@@ -216,25 +225,27 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                         ),
                                                       ),
                                                       CustomTextSpan(
-                                                        text: ', or ',
+                                              context: context,
+                                              text: ', or ',
                                                         style: TextStyle(),
                                                       ),
                                                       CustomTextSpan(
-                                                        text: '“chicken wing” ',
+                                              context: context,
+                                              text: '“chicken wing” ',
                                                         style: TextStyle(
                                                           fontStyle:
                                                           FontStyle.italic,
                                                         ),
                                                       ),
                                                       CustomTextSpan(
-                                                        text:
+                                              context: context,
+                                              text:
                                                         'motion, and build a clean, consistent shooting line every time.',
                                                         style: TextStyle(),
                                                       )
                                                     ],
-                                                    style: AppTextStyles.labelLarge(
-                                                        color: appColors.primaryBackground),
-                                                        ),
+                                                    style: AppTextStyles.labelLarge(color: AppThemeManager.primaryBackground),
+                                        ),
                                                 ),
                                             ),
                                           ],
@@ -271,8 +282,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                   .fromSTEB(12, 0, 0, 0),
                                       child: Text(
                                         'Perfect the Flow',
-                                                  style: AppTextStyles.headlineLarge(color: appColors.primaryBackground),
-                                                      ),
+                                        style: AppTextStyles.headlineLarge(color: AppThemeManager.primaryBackground),
+                                      ),
                                             ),
 
                                                   // Introduction on the third page
@@ -281,63 +292,72 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                       child: RichText(
                                         textScaler: MediaQuery.of(context).textScaler,
                                                         text: CustomTextSpan(
-                                                          children: [
+                                          context: context,
+                                          children: [
                                                             CustomTextSpan(
-                                                              text: 'See your shot in full motion. The ',
-                                                              style: AppTextStyles.labelLarge(
-                                                                  color: appColors.primaryBackground),
-                                                            ),
+                                              context: context,
+                                              text: 'See your shot in full motion. The ',
+                                                              style: AppTextStyles.labelLarge(color: AppThemeManager.primaryBackground),
+                                            ),
                                                             CustomTextSpan(
-                                                              text: 'side view',
+                                              context: context,
+                                              text: 'side view',
                                                               style: TextStyle(
                                                                 fontWeight: FontWeight.bold,
                                                                 fontStyle: FontStyle.normal,
                                                               ),
                                                             ),
                                                             CustomTextSpan(
-                                                              text: ' shows ',
+                                              context: context,
+                                              text: ' shows ',
                                                               style: TextStyle(),
                                                             ),
                                                             CustomTextSpan(
-                                                              text: 'how close',
+                                              context: context,
+                                              text: 'how close',
                                                               style: TextStyle(
                                                                 fontStyle: FontStyle.italic,
                                                               ),
                                                             ),
                                                             CustomTextSpan(
-                                                              text: ' the ball stays to your body, your ',
+                                              context: context,
+                                              text: ' the ball stays to your body, your ',
                                                               style: TextStyle(),
                                                             ),
                                                             CustomTextSpan(
-                                                              text: 'set ',
+                                              context: context,
+                                              text: 'set ',
                                                               style: TextStyle(
                                                                 fontStyle: FontStyle.italic,
                                                               ),
                                                             ),
                                                             CustomTextSpan(
-                                                              text: 'and ',
+                                              context: context,
+                                              text: 'and ',
                                                               style: TextStyle(),
                                                             ),
                                                             CustomTextSpan(
-                                                              text: 'release points',
+                                              context: context,
+                                              text: 'release points',
                                                               style: TextStyle(
                                                                 fontStyle: FontStyle.italic,
                                                               ),
                                                             ),
                                                             CustomTextSpan(
-                                                              text: ', and whether your shot follows a ',
+                                              context: context,
+                                              text: ', and whether your shot follows a ',
                                                               style: TextStyle(),
                                                             ),
                                                             CustomTextSpan(
-                                                              text: 'smooth forward path.',
+                                              context: context,
+                                              text: 'smooth forward path.',
                                                               style: TextStyle(
                                                                 fontStyle: FontStyle.italic,
                                                               ),
                                                             )
                                                           ],
-                                                          style: AppTextStyles.labelLarge(
-                                                              color: appColors.primaryBackground),
-                                                        ),
+                                                          style: AppTextStyles.labelLarge(color: AppThemeManager.primaryBackground),
+                                        ),
                                                       ),
                                                   ),
                                                 ],

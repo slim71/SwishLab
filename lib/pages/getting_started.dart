@@ -40,7 +40,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        backgroundColor: appColors.secondaryBackground,
+        backgroundColor: AppThemeManager.secondaryBackground,
         appBar: MyAppBar(
           style: MyAppBarStyle.backButtonTitleLeft,
           title: 'Getting started',
@@ -111,7 +111,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                           borderRadius: 30,
                                           borderWidth: 1,
                                           icon: Icons.navigate_next_rounded,
-                                          iconColor: appColors.secondaryText,
+                                          iconColor: AppThemeManager.secondaryText,
                                           iconSize: 30,
                                           onPressed: () async {
                                             await stepSlideShowController?.nextPage(
@@ -184,8 +184,8 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                               borderRadius: 30,
                                               borderWidth: 1,
                                               icon: Icons.navigate_next_rounded,
-                                              iconColor: appColors.secondaryText,
-                                              iconSize: 30,
+                                          iconColor: AppThemeManager.secondaryText,
+                                          iconSize: 30,
                                               onPressed: () async {
                                                 await stepSlideShowController?.nextPage(
                                                   duration: Duration(milliseconds: 300),
@@ -257,8 +257,8 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                               borderRadius: 30,
                                               borderWidth: 1,
                                               icon: Icons.navigate_next_rounded,
-                                              iconColor: appColors.secondaryText,
-                                              iconSize: 30,
+                                          iconColor: AppThemeManager.secondaryText,
+                                          iconSize: 30,
                                               onPressed: () async {
                                                 await stepSlideShowController?.nextPage(
                                                   duration: Duration(milliseconds: 300),
@@ -330,8 +330,8 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                               borderRadius: 30,
                                               borderWidth: 1,
                                               icon: Icons.navigate_next_rounded,
-                                              iconColor: appColors.secondaryText,
-                                              iconSize: 30,
+                                          iconColor: AppThemeManager.secondaryText,
+                                          iconSize: 30,
                                               onPressed: () async {
                                                 await stepSlideShowController?.nextPage(
                                                   duration: Duration(milliseconds: 300),

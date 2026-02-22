@@ -1,5 +1,6 @@
 import 'package:SwishLab/constants.dart';
 import 'package:SwishLab/models/custom_enums.dart';
+import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -124,26 +125,46 @@ class _DynamicAssetState extends State<DynamicAsset> {
 
     if (typeEnum == AssetType.animation) {
       return path.startsWith('http')
-          ? Lottie.network(
-              path,
-              width: widget.width,
-              height: widget.height,
-              errorBuilder: (_, __, ___) => _next(),
-            )
-          : Lottie.asset(
-              path,
-              width: widget.width,
-              height: widget.height,
-              package: 'SwishLab',
-              errorBuilder: (_, __, ___) => _next(),
-            );
+          ? ValueListenableBuilder(
+              valueListenable: AppThemeManager.notifier,
+              builder: (_, __, ___) {
+                return Container(
+                    color: AppThemeManager.primaryBackground,
+                    child: Lottie.network(
+                      path,
+                      width: widget.width,
+                      height: widget.height,
+                      errorBuilder: (_, __, ___) => _next(),
+                    ));
+              })
+          : ValueListenableBuilder(
+              valueListenable: AppThemeManager.notifier,
+              builder: (_, __, ___) {
+                return Container(
+                    color: AppThemeManager.primaryBackground,
+                    child: Lottie.asset(
+                      path,
+                      width: widget.width,
+                      height: widget.height,
+                      package: 'SwishLab',
+                      errorBuilder: (_, __, ___) => _next(),
+                    ));
+              });
     }
 
-    return Image(
-      image: path.startsWith('http') ? NetworkImage(path) : AssetImage(path, package: 'SwishLab') as ImageProvider,
-      width: widget.width,
-      height: widget.height,
-      errorBuilder: (_, __, ___) => _next(),
-    );
+    return ValueListenableBuilder(
+        valueListenable: AppThemeManager.notifier,
+        builder: (_, __, ___) {
+          return Container(
+              color: AppThemeManager.primaryBackground,
+              child: Image(
+                image: path.startsWith('http')
+                    ? NetworkImage(path)
+                    : AssetImage(path, package: 'SwishLab') as ImageProvider,
+                width: widget.width,
+                height: widget.height,
+                errorBuilder: (_, __, ___) => _next(),
+              ));
+        });
   }
 }

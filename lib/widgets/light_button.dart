@@ -24,33 +24,39 @@ class LightButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final appColors = AppThemeManager.currentColors;
 
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: appColors.lightButtonBackground,
-        elevation: 10,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          side: BorderSide(
-            color: appColors.lightButtonBorders,
-            width: 2,
-          ),
-        ),
-        fixedSize: Size.fromHeight(height),
-        padding: padding,
-      ),
-      child: Row(mainAxisSize: MainAxisSize.min, children: [
-        if (icon != null)
-          Padding(
-            padding: iconPadding,
-            child: icon,
-          ),
-        if (icon != null) const SizedBox(width: 8),
-        Text(
-          text,
-          style: AppTextStyles.titleLarge(color: appColors.lightButtonTextColor),
-        ),
-      ]),
-    );
+    return ValueListenableBuilder(
+        valueListenable: AppThemeManager.notifier,
+        builder: (_, __, ___) {
+          return Container(
+              color: AppThemeManager.primaryBackground,
+              child: ElevatedButton(
+                onPressed: onPressed,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: appColors.lightButtonBackground,
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    side: BorderSide(
+                      color: appColors.lightButtonBorders,
+                      width: 2,
+                    ),
+                  ),
+                  fixedSize: Size.fromHeight(height),
+                  padding: padding,
+                ),
+                child: Row(mainAxisSize: MainAxisSize.min, children: [
+                  if (icon != null)
+                    Padding(
+                      padding: iconPadding,
+                      child: icon,
+                    ),
+                  if (icon != null) const SizedBox(width: 8),
+                  Text(
+                    text,
+                    style: AppTextStyles.titleLarge(color: appColors.lightButtonTextColor),
+                  ),
+                ]),
+              ));
+        });
   }
 }

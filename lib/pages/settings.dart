@@ -138,10 +138,8 @@ class _SettingsState extends ConsumerState<Settings>
 
   @override
   Widget build(BuildContext context) {
-    final appColors = AppThemeManager.currentColors;
-
     return Scaffold(
-      backgroundColor: appColors.primaryBackground,
+      backgroundColor: AppThemeManager.primaryBackground,
       appBar: MyAppBar(
         style: MyAppBarStyle.titleOnly,
         title: 'Settings',

@@ -36,3 +36,9 @@ test-output/
 .dart_tool/
 .flutter-plugins-dependencies
 
+# Build system
+widgetbook/android/
+widgetbook/linux/
+widgetbook/macos/
+widgetbook/web/
+widgetbook/windows/

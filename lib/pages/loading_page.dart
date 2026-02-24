@@ -96,8 +96,8 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                                 padding: EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
                       child: Text(
                         'Processing Video',
-                                    style: AppTextStyles.headlineLarge(),
-                                  ),
+                        style: AppTextStyles.headlineLarge(context),
+                      ),
                               ),
 
                               // Text to ask the user to wait a bit
@@ -106,8 +106,8 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                       child: Text(
                         'Please wait while we prepare your video',
                                     textAlign: TextAlign.center,
-                                    style: AppTextStyles.labelLarge(),
-                                  ),
+                        style: AppTextStyles.labelLarge(context),
+                      ),
                               ),
 
                               // Container used to place a custom divider
@@ -139,8 +139,8 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                       child: Text(
                         'This may take a moment depending on the video size',
                                     textAlign: TextAlign.center,
-                                    style: AppTextStyles.labelLarge(),
-                                  ),
+                        style: AppTextStyles.labelLarge(context),
+                      ),
                               ),
 
                               // Back button to stop waiting and discard results

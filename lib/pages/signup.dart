@@ -189,8 +189,8 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                     Text(
                                       'Get Started',
                                                     textAlign: TextAlign.center,
-                                                    style: AppTextStyles.displaySmall(),
-                                                  ),
+                                        style: AppTextStyles.displaySmall(context),
+                                      ),
 
                                                 // Text to guide signup
                                                 Padding(
@@ -198,8 +198,8 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                       child: Text(
                                         'Fill out the data below',
                                                       textAlign: TextAlign.center,
-                                                      style: AppTextStyles.labelLarge(),
-                                                    ),
+                                          style: AppTextStyles.labelLarge(context),
+                                        ),
                                                 ),
                                                 Padding(
                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
@@ -348,8 +348,8 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                       child: Text(
                                         'Or',
                                                       textAlign: TextAlign.center,
-                                                      style: AppTextStyles.labelLarge(),
-                                                    ),
+                                          style: AppTextStyles.labelLarge(context),
+                                        ),
                                                 ),
 
                                                 // Button to create an account using Google

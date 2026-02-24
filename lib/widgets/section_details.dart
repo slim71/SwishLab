@@ -132,7 +132,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                           padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                                           child: Text(
                                             'Details',
-                                            style: AppTextStyles.titleLarge(),
+                                            style: AppTextStyles.titleLarge(context),
                                           ),
                                         ),
                                       ],
@@ -198,8 +198,8 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                 padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
                                                                 child: Text(
                                                                   sectionFieldsItem['name']?.toString() ?? '',
-                                                                  style: AppTextStyles.bodyMedium(),
-                                                                ),
+                                                                style: AppTextStyles.bodyMedium(context),
+                                                              ),
                                                               ),
                                                             ],
                                                           ),
@@ -213,7 +213,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                             // Item's value
                                                             Text(
                                                               sectionFieldsItem['value']?.toString() ?? '',
-                                                              style: AppTextStyles.bodyMedium(),
+                                                              style: AppTextStyles.bodyMedium(context),
                                                             ),
 
                                                             const SizedBox(width: 5),
@@ -221,7 +221,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                             // Item's unit of measurement
                                                             Text(
                                                               sectionFieldsItem['unit']?.toString() ?? '',
-                                                              style: AppTextStyles.bodyMedium(),
+                                                              style: AppTextStyles.bodyMedium(context),
                                                             ),
                                                           ],
                                                         ),
@@ -234,7 +234,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                             // Item's value range
                                                             Text(
                                                               sectionFieldsItem['range']?.toString() ?? '',
-                                                              style: AppTextStyles.bodyMedium(),
+                                                              style: AppTextStyles.bodyMedium(context),
                                                             ),
                                                           ],
                                                         ),
@@ -259,7 +259,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                           padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                                           child: Text(
                                             'Scores',
-                                            style: AppTextStyles.titleLarge(),
+                                            style: AppTextStyles.titleLarge(context),
                                           ),
                                         ),
                                       ],
@@ -335,8 +335,8 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                         child: Text(
                                                                           scoresJsonItem['name']?.toString() ??
                                                                               '',
-                                                                          style: AppTextStyles.bodyMedium(),
-                                                                        ),
+                                                                        style: AppTextStyles.bodyMedium(context),
+                                                                      ),
                                                                       ),
                                                                     ],
                                                                   ),
@@ -348,7 +348,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                     // Score value
                                                                     Text(
                                                                       scoresJsonItem['value']?.toString() ?? '',
-                                                                      style: AppTextStyles.bodyMedium(),
+                                                                      style: AppTextStyles.bodyMedium(context),
                                                                     ),
 
                                                                     // Star icon
@@ -400,7 +400,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                         child: Text(
                                                                           'Some feedback to download or I don\'t know how to gather',
                                                                           textAlign: TextAlign.start,
-                                                                          style: AppTextStyles.bodyMedium(),
+                                                                          style: AppTextStyles.bodyMedium(context),
                                                                         ),
                                                                       ),
                                                                     ),

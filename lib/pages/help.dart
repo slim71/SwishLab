@@ -119,8 +119,8 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                         padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                             child: Text(
                               'How can we help you?',
-                                            style: AppTextStyles.headlineMedium(),
-                                          ),
+                              style: AppTextStyles.headlineMedium(context),
+                            ),
                                       ),
 
                                       // Row to place the functionality widgets
@@ -241,8 +241,8 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                                 Text(
                                                   'Search FAQs',
                                                                   textAlign: TextAlign.center,
-                                                                  style: AppTextStyles.titleLarge(
-                                                                      color: appColors.darkButtonTextColor),
+                                                                  style: AppTextStyles.titleLarge(context,
+                                                        color: appColors.darkButtonTextColor),
                                                                 ),
                                                             ],
                                                           ),
@@ -328,16 +328,16 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                         padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 4),
                             child: Text(
                               'Frequently Asked Questions',
-                                            style: AppTextStyles.headlineSmall(),
-                                          ),
+                              style: AppTextStyles.headlineSmall(context),
+                            ),
                                       ),
 
                                       // "No results found." text
                                 if (!(filteredFaqsPageState.isNotEmpty))
                             Text(
                               'No results found.',
-                                      style: AppTextStyles.titleLarge(),
-                                    ),
+                              style: AppTextStyles.titleLarge(context),
+                            ),
 
                                       // Wrap containing all FAQs
                                       Builder(

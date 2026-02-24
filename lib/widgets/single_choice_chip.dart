@@ -42,6 +42,7 @@ class SingleChoiceChip extends StatelessWidget {
                     Text(
                       label,
                       style: AppTextStyles.bodyMedium(
+                        context,
                         color: selected ? appColors.primaryTwo : Colors.white,
                       ),
                     ),

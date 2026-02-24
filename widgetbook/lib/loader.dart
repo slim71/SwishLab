@@ -4,6 +4,7 @@ import 'package:SwishLab/constants.dart';
 import 'package:SwishLab/controllers/dropdown_controller.dart';
 import 'package:SwishLab/functions/process_analysis_results.dart';
 import 'package:SwishLab/models/video_source.dart';
+import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:SwishLab/widgets/background.dart';
@@ -94,17 +95,14 @@ Widget buildDropdown(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'Text', type: Text) // TODO: check text color once dependent on brightness
+@widgetbook.UseCase(name: 'Text', type: Text)
 Widget buildText(BuildContext context) {
   return ValueListenableBuilder(
       valueListenable: AppThemeManager.notifier,
       builder: (_, _, _) {
         return Container(
             color: AppThemeManager.primaryBackground,
-            child: Text('some text', style: Theme
-                .of(context)
-                .textTheme
-                .bodyMedium)
+            child: Text('some text', style: AppTextStyles.bodyMedium(context))
         );
       }
   );

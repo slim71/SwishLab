@@ -188,8 +188,8 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                                             blendMode: BlendMode.srcIn,
                                             child: Text(
                                               'Front view analysis',
-                                              style: AppTextStyles.displaySmall(),
-                                            ),
+                                    style: AppTextStyles.displaySmall(context),
+                                  ),
                                 ),
                                 move: const MoveConfig(begin: Offset(0, 60)),
                               ),
@@ -203,7 +203,7 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                       child: addAnimation(
                         widget: Text(
                           'Take a video with the camera facing you while you shoot.\nThis will analyze how you jump and release the ball.\nUseful to detect inefficient release points, power loss do to ball swings, etc...',
-                                style: AppTextStyles.titleSmall(),
+                          style: AppTextStyles.titleSmall(context),
                         ),
                         move: const MoveConfig(begin: Offset(0, 120)),
                       ),

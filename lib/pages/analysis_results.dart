@@ -187,8 +187,8 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                                                 ?.toDouble() ??
                                                                             0.0),
                                                                       ),
-                                                                      style: AppTextStyles.bodyLarge(),
-                                                                    ),
+                                                    style: AppTextStyles.bodyLarge(context),
+                                                  ),
                                                                 ),
 
                                                                 // Category score
@@ -202,8 +202,8 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                                   )?['value'])
                                                                       ?.toString() ??
                                                                       ''),
-                                                                  style: AppTextStyles.bodySmall(),
-                                                                ),
+                                                    style: AppTextStyles.bodySmall(context),
+                                                  ),
                                                             ),
                                                           ],
                                                         ),

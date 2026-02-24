@@ -2,134 +2,146 @@ import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// TODO: make this dynamic on brightness
 class AppTextStyles {
   // ========== DISPLAY ==========
-  static TextStyle displayLarge({
+  static TextStyle displayLarge(
+    BuildContext context, {
     Color? color,
   }) {
     return GoogleFonts.interTight(
       fontSize: 64,
       fontWeight: FontWeight.w600,
-      color: color ?? AppThemeManager.primaryText,
+      color: color ?? Theme.of(context).colorScheme.onSurface,
     );
   }
 
-  static TextStyle displayMedium({
+  static TextStyle displayMedium(
+    BuildContext context, {
     Color? color,
   }) {
     return GoogleFonts.interTight(
       fontSize: 44,
       fontWeight: FontWeight.w600,
-      color: color ?? AppThemeManager.primaryText,
+      color: color ?? Theme.of(context).colorScheme.onSurface,
     );
   }
 
-  static TextStyle displaySmall({
+  static TextStyle displaySmall(
+    BuildContext context, {
     Color? color,
   }) {
     return GoogleFonts.interTight(
       fontSize: 36,
       fontWeight: FontWeight.w600,
-      color: color ?? AppThemeManager.primaryText,
+      color: color ?? Theme.of(context).colorScheme.onSurface,
     );
   }
 
   // ========== HEADLINE ==========
-  static TextStyle headlineLarge({
+  static TextStyle headlineLarge(
+    BuildContext context, {
     Color? color,
   }) {
     return GoogleFonts.interTight(
       fontSize: 32,
       fontWeight: FontWeight.w600,
-      color: color ?? AppThemeManager.primaryText,
+      color: color ?? Theme.of(context).colorScheme.onSurface,
     );
   }
 
-  static TextStyle headlineMedium({
+  static TextStyle headlineMedium(
+    BuildContext context, {
     Color? color,
   }) {
     return GoogleFonts.interTight(
       fontSize: 28,
       fontWeight: FontWeight.w600,
-      color: color ?? AppThemeManager.primaryText,
+      color: color ?? Theme.of(context).colorScheme.onSurface,
     );
   }
 
-  static TextStyle headlineSmall({
+  static TextStyle headlineSmall(
+    BuildContext context, {
     Color? color,
   }) {
     return GoogleFonts.interTight(
       fontSize: 24,
       fontWeight: FontWeight.w600,
-      color: color ?? AppThemeManager.primaryText,
+      color: color ?? Theme.of(context).colorScheme.onSurface,
     );
   }
 
   // ========== TITLE ==========
-  static TextStyle titleLarge({
+  static TextStyle titleLarge(
+    BuildContext context, {
     Color? color,
   }) {
     return GoogleFonts.interTight(
       fontSize: 20,
       fontWeight: FontWeight.w600,
-      color: color ?? AppThemeManager.primaryText,
+      color: color ?? Theme.of(context).colorScheme.onSurface,
     );
   }
 
-  static TextStyle titleMedium({
+  static TextStyle titleMedium(
+    BuildContext context, {
     Color? color,
   }) {
     return GoogleFonts.interTight(
       fontSize: 18,
       fontWeight: FontWeight.w600,
-      color: color ?? AppThemeManager.primaryText,
+      color: color ?? Theme.of(context).colorScheme.onSurface,
     );
   }
 
-  static TextStyle titleSmall({
+  static TextStyle titleSmall(
+    BuildContext context, {
     Color? color,
   }) {
     return GoogleFonts.interTight(
       fontSize: 16,
       fontWeight: FontWeight.w600,
-      color: color ?? AppThemeManager.primaryText,
+      color: color ?? Theme.of(context).colorScheme.onSurface,
     );
   }
 
   // ========== BODY ==========
-  static TextStyle bodyLarge({
+  static TextStyle bodyLarge(
+    BuildContext context, {
     Color? color,
   }) {
     return GoogleFonts.inter(
       fontSize: 16,
       fontWeight: FontWeight.w400,
-      color: color ?? AppThemeManager.primaryText,
+      color: color ?? Theme.of(context).colorScheme.onSurface,
     );
   }
 
-  static TextStyle bodyMedium({
+  static TextStyle bodyMedium(
+    BuildContext context, {
     Color? color,
   }) {
     return GoogleFonts.inter(
       fontSize: 14,
       fontWeight: FontWeight.w400,
-      color: color ?? AppThemeManager.primaryText,
+      color: color ?? Theme.of(context).colorScheme.onSurface,
     );
   }
 
-  static TextStyle bodySmall({
+  static TextStyle bodySmall(
+    BuildContext context, {
     Color? color,
   }) {
     return GoogleFonts.inter(
       fontSize: 12,
       fontWeight: FontWeight.w400,
-      color: color ?? AppThemeManager.primaryText,
+      color: color ?? Theme.of(context).colorScheme.onSurface,
     );
   }
 
   // ========== LABEL ==========
-  static TextStyle labelLarge({
+  static TextStyle labelLarge(
+    BuildContext context, {
     Color? color,
   }) {
     final colors = AppThemeManager.currentColors;
@@ -140,7 +152,8 @@ class AppTextStyles {
     );
   }
 
-  static TextStyle labelMedium({
+  static TextStyle labelMedium(
+    BuildContext context, {
     Color? color,
   }) {
     final colors = AppThemeManager.currentColors;
@@ -151,7 +164,8 @@ class AppTextStyles {
     );
   }
 
-  static TextStyle labelSmall({
+  static TextStyle labelSmall(
+    BuildContext context, {
     Color? color,
   }) {
     final colors = AppThemeManager.currentColors;

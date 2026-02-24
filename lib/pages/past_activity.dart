@@ -66,8 +66,8 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                 padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
                         child: Text(
                           'All activity from this past month.',
-                                    style: AppTextStyles.titleSmall(),
-                                  ),
+                          style: AppTextStyles.titleSmall(context),
+                        ),
                               ),
 
                               // List of activities to show
@@ -163,8 +163,8 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                               // Timestamp related to the activity item
                                               Text(
                                                 '15, Jan. 2026',
-                                                                  style: AppTextStyles.labelMedium(),
-                                                                ),
+                                                style: AppTextStyles.labelMedium(context),
+                                              ),
 
                                                                 // Icon to show the activity
                                               Icon(
@@ -184,16 +184,16 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                               // Example test for an activity
                                               Text(
                                                 'Created New User',
-                                                                  style: AppTextStyles.bodyLarge(),
-                                                                ),
+                                                style: AppTextStyles.bodyLarge(context),
+                                              ),
 
                                                                 // Example test for an activity, part 2
                                                                 Padding(
                                                                   padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                                                 child: Text(
                                                   '<User>',
-                                                                      style: AppTextStyles.titleMedium(),
-                                                                    ),
+                                                  style: AppTextStyles.titleMedium(context),
+                                                ),
                                                                 ),
                                                               ],
                                                             ),
@@ -234,8 +234,8 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                                     padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
                                                   child: Text(
                                                     '<User>',
-                                                                        style: AppTextStyles.labelMedium(),
-                                                                      ),
+                                                    style: AppTextStyles.labelMedium(context),
+                                                  ),
                                                                   ),
                                                                 ],
                                                               ),
@@ -307,8 +307,8 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                               EdgeInsetsDirectional.fromSTEB(16, 24, 0, 0),
                         child: Text(
                           'Beginning of Activity',
-                                  style: AppTextStyles.bodyLarge(),
-                                ),
+                          style: AppTextStyles.bodyLarge(context),
+                        ),
                             ),
                           ],
                         ),

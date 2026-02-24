@@ -191,8 +191,8 @@ class _SettingsState extends ConsumerState<Settings>
                                     padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 8),
                           child: Text(
                             'Follow us on',
-                                        style: AppTextStyles.labelMedium(),
-                                      ),
+                            style: AppTextStyles.labelMedium(context),
+                          ),
                                   ),
 
                                   // Row with socials buttons
@@ -253,8 +253,8 @@ class _SettingsState extends ConsumerState<Settings>
                               EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                           child: Text(
                             'App Versions',
-                                  style: AppTextStyles.titleLarge(),
-                                ),
+                            style: AppTextStyles.titleLarge(context),
+                          ),
                             ),
 
                                   // App version
@@ -262,8 +262,8 @@ class _SettingsState extends ConsumerState<Settings>
                                     padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
                           child: Text(
                             'v0.0.1',
-                                        style: AppTextStyles.labelMedium(),
-                                      ),
+                            style: AppTextStyles.labelMedium(context),
+                          ),
                                   ),
 
                                   // Logout button

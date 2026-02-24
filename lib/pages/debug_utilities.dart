@@ -65,8 +65,8 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                               padding: EdgeInsetsDirectional.fromSTEB(16, 10, 0, 10),
                         child: Text(
                           'Available debug functionalities',
-                                  style: AppTextStyles.titleSmall(),
-                                ),
+                          style: AppTextStyles.titleSmall(context),
+                        ),
                             ),
 
                             // List of available debug utilities

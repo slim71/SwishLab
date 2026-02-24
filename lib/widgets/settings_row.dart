@@ -36,7 +36,7 @@ class SettingsRow extends StatelessWidget {
                       children: [
                         Text(
                           item.title,
-                          style: AppTextStyles.titleLarge(),
+                          style: AppTextStyles.titleLarge(context),
                         ),
                         Icon(
                           Icons.chevron_right_rounded,

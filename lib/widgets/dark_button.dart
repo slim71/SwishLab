@@ -53,8 +53,8 @@ class DarkButton extends StatelessWidget {
         if (icon != null) const SizedBox(width: 8),
         Text(
           text,
-          style: AppTextStyles.titleLarge(color: appColors.darkButtonTextColor),
-        ),
+                    style: AppTextStyles.titleLarge(context, color: appColors.darkButtonTextColor),
+                  ),
       ]),
               ));
         });

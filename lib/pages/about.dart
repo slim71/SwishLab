@@ -91,8 +91,8 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                           children: [
                                             Text(
                                               'Simone Vollaro',
-                                              style: AppTextStyles.headlineMedium(),
-                                            ),
+                                                style: AppTextStyles.headlineMedium(context),
+                                              ),
                                           ],
                                         ),
                                       ),
@@ -191,8 +191,8 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                     children: [
                       Text(
                         'Who am I?',
-                        style: AppTextStyles.titleLarge(),
-                      ),
+                          style: AppTextStyles.titleLarge(context),
+                        ),
                     ],
                   ),
                 ),
@@ -291,7 +291,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                                               alignment: AlignmentDirectional(0, 1),
                                                               child: Text(
                                                                 'Basketball has been part of my life since I was a kid. I played throughout my childhood and teenage years, and it had a huge impact on me. It made me more social, helped me find confidence around people, and gave me a way to stay in shape. ',
-                                                                style: AppTextStyles.bodyMedium(),
+                                                                style: AppTextStyles.bodyMedium(context),
                                                               ),
                                                             ),
                                                           ),
@@ -372,8 +372,8 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                 padding: EdgeInsets.all(10),
                                 child: Text(
                                   'When I moved to Pisa for university, life changed a bit and basketball slipped more into the background. I still kept in touch with it, just not as much as before. But in 2020 I found my way back, and even joined an amateur team in Rome for a year — and it reminded me how much I had missed it.',
-                                  style: AppTextStyles.bodyMedium(),
-                                ),
+                                    style: AppTextStyles.bodyMedium(context),
+                                  ),
                               ),
                             ),
                           ],
@@ -423,8 +423,8 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                             'where I saw many people asking for feedback on their shooting form, footwork, and general technique.',
                                       )
                                     ],
-                                    style: AppTextStyles.bodyMedium(),
-                                  ),
+                                      style: AppTextStyles.bodyMedium(context),
+                                    ),
                                 ),
                               ),
                             ),
@@ -448,8 +448,8 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                             context: context,
                                             text:
                                               'That’s when the idea for this app started to form: ',
-                                          style: AppTextStyles.bodyMedium(),
-                                        ),
+                                            style: AppTextStyles.bodyMedium(context),
+                                          ),
                                         CustomTextSpan(
                                             context: context,
                                             text:
@@ -474,8 +474,8 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                           ),
                                         )
                                       ],
-                                      style: AppTextStyles.bodyMedium(),
-                                    ),
+                                        style: AppTextStyles.bodyMedium(context),
+                                      ),
                                   ),
                                 ),
                               ),

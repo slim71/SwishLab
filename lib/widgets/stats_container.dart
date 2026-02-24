@@ -40,7 +40,6 @@ class StatsContainer extends StatelessWidget {
                       children: [
                         // Custom icon
                         DynamicIconImage(
-                          outerColor: AppThemeManager.secondaryBackground,
                           width: 50,
                           height: 50,
                           imageName: iconName,
@@ -52,14 +51,14 @@ class StatsContainer extends StatelessWidget {
                         // Title for the section
                         Text(
                           title,
-                          style: AppTextStyles.titleMedium(),
+                          style: AppTextStyles.titleMedium(context),
                           textAlign: TextAlign.center,
                         ),
 
                         // Latest score
                         Text(
                           text ?? '0',
-                          style: AppTextStyles.headlineMedium(),
+                          style: AppTextStyles.headlineMedium(context),
                           textAlign: TextAlign.center,
                         ),
                       ],

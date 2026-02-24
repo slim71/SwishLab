@@ -59,7 +59,7 @@ class _InputField extends State<InputField> {
                 autofillHints: widget.autofillHints,
                 textCapitalization: widget.textCapitalization,
                 obscureText: widget.obscureText && !_isVisible,
-                style: AppTextStyles.bodyLarge(color: appColors.textFieldText),
+                style: AppTextStyles.bodyLarge(context, color: appColors.textFieldText),
                 validator: widget.validator,
                 enableSuggestions: !widget.obscureText,
                 autocorrect: !widget.obscureText,
@@ -72,7 +72,7 @@ class _InputField extends State<InputField> {
                 ],
                 decoration: InputDecoration(
                   labelText: widget.label,
-                  labelStyle: AppTextStyles.labelLarge(color: appColors.textFieldLabelText),
+                  labelStyle: AppTextStyles.labelLarge(context, color: appColors.textFieldLabelText),
                   filled: true,
                   fillColor: AppThemeManager.primaryBackground,
                   // appColors.textFieldBackground,

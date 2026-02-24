@@ -82,7 +82,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                               addAnimation(
                                   widget: Text(
                                     'Pick your angle',
-                                    style: AppTextStyles.headlineMedium(),
+                                    style: AppTextStyles.headlineMedium(context),
                                   ),
                                   move: const MoveConfig(begin: Offset(0, 60))),
 
@@ -92,8 +92,8 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                       child: addAnimation(
                                           widget: Text(
                                             'Every angle gives you a new way to level up your shot with SwishLab.\nUse the Front view to spot and eliminate any sideways movement holding you back.\nSwitch to the Side view to understand your ball path and fine-tune your shooting form with confidence.',
-                                            style: AppTextStyles.labelMedium(),
-                                          ),
+                                      style: AppTextStyles.labelMedium(context),
+                                    ),
                                     move: const MoveConfig(begin: Offset(0, 80))),
                               ),
 
@@ -155,8 +155,8 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                   addAnimation(
                                       widget: Text(
                                         'Upload a video',
-                                        style: AppTextStyles.headlineMedium(),
-                                      ),
+                                    style: AppTextStyles.headlineMedium(context),
+                                  ),
                                   move: const MoveConfig(begin: Offset(0, 60))),
 
                               // Step description
@@ -165,7 +165,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                 child: addAnimation(
                                     widget: Text(
                                       'Shoot a new clip or pick one straight from your gallery - whatever works best for you.\nFor tips on getting the most out of your shots, check out the Help section and learn what makes a great video for SwishLab.',
-                                      style: AppTextStyles.labelMedium(),
+                                      style: AppTextStyles.labelMedium(context),
                                     ),
                                     move: const MoveConfig(begin: Offset(0, 80))),
                               ),
@@ -228,8 +228,8 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                   addAnimation(
                                       widget: Text(
                                         'Make your clip yours',
-                                        style: AppTextStyles.headlineMedium(),
-                                      ),
+                                    style: AppTextStyles.headlineMedium(context),
+                                  ),
                                   move: const MoveConfig(begin: Offset(0, 60))),
 
                               // Step description
@@ -238,7 +238,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                 child: addAnimation(
                                     widget: Text(
                                       'Add a few quick details about your video - like a name and a short description - to keep everything organized.\nDon’t worry, SwishLab takes care of the rest and fills in the remaining info automatically.',
-                                      style: AppTextStyles.labelMedium(),
+                                      style: AppTextStyles.labelMedium(context),
                                     ),
                                     move: const MoveConfig(begin: Offset(0, 80))),
                               ),
@@ -301,8 +301,8 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                   addAnimation(
                                       widget: Text(
                                         'Processing your shot',
-                                        style: AppTextStyles.headlineMedium(),
-                                      ),
+                                    style: AppTextStyles.headlineMedium(context),
+                                  ),
                                   move: const MoveConfig(begin: Offset(0, 60))),
 
                               // Step title
@@ -311,7 +311,7 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                 child: addAnimation(
                                     widget: Text(
                                       'The magic is happening!\nThis is a perfect moment to breathe, stretch, or dive right into the rest of your training session while SwishLab works for you.',
-                                      style: AppTextStyles.labelMedium(),
+                                      style: AppTextStyles.labelMedium(context),
                                     ),
                                     move: const MoveConfig(begin: Offset(0, 80))),
                               ),
@@ -374,8 +374,8 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                               addAnimation(
                                   widget: Text(
                                               'Review your performance',
-                                              style: AppTextStyles.headlineMedium(),
-                                            ),
+                                    style: AppTextStyles.headlineMedium(context),
+                                  ),
                                   move: const MoveConfig(begin: Offset(0, 60))),
 
                               // Step description
@@ -384,8 +384,8 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                 child: addAnimation(
                                     widget: Text(
                                                 'Your breakdown is ready!\nExplore your performance data and read personalized feedback to help you sharpen your form and grow your game.\nStay consistent - every rep moves you forward!',
-                                                style: AppTextStyles.labelMedium(),
-                                              ),
+                                      style: AppTextStyles.labelMedium(context),
+                                    ),
                                     move: const MoveConfig(begin: Offset(0, 80))),
                               ),
 

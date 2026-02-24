@@ -123,8 +123,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                       child: Text('${appState.userData?.firstName} ${appState.userData?.lastName}',
                               // "null null" if data missing
                               textAlign: TextAlign.center,
-                              style: AppTextStyles.headlineSmall()),
-                      ),
+                          style: AppTextStyles.headlineSmall(context)),
+                    ),
 
                       // User email address
                       Padding(
@@ -138,8 +138,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                             },
                             child: Text(
                               appState.userData?.eMail ?? "user@email.com",
-                              style: AppTextStyles.labelSmall().copyWith(
-                                color: Colors
+                          style: AppTextStyles.labelSmall(context).copyWith(
+                            color: Colors
                                     .white, // required, actual color comes from shader
                               ),
                             ),
@@ -174,8 +174,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                 child: Text(
                                   'Latest Stats',
                                           textAlign: TextAlign.start,
-                                          style: AppTextStyles.headlineMedium(),
-                                        ),
+                                    style: AppTextStyles.headlineMedium(context),
+                                  ),
                                     ),
 
                                     // Expanded container to allow inner column to scroll on its own

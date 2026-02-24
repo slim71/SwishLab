@@ -127,8 +127,8 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                             Text(
                               'Welcome Back',
                                           textAlign: TextAlign.center,
-                                          style: AppTextStyles.displaySmall(),
-                                        ),
+                                style: AppTextStyles.displaySmall(context),
+                              ),
 
                                           // Text telling the user to insert their credential below
                                           Padding(
@@ -136,8 +136,8 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                               child: Text(
                                 'Insert credentials to login',
                                                 textAlign: TextAlign.center,
-                                                style: AppTextStyles.labelMedium(),
-                                              ),
+                                  style: AppTextStyles.labelMedium(context),
+                                ),
                                           ),
 
                                           // Email field
@@ -204,8 +204,8 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                               child: Text(
                                 'Or sign in with',
                                                 textAlign: TextAlign.center,
-                                                style: AppTextStyles.labelMedium(),
-                                              ),
+                                  style: AppTextStyles.labelMedium(context),
+                                ),
                                           ),
 
                                           // Google login button

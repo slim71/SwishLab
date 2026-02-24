@@ -56,6 +56,7 @@ class TransparentButton extends StatelessWidget {
                     Text(
                       text,
                       style: AppTextStyles.titleLarge(
+                        context,
                         color: appColors.transparentButtonTextColor,
                       ),
                     ),

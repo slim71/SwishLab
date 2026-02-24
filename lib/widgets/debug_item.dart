@@ -40,7 +40,7 @@ class DebugItem extends StatelessWidget {
                       Expanded(
                         child: Text(
                           title,
-                          style: AppTextStyles.bodyMedium(),
+                          style: AppTextStyles.bodyMedium(context),
                         ),
                       ),
 

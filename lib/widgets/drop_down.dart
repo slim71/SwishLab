@@ -45,7 +45,7 @@ class _DropdownState<T> extends State<Dropdown<T>> {
                     canvasColor: AppThemeManager.secondaryBackground,
                     // Default text style for menu items
                     dropdownMenuTheme: DropdownMenuThemeData(
-                      textStyle: AppTextStyles.bodyMedium(),
+                      textStyle: AppTextStyles.bodyMedium(context),
                     ),
                   ),
                   child: DropdownButtonFormField<T>(
@@ -54,7 +54,7 @@ class _DropdownState<T> extends State<Dropdown<T>> {
                         .map(
                           (opt) => DropdownMenuItem<T>(
                             value: opt,
-                            child: Text(opt.toString(), style: AppTextStyles.bodyMedium()),
+                            child: Text(opt.toString(), style: AppTextStyles.bodyMedium(context)),
                           ),
                         )
                         .toList(),
@@ -84,7 +84,7 @@ class _DropdownState<T> extends State<Dropdown<T>> {
                       color: AppThemeManager.secondaryText,
                       size: 24,
                     ),
-                    style: AppTextStyles.bodyMedium(),
+                    style: AppTextStyles.bodyMedium(context),
                     elevation: 10,
                   )));
         });

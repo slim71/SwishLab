@@ -175,7 +175,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                           padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
                           child: Text(
                             'Your information',
-                            style: AppTextStyles.headlineMedium(),
+                            style: AppTextStyles.headlineMedium(context),
                           ),
                         ),
                       ],
@@ -205,8 +205,8 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                         Text(
                                           'Valid First Name required',
                                               textAlign: TextAlign.end,
-                                              style: AppTextStyles.labelMedium(),
-                                            ),
+                                          style: AppTextStyles.labelMedium(context),
+                                        ),
                                       ],
                                     ),
                                   Row(
@@ -246,8 +246,8 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                         Text(
                                           'Valid Last Name required',
                                               textAlign: TextAlign.end,
-                                              style: AppTextStyles.labelMedium(),
-                                            ),
+                                          style: AppTextStyles.labelMedium(context),
+                                        ),
                                       ],
                                     ),
                                   Row(
@@ -286,8 +286,8 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                         Text(
                                           'Valid Email required',
                                               textAlign: TextAlign.end,
-                                              style: AppTextStyles.labelMedium(),
-                                            ),
+                                          style: AppTextStyles.labelMedium(context),
+                                        ),
                                       ],
                                     ),
                                   Row(
@@ -326,8 +326,8 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                         Text(
                                           'Please select a valid Shooting Hand',
                                               textAlign: TextAlign.end,
-                                              style: AppTextStyles.labelMedium(),
-                                            ),
+                                          style: AppTextStyles.labelMedium(context),
+                                        ),
                                       ],
                                     ),
                                   Row(

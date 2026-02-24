@@ -16,7 +16,7 @@ class CustomTextSpan extends TextSpan {
     super.recognizer,
     super.mouseCursor,
   }) : super(
-          style: (style ?? AppTextStyles.bodyMedium()).copyWith(
+          style: (style ?? AppTextStyles.bodyMedium(context)).copyWith(
             fontWeight: bold ? FontWeight.bold : null,
             fontStyle: italic ? FontStyle.italic : null,
             decoration: underline ? TextDecoration.underline : null,

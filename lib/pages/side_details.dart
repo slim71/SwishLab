@@ -182,8 +182,8 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                             blendMode: BlendMode.srcIn,
                                             child: Text(
                                               'Side view analysis',
-                                              style: AppTextStyles.displaySmall(),
-                                            ),
+                                  style: AppTextStyles.displaySmall(context),
+                                ),
                               ),
                               move: const MoveConfig(begin: Offset(0, 60)),
                             ),
@@ -198,7 +198,7 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                       child: addAnimation(
                         widget: Text(
                           'Take a video with the camera on either side.\nThis will analyze your body posture and flow when shooting.\nUseful to detect incorrect ball paths, flow ruptures, etc...',
-                                style: AppTextStyles.titleSmall(),
+                          style: AppTextStyles.titleSmall(context),
                         ),
                         move: const MoveConfig(begin: Offset(0, 120)),
                       ),

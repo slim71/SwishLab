@@ -53,7 +53,7 @@ class LightButton extends StatelessWidget {
                   if (icon != null) const SizedBox(width: 8),
                   Text(
                     text,
-                    style: AppTextStyles.titleLarge(color: appColors.lightButtonTextColor),
+                    style: AppTextStyles.titleLarge(context, color: appColors.lightButtonTextColor),
                   ),
                 ]),
               ));

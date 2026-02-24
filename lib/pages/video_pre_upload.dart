@@ -195,8 +195,8 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
                                                       // "Category" text
                                         Text(
                                           'Category',
-                                                          style: AppTextStyles.labelMedium(),
-                                                        ),
+                                            style: AppTextStyles.labelMedium(context),
+                                          ),
                                                       const SizedBox(height: 12),
 
                                                             // Label to differentiate the functionality chosen, which is

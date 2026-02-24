@@ -90,7 +90,7 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
                                         // Item title, always shown
                                         Text(
                                       widget.title,
-                                      style: AppTextStyles.bodyLarge(),
+                                      style: AppTextStyles.bodyLarge(context),
                                     ),
                                   ),
                                 ),
@@ -124,7 +124,7 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
                                       padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                       child: Text(
                                         widget.description,
-                                        style: AppTextStyles.labelMedium(),
+                                        style: AppTextStyles.labelMedium(context),
                                       ).animate(controller: _controller).fade(
                                             begin: 0,
                                             end: 1,

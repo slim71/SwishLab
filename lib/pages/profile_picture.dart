@@ -256,8 +256,8 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                       Text(
                         'Tap to select a picture',
                                       textAlign: TextAlign.center,
-                                      style: AppTextStyles.bodyMedium(),
-                                    ),
+                        style: AppTextStyles.bodyMedium(context),
+                      ),
                                 ],
                               ),
                             const SizedBox(height: 32),
@@ -287,8 +287,8 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                         // Simple text to guide picture selection
                               Text(
                                 'Select Image Source',
-                                            style: AppTextStyles.labelMedium(),
-                                          ),
+                                style: AppTextStyles.labelMedium(context),
+                              ),
                                         const SizedBox(height: 12),
 
                                               // Row containing selection options
@@ -353,8 +353,8 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                                 // Text to guide the URL insertion
                                 Text(
                                   'Enter Image URL',
-                                                    style: AppTextStyles.labelMedium(),
-                                                  ),
+                                    style: AppTextStyles.labelMedium(context),
+                                  ),
                                                 const SizedBox(height: 12),
 
                                                 // Field where to put the image URL

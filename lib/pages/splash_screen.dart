@@ -93,7 +93,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                   .fromSTEB(12, 0, 0, 0),
                                       child: Text(
                                         'Understand Your Form',
-                                                  style: AppTextStyles.headlineLarge(color: AppThemeManager.primaryBackground),
+                                        style: AppTextStyles.headlineLarge(context,
+                                            color: AppThemeManager.primaryBackground),
                                       ),
                                             ),
 
@@ -109,7 +110,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                               context: context,
                                               text:
                                                                   'Your personal AI coach helps you understand your shot. \nTrack your ',
-                                                              style: AppTextStyles.labelLarge(),
+                                              style: AppTextStyles.labelLarge(context),
                                               color: AppThemeManager.primaryBackground,
                                             ),
                                                             CustomTextSpan(
@@ -137,7 +138,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                               italic: true,
                                                             )
                                                           ],
-                                                          style: AppTextStyles.labelLarge(),
+                                          style: AppTextStyles.labelLarge(context),
                                           color: AppThemeManager.primaryBackground,
                                         ),
                                                       ),
@@ -180,7 +181,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                     padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                                       child: Text(
                                         'Keep It Straight',
-                                                        style: AppTextStyles.headlineLarge(color: AppThemeManager.primaryBackground),
+                                        style: AppTextStyles.headlineLarge(context,
+                                            color: AppThemeManager.primaryBackground),
                                       ),
                                                   ),
 
@@ -199,7 +201,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                       CustomTextSpan(
                                               context: context,
                                               text: 'Use the ',
-                                                        style: AppTextStyles.labelLarge(color: AppThemeManager.primaryBackground),
+                                              style: AppTextStyles.labelLarge(context,
+                                                  color: AppThemeManager.primaryBackground),
                                             ),
                                                       CustomTextSpan(
                                               context: context,
@@ -244,7 +247,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                         style: TextStyle(),
                                                       )
                                                     ],
-                                                    style: AppTextStyles.labelLarge(color: AppThemeManager.primaryBackground),
+                                          style: AppTextStyles.labelLarge(context,
+                                              color: AppThemeManager.primaryBackground),
                                         ),
                                                 ),
                                             ),
@@ -282,7 +286,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                   .fromSTEB(12, 0, 0, 0),
                                       child: Text(
                                         'Perfect the Flow',
-                                        style: AppTextStyles.headlineLarge(color: AppThemeManager.primaryBackground),
+                                        style: AppTextStyles.headlineLarge(context,
+                                            color: AppThemeManager.primaryBackground),
                                       ),
                                             ),
 
@@ -297,7 +302,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                             CustomTextSpan(
                                               context: context,
                                               text: 'See your shot in full motion. The ',
-                                                              style: AppTextStyles.labelLarge(color: AppThemeManager.primaryBackground),
+                                              style: AppTextStyles.labelLarge(context,
+                                                  color: AppThemeManager.primaryBackground),
                                             ),
                                                             CustomTextSpan(
                                               context: context,
@@ -356,7 +362,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                               ),
                                                             )
                                                           ],
-                                                          style: AppTextStyles.labelLarge(color: AppThemeManager.primaryBackground),
+                                          style: AppTextStyles.labelLarge(context,
+                                              color: AppThemeManager.primaryBackground),
                                         ),
                                                       ),
                                                   ),

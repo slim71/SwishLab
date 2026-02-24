@@ -199,8 +199,8 @@ class _CreditsState extends ConsumerState<Credits> {
                                                   child: Text(
                                                     creditsItem.author,
                                                     textAlign: TextAlign.center,
-                                                    style: AppTextStyles.titleSmall(),
-                                                  ),
+                                          style: AppTextStyles.titleSmall(context),
+                                        ),
                                                 ),
                                               ],
                                             ),

@@ -45,7 +45,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       toolbarHeight: height,
       title: Text(
         title,
-        style: AppTextStyles.displaySmall(color: appColors.primaryTwo),
+        style: AppTextStyles.displaySmall(context, color: appColors.primaryTwo),
       ),
       leading: _buildLeading(context),
       actions: _buildActions(context),

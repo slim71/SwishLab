@@ -1,6 +1,7 @@
 import 'package:SwishLab/constants.dart';
 import 'package:SwishLab/functions/add_animation.dart';
 import 'package:SwishLab/functions/load_json_remote_or_app_state.dart';
+import 'package:SwishLab/logger.dart';
 import 'package:SwishLab/state/app_state.dart';
 import 'package:SwishLab/styles/styles.dart';
 import 'package:SwishLab/styles/theme_manager.dart';
@@ -138,6 +139,8 @@ class _SettingsState extends ConsumerState<Settings>
 
   @override
   Widget build(BuildContext context) {
+    final logger = AppLogger.forClass(this);
+
     return Scaffold(
       backgroundColor: AppThemeManager.primaryBackground,
       appBar: MyAppBar(
@@ -207,8 +210,8 @@ class _SettingsState extends ConsumerState<Settings>
                                     SocialIconButton(
                                             icon: FontAwesomeIcons.twitter,
                                       onTap: () {
-                                        print('twitterButton pressed ...');
-                                      },
+                                  logger.d('twitterButton pressed ...');
+                                },
                                     ),
                                     const SizedBox(width: 8),
 
@@ -216,8 +219,8 @@ class _SettingsState extends ConsumerState<Settings>
                                           SocialIconButton(
                                             icon: FontAwesomeIcons.instagram,
                                             onTap: () {
-                                              print('instagramButton pressed ...');
-                                            },
+                                  logger.d('instagramButton pressed ...');
+                                },
                                           ),
                                           const SizedBox(width: 8),
 
@@ -225,8 +228,8 @@ class _SettingsState extends ConsumerState<Settings>
                                     SocialIconButton(
                                             icon: FontAwesomeIcons.facebookF,
                                       onTap: () {
-                                        print('facebookButton pressed ...');
-                                      },
+                                  logger.d('facebookButton pressed ...');
+                                },
                                     ),
                                   ],
                                 ),

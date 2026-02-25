@@ -1,4 +1,5 @@
 import 'package:SwishLab/constants.dart';
+import 'package:SwishLab/logger.dart';
 import 'package:SwishLab/models/statistics_row.dart';
 import 'package:SwishLab/models/users_row.dart';
 import 'package:SwishLab/providers/statistics_provider.dart';
@@ -33,6 +34,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final logger = AppLogger.forClass(this);
     final appState = ref.watch(appStateProvider);
     final hasShootingHand =
         (appState.userData?.shootingHand?.isNotEmpty ?? false);
@@ -68,8 +70,8 @@ class _HomePageState extends ConsumerState<HomePage> {
           title: 'Home',
           height: 100,
           onProfilePressed: () async {
-            print('Navigating...');
-            context.goNamed('profile');
+              logger.d('Navigating...');
+              context.goNamed('profile');
           },
           profileImageUrl:
               appState.userData?.profilePicture ?? kDefaultProfilePictureUrl,

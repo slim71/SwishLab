@@ -1,3 +1,4 @@
+import 'package:SwishLab/logger.dart';
 import 'package:SwishLab/styles/colors.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -11,6 +12,7 @@ class AppThemeManager extends ChangeNotifier {
 
   static AppColorSet currentColors = theBay;
   static AppBrightness brightness = AppBrightness.system;
+  static final logger = AppLogger.scope('AppThemeManager');
 
   // Used by Widgetbook / app root to rebuild
   static final ValueNotifier<int> notifier = ValueNotifier(0);
@@ -21,14 +23,14 @@ class AppThemeManager extends ChangeNotifier {
 
   static void setBrightness(AppBrightness newBrightness) {
     if (brightness == newBrightness) return; // prevents useless rebuilds
-    print("setting brightness to $newBrightness");
+    logger.d("setting brightness to $newBrightness");
     brightness = newBrightness;
     _notify();
   }
 
   static void setColors(AppColorSet newColors) {
     if (currentColors == newColors) return; // prevents useless rebuilds
-    print("setting colors to $newColors");
+    logger.d("setting colors to $newColors");
     currentColors = newColors;
     _notify();
   }

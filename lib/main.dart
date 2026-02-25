@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'app.dart';
+import 'logger.dart';
 
 class Root extends StatelessWidget {
   const Root({super.key});
@@ -22,6 +23,8 @@ class Root extends StatelessWidget {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await AppLogger.init();
 
   // Initialize Supabase connection
   await Supabase.initialize(

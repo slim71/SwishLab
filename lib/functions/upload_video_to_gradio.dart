@@ -2,8 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:SwishLab/constants.dart';
+import 'package:SwishLab/logger.dart';
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
+
+final uploadLogger = AppLogger.scope('Credits');
 
 /// Upload the supplied video to Gradio.
 ///
@@ -49,8 +52,8 @@ Future<String?> uploadVideoToGradio(File videoFile) async {
     } else {
       throw Exception("Upload failed: ${response.statusCode}");
     }
-  } catch (e) {
-    print("Error uploading video: $e");
+  } catch (e, stack) {
+    uploadLogger.e("Error uploading video", error: e, stackTrace: stack);
     return null;
   }
 }

@@ -1,9 +1,12 @@
 import 'dart:convert';
 
 import 'package:SwishLab/constants.dart';
+import 'package:SwishLab/logger.dart';
 import 'package:SwishLab/models/credit_item.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
+
+final creditsLogger = AppLogger.scope('Credits');
 
 /// Loads a JSON array of credits from local assets or remote Supabase
 /// storage.
@@ -16,9 +19,9 @@ Future<List<Credit>> loadCredits() async {
   // Try local first
   try {
     jsonString = await rootBundle.loadString(localPath);
-    if (jsonString.isNotEmpty) print('Loaded local credits.json');
+    if (jsonString.isNotEmpty) creditsLogger.i('Loaded local credits.json');
   } catch (e) {
-    print('Local JSON not found, falling back to remote: $e');
+    creditsLogger.d('Local JSON not found, falling back to remote');
   }
 
   // Try remote if local not available
@@ -27,27 +30,29 @@ Future<List<Credit>> loadCredits() async {
       final response = await http.get(Uri.parse(remoteUrl));
       if (response.statusCode == 200 && response.body.isNotEmpty) {
         jsonString = response.body;
-        print('Loaded remote credits.json');
+        creditsLogger.i('Loaded remote credits.json');
       } else {
-        print('Failed to load remote credits.json: ${response.statusCode}');
+        creditsLogger.w('Failed to load remote credits.json: ${response.statusCode}');
       }
-    } catch (e) {
-      print('Error fetching remote JSON: $e');
+    } catch (e, stack) {
+      creditsLogger.e('Error fetching remote JSON', error: e, stackTrace: stack);
     }
   }
 
+  // Check content
   if (jsonString == null || jsonString.isEmpty) {
-    print('No JSON data found');
+    creditsLogger.w('No JSON data found');
     return [];
   }
 
+  // Parse content
   try {
     final List<dynamic> data = json.decode(jsonString) as List<dynamic>;
-    print('Parsed ${data.length} credit entries');
+    creditsLogger.i('Parsed ${data.length} credit entries');
 
     return data.cast<Map<String, dynamic>>().map((json) => Credit.fromJson(json)).toList();
-  } catch (e) {
-    print('Failed to parse JSON: $e');
+  } catch (e, stack) {
+    creditsLogger.e('Failed to parse credits JSON', error: e, stackTrace: stack);
     return [];
   }
 }

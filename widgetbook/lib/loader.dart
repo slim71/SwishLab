@@ -34,10 +34,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+// TODO: check appearance in the real app: here it shows a square background on its own
 @widgetbook.UseCase(name: 'IconActionButton', type: IconActionButton)
 Widget buildIconActionButton(BuildContext context) {
   return IconActionButton(
-      borderColor: Colors.transparent,
       borderRadius: 30,
       borderWidth: 1,
       size: 50,
@@ -110,7 +110,7 @@ Widget buildText(BuildContext context) {
 
 @widgetbook.UseCase(name: 'CustomTextSpan', type: CustomTextSpan)
 Widget buildCustomTextSpan(BuildContext context) {
-  return RichText(text: CustomTextSpan(context: context, text: 'Sample', style: TextStyle(height: 2)));
+  return RichText(text: CustomTextSpan(context, text: 'Sample', style: TextStyle(height: 2)));
 }
 
 @widgetbook.UseCase(name: 'InputField', type: InputField)
@@ -126,6 +126,7 @@ Widget buildVideoPreview(BuildContext context) {
   );
 }
 
+// TODO: check appearance in the real app: here it shows a square background on its own
 @widgetbook.UseCase(name: 'DynamicIconImage', type: DynamicIconImage)
 Widget buildDynamicIconImage(BuildContext context) {
   return DynamicIconImage(width: 25, height: 25, imageName: 'default_icon');

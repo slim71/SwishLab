@@ -3,8 +3,8 @@ import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextSpan extends TextSpan {
-  CustomTextSpan({
-    required BuildContext context,
+  CustomTextSpan(
+    BuildContext context, {
     super.text,
     bool bold = false,
     bool italic = false,

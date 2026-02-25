@@ -149,7 +149,7 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                             icon: Icon(
                                               Icons.email,
                                               size: 30,
-                                            ), // TODO: what about the size?
+                                    ),
                                   ),
                                   move: const MoveConfig(begin: Offset(0, 110)),
                                 ),

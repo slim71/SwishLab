@@ -72,11 +72,11 @@ class _DropdownState<T> extends State<Dropdown<T>> {
                       contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: appColors.altContBorders, width: 2),
+                        borderSide: BorderSide(color: appColors.dropDownBorders, width: 2),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: appColors.altContBorders, width: 2),
+                        borderSide: BorderSide(color: appColors.dropDownBorders, width: 2),
                       ),
                     ),
                     icon: Icon(

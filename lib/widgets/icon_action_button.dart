@@ -8,7 +8,6 @@ class IconActionButton extends StatelessWidget {
   final double iconSize;
   final double borderRadius;
   final double borderWidth;
-  final Color borderColor;
   final Color? iconColor;
   final Color backgroundColor;
   final EdgeInsetsGeometry? padding;
@@ -24,7 +23,6 @@ class IconActionButton extends StatelessWidget {
     this.iconSize = 30,
     this.borderRadius = 30,
     this.borderWidth = 1,
-    this.borderColor = Colors.transparent,
     this.shape = BoxShape.circle,
     this.iconColor,
     this.backgroundColor = Colors.transparent,
@@ -38,9 +36,9 @@ class IconActionButton extends StatelessWidget {
     return ValueListenableBuilder(
         valueListenable: AppThemeManager.notifier,
         builder: (_, __, ___) {
+          final appColors = AppThemeManager.currentColors;
+
           return Container(
-              color: Colors.transparent,
-              child: Container(
                 width: size,
                 height: size,
                 decoration: BoxDecoration(
@@ -48,8 +46,8 @@ class IconActionButton extends StatelessWidget {
                   shape: shape,
                   border: wrapped
                       ? Border.all(
-                          color: borderColor,
-                          width: borderWidth,
+                      color: appColors.actionButtonBorders,
+                      width: borderWidth,
                         )
                       : null,
                 ),
@@ -62,7 +60,7 @@ class IconActionButton extends StatelessWidget {
                   alignment: alignment,
                   splashRadius: size / 2,
                 ),
-              ));
+          );
         });
   }
 }

@@ -215,20 +215,24 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup>
                                                         MediaQuery.of(context)
                                                             .textScaler,
                                                     text: CustomTextSpan(
-                                                      children: [
+                                              context,
+                                              children: [
                                                         CustomTextSpan(
-                                                          text: 'Navigate to ',
+                                                  context,
+                                                  text: 'Navigate to ',
                                                   style: AppTextStyles.labelMedium(context),
                                                   color: AppThemeManager.secondaryText,
                                                 ),
                                                         CustomTextSpan(
-                                                          text: 'Settings > User Info',
+                                                  context,
+                                                  text: 'Settings > User Info',
                                                   color: AppThemeManager.secondaryText,
                                                   bold: true,
                                                           italic: true,
                                                         ),
                                                         CustomTextSpan(
-                                                          text: ' page to customize your profile',
+                                                  context,
+                                                  text: ' page to customize your profile',
                                                   color: AppThemeManager.secondaryText,
                                                 )
                                                       ],

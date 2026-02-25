@@ -35,7 +35,7 @@ class SingleChoiceChip extends StatelessWidget {
                       Icon(
                         icon,
                         size: 16,
-                        color: selected ? appColors.labelSelectedIconColor : appColors.labelUnselectedIconColor,
+                        color: selected ? AppThemeManager.primaryText : AppThemeManager.secondaryText,
                       ),
                       const SizedBox(width: 6),
                     ],

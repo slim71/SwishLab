@@ -23,7 +23,6 @@ class DynamicIconImage extends StatelessWidget {
     final assetPath = 'assets/icons/$_normalized.png';
     final defaultPath = 'assets/icons/default_icon.png';
 
-    // TODO: maybe add network fallback if dynamic in the future
     return ValueListenableBuilder(
         valueListenable: AppThemeManager.notifier,
         builder: (_, __, ___) {

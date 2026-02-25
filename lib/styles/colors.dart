@@ -45,21 +45,11 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
   final Color lightButtonTextColor;
   final Color transparentButtonTextColor;
   final Color actionButtonBorders;
-  final Color actionButtonBackground;
-  final Color actionButtonIconColor;
   final Color textFieldBorders;
-  final Color textFieldBackground;
-  final Color textFieldText;
-  final Color textFieldLabelText;
   final Color dropDownBorders;
-  final Color dropDownBackground;
-  final Color dropDownIconColor;
-  final Color dropDownTextColor;
   final Color labelSelectedBackground;
-  final Color labelSelectedIconColor;
   final Color labelSelectedBorders;
   final Color labelUnselectedBackground;
-  final Color labelUnselectedIconColor;
   final Color labelUnselectedBorders;
   final Color containersBorders;
   final Color altContBorders;
@@ -85,21 +75,11 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
     required this.lightButtonTextColor,
     required this.transparentButtonTextColor,
     required this.actionButtonBorders,
-    required this.actionButtonBackground,
-    required this.actionButtonIconColor,
     required this.textFieldBorders,
-    required this.textFieldBackground,
-    required this.textFieldText,
-    required this.textFieldLabelText,
     required this.dropDownBorders,
-    required this.dropDownBackground,
-    required this.dropDownIconColor,
-    required this.dropDownTextColor,
     required this.labelSelectedBackground,
-    required this.labelSelectedIconColor,
     required this.labelSelectedBorders,
     required this.labelUnselectedBackground,
-    required this.labelUnselectedIconColor,
     required this.labelUnselectedBorders,
     required this.containersBorders,
     required this.altContBorders,
@@ -231,21 +211,11 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
       lightButtonTextColor: lightBtnText ?? lightButtonTextColor,
       transparentButtonTextColor: transpBtnText ?? transparentButtonTextColor,
       actionButtonBorders: actionBtnBorders ?? actionButtonBorders,
-      actionButtonBackground: actionBtnBackground ?? actionButtonBackground,
-      actionButtonIconColor: actionBtnIcon ?? actionButtonIconColor,
       textFieldBorders: textBorders ?? textFieldBorders,
-      textFieldBackground: textBackground ?? textFieldBackground,
-      textFieldText: textColor ?? textFieldText,
-      textFieldLabelText: textLabel ?? textFieldLabelText,
       dropDownBorders: ddBorders ?? dropDownBorders,
-      dropDownBackground: ddBkg ?? dropDownBackground,
-      dropDownIconColor: ddIcon ?? dropDownIconColor,
-      dropDownTextColor: ddText ?? dropDownTextColor,
       labelSelectedBackground: labelSelBkg ?? labelSelectedBackground,
-      labelSelectedIconColor: labelSelIcon ?? labelSelectedIconColor,
       labelSelectedBorders: labelSelBorders ?? labelSelectedBorders,
       labelUnselectedBackground: labelUnselBkg ?? labelUnselectedBackground,
-      labelUnselectedIconColor: labelUnselIcon ?? labelUnselectedIconColor,
       labelUnselectedBorders: labelUnselBorders ?? labelUnselectedBorders,
       containersBorders: contBorders ?? containersBorders,
       altContBorders: contAltBorders ?? altContBorders,
@@ -287,34 +257,15 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
           transparentButtonTextColor, other.transparentButtonTextColor, t)!,
       actionButtonBorders:
           Color.lerp(actionButtonBorders, other.actionButtonBorders, t)!,
-      actionButtonBackground:
-          Color.lerp(actionButtonBackground, other.actionButtonBackground, t)!,
-      actionButtonIconColor:
-          Color.lerp(actionButtonIconColor, other.actionButtonIconColor, t)!,
       textFieldBorders:
           Color.lerp(textFieldBorders, other.textFieldBorders, t)!,
-      textFieldBackground:
-          Color.lerp(textFieldBackground, other.textFieldBackground, t)!,
-      textFieldText: Color.lerp(textFieldText, other.textFieldText, t)!,
-      textFieldLabelText:
-          Color.lerp(textFieldLabelText, other.textFieldLabelText, t)!,
       dropDownBorders: Color.lerp(dropDownBorders, other.dropDownBorders, t)!,
-      dropDownBackground:
-          Color.lerp(dropDownBackground, other.dropDownBackground, t)!,
-      dropDownIconColor:
-          Color.lerp(dropDownIconColor, other.dropDownIconColor, t)!,
-      dropDownTextColor:
-          Color.lerp(dropDownTextColor, other.dropDownTextColor, t)!,
       labelSelectedBackground: Color.lerp(
           labelSelectedBackground, other.labelSelectedBackground, t)!,
-      labelSelectedIconColor:
-          Color.lerp(labelSelectedIconColor, other.labelSelectedIconColor, t)!,
       labelSelectedBorders:
           Color.lerp(labelSelectedBorders, other.labelSelectedBorders, t)!,
       labelUnselectedBackground: Color.lerp(
           labelUnselectedBackground, other.labelUnselectedBackground, t)!,
-      labelUnselectedIconColor: Color.lerp(
-          labelUnselectedIconColor, other.labelUnselectedIconColor, t)!,
       labelUnselectedBorders:
           Color.lerp(labelUnselectedBorders, other.labelUnselectedBorders, t)!,
       containersBorders:
@@ -326,7 +277,6 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
 
 const theBay = AppColorSet(
     name: "theBay",
-    // TODO: might need to be changed
     primaryOne: royalBlue,
     primaryTwo: goldenYellow,
     primaryThree: white,
@@ -346,26 +296,14 @@ const theBay = AppColorSet(
     lightButtonTextColor: white,
     transparentButtonTextColor: oxfordBlue,
     actionButtonBorders: persianRed,
-    actionButtonBackground: secondaryBackgroundDark,
-    actionButtonIconColor: primaryTextDark,
     textFieldBorders: marianBlue,
-    textFieldBackground: secondaryBackgroundDark,
-    // TODO: dynamic with brightness?
-    textFieldText: primaryTextDark,
-    textFieldLabelText: secondaryTextDark,
     dropDownBorders: marianBlue,
-    dropDownBackground: secondaryBackgroundDark,
-    dropDownIconColor: secondaryTextDark,
-    dropDownTextColor: primaryTextDark,
     labelSelectedBackground: pictonBlue,
-    labelSelectedIconColor: primaryTextDark,
     labelSelectedBorders: persianRed,
     labelUnselectedBackground: oxfordBlue,
-    labelUnselectedIconColor: secondaryTextDark,
     labelUnselectedBorders: airForceBlue,
     containersBorders: persianRed,
     altContBorders: pictonBlue // or airForceBlue
-    // TODO: specific AppBar colors?
     );
 
 const List<AppColorSet> themeList = [theBay];

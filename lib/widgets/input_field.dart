@@ -59,7 +59,7 @@ class _InputField extends State<InputField> {
                 autofillHints: widget.autofillHints,
                 textCapitalization: widget.textCapitalization,
                 obscureText: widget.obscureText && !_isVisible,
-                style: AppTextStyles.bodyLarge(context, color: appColors.textFieldText),
+                style: AppTextStyles.bodyLarge(context, color: AppThemeManager.primaryText),
                 validator: widget.validator,
                 enableSuggestions: !widget.obscureText,
                 autocorrect: !widget.obscureText,
@@ -72,10 +72,9 @@ class _InputField extends State<InputField> {
                 ],
                 decoration: InputDecoration(
                   labelText: widget.label,
-                  labelStyle: AppTextStyles.labelLarge(context, color: appColors.textFieldLabelText),
+                  labelStyle: AppTextStyles.labelLarge(context, color: AppThemeManager.secondaryText),
                   filled: true,
                   fillColor: AppThemeManager.primaryBackground,
-                  // appColors.textFieldBackground,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                     borderSide: BorderSide(
@@ -114,7 +113,7 @@ class _InputField extends State<InputField> {
                           focusNode: FocusNode(skipTraversal: true),
                           child: Icon(
                             _isVisible ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                            color: appColors.textFieldLabelText.withAlpha(0xCC), // ~80% opacity
+                            color: AppThemeManager.secondaryText.withAlpha(0xCC), // ~80% opacity
                             size: 22,
                           ),
                         )

@@ -375,12 +375,15 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                                       child: RichText(
                                                         textScaler: MediaQuery.of(context).textScaler,
                                                         text: CustomTextSpan(
-                                                          children: [
+                                              context,
+                                              children: [
                                                             CustomTextSpan(
-                                                              text: 'Already have an account?  ',
+                                                  context,
+                                                  text: 'Already have an account?  ',
                                                             ),
                                                             CustomTextSpan(
-                                                              text: 'Login here',
+                                                  context,
+                                                  text: 'Login here',
                                                             )
                                                           ],
                                                         ),

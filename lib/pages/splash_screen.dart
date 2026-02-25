@@ -104,35 +104,35 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                       child: RichText(
                                         textScaler: MediaQuery.of(context).textScaler,
                                                         text: CustomTextSpan(
-                                          context: context,
+                                          context,
                                           children: [
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text:
                                                                   'Your personal AI coach helps you understand your shot. \nTrack your ',
                                               style: AppTextStyles.labelLarge(context),
                                               color: AppThemeManager.primaryBackground,
                                             ),
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: 'form, ball path,',
                                                               italic: true,
                                                             ),
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: ' and ',
                                                             ),
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: 'movement ',
                                                               italic: true,
                                                             ),
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: 'to get simple, actionable insights that make ',
                                                             ),
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: 'every rep count.',
                                                               bold: true,
                                                               italic: true,
@@ -196,16 +196,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                       .of(context)
                                                       .textScaler,
                                                   text: CustomTextSpan(
-                                          context: context,
+                                          context,
                                           children: [
                                                       CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: 'Use the ',
                                               style: AppTextStyles.labelLarge(context,
                                                   color: AppThemeManager.primaryBackground),
                                             ),
                                                       CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: 'front view ',
                                                         style: TextStyle(
                                                           fontWeight:
@@ -213,13 +213,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                         ),
                                                       ),
                                                       CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text:
                                                         'to keep your shot straight and balanced. Spot',
                                                         style: TextStyle(),
                                                       ),
                                                       CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text:
                                                         ' side drift, arm flare',
                                                         style: TextStyle(
@@ -228,12 +228,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                         ),
                                                       ),
                                                       CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: ', or ',
                                                         style: TextStyle(),
                                                       ),
                                                       CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: '“chicken wing” ',
                                                         style: TextStyle(
                                                           fontStyle:
@@ -241,7 +241,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                         ),
                                                       ),
                                                       CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text:
                                                         'motion, and build a clean, consistent shooting line every time.',
                                                         style: TextStyle(),
@@ -297,16 +297,16 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                       child: RichText(
                                         textScaler: MediaQuery.of(context).textScaler,
                                                         text: CustomTextSpan(
-                                          context: context,
+                                          context,
                                           children: [
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: 'See your shot in full motion. The ',
                                               style: AppTextStyles.labelLarge(context,
                                                   color: AppThemeManager.primaryBackground),
                                             ),
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: 'side view',
                                                               style: TextStyle(
                                                                 fontWeight: FontWeight.bold,
@@ -314,48 +314,48 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                               ),
                                                             ),
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: ' shows ',
                                                               style: TextStyle(),
                                                             ),
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: 'how close',
                                                               style: TextStyle(
                                                                 fontStyle: FontStyle.italic,
                                                               ),
                                                             ),
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: ' the ball stays to your body, your ',
                                                               style: TextStyle(),
                                                             ),
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: 'set ',
                                                               style: TextStyle(
                                                                 fontStyle: FontStyle.italic,
                                                               ),
                                                             ),
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: 'and ',
                                                               style: TextStyle(),
                                                             ),
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: 'release points',
                                                               style: TextStyle(
                                                                 fontStyle: FontStyle.italic,
                                                               ),
                                                             ),
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: ', and whether your shot follows a ',
                                                               style: TextStyle(),
                                                             ),
                                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: 'smooth forward path.',
                                                               style: TextStyle(
                                                                 fontStyle: FontStyle.italic,

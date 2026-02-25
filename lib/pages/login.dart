@@ -234,12 +234,15 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                                 child: RichText(
                                                   textScaler: MediaQuery.of(context).textScaler,
                                                   text: CustomTextSpan(
-                                                    children: [
+                                      context,
+                                      children: [
                                                       CustomTextSpan(
-                                                        text: 'Don\'t have an account?  ',
+                                          context,
+                                          text: 'Don\'t have an account?  ',
                                                       ),
                                                       CustomTextSpan(
-                                                        text: 'Sign Up',
+                                          context,
+                                          text: 'Sign Up',
                                                       )
                                                     ],
                                                   ),

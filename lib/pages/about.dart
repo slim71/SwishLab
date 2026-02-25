@@ -213,23 +213,22 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                 child: RichText(
                                   textScaler: MediaQuery.of(context).textScaler,
                                     text: CustomTextSpan(
-                                      context: context,
+                                      context,
                                       children: [
                                         CustomTextSpan(
-                                          context: context,
+                                          context,
                                           text: 'Hi, I’m Simone.\n',
                                       ),
                                         CustomTextSpan(
-                                          context: context,
+                                          context,
                                           text:
                                             'I’m a software engineer with a background in robotics, automation, and programming — and someone who',
                                       ),
-                                        CustomTextSpan(
-                                            context: context,
+                                        CustomTextSpan(context,
                                             text: ' has always loved building things. ',
                                             italic: true),
                                         CustomTextSpan(
-                                          context: context,
+                                          context,
                                           text:
                                             'Over the years I’ve worked on all kinds of personal projects, from drones to 3D printers, and this app is simply the latest creation that grew from that same curiosity.\n\nI’ve also been wanting to give something back to the community for a while. Working on an open-source project felt like the right way to do that — something useful, but also something personal.',
                                       )
@@ -325,20 +324,19 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                       textScaler:
                                           MediaQuery.of(context).textScaler,
                                         text: CustomTextSpan(
-                                          context: context,
+                                          context,
                                           children: [
                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text:
                                                 'I was never a professional player, but I did reach some moments I’m still proud of, like being selected for the ',
                                           ),
-                                            CustomTextSpan(
-                                                context: context,
+                                            CustomTextSpan(context,
                                                 text: 'All-Star Toscana game',
                                                 italic: true,
                                                 bold: true),
                                             CustomTextSpan(
-                                              context: context,
+                                              context,
                                               text: ' when I was 14.',
                                           )
                                         ],
@@ -398,15 +396,15 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                 child: RichText(
                                   textScaler: MediaQuery.of(context).textScaler,
                                   text: CustomTextSpan(
-                                      context: context,
+                                      context,
                                       children: [
                                       CustomTextSpan(
-                                          context: context,
+                                          context,
                                           text:
                                             'Over the last couple of years, I’ve been trying to return to the form I had in my younger days… or maybe even better. I also joined the  ',
                                       ),
                                       CustomTextSpan(
-                                          context: context,
+                                          context,
                                           text: 'r/BasketballTips community on Reddit, ',
                                           bold: true,
                                         underline: true,
@@ -418,7 +416,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                           },
                                       ),
                                       CustomTextSpan(
-                                          context: context,
+                                          context,
                                           text:
                                             'where I saw many people asking for feedback on their shooting form, footwork, and general technique.',
                                       )
@@ -442,16 +440,16 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                   child: RichText(
                                       textScaler: MediaQuery.of(context).textScaler,
                                       text: CustomTextSpan(
-                                        context: context,
+                                        context,
                                         children: [
                                         CustomTextSpan(
-                                            context: context,
+                                            context,
                                             text:
                                               'That’s when the idea for this app started to form: ',
                                             style: AppTextStyles.bodyMedium(context),
                                           ),
                                         CustomTextSpan(
-                                            context: context,
+                                            context,
                                             text:
                                               'a simple tool to help people understand their movement and improve, even if they don’t have a coach watching them all the time.',
                                           style: TextStyle(
@@ -460,13 +458,13 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                           ),
                                         ),
                                         CustomTextSpan(
-                                            context: context,
+                                            context,
                                             text:
                                               '\n\nThis project is my way of combining the things I care about — technology, learning, and basketball — and hopefully',
                                           style: TextStyle(),
                                         ),
                                         CustomTextSpan(
-                                            context: context,
+                                            context,
                                             text:
                                               ' making something that can help others along the way.',
                                           style: TextStyle(

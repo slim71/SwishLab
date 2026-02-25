@@ -82,45 +82,45 @@ class _CreditsState extends ConsumerState<Credits> {
                           child: RichText(
                             textScaler: MediaQuery.of(context).textScaler,
                                           text: CustomTextSpan(
-                              context: context,
+                              context,
                               children: [
                                               CustomTextSpan(
-                                  context: context,
+                                  context,
                                   text:
                                                     'This project uses a mix of freely available icons, illustrations, and animations created by ',
                                               ),
                                               CustomTextSpan(
-                                  context: context,
+                                  context,
                                   text: 'amazing designers and developers around the world.\n\n',
                                               ),
                                               CustomTextSpan(
-                                  context: context,
+                                  context,
                                   text: 'I’ve done my best to give ',
                                               ),
                                               CustomTextSpan(
-                                  context: context,
+                                  context,
                                   text: 'proper credit',
                                               ),
                                               CustomTextSpan(
-                                  context: context,
+                                  context,
                                   text:
                                                     ' to everyone whose work helped bring this project to life. You can',
                                               ),
                                               CustomTextSpan(
-                                  context: context,
+                                  context,
                                   text: ' click on any item ',
                                               ),
                                               CustomTextSpan(
-                                  context: context,
+                                  context,
                                   text: 'to visit the author\'s page.\n\n',
                                               ),
                                               CustomTextSpan(
-                                  context: context,
+                                  context,
                                   text:
                                                     'If I’ve missed anyone or got something wrong, please let me know - ',
                                               ),
                                               CustomTextSpan(
-                                  context: context,
+                                  context,
                                   text: 'any correction or contribution is always appreciated!',
                                               )
                                             ],

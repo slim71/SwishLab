@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-import 'package:SwishLab/constants.dart';
-import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
-import 'package:SwishLab/widgets/app_bar.dart';
-import 'package:SwishLab/widgets/background.dart';
-import 'package:SwishLab/widgets/debug_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:swish_lab/constants.dart';
+import 'package:swish_lab/state/app_state.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/widgets/app_bar.dart';
+import 'package:swish_lab/widgets/background.dart';
+import 'package:swish_lab/widgets/debug_item.dart';
 
 /// Page with debug utilities
 class DebugUtilities extends ConsumerStatefulWidget {

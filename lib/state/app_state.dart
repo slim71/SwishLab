@@ -1,6 +1,6 @@
-import 'package:SwishLab/models/credit_item.dart';
-import 'package:SwishLab/models/user_row_data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:swish_lab/models/credit_item.dart';
+import 'package:swish_lab/models/user_row_data.dart';
 
 class AppState {
   // Riverpod requires immutable states

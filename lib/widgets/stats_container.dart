@@ -1,8 +1,8 @@
-import 'package:SwishLab/functions/add_animation.dart';
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
-import 'package:SwishLab/widgets/dynamic_icon_image.dart';
 import 'package:flutter/material.dart';
+import 'package:swish_lab/functions/add_animation.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/widgets/dynamic_icon_image.dart';
 
 class StatsContainer extends StatelessWidget {
   final Color borderColor;

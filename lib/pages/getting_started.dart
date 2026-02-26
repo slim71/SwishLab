@@ -1,13 +1,13 @@
-import 'package:SwishLab/functions/add_animation.dart';
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
-import 'package:SwishLab/widgets/app_bar.dart';
-import 'package:SwishLab/widgets/background.dart';
-import 'package:SwishLab/widgets/dark_button.dart';
-import 'package:SwishLab/widgets/icon_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart' as smooth_page_indicator;
+import 'package:swish_lab/functions/add_animation.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/widgets/app_bar.dart';
+import 'package:swish_lab/widgets/background.dart';
+import 'package:swish_lab/widgets/dark_button.dart';
+import 'package:swish_lab/widgets/icon_action_button.dart';
 
 /// Page to help the user understand how the system works
 class GettingStartedPage extends StatefulWidget {
@@ -107,7 +107,6 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                     // Next button
                                     addAnimation(
                                         widget: IconActionButton(
-                                          borderColor: Colors.transparent,
                                           borderRadius: 30,
                                           borderWidth: 1,
                                           icon: Icons.navigate_next_rounded,
@@ -180,7 +179,6 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                         // Next button
                                         addAnimation(
                                             widget: IconActionButton(
-                                              borderColor: Colors.transparent,
                                               borderRadius: 30,
                                               borderWidth: 1,
                                               icon: Icons.navigate_next_rounded,
@@ -253,7 +251,6 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                         // Next button
                                         addAnimation(
                                             widget: IconActionButton(
-                                              borderColor: Colors.transparent,
                                               borderRadius: 30,
                                               borderWidth: 1,
                                               icon: Icons.navigate_next_rounded,
@@ -326,7 +323,6 @@ class _GettingStartedPageState extends State<GettingStartedPage> with TickerProv
                                         // Next button
                                         addAnimation(
                                             widget: IconActionButton(
-                                              borderColor: Colors.transparent,
                                               borderRadius: 30,
                                               borderWidth: 1,
                                               icon: Icons.navigate_next_rounded,

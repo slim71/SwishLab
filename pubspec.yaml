@@ -1,6 +1,6 @@
 # declares package dependencies, assets, fonts, environment SDK constraints, and dev tools.
 
-name: SwishLab
+name: swish_lab
 description: Manual migration from FlutterFlow
 publish_to: "none"
 version: 1.0.0+1

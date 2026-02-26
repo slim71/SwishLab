@@ -1,13 +1,13 @@
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
-import 'package:SwishLab/widgets/background.dart';
-import 'package:SwishLab/widgets/custom_text_span.dart';
-import 'package:SwishLab/widgets/dark_button.dart';
-import 'package:SwishLab/widgets/light_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart' as smooth_page_indicator;
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/widgets/background.dart';
+import 'package:swish_lab/widgets/custom_text_span.dart';
+import 'package:swish_lab/widgets/dark_button.dart';
+import 'package:swish_lab/widgets/light_button.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});

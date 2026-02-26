@@ -1,20 +1,20 @@
-import 'package:SwishLab/functions/add_animation.dart';
-import 'package:SwishLab/models/users_row.dart';
-import 'package:SwishLab/providers/auth_providers.dart';
-import 'package:SwishLab/providers/users_provider.dart';
-import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/widgets/background.dart';
-import 'package:SwishLab/widgets/box_with_shadow.dart';
-import 'package:SwishLab/widgets/custom_text_span.dart';
-import 'package:SwishLab/widgets/dark_button.dart';
-import 'package:SwishLab/widgets/input_field.dart';
-import 'package:SwishLab/widgets/light_button.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:swish_lab/functions/add_animation.dart';
+import 'package:swish_lab/models/users_row.dart';
+import 'package:swish_lab/providers/auth_providers.dart';
+import 'package:swish_lab/providers/users_provider.dart';
+import 'package:swish_lab/state/app_state.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/widgets/background.dart';
+import 'package:swish_lab/widgets/box_with_shadow.dart';
+import 'package:swish_lab/widgets/custom_text_span.dart';
+import 'package:swish_lab/widgets/dark_button.dart';
+import 'package:swish_lab/widgets/input_field.dart';
+import 'package:swish_lab/widgets/light_button.dart';
 
 /// Page to create a new account
 class SignupPage extends ConsumerStatefulWidget {

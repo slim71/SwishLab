@@ -1,5 +1,5 @@
-import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
 
 /// Widget to display an icon from local assets.
 /// Falls back to a default icon if the requested one is missing.

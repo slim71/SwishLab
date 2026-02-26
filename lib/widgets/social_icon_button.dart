@@ -1,6 +1,6 @@
-import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
 
 class SocialIconButton extends StatelessWidget {
   final IconData icon;

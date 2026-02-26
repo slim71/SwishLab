@@ -1,7 +1,7 @@
-import 'package:SwishLab/providers/session_bootstrap.dart';
-import 'package:SwishLab/widgets/nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:swish_lab/providers/session_bootstrap.dart';
+import 'package:swish_lab/widgets/nav_bar.dart';
 
 class NavBarScaffold extends ConsumerWidget {
   final Widget child;

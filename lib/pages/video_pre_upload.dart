@@ -1,25 +1,25 @@
 import 'dart:io';
 
-import 'package:SwishLab/functions/add_animation.dart';
-import 'package:SwishLab/functions/upload_video_to_gradio.dart';
-import 'package:SwishLab/models/analysis_response.dart';
-import 'package:SwishLab/models/custom_enums.dart';
-import 'package:SwishLab/models/results_response.dart';
-import 'package:SwishLab/models/statistics_row.dart';
-import 'package:SwishLab/models/video_source.dart';
-import 'package:SwishLab/providers/shooting_analysis_provider.dart';
-import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/widgets/app_bar.dart';
-import 'package:SwishLab/widgets/background.dart';
-import 'package:SwishLab/widgets/choice_chips_group.dart';
-import 'package:SwishLab/widgets/dark_button.dart';
-import 'package:SwishLab/widgets/input_field.dart';
-import 'package:SwishLab/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:swish_lab/functions/add_animation.dart';
+import 'package:swish_lab/functions/upload_video_to_gradio.dart';
+import 'package:swish_lab/models/analysis_response.dart';
+import 'package:swish_lab/models/custom_enums.dart';
+import 'package:swish_lab/models/results_response.dart';
+import 'package:swish_lab/models/statistics_row.dart';
+import 'package:swish_lab/models/video_source.dart';
+import 'package:swish_lab/providers/shooting_analysis_provider.dart';
+import 'package:swish_lab/state/app_state.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/widgets/app_bar.dart';
+import 'package:swish_lab/widgets/background.dart';
+import 'package:swish_lab/widgets/choice_chips_group.dart';
+import 'package:swish_lab/widgets/dark_button.dart';
+import 'package:swish_lab/widgets/input_field.dart';
+import 'package:swish_lab/widgets/video_preview.dart';
 
 /// Page to preview the file to upload and to add some info to it
 class VideoPreUpload extends ConsumerStatefulWidget {

@@ -1,21 +1,21 @@
-import 'package:SwishLab/constants.dart';
-import 'package:SwishLab/functions/add_animation.dart';
-import 'package:SwishLab/functions/get_border_color.dart';
-import 'package:SwishLab/functions/process_analysis_results.dart';
-import 'package:SwishLab/functions/score_to_rating.dart';
-import 'package:SwishLab/models/analysis_state.dart';
-import 'package:SwishLab/models/statistics_row.dart';
-import 'package:SwishLab/models/video_source.dart';
-import 'package:SwishLab/providers/shooting_analysis_provider.dart';
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
-import 'package:SwishLab/widgets/app_bar.dart';
-import 'package:SwishLab/widgets/background.dart';
-import 'package:SwishLab/widgets/dynamic_icon_image.dart';
-import 'package:SwishLab/widgets/section_details.dart';
-import 'package:SwishLab/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:swish_lab/constants.dart';
+import 'package:swish_lab/functions/add_animation.dart';
+import 'package:swish_lab/functions/get_border_color.dart';
+import 'package:swish_lab/functions/process_analysis_results.dart';
+import 'package:swish_lab/functions/score_to_rating.dart';
+import 'package:swish_lab/models/analysis_state.dart';
+import 'package:swish_lab/models/statistics_row.dart';
+import 'package:swish_lab/models/video_source.dart';
+import 'package:swish_lab/providers/shooting_analysis_provider.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/widgets/app_bar.dart';
+import 'package:swish_lab/widgets/background.dart';
+import 'package:swish_lab/widgets/dynamic_icon_image.dart';
+import 'package:swish_lab/widgets/section_details.dart';
+import 'package:swish_lab/widgets/video_preview.dart';
 
 class AnalysisResults extends ConsumerStatefulWidget {
   final Map<String, dynamic> videoDataJson;

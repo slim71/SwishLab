@@ -1,7 +1,7 @@
-import 'package:SwishLab/models/analysis_state.dart';
-import 'package:SwishLab/providers/api_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:swish_lab/models/analysis_state.dart';
+import 'package:swish_lab/providers/api_providers.dart';
 
 class ShootingAnalysisController extends StateNotifier<AnalysisState> {
   ShootingAnalysisController(this.ref) : super(AnalysisIdle());

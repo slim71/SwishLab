@@ -1,13 +1,13 @@
-import 'package:SwishLab/models/analysis_state.dart';
-import 'package:SwishLab/providers/shooting_analysis_provider.dart';
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
-import 'package:SwishLab/widgets/background.dart';
-import 'package:SwishLab/widgets/transparent_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
+import 'package:swish_lab/models/analysis_state.dart';
+import 'package:swish_lab/providers/shooting_analysis_provider.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/widgets/background.dart';
+import 'package:swish_lab/widgets/transparent_button.dart';
 
 class LoadingPage extends ConsumerStatefulWidget {
   const LoadingPage({super.key});

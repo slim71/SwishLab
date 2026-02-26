@@ -1,17 +1,17 @@
 import 'dart:ui';
 
-import 'package:SwishLab/functions/shadow_from_color.dart';
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
-import 'package:SwishLab/widgets/app_bar.dart';
-import 'package:SwishLab/widgets/background.dart';
-import 'package:SwishLab/widgets/box_with_shadow.dart';
-import 'package:SwishLab/widgets/custom_text_span.dart';
-import 'package:SwishLab/widgets/icon_action_button.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:swish_lab/functions/shadow_from_color.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/widgets/app_bar.dart';
+import 'package:swish_lab/widgets/background.dart';
+import 'package:swish_lab/widgets/box_with_shadow.dart';
+import 'package:swish_lab/widgets/custom_text_span.dart';
+import 'package:swish_lab/widgets/icon_action_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AboutUs extends ConsumerStatefulWidget {

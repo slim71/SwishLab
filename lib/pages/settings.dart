@@ -1,20 +1,20 @@
-import 'package:SwishLab/constants.dart';
-import 'package:SwishLab/functions/add_animation.dart';
-import 'package:SwishLab/functions/load_json_remote_or_app_state.dart';
-import 'package:SwishLab/logger.dart';
-import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
-import 'package:SwishLab/widgets/app_bar.dart';
-import 'package:SwishLab/widgets/background.dart';
-import 'package:SwishLab/widgets/light_button.dart';
-import 'package:SwishLab/widgets/settings_item.dart';
-import 'package:SwishLab/widgets/settings_row.dart';
-import 'package:SwishLab/widgets/social_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:swish_lab/constants.dart';
+import 'package:swish_lab/functions/add_animation.dart';
+import 'package:swish_lab/functions/load_json_remote_or_app_state.dart';
+import 'package:swish_lab/logger.dart';
+import 'package:swish_lab/state/app_state.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/widgets/app_bar.dart';
+import 'package:swish_lab/widgets/background.dart';
+import 'package:swish_lab/widgets/light_button.dart';
+import 'package:swish_lab/widgets/settings_item.dart';
+import 'package:swish_lab/widgets/settings_row.dart';
+import 'package:swish_lab/widgets/social_icon_button.dart';
 
 const slideDurationMs = 500; // [ms]
 const settleDurationMs = 250; // [ms]

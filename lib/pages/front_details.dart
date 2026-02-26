@@ -1,17 +1,17 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:SwishLab/functions/add_animation.dart';
-import 'package:SwishLab/models/custom_enums.dart';
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
-import 'package:SwishLab/widgets/icon_action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:swish_lab/functions/add_animation.dart';
+import 'package:swish_lab/models/custom_enums.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/widgets/icon_action_button.dart';
 
 /// Page with overview of the front view analysis
 class FrontDetails extends ConsumerStatefulWidget {
@@ -76,7 +76,6 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                                 // Back button
                         addAnimation(
                           widget: IconActionButton(
-                            borderColor: appColors.containersBorders,
                             size: 60,
                             backgroundColor: AppThemeManager.secondaryBackground,
                             icon: Icons.arrow_back_rounded,
@@ -101,7 +100,6 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
                           child: addAnimation(
                               widget: IconActionButton(
-                                borderColor: appColors.containersBorders,
                                       size: 60,
                                 backgroundColor: AppThemeManager.secondaryBackground,
                                 icon: FontAwesomeIcons.upload,

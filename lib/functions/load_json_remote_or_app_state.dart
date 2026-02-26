@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:SwishLab/constants.dart';
-import 'package:SwishLab/logger.dart';
 import 'package:http/http.dart' as http;
+import 'package:swish_lab/constants.dart';
+import 'package:swish_lab/logger.dart';
 
 final loadLogger = AppLogger.scope('Credits');
 

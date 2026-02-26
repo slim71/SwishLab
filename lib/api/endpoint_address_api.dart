@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:SwishLab/api/api_client.dart';
-import 'package:SwishLab/models/analysis_response.dart';
-import 'package:SwishLab/models/results_response.dart';
 import 'package:dio/dio.dart';
+import 'package:swish_lab/api/api_client.dart';
+import 'package:swish_lab/models/analysis_response.dart';
+import 'package:swish_lab/models/results_response.dart';
 
 class EndpointAddressApi {
   final ApiClient _client;

@@ -1,7 +1,7 @@
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
-import 'package:SwishLab/widgets/settings_item.dart';
 import 'package:flutter/material.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/widgets/settings_item.dart';
 
 class SettingsRow extends StatelessWidget {
   final SettingsItem item;

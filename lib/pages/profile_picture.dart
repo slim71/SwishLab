@@ -1,22 +1,22 @@
 import 'dart:io';
 
-import 'package:SwishLab/functions/add_animation.dart';
-import 'package:SwishLab/providers/users_provider.dart';
-import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
-import 'package:SwishLab/widgets/app_bar.dart';
-import 'package:SwishLab/widgets/background.dart';
-import 'package:SwishLab/widgets/dark_button.dart';
-import 'package:SwishLab/widgets/input_field.dart';
-import 'package:SwishLab/widgets/light_button.dart';
-import 'package:SwishLab/widgets/transparent_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:swish_lab/functions/add_animation.dart';
+import 'package:swish_lab/providers/users_provider.dart';
+import 'package:swish_lab/state/app_state.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/widgets/app_bar.dart';
+import 'package:swish_lab/widgets/background.dart';
+import 'package:swish_lab/widgets/dark_button.dart';
+import 'package:swish_lab/widgets/input_field.dart';
+import 'package:swish_lab/widgets/light_button.dart';
+import 'package:swish_lab/widgets/transparent_button.dart';
 
 /// Page where the user can change their profile picture
 class ProfilePicturePage extends ConsumerStatefulWidget {

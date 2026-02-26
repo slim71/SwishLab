@@ -1,7 +1,7 @@
-import 'package:SwishLab/controllers/dropdown_controller.dart';
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:swish_lab/controllers/dropdown_controller.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
 
 class Dropdown<T> extends StatefulWidget {
   final DropdownController<T> controller;

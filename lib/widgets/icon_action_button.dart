@@ -1,5 +1,5 @@
-import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
 
 class IconActionButton extends StatelessWidget {
   final IconData icon;

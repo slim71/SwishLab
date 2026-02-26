@@ -1,6 +1,6 @@
-import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
 
 class AppTextStyles {
   // ========== DISPLAY ==========

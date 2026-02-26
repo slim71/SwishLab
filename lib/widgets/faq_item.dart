@@ -1,9 +1,9 @@
 import 'dart:math' as math;
 
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
 
 /// Custom widget to use as a list item with title and hideable description
 class FaqItem extends StatefulWidget {

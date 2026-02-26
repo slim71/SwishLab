@@ -1,5 +1,5 @@
-import 'package:SwishLab/models/users_row.dart';
-import 'package:SwishLab/repositories/users_repository.dart';
+import 'package:swish_lab/models/users_row.dart';
+import 'package:swish_lab/repositories/users_repository.dart';
 
 class UpdateUser {
   final UsersRepository usersRepository;

@@ -1,5 +1,5 @@
-import 'package:SwishLab/functions/fields_lookup_table.dart';
-import 'package:SwishLab/functions/get_section_name.dart';
+import 'package:swish_lab/functions/fields_lookup_table.dart';
+import 'package:swish_lab/functions/get_section_name.dart';
 
 /// Process the main subsection of the results JSON to extract relevant info
 List<dynamic> processFields(dynamic data) {

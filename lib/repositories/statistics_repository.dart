@@ -1,5 +1,5 @@
-import 'package:SwishLab/models/statistics_row.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:swish_lab/models/statistics_row.dart';
 
 class StatisticsRepository {
   final SupabaseClient _client;

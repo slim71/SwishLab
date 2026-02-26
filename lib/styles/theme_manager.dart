@@ -1,6 +1,6 @@
-import 'package:SwishLab/logger.dart';
-import 'package:SwishLab/styles/colors.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:swish_lab/logger.dart';
+import 'package:swish_lab/styles/colors.dart';
 
 enum AppBrightness { system, light, dark }
 

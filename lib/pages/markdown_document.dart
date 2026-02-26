@@ -1,8 +1,8 @@
-import 'package:SwishLab/functions/load_markdown.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
-import 'package:SwishLab/widgets/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_md/flutter_md.dart';
+import 'package:swish_lab/functions/load_markdown.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/widgets/app_bar.dart';
 
 class MarkdownDocument extends StatefulWidget {
   final String fileName;

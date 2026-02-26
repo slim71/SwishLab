@@ -1,4 +1,4 @@
-import 'package:SwishLab/functions/get_section_name.dart';
+import 'package:swish_lab/functions/get_section_name.dart';
 
 /// Process the "scores" subsection of the results JSON to extract relevant
 /// info

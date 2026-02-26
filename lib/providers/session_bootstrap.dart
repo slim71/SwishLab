@@ -1,10 +1,10 @@
-import 'package:SwishLab/app.dart' show rootNavigatorKey;
-import 'package:SwishLab/providers/users_provider.dart';
-import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:swish_lab/app.dart' show rootNavigatorKey;
+import 'package:swish_lab/providers/users_provider.dart';
+import 'package:swish_lab/state/app_state.dart';
+import 'package:swish_lab/styles/styles.dart';
 
 // Helper provider to feed the BuildContext
 final navigationContextProvider = StateProvider<BuildContext?>((ref) => null);

@@ -1,8 +1,8 @@
-import 'package:SwishLab/providers/supabase_provider.dart';
-import 'package:SwishLab/services/authentication.dart';
-import 'package:SwishLab/state/persisted_states.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:swish_lab/providers/supabase_provider.dart';
+import 'package:swish_lab/services/authentication.dart';
+import 'package:swish_lab/state/persisted_states.dart';
 
 /// Emits auth state changes (login / logout / token refresh)
 final authStateProvider = StreamProvider<AuthState>((ref) {

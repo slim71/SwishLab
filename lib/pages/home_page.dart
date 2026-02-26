@@ -1,19 +1,19 @@
-import 'package:SwishLab/constants.dart';
-import 'package:SwishLab/logger.dart';
-import 'package:SwishLab/models/statistics_row.dart';
-import 'package:SwishLab/models/users_row.dart';
-import 'package:SwishLab/providers/statistics_provider.dart';
-import 'package:SwishLab/providers/users_provider.dart';
-import 'package:SwishLab/state/app_state.dart';
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
-import 'package:SwishLab/widgets/app_bar.dart';
-import 'package:SwishLab/widgets/background.dart';
-import 'package:SwishLab/widgets/box_with_shadow.dart';
-import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:swish_lab/constants.dart';
+import 'package:swish_lab/logger.dart';
+import 'package:swish_lab/models/statistics_row.dart';
+import 'package:swish_lab/models/users_row.dart';
+import 'package:swish_lab/providers/statistics_provider.dart';
+import 'package:swish_lab/providers/users_provider.dart';
+import 'package:swish_lab/state/app_state.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/widgets/app_bar.dart';
+import 'package:swish_lab/widgets/background.dart';
+import 'package:swish_lab/widgets/box_with_shadow.dart';
+import 'package:swish_lab/widgets/dark_button.dart';
 
 /// Home page
 class HomePage extends ConsumerStatefulWidget {

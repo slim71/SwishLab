@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:SwishLab/features/update_user_field.dart';
-import 'package:SwishLab/functions/local_image_from_url.dart';
-import 'package:SwishLab/repositories/storage_repository.dart';
-import 'package:SwishLab/repositories/users_repository.dart';
+import 'package:swish_lab/features/update_user_field.dart';
+import 'package:swish_lab/functions/local_image_from_url.dart';
+import 'package:swish_lab/repositories/storage_repository.dart';
+import 'package:swish_lab/repositories/users_repository.dart';
 
 class ChangeProfilePicture {
   final UsersRepository usersRepository;

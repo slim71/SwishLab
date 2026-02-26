@@ -1,7 +1,7 @@
-import 'package:SwishLab/styles/colors.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
-import 'package:SwishLab/styles/themes.dart';
 import 'package:flutter/material.dart';
+import 'package:swish_lab/styles/colors.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/styles/themes.dart';
 
 class WidgetbookThemeWrapper extends StatelessWidget {
   final Widget child;

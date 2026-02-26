@@ -1,5 +1,5 @@
-import 'package:SwishLab/styles/theme_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
 
 class ToggleIcon extends StatelessWidget {
   final bool value;

@@ -1,5 +1,5 @@
-import 'package:SwishLab/models/users_row.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:swish_lab/models/users_row.dart';
 
 // Define connections to the Users row in Supabase
 class UsersRepository {

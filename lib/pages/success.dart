@@ -1,15 +1,15 @@
-import 'package:SwishLab/functions/add_animation.dart';
-import 'package:SwishLab/models/users_row.dart';
-import 'package:SwishLab/providers/users_provider.dart';
-import 'package:SwishLab/styles/styles.dart';
-import 'package:SwishLab/styles/theme_manager.dart';
-import 'package:SwishLab/widgets/box_with_shadow.dart';
-import 'package:SwishLab/widgets/custom_text_span.dart';
-import 'package:SwishLab/widgets/dark_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:swish_lab/functions/add_animation.dart';
+import 'package:swish_lab/models/users_row.dart';
+import 'package:swish_lab/providers/users_provider.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/widgets/box_with_shadow.dart';
+import 'package:swish_lab/widgets/custom_text_span.dart';
+import 'package:swish_lab/widgets/dark_button.dart';
 
 /// Page showing a confirmation of the account creation
 class SuccessAfterSignup extends ConsumerStatefulWidget {

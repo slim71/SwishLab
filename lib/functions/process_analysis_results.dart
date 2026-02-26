@@ -1,6 +1,6 @@
-import 'package:SwishLab/functions/get_section_name.dart';
-import 'package:SwishLab/functions/process_fields.dart';
-import 'package:SwishLab/functions/process_scores.dart';
+import 'package:swish_lab/functions/get_section_name.dart';
+import 'package:swish_lab/functions/process_fields.dart';
+import 'package:swish_lab/functions/process_scores.dart';
 
 /// Process the results JSON to extract relevant info
 List<dynamic> processAnalysisResults(dynamic analysisResults) {

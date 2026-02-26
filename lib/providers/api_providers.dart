@@ -1,7 +1,7 @@
-import 'package:SwishLab/api/api_client.dart';
-import 'package:SwishLab/api/endpoint_address_api.dart';
-import 'package:SwishLab/constants.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:swish_lab/api/api_client.dart';
+import 'package:swish_lab/api/endpoint_address_api.dart';
+import 'package:swish_lab/constants.dart';
 
 /// Makes APIs available in the whole app
 

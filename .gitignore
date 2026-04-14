@@ -37,6 +37,7 @@ test-output/
 .flutter-plugins-dependencies
 
 # Build system
+android/
 widgetbook/android/
 widgetbook/linux/
 widgetbook/macos/

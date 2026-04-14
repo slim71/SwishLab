@@ -56,7 +56,7 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
   AnalysisResponse? analysisJsonEventId;
 
   // Stores action output result for [Backend Call - API (GetShootingFormResults)] action in uploadButton widget.
-  AnalysisResults? analysisJsonResults;
+  ResultsResponse? analysisJsonResults;
 
   // Stores action output result for [Backend Call - Insert Row] action in uploadButton widget.
   StatisticsRow? insertionReturnValue;

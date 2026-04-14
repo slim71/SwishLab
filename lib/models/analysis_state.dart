@@ -7,7 +7,7 @@ class AnalysisIdle extends AnalysisState {}
 class AnalysisLoading extends AnalysisState {}
 
 class AnalysisSuccess extends AnalysisState {
-  final AnalysisResults result;
+  final ResultsResponse result;
 
   AnalysisSuccess(this.result);
 }

@@ -1,7 +1,7 @@
-class AnalysisResults {
+class ResultsResponse {
   final Map<String, dynamic> raw;
 
-  AnalysisResults(this.raw);
+  ResultsResponse(this.raw);
 
   bool get succeeded => raw['success'] == true || raw['status'] == 'completed';
 

@@ -63,7 +63,7 @@ class EndpointAddressApi {
     }
   }
 
-  Future<AnalysisResults> getFinalAnalysisResult({
+  Future<ResultsResponse> getFinalAnalysisResult({
     required String hfEventId,
   }) async {
     final buffer = StringBuffer();
@@ -75,7 +75,7 @@ class EndpointAddressApi {
     return _parseSseResponse(buffer.toString());
   }
 
-  AnalysisResults _parseSseResponse(String raw) {
+  ResultsResponse _parseSseResponse(String raw) {
     String? currentEvent;
     String? currentData;
 
@@ -85,7 +85,7 @@ class EndpointAddressApi {
       if (trimmed.isEmpty) {
         if (currentEvent == 'complete' && currentData != null) {
           final json = jsonDecode(currentData) as Map<String, dynamic>;
-          return AnalysisResults(json);
+          return ResultsResponse(json);
         }
         currentEvent = null;
         currentData = null;

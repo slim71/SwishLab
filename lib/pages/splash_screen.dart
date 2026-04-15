@@ -93,8 +93,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                   .fromSTEB(12, 0, 0, 0),
                                       child: Text(
                                         'Understand Your Form',
-                                        style: AppTextStyles.headlineLarge(context,
-                                            color: AppThemeManager.primaryBackground),
+                                        style: AppTextStyles.headlineLarge(context, color: Colors.black),
                                       ),
                                             ),
 
@@ -111,32 +110,37 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                               text:
                                                                   'Your personal AI coach helps you understand your shot. \nTrack your ',
                                               style: AppTextStyles.labelLarge(context),
-                                              color: AppThemeManager.primaryBackground,
+                                              color: Colors.black,
                                             ),
                                                             CustomTextSpan(
                                               context,
                                               text: 'form, ball path,',
                                                               italic: true,
-                                                            ),
+                                              color: Colors.black,
+                                            ),
                                                             CustomTextSpan(
                                               context,
                                               text: ' and ',
-                                                            ),
+                                              color: Colors.black,
+                                            ),
                                                             CustomTextSpan(
                                               context,
                                               text: 'movement ',
-                                                              italic: true,
+                                              color: Colors.black,
+                                              italic: true,
                                                             ),
                                                             CustomTextSpan(
                                               context,
                                               text: 'to get simple, actionable insights that make ',
-                                                            ),
+                                              color: Colors.black,
+                                            ),
                                                             CustomTextSpan(
                                               context,
                                               text: 'every rep count.',
                                                               bold: true,
                                                               italic: true,
-                                                            )
+                                              color: Colors.black,
+                                            )
                                                           ],
                                           style: AppTextStyles.labelLarge(context),
                                           color: AppThemeManager.primaryBackground,
@@ -181,8 +185,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                     padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                                       child: Text(
                                         'Keep It Straight',
-                                        style: AppTextStyles.headlineLarge(context,
-                                            color: AppThemeManager.primaryBackground),
+                                        style: AppTextStyles.headlineLarge(context, color: Colors.black),
                                       ),
                                                   ),
 
@@ -286,8 +289,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                                   .fromSTEB(12, 0, 0, 0),
                                       child: Text(
                                         'Perfect the Flow',
-                                        style: AppTextStyles.headlineLarge(context,
-                                            color: AppThemeManager.primaryBackground),
+                                        style: AppTextStyles.headlineLarge(context, color: Colors.black),
                                       ),
                                             ),
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:swish_lab/styles/styles.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
 
 class CustomTextSpan extends TextSpan {
   CustomTextSpan(
@@ -21,7 +20,7 @@ class CustomTextSpan extends TextSpan {
             fontStyle: italic ? FontStyle.italic : null,
             decoration: underline ? TextDecoration.underline : null,
             color: color ?? Theme.of(context).colorScheme.onSurface,
-            backgroundColor: backgroundColor ?? AppThemeManager.primaryBackground,
+            backgroundColor: backgroundColor ?? Colors.transparent,
           ),
         );
 }

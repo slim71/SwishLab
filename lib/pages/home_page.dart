@@ -73,9 +73,8 @@ class _HomePageState extends ConsumerState<HomePage> {
               logger.d('Navigating...');
               context.goNamed('profile');
           },
-          profileImageUrl:
-              appState.userData?.profilePicture ?? kDefaultProfilePictureUrl,
-        ),
+            profileImageUrl: userInfo?.profilePic ?? kDefaultProfilePictureUrl,
+          ),
           body: Background(
             // Container to have a colored background
             child: SizedBox(

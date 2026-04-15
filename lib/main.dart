@@ -1,11 +1,12 @@
-import 'package:swish_lab/styles/theme_manager.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import 'app.dart';
-import 'logger.dart';
+import 'package:swish_lab/app.dart';
+import 'package:swish_lab/logger.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
 
 class Root extends StatelessWidget {
   const Root({super.key});

@@ -13,6 +13,8 @@ class SettingsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final opacityPercentage = 0.50;
+
     return ValueListenableBuilder(
         valueListenable: AppThemeManager.notifier,
         builder: (_, __, ___) {
@@ -27,7 +29,7 @@ class SettingsRow extends StatelessWidget {
                   child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: item.background,
+                      color: item.background.withAlpha((255 * opacityPercentage).round()),
                     ),
                     padding: const EdgeInsets.all(16),
                     child: Row(

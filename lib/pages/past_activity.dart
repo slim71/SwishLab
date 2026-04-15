@@ -163,8 +163,7 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                               // Timestamp related to the activity item
                                               Text(
                                                 '15, Jan. 2026',
-                                                style: AppTextStyles.labelMedium(context),
-                                              ),
+                                                  style: AppTextStyles.labelMedium(context, color: Colors.black)),
 
                                                                 // Icon to show the activity
                                               Icon(
@@ -234,7 +233,7 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                                     padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
                                                   child: Text(
                                                     '<User>',
-                                                    style: AppTextStyles.labelMedium(context),
+                                                    style: AppTextStyles.labelMedium(context, color: Colors.black),
                                                   ),
                                                                   ),
                                                                 ],

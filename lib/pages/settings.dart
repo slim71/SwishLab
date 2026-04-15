@@ -6,6 +6,7 @@ import 'package:swish_lab/constants.dart';
 import 'package:swish_lab/functions/add_animation.dart';
 import 'package:swish_lab/functions/load_json_remote_or_app_state.dart';
 import 'package:swish_lab/logger.dart';
+import 'package:swish_lab/providers/supabase_provider.dart';
 import 'package:swish_lab/state/app_state.dart';
 import 'package:swish_lab/styles/styles.dart';
 import 'package:swish_lab/styles/theme_manager.dart';
@@ -164,9 +165,7 @@ class _SettingsState extends ConsumerState<Settings>
                             itemCount: items.length,
                             itemBuilder: (context, index) {
                   return addAnimation(
-                    widget: SettingsRow(
-                      item: items[index],
-                                ),
+                    widget: SettingsRow(item: items[index]),
                     withFade: false,
                     slide: SlideConfig(
                         begin: const Offset(0, 100),
@@ -194,7 +193,7 @@ class _SettingsState extends ConsumerState<Settings>
                                     padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 8),
                           child: Text(
                             'Follow us on',
-                            style: AppTextStyles.labelMedium(context),
+                            style: AppTextStyles.labelMedium(context, color: Colors.black),
                           ),
                                   ),
 
@@ -265,7 +264,7 @@ class _SettingsState extends ConsumerState<Settings>
                                     padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
                           child: Text(
                             'v0.0.1',
-                            style: AppTextStyles.labelMedium(context),
+                            style: AppTextStyles.labelMedium(context, color: Colors.black),
                           ),
                                   ),
 
@@ -275,16 +274,8 @@ class _SettingsState extends ConsumerState<Settings>
                               EdgeInsetsDirectional.fromSTEB(16, 16, 0, 0),
                           child: LightButton(
                             onPressed: () async {
-                                    // GoRouter.of(context).prepareAuthEvent();
-                                    // await authManager.signOut();
-                                    // GoRouter.of(context)
-                                    //     .clearRedirectLocation();
-                                    //
-                                    // context.goNamedAuth(
-                                    //     SplashScreenWidget.routeName,
-                                    //     context.mounted);
-                                    // AuthStorage.setLoggedIn(false);
-                                  },
+                              await ref.read(supabaseProvider).auth.signOut();
+                            },
                                   text: 'Log Out',
                                 ),
                             ),

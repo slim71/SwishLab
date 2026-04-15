@@ -28,7 +28,7 @@ class LightButton extends StatelessWidget {
         valueListenable: AppThemeManager.notifier,
         builder: (_, __, ___) {
           return Container(
-              color: AppThemeManager.primaryBackground,
+              color: Colors.transparent,
               child: ElevatedButton(
                 onPressed: onPressed,
                 style: ElevatedButton.styleFrom(

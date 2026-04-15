@@ -64,8 +64,8 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    final appState = ref.watch(appStateProvider);
-    final userInfoAsync = ref.watch(appUserProvider);
+    final appState = ref.read(appStateProvider);
+    final userInfoAsync = ref.read(appUserProvider);
     final UsersRow? userInfo = userInfoAsync.value;
 
     // On page load action.

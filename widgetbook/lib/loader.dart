@@ -34,6 +34,21 @@ import 'package:swish_lab/widgets/video_preview.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
+@widgetbook.UseCase(name: 'DarkButton', type: DarkButton)
+Widget buildDarkButton(BuildContext context) {
+  return DarkButton(onPressed: () {}, text: 'Sample');
+}
+
+@widgetbook.UseCase(name: 'LightButton', type: LightButton)
+Widget buildLightButton(BuildContext context) {
+  return LightButton(text: 'Example', icon: FaIcon(FontAwesomeIcons.google, size: 15), onPressed: () async {});
+}
+
+@widgetbook.UseCase(name: 'TransparentButton', type: TransparentButton)
+Widget buildTransparentButton(BuildContext context) {
+  return TransparentButton(onPressed: () {}, text: 'Sample');
+}
+
 // TODO: check appearance in the real app: here it shows a square background on its own
 @widgetbook.UseCase(name: 'IconActionButton', type: IconActionButton)
 Widget buildIconActionButton(BuildContext context) {
@@ -47,16 +62,21 @@ Widget buildIconActionButton(BuildContext context) {
   );
 }
 
-@widgetbook.UseCase(name: 'LightButton', type: LightButton)
-Widget buildLightButton(BuildContext context) {
-  return LightButton(text: 'Example', icon: FaIcon(FontAwesomeIcons.google, size: 15), onPressed: () async {});
-}
-
 @widgetbook.UseCase(name: 'SingleChoiceChip', type: SingleChoiceChip)
 Widget buildSingleChoiceChip(BuildContext context) {
   final isSelected = context.knobs.boolean(label: 'Selected', initialValue: false);
 
   return SingleChoiceChip(label: 'Sample', icon: Icons.paypal, selected: isSelected, onTap: () async {});
+}
+
+@widgetbook.UseCase(name: 'Dropdown', type: Dropdown)
+Widget buildDropdown(BuildContext context) {
+  return Dropdown<String>(
+    controller: DropdownController<String>(),
+    options: ['Left', 'Right'],
+    onChanged: (_) {},
+    hintText: 'Sample sample sample',
+  );
 }
 
 @widgetbook.UseCase(name: 'SocialIconButton', type: SocialIconButton)
@@ -71,27 +91,6 @@ Widget buildToggleIcon(BuildContext context) {
       value: true,
       onIcon: Icon(Icons.search, size: 30),
       offIcon: Icon(Icons.search_off, size: 30),
-  );
-}
-
-@widgetbook.UseCase(name: 'TransparentButton', type: TransparentButton)
-Widget buildTransparentButton(BuildContext context) {
-  return TransparentButton(onPressed: () {}, text: 'Sample');
-}
-
-@widgetbook.UseCase(name: 'DarkButton', type: DarkButton)
-Widget buildDarkButton(BuildContext context) {
-  return DarkButton(onPressed: () {}, text: 'Sample'
-  );
-}
-
-@widgetbook.UseCase(name: 'Dropdown', type: Dropdown)
-Widget buildDropdown(BuildContext context) {
-  return Dropdown<String>(
-      controller: DropdownController<String>(),
-      options: ['Left', 'Right'],
-      onChanged: (_) {},
-      hintText: 'Sample sample sample',
   );
 }
 
@@ -116,6 +115,20 @@ Widget buildCustomTextSpan(BuildContext context) {
 @widgetbook.UseCase(name: 'InputField', type: InputField)
 Widget buildInputField(BuildContext context) {
   return InputField(controller: TextEditingController(), onChanged: (_) {}, label: 'Sample');
+}
+
+@widgetbook.UseCase(name: 'SettingsRow', type: SettingsRow)
+Widget buildSettingsRow(BuildContext context) {
+  final backgroundIndex = context.knobs.object.dropdown<int>(
+    label: 'Background',
+    options: [0, 1, 2],
+    initialOption: 0,
+    labelBuilder: (value) => 'Variant $value',
+  );
+
+  return SettingsRow(
+    item: SettingsItem(title: 'Sample', background: settingsItemBackgrounds[backgroundIndex], onTap: (_) async {}),
+  );
 }
 
 @widgetbook.UseCase(name: 'VideoPreview', type: VideoPreview)
@@ -249,20 +262,6 @@ Widget buildFaqItem(BuildContext context) {
 @widgetbook.UseCase(name: 'DebugItem', type: DebugItem)
 Widget buildDebugItem(BuildContext context) {
   return DebugItem(width: 300, title: 'Sample', buttonText: 'Sample', onPressed: () async {});
-}
-
-@widgetbook.UseCase(name: 'SettingsRow', type: SettingsRow)
-Widget buildSettingsRow(BuildContext context) {
-  final backgroundIndex = context.knobs.object.dropdown<int>(
-    label: 'Background',
-    options: [0, 1, 2],
-    initialOption: 0,
-    labelBuilder: (value) => 'Variant $value',
-  );
-
-  return SettingsRow(
-      item: SettingsItem(title: 'Sample', background: settingsItemBackgrounds[backgroundIndex], onTap: (_) async {}),
-  );
 }
 
 @widgetbook.UseCase(name: 'SectionDetails', type: SectionDetails)

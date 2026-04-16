@@ -1,0 +1,165 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
+import 'package:swish_lab/models/analysis_state.dart';
+import 'package:swish_lab/providers/shooting_analysis_provider.dart';
+import 'package:swish_lab/styles/styles.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
+import 'package:swish_lab/widgets/background.dart';
+import 'package:swish_lab/widgets/transparent_button.dart';
+
+class ProcessingVideo extends ConsumerStatefulWidget {
+  const ProcessingVideo({super.key});
+
+  @override
+  ConsumerState<ProcessingVideo> createState() => _ProcessingVideoState();
+}
+
+class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final appColors = AppThemeManager.currentColors;
+
+    ref.listen<AnalysisState>(
+      shootingAnalysisProvider,
+      (previous, next) {
+        if (next is AnalysisSuccess) {
+          context.goNamed('results');
+        }
+
+        if (next is AnalysisFailure) {
+          showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+              title: const Text('Analysis failed'),
+              content: const Text('Error! Navigate home?'),
+              actions: [
+                TextButton(
+                  onPressed: () => context.pop(),
+                  child: const Text('Stay'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    context.pop();
+                    context.goNamed('home');
+                  },
+                  child: const Text('Go home'),
+                ),
+              ],
+            ),
+          );
+        }
+      },
+    );
+
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).unfocus();
+        FocusManager.instance.primaryFocus?.unfocus();
+      },
+      child: Scaffold(
+        backgroundColor: AppThemeManager.secondaryBackground,
+        body: SafeArea(
+          top: true,
+          child:
+              // Container with the content for the loading page
+              Background(
+            child: SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child:
+                  // Column to place the content for the loading page
+                  Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Loading animation
+                    Lottie.asset(
+                      'assets/jsons/loader_basketball.json',
+                      width: 400,
+                      height: 400,
+                      fit: BoxFit.contain,
+                      animate: true,
+                    ),
+
+                    // "Processing Video" text
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
+                      child: Text(
+                        'Processing Video',
+                        style: AppTextStyles.headlineLarge(context),
+                      ),
+                    ),
+
+                    // Text to ask the user to wait a bit
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(32, 8, 32, 0),
+                      child: Text(
+                        'Please wait while we prepare your video',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.labelLarge(context),
+                      ),
+                    ),
+
+                    // Container used to place a custom divider
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
+                      child: Container(
+                        width: 240,
+                        height: 8,
+                        decoration: BoxDecoration(
+                          color: appColors.alternateOne,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child:
+                            // Container used as colored divider
+                            Container(
+                          width: 120,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            gradient: appColors.gradientLinear(),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    // Text stating that the loading might take a while
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(32, 24, 32, 0),
+                      child: Text(
+                        'This may take a moment depending on the video size',
+                        textAlign: TextAlign.center,
+                        style: AppTextStyles.labelLarge(context),
+                      ),
+                    ),
+
+                    // Back button to stop waiting and discard results
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 48, 0, 0),
+                      child: TransparentButton(
+                        onPressed: () async {
+                          context.pop();
+                        },
+                        text: 'Go back',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

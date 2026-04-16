@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
-import 'package:swish_lab/app.dart' show rootNavigatorKey;
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:swish_lab/providers/supabase_provider.dart';
 import 'package:swish_lab/providers/users_provider.dart';
+import 'package:swish_lab/router/central_routing.dart' show rootNavigatorKey;
 import 'package:swish_lab/state/app_state.dart';
 import 'package:swish_lab/styles/styles.dart';
 
-// Helper provider to feed the BuildContext
+/// Helper provider to feed the BuildContext
 final navigationContextProvider = StateProvider<BuildContext?>((ref) => null);
 
+/// Handles one-time session initialization tasks for the current user
 final sessionBootstrapProvider = Provider<void>((ref) {
   final appState = ref.read(appStateProvider);
   final userAsync = ref.watch(appUserProvider);
@@ -40,7 +43,7 @@ final sessionBootstrapProvider = Provider<void>((ref) {
   });
 });
 
-// Helper function to show a custom dialog
+/// Helper function to show a custom dialog
 Future<void> _showInfoDialog(String msg) async {
   final context = rootNavigatorKey.currentContext;
   if (context == null) return; // safety
@@ -59,3 +62,9 @@ Future<void> _showInfoDialog(String msg) async {
     ),
   );
 }
+
+/// Tracks the current authentication status of the app
+final verifiedSessionProvider = FutureProvider<Session?>((ref) async {
+  final supabase = ref.read(supabaseProvider);
+  return supabase.auth.currentSession;
+});

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:swish_lab/constants.dart';
 import 'package:swish_lab/functions/add_animation.dart';
 import 'package:swish_lab/providers/auth_providers.dart';
 import 'package:swish_lab/state/app_state.dart';
-import 'package:swish_lab/state/persisted_states.dart';
 import 'package:swish_lab/styles/styles.dart';
 import 'package:swish_lab/widgets/background.dart';
 import 'package:swish_lab/widgets/box_with_shadow.dart';
@@ -31,6 +31,7 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
   late bool passwordVisibility;
   late String? Function(BuildContext, String?) emailAddressTextControllerValidator;
   late String? Function(BuildContext, String?) passwordTextControllerValidator;
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -75,195 +76,233 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
       child: Scaffold(
         body:
             // Container used for background purposes
-            Background(
-          child: Container(
-                    height: double.infinity,
-                    alignment: AlignmentDirectional(0, -1),
-                    child:
-                        // Column containing all content for the login page
-                Column(
-              mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          // Container to allow padding around the page title
-                Container(
-                  width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                              ),
-                              alignment: AlignmentDirectional(0, 0),
-                              child:
-                                  // App logo
-                      ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                                  child: Image.asset(
-                                    'assets/images/SwishLab_logo.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                ),
-
-                // Container with the login form
-                      Padding(
-                        padding: EdgeInsets.all(16),
-                  child: addAnimation(
-                    widget: Container(
-                      width: double.infinity,
-                            constraints: BoxConstraints(
-                              maxWidth: 570,
-                            ),
-                                decoration: BoxWithShadow(),
-                                child:
-                            // Column containing the login form
-                            Align(
-                              alignment: AlignmentDirectional(0, 0),
-                              child: Padding(
-                                padding: EdgeInsets.all(32),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      // Simple text to greet the user
-                            Text(
-                              'Welcome Back',
-                                          textAlign: TextAlign.center,
-                                style: AppTextStyles.displaySmall(context),
-                              ),
-
-                                          // Text telling the user to insert their credential below
-                                          Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 24),
-                              child: Text(
-                                'Insert credentials to login',
-                                                textAlign: TextAlign.center,
-                                  style: AppTextStyles.labelMedium(context),
-                                ),
-                                          ),
-
-                                          // Email field
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 16),
-                              child: SizedBox(
-                                width: double.infinity,
-                                            child: InputField(
-                                              controller:
-                                              emailAddressTextController,
-                                              focusNode: emailAddressFocusNode,
-                                              label: 'Email',
-                                              autofillHints: const [
-                                                AutofillHints.email
-                                              ],
-                                              validator: (value) => emailAddressTextControllerValidator(context, value),
-                                              allowRegex: RegExp(r'[a-zA-Z0-9@._%+-]'),
-                                            ),
-                                          ),
-                                      ),
-
-                                          // Password field
-                                          Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                              child: SizedBox(
-                                width: double.infinity,
-                                                child: InputField(
-                                                  controller: passwordTextController,
-                                                  focusNode: passwordFocusNode,
-                                                  label: 'Password',
-                                                  autofillHints: [AutofillHints.password],
-                                                  obscureText: !passwordVisibility,
-                                                  validator: (value) => passwordTextControllerValidator(context, value),
-                                                  denyRegex: RegExp(r'\s'),
-                                                ),
-                                              ),
-                                          ),
-
-                                          // Button to sign in with provided email and password
-                            DarkButton(
-                              onPressed: () async {
-                                            final user = await ref
-                                                .read(authServiceProvider)
-                                                .signInWithEmail(
-                                              emailAddressTextController.text,
-                                              passwordTextController.text,
-                                            );
-                                            if (user == null || !context.mounted) {
-                                              return;
-                                            }
-
-                                                ref.read(appStateProvider.notifier).setHasOpenedBefore(true);
-                                                AuthStorage.setLoggedIn(true);
-
-                                                context.goNamed('home');
-                                          },
-                                          text: 'Log In',
-                                        ),
-
-                                          // Brief text to point the user to the Google login button
-                                          Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(16, 15, 16, 15),
-                              child: Text(
-                                'Or sign in with',
-                                                textAlign: TextAlign.center,
-                                  style: AppTextStyles.labelMedium(context),
-                                ),
-                                          ),
-
-                                          // Google login button
-                            LightButton(
-                              onPressed: () async {
-                                            await ref
-                                                .read(authServiceProvider)
-                                                .signInWithGoogle();
-                                            if (!context.mounted) return;
-                                            context.goNamed('home');
-                                          },
-                                          text: 'Continue with Google',
-                                          icon: FaIcon(
-                                            FontAwesomeIcons.google,
-                                            size: 15,
-                                          ),
-                                        ),
-
-                                          // Text redirecting to signup page
-                                          Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
-                              child: InkWell(
-                                onTap: () async {
-                                                  context.goNamed('signup');
-                                                },
-                                                child: RichText(
-                                                  textScaler: MediaQuery.of(context).textScaler,
-                                                  text: CustomTextSpan(
-                                      context,
-                                      children: [
-                                                      CustomTextSpan(
-                                          context,
-                                          text: 'Don\'t have an account?  ',
-                                                      ),
-                                                      CustomTextSpan(
-                                          context,
-                                          text: 'Sign Up',
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                          ),
-                                        ],
-                                      ),
-                      ),
-                    ),
-                    ),
-                    scale: const ScaleConfig(begin: Offset(0.9, 1.0)),
-                    move: const MoveConfig(begin: Offset(0, 140)),
-                    rotate: const RotateConfig(begin: -0.05), // radians ~ small tilt
-                  ),
+              SingleChildScrollView(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewInsets.bottom,
+            ),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height,
+              ),
+              child: Background(
+                child: Container(
+                  // height: double.infinity,
+                  alignment: AlignmentDirectional(0, -1),
+                  child:
+                      // Column containing all content for the login page
+                      Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // Container to allow padding around the page title
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        alignment: AlignmentDirectional(0, 0),
+                        child:
+                            // App logo
+                            ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.asset(
+                            'assets/images/SwishLab_logo.png',
+                            fit: BoxFit.cover,
                           ),
-                        ],
+                        ),
                       ),
+
+                      // Container with the login form
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: addAnimation(
+                        widget: Container(
+                          width: double.infinity,
+                          constraints: BoxConstraints(
+                            maxWidth: 570,
+                          ),
+                          decoration: BoxWithShadow(),
+                          child:
+                          // Column containing the login form
+                          Align(
+                            alignment: AlignmentDirectional(0, 0),
+                            child: Padding(
+                              padding: EdgeInsets.all(32),
+                              child: Form(
+                                key: formKey,
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    // Simple text to greet the user
+                                    Text(
+                                      'Welcome Back',
+                                      textAlign: TextAlign.center,
+                                      style: AppTextStyles.displaySmall(context),
+                                    ),
+
+                                    // Text telling the user to insert their credential below
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 24),
+                                      child: Text(
+                                        'Insert credentials to login',
+                                        textAlign: TextAlign.center,
+                                        style: AppTextStyles.labelMedium(context),
+                                      ),
+                                    ),
+
+                                    // Email field
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 16),
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        child: InputField(
+                                          controller:
+                                          emailAddressTextController,
+                                          focusNode: emailAddressFocusNode,
+                                          label: 'Email',
+                                          autofillHints: const [
+                                            AutofillHints.email
+                                          ],
+                                          validator: (value) => emailAddressTextControllerValidator(context, value),
+                                          allowRegex: RegExp(r'[a-zA-Z0-9@._%+-]'),
+                                        ),
+                                      ),
+                                    ),
+
+                                    // Password field
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                      child: SizedBox(
+                                        width: double.infinity,
+                                        child: InputField(
+                                          controller: passwordTextController,
+                                          focusNode: passwordFocusNode,
+                                          label: 'Password',
+                                          autofillHints: [AutofillHints.password],
+                                          obscureText: !passwordVisibility,
+                                          validator: (value) => passwordTextControllerValidator(context, value),
+                                          denyRegex: RegExp(r'\s'),
+                                        ),
+                                      ),
+                                    ),
+
+                                    // Button to sign in with provided email and password
+                                    DarkButton(
+                                      onPressed: () async {
+                                        // Check all required fields are filled
+                                        if (!formKey.currentState!.validate()) {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(
+                                              content: Text('Please fill all fields correctly!'),
+                                            ),
+                                          );
+                                          return;
+                                        }
+                                        try {
+                                          final user = await ref.read(authServiceProvider).signInWithEmail(
+                                            emailAddressTextController.text,
+                                            passwordTextController.text,
+                                          );
+                                          if (!context.mounted) return;
+                                          if (user == null) {
+                                            ScaffoldMessenger.of(context).showSnackBar(
+                                              const SnackBar(content: Text('Login failed')),
+                                            );
+                                            return;
+                                          }
+
+                                          ref.read(appStateProvider.notifier).setHasOpenedBefore(true);
+
+                                          context.goNamed('home');
+                                        } on AuthException catch (e) {
+                                          if (!context.mounted) return;
+
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(content: Text(e.message)),
+                                          );
+                                        } catch (e) {
+                                          if (!context.mounted) return;
+
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(content: Text('Unexpected error occurred')),
+                                          );
+                                        }
+                                      },
+                                      text: 'Log In',
+                                    ),
+
+                                    // Brief text to point the user to the Google login button
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(16, 15, 16, 15),
+                                      child: Text(
+                                        'Or sign in with',
+                                        textAlign: TextAlign.center,
+                                        style: AppTextStyles.labelMedium(context),
+                                      ),
+                                    ),
+
+                                    // Google login button
+                                    LightButton(
+                                      onPressed: () async {
+                                        await ref
+                                            .read(authServiceProvider)
+                                            .signInWithGoogle();
+                                        if (!context.mounted) return;
+                                        context.goNamed('home');
+                                      },
+                                      text: 'Continue with Google',
+                                      icon: FaIcon(
+                                        FontAwesomeIcons.google,
+                                        size: 15,
+                                      ),
+                                    ),
+
+                                    // Text redirecting to signup page
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
+                                      child: InkWell(
+                                        onTap: () async {
+                                          context.goNamed('signup');
+                                        },
+                                        child: RichText(
+                                          textScaler: MediaQuery
+                                              .of(context)
+                                              .textScaler,
+                                          text: CustomTextSpan(
+                                            context,
+                                            children: [
+                                              CustomTextSpan(
+                                                context,
+                                                text: 'Don\'t have an account?  ',
+                                              ),
+                                              CustomTextSpan(
+                                                context,
+                                                text: 'Sign Up',
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        scale: const ScaleConfig(begin: Offset(0.9, 1.0)),
+                        move: const MoveConfig(begin: Offset(0, 140)),
+                        rotate: const RotateConfig(begin: -0.05), // radians ~ small tilt
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
-      ),
-    );
+      ));
   }
 }

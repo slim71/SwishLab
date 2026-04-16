@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:swish_lab/functions/add_animation.dart';
 import 'package:swish_lab/models/users_row.dart';
 import 'package:swish_lab/providers/auth_providers.dart';
@@ -50,6 +51,8 @@ class _SignupPageState extends ConsumerState<SignupPage>
   FocusNode? confpswdFocusNode;
   late TextEditingController confpswdController;
   late String? Function(BuildContext, String?) confpswdValidator;
+
+  final formKey = GlobalKey<FormState>();
 
   // Stores action output result for [Backend Call - Insert Row] action in manualSignupButton widget.
   UsersRow? backendResult;
@@ -114,6 +117,9 @@ class _SignupPageState extends ConsumerState<SignupPage>
       }
       if (!RegExp(r'(?=.*\d)').hasMatch(value)) {
         return 'Password must contain a number';
+      }
+      if (value != passwordController.text) {
+        return 'Passwords don\'t match';
       }
       return null;
     };
@@ -181,218 +187,220 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                         alignment: AlignmentDirectional(0, 0),
                                         child: Padding(
                                           padding: EdgeInsets.all(32),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              children: [
-                                                // Greeting text
-                                    Text(
-                                      'Get Started',
-                                                    textAlign: TextAlign.center,
-                                        style: AppTextStyles.displaySmall(context),
-                                      ),
+                                  child: Form(
+                                    key: formKey,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        // Greeting text
+                                        Text(
+                                          'Get Started',
+                                          textAlign: TextAlign.center,
+                                          style: AppTextStyles.displaySmall(context),
+                                        ),
 
-                                                // Text to guide signup
+                                        // Text to guide signup
                                                 Padding(
                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 24),
-                                      child: Text(
-                                        'Fill out the data below',
-                                                      textAlign: TextAlign.center,
-                                          style: AppTextStyles.labelLarge(context),
+                                                  child: Text(
+                                                    'Fill out the data below',
+                                                    textAlign: TextAlign.center,
+                                                    style: AppTextStyles.labelLarge(context),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                                  child: SizedBox(
+                                                    width: double.infinity,
+                                                    child: InputField(
+                                                        controller: firstnameController,
+                                                        focusNode: firstnameFocusNode,
+                                                        autofillHints: [AutofillHints.name],
+                                                        textCapitalization: TextCapitalization.words,
+                                                        label: 'First Name',
+                                                        validator: (value) => firstnameValidator.call(context, value),
+                                                        allowRegex: RegExp('^[A-Za-z\' -]+\$')),
+                                                  ),
+                                                ),
+
+                                        // Last name field
+                                        Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                          child: SizedBox(
+                                            width: double.infinity,
+                                            child: InputField(
+                                                controller: lastnameController,
+                                                focusNode: lastnameFocusNode,
+                                                autofillHints: [AutofillHints.name],
+                                                textCapitalization: TextCapitalization.words,
+                                                label: 'Last Name',
+                                                validator: (value) => lastnameValidator.call(context, value),
+                                                allowRegex: RegExp('^[A-Za-z\' -]+\$')),
+                                          ),
                                         ),
-                                                ),
+
+                                        // Email address field
                                                 Padding(
                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                      child: SizedBox(
-                                        width: double.infinity,
-                                                      child: InputField(
-                                                          controller: firstnameController,
-                                                          focusNode: firstnameFocusNode,
-                                                          autofillHints: [AutofillHints.name],
-                                                          textCapitalization: TextCapitalization.words,
-                                                          label: 'First Name',
-                                                          validator: (value) => firstnameValidator.call(context, value),
-                                                          allowRegex: RegExp('^[A-Za-z\' -]+\$')),
+                                                  child: SizedBox(
+                                                    width: double.infinity,
+                                                    child: InputField(
+                                                      controller: emailAddressController,
+                                                      focusNode: emailAddressFocusNode,
+                                                      label: 'Email',
+                                                      autofillHints: [AutofillHints.email],
+                                                      validator: (value) => emailValidator.call(context, value),
+                                                      allowRegex: RegExp(r'[a-zA-Z0-9@._%+-]'),
                                                     ),
+                                                  ),
                                                 ),
 
-                                                // Last name field
+                                        // Password field
+                                        Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                          child: SizedBox(
+                                            width: double.infinity,
+                                            child: InputField(
+                                              controller: passwordController,
+                                              focusNode: passwordFocusNode,
+                                              label: 'Password',
+                                              autofillHints: [AutofillHints.password],
+                                              obscureText: true,
+                                              validator: (value) => passwordValidator.call(context, value),
+                                            ),
+                                          ),
+                                        ),
+
+                                        // Confirm password field
                                                 Padding(
                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                      child: SizedBox(
-                                        width: double.infinity,
-                                                      child: InputField(
-                                                          controller: lastnameController,
-                                                          focusNode: lastnameFocusNode,
-                                                          autofillHints: [AutofillHints.name],
-                                                          textCapitalization: TextCapitalization.words,
-                                                          label: 'Last Name',
-                                                          validator: (value) => lastnameValidator.call(context, value),
-                                                          allowRegex: RegExp('^[A-Za-z\' -]+\$')),
+                                                  child: SizedBox(
+                                                    width: double.infinity,
+                                                    child: InputField(
+                                                      controller: confpswdController,
+                                                      focusNode: confpswdFocusNode,
+                                                      label: 'Confirm password',
+                                                      autofillHints: [AutofillHints.password],
+                                                      obscureText: true,
+                                                      validator: (value) => confpswdValidator.call(context, value),
                                                     ),
+                                                  ),
                                                 ),
 
-                                                // Email address field
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                      child: SizedBox(
-                                        width: double.infinity,
-                                                      child: InputField(
-                                                        controller: emailAddressController,
-                                                        focusNode: emailAddressFocusNode,
-                                                        label: 'Email',
-                                                        autofillHints: [AutofillHints.email],
-                                                        validator: (value) => emailValidator.call(context, value),
-                                                        allowRegex: RegExp(r'[a-zA-Z0-9@._%+-]'),
-                                                      ),
-                                                    ),
+                                        // Button to create an account with inserted data
+                                        DarkButton(
+                                          onPressed: () async {
+                                            // Check all required fields are filled
+                                            if (!formKey.currentState!.validate()) {
+                                              if (!mounted) return;
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                const SnackBar(
+                                                  content: Text('Please fill all fields!'),
                                                 ),
+                                              );
+                                              return;
+                                            }
 
-                                                // Password field
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                      child: SizedBox(
-                                        width: double.infinity,
-                                                      child: InputField(
-                                                        controller: passwordController,
-                                                        focusNode: passwordFocusNode,
-                                                        label: 'Password',
-                                                        autofillHints: [AutofillHints.password],
-                                                        obscureText: true,
-                                                        validator: (value) => passwordValidator.call(context, value),
-                                                      ),
-                                                    ),
-                                                ),
-
-                                                // Confirm password field
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                      child: SizedBox(
-                                        width: double.infinity,
-                                                      child: InputField(
-                                                        controller: confpswdController,
-                                                        focusNode: confpswdFocusNode,
-                                                        label: 'Confirm password',
-                                                        autofillHints: [AutofillHints.password],
-                                                        obscureText: true,
-                                                        validator: (value) => confpswdValidator.call(context, value),
-                                                      ),
-                                                    ),
-                                                ),
-
-                                                // Button to create an account with inserted data
-                                    DarkButton(
-                                      onPressed: () async {
-                                                      // Check all required fields are filled
-                                                      if (emailAddressController.text.isEmpty ||
-                                                          passwordController.text.isEmpty ||
-                                                          confpswdController.text.isEmpty ||
-                                                          firstnameController.text.isEmpty ||
-                                                          lastnameController.text.isEmpty) {
-                                                        if (!mounted) return;
-                                                        ScaffoldMessenger.of(context).showSnackBar(
-                                                          const SnackBar(
-                                                            content: Text('Please fill all fields!'),
-                                                          ),
-                                                        );
-                                                        return;
-                                                      }
-
-                                                      // Password check
-                                                      if (passwordController.text != confpswdController.text) {
-                                                        if (!mounted) return;
-                                                        ScaffoldMessenger.of(context).showSnackBar(
-                                                          SnackBar(
-                                                            content: Text(
-                                                              'Passwords don\'t match!',
-                                                            ),
-                                                          ),
-                                                        );
-                                                        return;
-                                                      }
-
-                                                      // Create auth user
+                                            // Create auth user
+                                                    try {
                                                       final authService = ref.read(authServiceProvider);
                                                       final user = await authService.signUp(
                                                         email: emailAddressController.text,
                                                         password: passwordController.text,
                                                       );
 
-                                                      if (user == null || !mounted) {
-                                                        return;
-                                                      }
+                                              if (user == null || !mounted) {
+                                                return;
+                                              }
 
-                                                      // Update app state
+                                              // Update app state
                                                       ref.read(appStateProvider.notifier).setHasOpenedBefore(true);
 
-                                                      // Insert into Users table
-                                                      final usersRepo = ref.read(usersRepositoryProvider);
+                                              // Insert into Users table
+                                              final usersRepo = ref.read(usersRepositoryProvider);
 
-                                                      await usersRepo.insertUser(
+                                              await usersRepo.insertUser(
                                                         id: user.id,
                                                         email: emailAddressController.text,
                                                         firstName: firstnameController.text,
                                                         lastName: lastnameController.text,
                                                       );
 
-                                                      // Navigate
-                                                      if (!context.mounted) return;
-                                                      context.goNamed('success');
-                                                    },
-                                                    text: 'Create Account',
-                                                  ),
+                                              // Navigate
+                                              if (!context.mounted) return;
+                                              context.goNamed('success');
+                                            } on AuthException catch (e) {
+                                              if (!context.mounted) return;
 
-                                                // Or
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(content: Text(e.message)),
+                                              );
+                                            } catch (e) {
+                                              if (!context.mounted) return;
+
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                const SnackBar(content: Text('Unexpected error occurred')),
+                                              );
+                                            }
+                                          },
+                                          text: 'Create Account',
+                                        ),
+
+                                        // Or
                                                 Padding(
                                                   padding: EdgeInsetsDirectional.fromSTEB(16, 15, 16, 15),
-                                      child: Text(
-                                        'Or',
-                                                      textAlign: TextAlign.center,
-                                          style: AppTextStyles.labelLarge(context),
-                                        ),
+                                                  child: Text(
+                                                    'Or',
+                                                    textAlign: TextAlign.center,
+                                                    style: AppTextStyles.labelLarge(context),
+                                                  ),
                                                 ),
 
-                                                // Button to create an account using Google
-                                    LightButton(
-                                      onPressed: () async {
-                                                      final authService = ref.read(authServiceProvider);
-                                                      await authService.signInWithGoogle();
-                                                    },
-                                                    text: 'Signup with Google',
-                                                    icon: FaIcon(
-                                                      FontAwesomeIcons.google,
-                                                      size: 15,
-                                                    ),
-                                                  ),
+                                        // Button to create an account using Google
+                                        LightButton(
+                                          onPressed: () async {
+                                            final authService = ref.read(authServiceProvider);
+                                            await authService.signInWithGoogle();
+                                          },
+                                          text: 'Signup with Google',
+                                          icon: FaIcon(
+                                            FontAwesomeIcons.google,
+                                            size: 15,
+                                          ),
+                                        ),
 
-                                                // Instructions to redirect to login
+                                        // Instructions to redirect to login
                                                 Padding(
                                                   padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
-                                      child: InkWell(
-                                        onTap: () async {
-                                                        context.goNamed('login');
-                                                      },
-                                                      child: RichText(
-                                                        textScaler: MediaQuery.of(context).textScaler,
-                                                        text: CustomTextSpan(
-                                              context,
-                                              children: [
-                                                            CustomTextSpan(
-                                                  context,
-                                                  text: 'Already have an account?  ',
-                                                            ),
-                                                            CustomTextSpan(
-                                                  context,
-                                                  text: 'Login here',
-                                                            )
-                                                          ],
-                                                        ),
+                                                  child: InkWell(
+                                                    onTap: () async {
+                                                      context.goNamed('login');
+                                                    },
+                                                    child: RichText(
+                                                      textScaler: MediaQuery
+                                                          .of(context)
+                                                          .textScaler,
+                                                      text: CustomTextSpan(
+                                                        context,
+                                                        children: [
+                                                          CustomTextSpan(
+                                                            context,
+                                                            text: 'Already have an account?  ',
+                                                          ),
+                                                          CustomTextSpan(
+                                                            context,
+                                                            text: 'Login here',
+                                                          )
+                                                        ],
                                                       ),
                                                     ),
+                                                  ),
                                                 ),
                                               ],
                                             ),
-                              ),
+                                          ),
+                                        ),
                             ),
                             ),
                             move: const MoveConfig(begin: Offset(0, 140)),

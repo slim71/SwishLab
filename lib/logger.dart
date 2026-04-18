@@ -9,25 +9,13 @@ class AppLogger {
 
   /// Must be called in main() before runApp()
   static Future<void> init() async {
-    if (kReleaseMode) {
-      // Only warnings + errors in release
-      _baseLogger = Logger(
-        level: Level.warning,
-        printer: SimplePrinter(),
-      );
-    } else {
-      // Everything in dev
-      _baseLogger = Logger(
-        level: Level.debug,
-        printer: PrettyPrinter(
-          methodCount: 0,
-          errorMethodCount: 5,
-          lineLength: 100,
-          colors: true,
-          printEmojis: true,
-        ),
-      );
-    }
+    _baseLogger = Logger(
+      level: kReleaseMode ? Level.warning : Level.debug,
+      printer: SimplePrinter(
+        colors: true,
+        printTime: true,
+      ),
+    );
   }
 
   /// Future remote logging hook

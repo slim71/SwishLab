@@ -71,6 +71,10 @@ class AppStateNotifier extends Notifier<AppState> {
   void setSessionInitialized(bool value) {
     state = state.copyWith(sessionInitialized: value);
   }
+
+  void reset() {
+    state = const AppState();
+  }
 }
 
 final appStateProvider =

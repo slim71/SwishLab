@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
+import 'package:swish_lab/constants.dart';
 import 'package:swish_lab/providers/supabase_provider.dart';
 
 /// Periodically checks whether the backend (Supabase) is reachable.
@@ -34,10 +37,16 @@ final backendReachabilityProvider = StreamProvider<bool>((ref) async* {
     bool current;
 
     try {
-      // lightweight ping
-      await supabase.from('users').select().limit(1); // TODO: consider adding a 1-row table for this
-      current = true;
-    } catch (_) {
+      final response = await http
+          .get(
+            Uri.parse('$supabaseDomain/rest/v1/'),
+          )
+          .timeout(const Duration(seconds: 3));
+
+      // If we get ANY response, backend is reachable
+      debugPrint('Reachability status code: ${response.statusCode}');
+      current = response.statusCode < 500;
+    } catch (e) {
       current = false;
     }
 

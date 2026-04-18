@@ -6,6 +6,8 @@ import 'package:swish_lab/providers/storage_providers.dart';
 import 'package:swish_lab/providers/supabase_provider.dart';
 import 'package:swish_lab/repositories/users_repository.dart';
 
+import 'auth_providers.dart';
+
 // Provider used to load data from the Users table in Supabase
 
 /// Repository provider (single source of truth)
@@ -18,12 +20,11 @@ final usersRepositoryProvider = Provider<UsersRepository>((ref) {
 /// Use for profile and app-related ops, and as foreign key for other DB tables.
 final appUserProvider = FutureProvider<UsersRow?>((ref) async {
   final repo = ref.watch(usersRepositoryProvider);
-  final supabase = ref.watch(supabaseProvider);
+  final user = ref.watch(authUserProvider);
 
-  final userId = supabase.auth.currentUser?.id;
-  if (userId == null) return null;
+  if (user == null) return null;
 
-  return repo.getUserRow(userId);
+  return repo.getUserRow(user.id);
 });
 
 /// Simple changes of the user's info

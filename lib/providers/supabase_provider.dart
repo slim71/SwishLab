@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:swish_lab/providers/auth_providers.dart';
 
+import '../state/app_state.dart';
+
 /// Supabase client: main entry point for interacting with Supabase services
 final supabaseProvider = Provider<SupabaseClient>((ref) {
   return Supabase.instance.client;
@@ -40,6 +42,8 @@ final supabaseAuthListenerProvider = Provider<void>((ref) {
 
       if (session?.accessToken == null) {
         notifier.setUnauthenticated();
+        // Reset app state on logout
+        ref.read(appStateProvider.notifier).reset();
       } else {
         notifier.setAuthenticated();
       }

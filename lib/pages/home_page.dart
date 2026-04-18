@@ -7,7 +7,6 @@ import 'package:swish_lab/models/statistics_row.dart';
 import 'package:swish_lab/models/users_row.dart';
 import 'package:swish_lab/providers/statistics_provider.dart';
 import 'package:swish_lab/providers/users_provider.dart';
-import 'package:swish_lab/state/app_state.dart';
 import 'package:swish_lab/styles/styles.dart';
 import 'package:swish_lab/styles/theme_manager.dart';
 import 'package:swish_lab/widgets/app_bar.dart';
@@ -35,12 +34,10 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     final logger = AppLogger.forClass(this);
-    final appState = ref.watch(appStateProvider);
-    final hasShootingHand =
-        (appState.userData?.shootingHand?.isNotEmpty ?? false);
-    final appColors = AppThemeManager.currentColors;
     final userInfoAsync = ref.watch(appUserProvider);
     final UsersRow? userInfo = userInfoAsync.value;
+    final hasShootingHand = (userInfo?.shootingHand?.isNotEmpty ?? false);
+    final appColors = AppThemeManager.currentColors;
     final statsAsync = ref.watch(userStatisticsProvider);
     final List<StatisticsRow> checkedForms = statsAsync.maybeWhen(
       data: (data) => data,

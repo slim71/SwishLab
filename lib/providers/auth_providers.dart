@@ -62,6 +62,8 @@ class AppAuthNotifier extends StateNotifier<AppAuthStatus> {
 /// Do NOT use this for routing decisions — prefer [appStatusProvider].
 final authUserProvider = Provider<User?>((ref) {
   final supabase = ref.watch(supabaseProvider);
+  // Watch appAuthStatusProvider to ensure this provider refreshes on auth changes
+  ref.watch(appAuthStatusProvider);
   return supabase.auth.currentUser;
 });
 

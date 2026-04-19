@@ -1,0 +1,73 @@
+repos:
+  - repo: local
+    hooks:
+      # Analyze (fast fail). WARNING: may miss cross-file issues (rare, but possible)
+      - id: flutter-analyze-incremental
+        name: flutter analyze (staged files)
+        entry: |
+          bash -c '
+            if [ "$#" -eq 0 ]; then
+              exit 0
+            fi
+            flutter analyze --no-fatal-infos --no-fatal-warnings "$@"
+          '
+        language: system
+        files: \.dart$
+        stages: [ pre-commit ]
+
+      # Auto-fix Dart issues (only on staged Dart files)
+      - id: dart-fix
+        name: dart fix (staged files only)
+        entry: bash -c 'dart fix --apply "$@"'
+        language: system
+        files: \.dart$
+        stages: [ pre-commit ]
+
+      # Auto-format staged Dart files (only run if .dart files changed)
+      - id: dart-format-smart
+        name: dart format (auto-fix + require review)
+        entry: |
+          bash -c '
+            dart format -l 120 "$@" &&
+            git diff --quiet -- "$@" || {
+              echo "❌ Dart formatting was applied."
+              echo "👉 Review changes, then run: git add ."
+              # git add "$@"   # <-- uncomment to auto-stage in future
+              exit 1
+            }
+          '
+        language: system
+        files: \.dart$
+        stages: [ pre-commit ]
+
+      # Check tests on push
+      - id: flutter-test
+        name: flutter test
+        entry: flutter test
+        language: system
+        pass_filenames: false
+        stages: [ pre-push ]
+
+      # Full analysis on push, to make sure not to miss anything
+      - id: flutter-analyze-full
+        name: flutter analyze (full project)
+        entry: flutter analyze
+        language: system
+        pass_filenames: false
+        stages: [ pre-push ]
+
+  # -------------------------------
+  # Generic useful hooks
+  # -------------------------------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: trailing-whitespace
+      - id: mixed-line-ending
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: detect-private-key
+
+      # Format JSON files automatically
+      - id: pretty-format-json
+        args: [ "--autofix" ]

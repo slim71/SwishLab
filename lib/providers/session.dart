@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
+import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:swish_lab/providers/supabase_provider.dart';
 import 'package:swish_lab/providers/users_provider.dart';
@@ -8,33 +9,28 @@ import 'package:swish_lab/router/central_routing.dart' show rootNavigatorKey;
 import 'package:swish_lab/state/app_state.dart';
 import 'package:swish_lab/styles/styles.dart';
 
+import '../logger.dart';
+
 /// Helper provider to feed the BuildContext
 final navigationContextProvider = StateProvider<BuildContext?>((ref) => null);
 
 /// Handles one-time session initialization tasks for the current user
 final sessionBootstrapProvider = Provider<void>((ref) {
-  final appState = ref.read(appStateProvider);
   final userAsync = ref.watch(appUserProvider);
 
   userAsync.whenData((user) {
     if (user == null) return;
 
     // Only run if session not yet initialized
-    if (appState.sessionInitialized) return;
+    final sessionInitialized = ref.read(appStateProvider).sessionInitialized;
+    if (sessionInitialized) return;
 
     // Show dialog AFTER build frame
     if (user.shootingHand?.isEmpty ?? true) {
       Future.microtask(() async {
-        // You can pass BuildContext via ref if you wrap this in a widget
-        final context = ref.read(navigationContextProvider);
-        if (context != null) {
-          await _showInfoDialog(
-            'One quick step before you continue: tell us your shooting hand.',
-          );
-        }
-
-        // Navigate after the dialog is closed
-        // _rootNavigatorKey.currentState?.pushNamed(UserDataWidget.routeName);
+        await _showInfoDialog(
+          'One quick step before you continue: tell us your shooting hand.',
+        );
       });
     }
 
@@ -46,6 +42,7 @@ final sessionBootstrapProvider = Provider<void>((ref) {
 /// Helper function to show a custom dialog
 Future<void> _showInfoDialog(String msg) async {
   final context = rootNavigatorKey.currentContext;
+  final logger = AppLogger.scope('Shooting hand dialog');
   if (context == null) return; // safety
 
   return showDialog(
@@ -55,7 +52,10 @@ Future<void> _showInfoDialog(String msg) async {
       content: Text(msg, style: AppTextStyles.bodyLarge(context, color: Colors.black)),
       actions: [
         TextButton(
-          onPressed: () => Navigator.pop(ctx),
+          onPressed: () async {
+            logger.d('Navigating...');
+            context.goNamed('user');
+          },
           child: const Text('Ok'),
         ),
       ],

@@ -36,6 +36,7 @@ class _SwishLabState extends ConsumerState<SwishLab> {
     final router = ref.watch(routerProvider);
     final title = ref.watch(appTitleProvider);
     ref.watch(supabaseAuthListenerProvider); // triggers creation
+    ref.watch(sessionBootstrapProvider); // triggers shooting hand check
 
     // Listener to add the user to the DB
     ref.listen<AsyncValue<Session?>>(

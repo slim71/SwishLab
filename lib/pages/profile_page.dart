@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:swish_lab/constants.dart';
 import 'package:swish_lab/functions/add_animation.dart';
-import 'package:swish_lab/models/statistics_row.dart';
 import 'package:swish_lab/models/users_row.dart';
+import 'package:swish_lab/providers/statistics_provider.dart';
 import 'package:swish_lab/providers/users_provider.dart';
 import 'package:swish_lab/styles/styles.dart';
 import 'package:swish_lab/styles/theme_manager.dart';
@@ -21,9 +21,6 @@ class ProfilePage extends ConsumerStatefulWidget {
 }
 
 class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderStateMixin {
-  // Stores action output result for [Backend Call - Query Rows] action in ProfilePage widget.
-  List<StatisticsRow>? statisticsDataDecreasing;
-
   @override
   void initState() {
     super.initState();
@@ -34,6 +31,12 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
     final appColors = AppThemeManager.currentColors;
     final userInfoAsync = ref.watch(appUserProvider);
     final UsersRow? userInfo = userInfoAsync.value;
+
+    final statsAsync = ref.watch(userStatisticsProvider);
+    final statisticsDataDecreasing = statsAsync.maybeWhen(
+      data: (data) => data.reversed.toList(),
+      orElse: () => null,
+    );
 
     return GestureDetector(
       onTap: () {

@@ -48,6 +48,6 @@ linter:
     use_super_parameters: true
 
     # Dependencies / streams
-    sort_pub_dependencies: true
+    sort_pub_dependencies: false
     cancel_subscriptions: true
     close_sinks: true

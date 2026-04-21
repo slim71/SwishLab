@@ -1,6 +1,8 @@
 repos:
   - repo: local
     hooks:
+      ############# COMMIT hooks ####################
+
       # Analyze (fast fail). WARNING: may miss cross-file issues (rare, but possible)
       - id: flutter-analyze-incremental
         name: flutter analyze
@@ -41,6 +43,8 @@ repos:
         language: system
         files: ^(lib|test)/.*\.dart$
         stages: [ pre-commit ]
+
+      ############# PUSH hooks ####################
 
       # Check tests on push
       - id: flutter-test

@@ -1,9 +1,10 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:swish_lab/api/api_client.dart';
-import 'package:swish_lab/models/analysis_response.dart';
-import 'package:swish_lab/models/results_response.dart';
+
+import '../models/analysis_response.dart';
+import '../models/results_response.dart';
+import 'api_client.dart';
 
 class EndpointAddressApi {
   final ApiClient _client;
@@ -19,7 +20,7 @@ class EndpointAddressApi {
     required String shootingHand,
     required String pointOfView,
   }) async {
-    final response = await _client.dio.post(
+    final response = await _client.dio.post<Map<String, dynamic>>(
       '/gradio_api/call/api_endpoint',
       data: {
         // JSON body
@@ -37,7 +38,7 @@ class EndpointAddressApi {
         ]
       },
     );
-    return AnalysisResponse.fromJson(response.data);
+    return AnalysisResponse.fromJson(response.data as Map<String, dynamic>);
   }
 
   /// --------------------------------

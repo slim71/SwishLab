@@ -3,24 +3,26 @@ repos:
     hooks:
       # Analyze (fast fail). WARNING: may miss cross-file issues (rare, but possible)
       - id: flutter-analyze-incremental
-        name: flutter analyze (staged files)
+        name: flutter analyze
         entry: |
           bash -c '
             if [ "$#" -eq 0 ]; then
               exit 0
             fi
-            flutter analyze --no-fatal-infos --no-fatal-warnings "$@"
+            flutter analyze | tr "\\\\" "/"
           '
         language: system
-        files: \.dart$
+        pass_filenames: false
+        files: ^(lib|test)/.*\.dart$
         stages: [ pre-commit ]
 
       # Auto-fix Dart issues (only on staged Dart files)
       - id: dart-fix
-        name: dart fix (staged files only)
-        entry: bash -c 'dart fix --apply "$@"'
+        name: dart fix (project-wide)
+        entry: dart fix --apply
         language: system
-        files: \.dart$
+        pass_filenames: false
+        files: ^(lib|test)/.*\.dart$
         stages: [ pre-commit ]
 
       # Auto-format staged Dart files (only run if .dart files changed)
@@ -37,7 +39,7 @@ repos:
             }
           '
         language: system
-        files: \.dart$
+        files: ^(lib|test)/.*\.dart$
         stages: [ pre-commit ]
 
       # Check tests on push
@@ -66,8 +68,8 @@ repos:
       - id: mixed-line-ending
       - id: end-of-file-fixer
       - id: check-yaml
+      - id: check-toml
+      - id: check-xml
       - id: detect-private-key
-
-      # Format JSON files automatically
       - id: pretty-format-json
         args: [ "--autofix" ]

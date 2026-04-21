@@ -5,7 +5,7 @@ class AnalysisResponse {
 
   factory AnalysisResponse.fromJson(Map<String, dynamic> json) {
     return AnalysisResponse(
-      eventId: json['event_id'],
+      eventId: json['event_id'] as String,
     );
   }
 }

@@ -6,17 +6,18 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:swish_lab/functions/add_animation.dart';
-import 'package:swish_lab/providers/users_provider.dart';
-import 'package:swish_lab/state/app_state.dart';
-import 'package:swish_lab/styles/styles.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
-import 'package:swish_lab/widgets/app_bar.dart';
-import 'package:swish_lab/widgets/background.dart';
-import 'package:swish_lab/widgets/dark_button.dart';
-import 'package:swish_lab/widgets/input_field.dart';
-import 'package:swish_lab/widgets/light_button.dart';
-import 'package:swish_lab/widgets/transparent_button.dart';
+
+import '../functions/add_animation.dart';
+import '../providers/users_provider.dart';
+import '../state/app_state.dart';
+import '../styles/styles.dart';
+import '../styles/theme_manager.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/background.dart';
+import '../widgets/dark_button.dart';
+import '../widgets/input_field.dart';
+import '../widgets/light_button.dart';
+import '../widgets/transparent_button.dart';
 
 /// Page where the user can change their profile picture
 class ProfilePicturePage extends ConsumerStatefulWidget {
@@ -131,7 +132,7 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
             'Invalid image format. Please select another one',
             style: TextStyle(color: AppThemeManager.primaryText),
           ),
-          duration: Duration(milliseconds: 4000),
+          duration: const Duration(milliseconds: 4000),
           backgroundColor: AppThemeManager.primaryBackground,
         ),
       );
@@ -167,7 +168,7 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        appBar: MyAppBar(
+        appBar: const MyAppBar(
           title: 'Profile Picture',
           style: MyAppBarStyle.backButtonTitleCentered,
         ),
@@ -177,293 +178,291 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
               // Container used to have a colored background
               Background(
             child: Padding(
-                      padding: EdgeInsets.all(24),
+              padding: const EdgeInsets.all(24),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            // Column containing the profile picture
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // Column containing the profile picture
                   Column(
                     mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  // Container for the profile picture
+                    children: [
+                      // Container for the profile picture
                       Container(
                         width: 200,
-                                      height: 200,
-                                      decoration: BoxDecoration(
+                        height: 200,
+                        decoration: BoxDecoration(
                           color: AppThemeManager.secondaryBackground,
                           shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: appColors.alternateTwo,
-                                          width: 3,
-                                        ),
-                                      ),
-                                      child:
-                                          // Stack to have multiple image uploads widgets together
+                          border: Border.all(
+                            color: appColors.alternateTwo,
+                            width: 3,
+                          ),
+                        ),
+                        child:
+                            // Stack to have multiple image uploads widgets together
                             Stack(
                           children: [
-                                            // Circle image for local file
-                                            if (imgNetwork == null || imgNetwork == '')
+                            // Circle image for local file
+                            if (imgNetwork == null || imgNetwork == '')
                               InkWell(
                                 onTap: pickLocalImage,
-                                                  child: Container(
-                                                    width: 200,
-                                                    height: 200,
-                                                    clipBehavior: Clip.antiAlias,
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    child: Image.memory(
-                                                      imgLocalBytes!,
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                                  ),
-                                                ),
-
-                                            // Circle image for a remote image
-                                      if (imgNetwork != null && imgNetwork != '')
-                              InkWell(
-                                onTap: pickLocalImage,
-                                            child: Container(
-                                              width: 200,
-                                              height: 200,
-                                              clipBehavior: Clip.antiAlias,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                              ),
-                                              child: Image.network(
-                                                imgNetwork!,
-                                                fit: BoxFit.cover,
-                                                loadingBuilder: (context, child, loadingProgress) {
-                                                  if (loadingProgress == null) return child;
-                                                  return const Center(child: CircularProgressIndicator());
-                                                },
-                                                errorBuilder: (_, __, ___) =>
-                                                    Image.asset(
-                                                      'assets/images/error_image.jpg',
-                                                      fit: BoxFit.cover,
-                                                    ),
-                                              ),
-                                            ),
-                                          ),
-                                    ],
+                                child: Container(
+                                  width: 200,
+                                  height: 200,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
                                   ),
+                                  child: Image.memory(
+                                    imgLocalBytes!,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+
+                            // Circle image for a remote image
+                            if (imgNetwork != null && imgNetwork != '')
+                              InkWell(
+                                onTap: pickLocalImage,
+                                child: Container(
+                                  width: 200,
+                                  height: 200,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Image.network(
+                                    imgNetwork!,
+                                    fit: BoxFit.cover,
+                                    loadingBuilder: (context, child, loadingProgress) {
+                                      if (loadingProgress == null) return child;
+                                      return const Center(child: CircularProgressIndicator());
+                                    },
+                                    errorBuilder: (_, __, ___) => Image.asset(
+                                      'assets/images/error_image.jpg',
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
                       ),
                       const SizedBox(height: 24),
 
-                                  // Instructions on how to select a picture
+                      // Instructions on how to select a picture
                       Text(
                         'Tap to select a picture',
-                                      textAlign: TextAlign.center,
+                        textAlign: TextAlign.center,
                         style: AppTextStyles.bodyMedium(context),
                       ),
-                                ],
-                              ),
-                            const SizedBox(height: 32),
+                    ],
+                  ),
+                  const SizedBox(height: 32),
 
-                            // Options to choose a profile picture
+                  // Options to choose a profile picture
                   Column(
                     mainAxisSize: MainAxisSize.max,
-                          children: [
-                            // Container with picture selection options
+                    children: [
+                      // Container with picture selection options
                       Container(
                         width: double.infinity,
-                                decoration: BoxDecoration(
+                        decoration: BoxDecoration(
                           color: AppThemeManager.secondaryBackground,
                           borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(
-                                    color: appColors.altContBorders,
-                                    width: 1,
-                                  ),
-                                ),
-                                child:
-                                // Column to have a structure for picture selection options
-                                Padding(
-                                  padding: EdgeInsets.all(16),
+                          border: Border.all(
+                            color: appColors.altContBorders,
+                            width: 1,
+                          ),
+                        ),
+                        child:
+                            // Column to have a structure for picture selection options
+                            Padding(
+                          padding: const EdgeInsets.all(16),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        // Simple text to guide picture selection
+                            children: [
+                              // Simple text to guide picture selection
                               Text(
                                 'Select Image Source',
                                 style: AppTextStyles.labelMedium(context),
                               ),
-                                        const SizedBox(height: 12),
+                              const SizedBox(height: 12),
 
-                                              // Row containing selection options
+                              // Row containing selection options
                               Row(
                                 mainAxisSize: MainAxisSize.max,
-                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                  children: [
-                                                    // Button to choose a local picture
-                                                    Expanded(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  // Button to choose a local picture
+                                  Expanded(
                                     child: TransparentButton(
                                       onPressed: pickLocalImage,
-                                                          text: 'From Device',
-                                                          icon: Icon(
-                                                            Icons.photo_library_outlined,
-                                                            size: 15,
-                                                          ),
-                                                        ),
-                                                    ),
+                                      text: 'From Device',
+                                      icon: const Icon(
+                                        Icons.photo_library_outlined,
+                                        size: 15,
+                                      ),
+                                    ),
+                                  ),
 
-                                                    // Button to show the URL field for a remote picture
-                                              Expanded(
+                                  // Button to show the URL field for a remote picture
+                                  Expanded(
                                     child: TransparentButton(
                                       onPressed: () async {
-                                                      showUrlField = !showUrlField;
-                                                      setState(() {});
-                                                    },
-                                                    text: 'From URL',
-                                                    icon: Icon(
-                                                      Icons.link_rounded,
-                                                      size: 15,
-                                                    ),
-                                                  ),
-                                              ),
-                                            ],
-                                          ),
-                                      ],
+                                        showUrlField = !showUrlField;
+                                        setState(() {});
+                                      },
+                                      text: 'From URL',
+                                      icon: const Icon(
+                                        Icons.link_rounded,
+                                        size: 15,
+                                      ),
                                     ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       const SizedBox(height: 16),
 
-                                  // Container with the URL field
-                                  if (showUrlField == true)
+                      // Container with the URL field
+                      if (showUrlField == true)
                         addAnimation(
                           widget: Container(
                             width: double.infinity,
-                                        decoration: BoxDecoration(
+                            decoration: BoxDecoration(
                               color: AppThemeManager.secondaryBackground,
                               borderRadius: BorderRadius.circular(12),
-                                          border: Border.all(
-                                            color: appColors.altContBorders,
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child:
-                                            // Column with the URL field
-                                            Padding(
-                                          padding: EdgeInsets.all(16),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                // Text to guide the URL insertion
-                                Text(
-                                  'Enter Image URL',
+                              border: Border.all(
+                                color: appColors.altContBorders,
+                                width: 1,
+                              ),
+                            ),
+                            child:
+                                // Column with the URL field
+                                Padding(
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  // Text to guide the URL insertion
+                                  Text(
+                                    'Enter Image URL',
                                     style: AppTextStyles.labelMedium(context),
                                   ),
-                                                const SizedBox(height: 12),
+                                  const SizedBox(height: 12),
 
-                                                // Field where to put the image URL
-                                          Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                  child: InputField(
-                                    label: 'https://example.com/image.jpg',
-                                                controller: urlFieldTextController,
-                                                focusNode: urlFieldFocusNode,
-                                                autofillHints: [AutofillHints.url],
-                                                validator: (value) =>
-                                                    urlFieldTextControllerValidator.call(context, value),
-                                              ),
-                                          ),
-                                          const SizedBox(height: 12),
+                                  // Field where to put the image URL
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                    child: InputField(
+                                      label: 'https://example.com/image.jpg',
+                                      controller: urlFieldTextController,
+                                      focusNode: urlFieldFocusNode,
+                                      autofillHints: const [AutofillHints.url],
+                                      validator: (value) => urlFieldTextControllerValidator.call(context, value),
+                                    ),
+                                  ),
+                                  const SizedBox(height: 12),
 
-                                                // Button to load the image pointed by the URL
-                                DarkButton(
-                                  onPressed: () async {
-                                                      final url = urlFieldTextController.text.trim();
+                                  // Button to load the image pointed by the URL
+                                  DarkButton(
+                                    onPressed: () async {
+                                      final url = urlFieldTextController.text.trim();
 
-                                                      if (!isValidImageUrl(url)) {
-                                                  // optionally show a SnackBar
-                                                  return;
-                                                }
+                                      if (!isValidImageUrl(url)) {
+                                        // optionally show a SnackBar
+                                        return;
+                                      }
 
-                                                      setState(() {
-                                                        imgNetwork = url;
-                                                        imgLocal = null;
-                                                        imgLocalBytes = null;
-                                                      });
-                                                    },
-                                                    text: 'Load Image From URL',
-                                                  ),
-                                              ],
-                                            ),
-                          ),
+                                      setState(() {
+                                        imgNetwork = url;
+                                        imgLocal = null;
+                                        imgLocalBytes = null;
+                                      });
+                                    },
+                                    text: 'Load Image From URL',
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                           withFade: false,
                           move: const MoveConfig(begin: Offset(0, -20)),
                         ),
-                                ],
-                              ),
-                            const SizedBox(height: 32),
+                    ],
+                  ),
+                  const SizedBox(height: 32),
 
-                            // Row with action buttons
+                  // Row with action buttons
                   Row(
                     mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            // Button to cancel the operation and navigate back
-                            Expanded(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      // Button to cancel the operation and navigate back
+                      Expanded(
                         child: LightButton(
                           onPressed: () async {
-                                    context.pop();
-                                  },
-                                  text: 'Cancel',
-                                ),
-                            ),
-                            const SizedBox(width: 16),
+                            context.pop();
+                          },
+                          text: 'Cancel',
+                        ),
+                      ),
+                      const SizedBox(width: 16),
 
-                                  // Button to confirm the choice and upload the profile picture
-                                  Expanded(
+                      // Button to confirm the choice and upload the profile picture
+                      Expanded(
                         child: DarkButton(
                           onPressed: () async {
-                                          final userInfoAsync = ref.read(appUserProvider);
-                                          final user = userInfoAsync.value;
+                            final userInfoAsync = ref.read(appUserProvider);
+                            final user = userInfoAsync.value;
 
-                                          if (user == null) return;
+                            if (user == null) return;
 
-                                          setState(() => isDataUploading = true);
+                            setState(() => isDataUploading = true);
 
-                                          try {
-                                      final useCase = ref.read(changeProfilePictureProvider);
+                            try {
+                              final useCase = ref.read(changeProfilePictureProvider);
 
-                                            final newUrl = await useCase.execute(
-                                              userId: user.id,
-                                              localFile: imgLocal,
-                                              networkUrl: imgNetwork,
-                                            );
+                              final newUrl = await useCase.execute(
+                                userId: user.id,
+                                localFile: imgLocal,
+                                networkUrl: imgNetwork,
+                              );
 
-                                            ref.read(appStateProvider.notifier).setUserData(
-                                        appState.userData!.copyWith(profilePicture: newUrl),
-                                      );
+                              ref.read(appStateProvider.notifier).setUserData(
+                                    appState.userData!.copyWith(profilePicture: newUrl),
+                                  );
 
-                                            if (!context.mounted) return;
-                                            context.goNamed('home');
-                                          } catch (e) {
-                                            ScaffoldMessenger.of(context)
-                                              ..hideCurrentSnackBar()
-                                              ..showSnackBar(
-                                                const SnackBar(
-                                                  content: Text('Error uploading profile picture'),
-                                                  backgroundColor: Colors.red,
-                                                ),
-                                              );
-                                          } finally {
-                                            if (mounted) {
-                                              setState(() => isDataUploading = false);
-                                            }
-                                          }
-                                        },
-                                        text: 'Save Picture',
-                                      ),
+                              if (!context.mounted) return;
+                              context.goNamed('home');
+                            } catch (e) {
+                              ScaffoldMessenger.of(context)
+                                ..hideCurrentSnackBar()
+                                ..showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Error uploading profile picture'),
+                                    backgroundColor: Colors.red,
                                   ),
-                                ],
-                              ),
-                          ],
+                                );
+                            } finally {
+                              if (mounted) {
+                                setState(() => isDataUploading = false);
+                              }
+                            }
+                          },
+                          text: 'Save Picture',
                         ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),

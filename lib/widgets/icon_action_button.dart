@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
+
+import '../styles/theme_manager.dart';
 
 class IconActionButton extends StatelessWidget {
   final IconData icon;
@@ -39,27 +40,27 @@ class IconActionButton extends StatelessWidget {
           final appColors = AppThemeManager.currentColors;
 
           return Container(
-                width: size,
-                height: size,
-                decoration: BoxDecoration(
-                  color: backgroundColor,
-                  shape: shape,
-                  border: wrapped
-                      ? Border.all(
+            width: size,
+            height: size,
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              shape: shape,
+              border: wrapped
+                  ? Border.all(
                       color: appColors.actionButtonBorders,
                       width: borderWidth,
-                        )
-                      : null,
-                ),
-                child: IconButton(
-                  onPressed: onPressed,
-                  iconSize: iconSize,
-                  color: iconColor ?? AppThemeManager.primaryText,
-                  icon: Icon(icon),
-                  padding: padding,
-                  alignment: alignment,
-                  splashRadius: size / 2,
-                ),
+                    )
+                  : null,
+            ),
+            child: IconButton(
+              onPressed: onPressed,
+              iconSize: iconSize,
+              color: iconColor ?? AppThemeManager.primaryText,
+              icon: Icon(icon),
+              padding: padding,
+              alignment: alignment,
+              splashRadius: size / 2,
+            ),
           );
         });
   }

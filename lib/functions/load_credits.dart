@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:http/http.dart' as http;
-import 'package:swish_lab/constants.dart';
-import 'package:swish_lab/logger.dart';
-import 'package:swish_lab/models/credit_item.dart';
+
+import '../constants.dart';
+import '../logger.dart';
+import '../models/credit_item.dart';
 
 final creditsLogger = AppLogger.scope('Credits');
 

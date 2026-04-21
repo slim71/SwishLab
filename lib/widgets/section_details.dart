@@ -3,9 +3,10 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:swish_lab/styles/styles.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
-import 'package:swish_lab/widgets/dynamic_icon_image.dart';
+
+import '../styles/styles.dart';
+import '../styles/theme_manager.dart';
+import 'dynamic_icon_image.dart';
 
 /// Custom bottom sheet to show more details of the section the user clicked
 /// on
@@ -48,13 +49,13 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                   children: [
                     // Container for the actual bottom sheet
                     Align(
-                      alignment: AlignmentDirectional(0, 1),
+                      alignment: const AlignmentDirectional(0, 1),
                       child: Container(
                         width: double.infinity,
                         height: sheetHeight,
                         decoration: BoxDecoration(
                           color: AppThemeManager.primaryBackground,
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(0),
                             bottomRight: Radius.circular(0),
                             topLeft: Radius.circular(40),
@@ -83,7 +84,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                     gradient: appColors.gradientBackground(),
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                       bottomLeft: Radius.circular(0),
                                       bottomRight: Radius.circular(0),
                                       topLeft: Radius.circular(25),
@@ -96,7 +97,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                     onTap: () async {
                                       Navigator.pop(context);
                                     },
-                                    child: Row(
+                                    child: const Row(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -129,7 +130,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                       children: [
                                         // Details section title
                                         Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                                          padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                                           child: Text(
                                             'Details',
                                             style: AppTextStyles.titleLarge(context),
@@ -153,7 +154,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                         child:
                                             // Wrap to dynamically generate content for the Details section
                                             Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                                          padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                                           child: Builder(
                                             builder: (context) {
                                               final List<dynamic> sectionFields =
@@ -173,12 +174,12 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                   return
                                                       // Row to place details of an item
                                                       Padding(
-                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                                                     child: Row(
                                                       mainAxisSize: MainAxisSize.max,
                                                       mainAxisAlignment: MainAxisAlignment.start,
-                                                        children: [
-                                                          // Row to place the item's icon and name
+                                                      children: [
+                                                        // Row to place the item's icon and name
                                                         Row(
                                                           mainAxisSize: MainAxisSize.max,
                                                           children: [
@@ -194,18 +195,18 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                             ),
 
                                                             // Item's name
-                                                              Padding(
-                                                                padding: EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                                                                child: Text(
-                                                                  sectionFieldsItem['name']?.toString() ?? '',
+                                                            Padding(
+                                                              padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                                                              child: Text(
+                                                                sectionFieldsItem['name']?.toString() ?? '',
                                                                 style: AppTextStyles.bodyMedium(context),
                                                               ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                          const SizedBox(width: 20),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        const SizedBox(width: 20),
 
-                                                          // Row to place an item's value and unit
+                                                        // Row to place an item's value and unit
                                                         Row(
                                                           mainAxisSize: MainAxisSize.max,
                                                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -227,7 +228,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                         ),
                                                         const SizedBox(width: 20),
 
-                                                          // Row to place the considered range of the item's value
+                                                        // Row to place the considered range of the item's value
                                                         Row(
                                                           mainAxisSize: MainAxisSize.max,
                                                           children: [
@@ -239,7 +240,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                           ],
                                                         ),
                                                       ],
-                                                      ),
+                                                    ),
                                                   );
                                                 }),
                                               );
@@ -256,7 +257,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                       children: [
                                         // Scores section title
                                         Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                                          padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                                           child: Text(
                                             'Scores',
                                             style: AppTextStyles.titleLarge(context),
@@ -280,7 +281,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                         child:
                                             // Wrap to dynamically generate content for the Scores section
                                             Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                                          padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                                           child: Builder(
                                             builder: (context) {
                                               final scoresJson = (widget.sectionJson['scores'] as List<dynamic>?) ?? [];
@@ -299,15 +300,15 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                   return
                                                       // Container to place each feedback item
                                                       Padding(
-                                                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                                                     child: Container(
-                                                      decoration: BoxDecoration(),
+                                                      decoration: const BoxDecoration(),
                                                       child: Column(
-                                                          mainAxisSize: MainAxisSize.max,
-                                                          children: [
-                                                            // Row to place the score of an item
-                                                            Padding(
-                                                              padding: EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                                                        mainAxisSize: MainAxisSize.max,
+                                                        children: [
+                                                          // Row to place the score of an item
+                                                          Padding(
+                                                            padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
                                                             child: Row(
                                                               mainAxisSize: MainAxisSize.max,
                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -329,17 +330,16 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                     ),
 
                                                                     // Item's name
-                                                                      Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            5, 0, 0, 0),
-                                                                        child: Text(
-                                                                          scoresJsonItem['name']?.toString() ??
-                                                                              '',
+                                                                    Padding(
+                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          5, 0, 0, 0),
+                                                                      child: Text(
+                                                                        scoresJsonItem['name']?.toString() ?? '',
                                                                         style: AppTextStyles.bodyMedium(context),
                                                                       ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
+                                                                    ),
+                                                                  ],
+                                                                ),
 
                                                                 // Row to place the actual score for this category
                                                                 Row(
@@ -352,28 +352,28 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                     ),
 
                                                                     // Star icon
-                                                                      Padding(
-                                                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            5, 0, 0, 0),
-                                                                        child: SizedBox(
+                                                                    const Padding(
+                                                                      padding:
+                                                                          EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                                                                      child: SizedBox(
+                                                                        width: 20,
+                                                                        height: 20,
+                                                                        child: DynamicIconImage(
                                                                           width: 20,
                                                                           height: 20,
-                                                                          child: DynamicIconImage(
-                                                                            width: 20,
-                                                                            height: 20,
-                                                                            imageName: 'star',
-                                                                          ),
+                                                                          imageName: 'star',
                                                                         ),
                                                                       ),
-                                                                    ],
-                                                                  ),
-                                                                ],
-                                                              ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ],
                                                             ),
+                                                          ),
 
-                                                            // Row to place the feedback text
-                                                            Padding(
-                                                              padding: EdgeInsetsDirectional.fromSTEB(25, 0, 0, 0),
+                                                          // Row to place the feedback text
+                                                          Padding(
+                                                            padding: const EdgeInsetsDirectional.fromSTEB(25, 0, 0, 0),
                                                             child: Row(
                                                               mainAxisSize: MainAxisSize.max,
                                                               children: [
@@ -396,7 +396,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                       child:
                                                                           // Feedback related to the user's score for this category
                                                                           Padding(
-                                                                        padding: EdgeInsets.all(5),
+                                                                        padding: const EdgeInsets.all(5),
                                                                         child: Text(
                                                                           'Some feedback to download or I don\'t know how to gather',
                                                                           textAlign: TextAlign.start,
@@ -409,9 +409,9 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                               ],
                                                             ),
                                                           ),
-                                                          ],
-                                                        ),
+                                                        ],
                                                       ),
+                                                    ),
                                                   );
                                                 }),
                                               );

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
-import 'package:swish_lab/models/analysis_state.dart';
-import 'package:swish_lab/providers/shooting_analysis_provider.dart';
-import 'package:swish_lab/styles/styles.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
-import 'package:swish_lab/widgets/background.dart';
-import 'package:swish_lab/widgets/transparent_button.dart';
+
+import '../models/analysis_state.dart';
+import '../providers/shooting_analysis_provider.dart';
+import '../styles/styles.dart';
+import '../styles/theme_manager.dart';
+import '../widgets/background.dart';
+import '../widgets/transparent_button.dart';
 
 class ProcessingVideo extends ConsumerStatefulWidget {
   const ProcessingVideo({super.key});
@@ -34,7 +35,7 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
         }
 
         if (next is AnalysisFailure) {
-          showDialog(
+          showDialog<void>(
             context: context,
             builder: (_) => AlertDialog(
               title: const Text('Analysis failed'),
@@ -76,7 +77,7 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
               child:
                   // Column to place the content for the loading page
                   Padding(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -93,7 +94,7 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
 
                     // "Processing Video" text
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
                       child: Text(
                         'Processing Video',
                         style: AppTextStyles.headlineLarge(context),
@@ -102,7 +103,7 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
 
                     // Text to ask the user to wait a bit
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(32, 8, 32, 0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(32, 8, 32, 0),
                       child: Text(
                         'Please wait while we prepare your video',
                         textAlign: TextAlign.center,
@@ -112,7 +113,7 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
 
                     // Container used to place a custom divider
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
                       child: Container(
                         width: 240,
                         height: 8,
@@ -135,7 +136,7 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
 
                     // Text stating that the loading might take a while
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(32, 24, 32, 0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(32, 24, 32, 0),
                       child: Text(
                         'This may take a moment depending on the video size',
                         textAlign: TextAlign.center,
@@ -145,7 +146,7 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
 
                     // Back button to stop waiting and discard results
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 48, 0, 0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(0, 48, 0, 0),
                       child: TransparentButton(
                         onPressed: () async {
                           context.pop();

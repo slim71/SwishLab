@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:swish_lab/styles/styles.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
+
+import '../styles/styles.dart';
+import '../styles/theme_manager.dart';
 
 class DarkButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -31,31 +32,31 @@ class DarkButton extends StatelessWidget {
               color: Colors.transparent,
               child: ElevatedButton(
                 onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: appColors.darkButtonBackground,
-        elevation: 10,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          side: BorderSide(
-            color: appColors.darkButtonBorders,
-            width: 2,
-          ),
-        ),
-        fixedSize: Size.fromHeight(height),
-        padding: padding,
-      ),
-      child: Row(mainAxisSize: MainAxisSize.min, children: [
-        if (icon != null)
-          Padding(
-            padding: iconPadding,
-            child: icon,
-          ),
-        if (icon != null) const SizedBox(width: 8),
-        Text(
-          text,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: appColors.darkButtonBackground,
+                  elevation: 10,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
+                    side: BorderSide(
+                      color: appColors.darkButtonBorders,
+                      width: 2,
+                    ),
+                  ),
+                  fixedSize: Size.fromHeight(height),
+                  padding: padding,
+                ),
+                child: Row(mainAxisSize: MainAxisSize.min, children: [
+                  if (icon != null)
+                    Padding(
+                      padding: iconPadding,
+                      child: icon,
+                    ),
+                  if (icon != null) const SizedBox(width: 8),
+                  Text(
+                    text,
                     style: AppTextStyles.titleLarge(context, color: appColors.darkButtonTextColor),
                   ),
-      ]),
+                ]),
               ));
         });
   }

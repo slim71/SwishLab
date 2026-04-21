@@ -1,7 +1,8 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
+
+import 'styles/theme_manager.dart';
 
 const String kDefaultResultsJson = '''
 {

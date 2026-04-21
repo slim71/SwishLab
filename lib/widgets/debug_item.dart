@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:swish_lab/styles/styles.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
-import 'package:swish_lab/widgets/box_with_shadow.dart';
-import 'package:swish_lab/widgets/dark_button.dart';
+
+import '../styles/styles.dart';
+import '../styles/theme_manager.dart';
+import 'box_with_shadow.dart';
+import 'dark_button.dart';
 
 class DebugItem extends StatelessWidget {
   const DebugItem({

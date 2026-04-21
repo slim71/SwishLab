@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:swish_lab/constants.dart';
-import 'package:swish_lab/models/custom_enums.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
+
+import '../constants.dart';
+import '../models/custom_enums.dart';
+import '../styles/theme_manager.dart';
 
 /// Widget to upload an asset based on the supplied string.
 ///

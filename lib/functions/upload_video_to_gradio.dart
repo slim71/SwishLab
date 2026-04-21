@@ -3,8 +3,9 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:path/path.dart' as path;
-import 'package:swish_lab/constants.dart';
-import 'package:swish_lab/logger.dart';
+
+import '../constants.dart';
+import '../logger.dart';
 
 final uploadLogger = AppLogger.scope('Credits');
 

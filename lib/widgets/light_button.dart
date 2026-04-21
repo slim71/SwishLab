@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:swish_lab/styles/styles.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
+
+import '../styles/styles.dart';
+import '../styles/theme_manager.dart';
 
 class LightButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -35,7 +36,7 @@ class LightButton extends StatelessWidget {
                   backgroundColor: appColors.lightButtonBackground,
                   elevation: 10,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8)),
+                    borderRadius: const BorderRadius.all(Radius.circular(8)),
                     side: BorderSide(
                       color: appColors.lightButtonBorders,
                       width: 2,

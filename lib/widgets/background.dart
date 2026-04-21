@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
+
+import '../styles/theme_manager.dart';
 
 class Background extends StatelessWidget {
   const Background({

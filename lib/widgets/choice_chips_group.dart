@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:swish_lab/models/custom_enums.dart';
-import 'package:swish_lab/widgets/single_choice_chip.dart';
+
+import '../models/custom_enums.dart';
+import 'single_choice_chip.dart';
 
 class ChoiceChipsGroup<T> extends StatelessWidget {
   final List<String> labels;

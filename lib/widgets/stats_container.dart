@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:swish_lab/functions/add_animation.dart';
-import 'package:swish_lab/styles/styles.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
-import 'package:swish_lab/widgets/dynamic_icon_image.dart';
+
+import '../functions/add_animation.dart';
+import '../styles/styles.dart';
+import '../styles/theme_manager.dart';
+import 'dynamic_icon_image.dart';
 
 class StatsContainer extends StatelessWidget {
   final Color borderColor;
@@ -34,7 +35,7 @@ class StatsContainer extends StatelessWidget {
                       borderRadius: BorderRadius.circular(24),
                       border: Border.all(color: borderColor, width: 3),
                     ),
-                    padding: EdgeInsets.all(12),
+                    padding: const EdgeInsets.all(12),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

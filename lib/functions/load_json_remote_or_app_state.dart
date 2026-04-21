@@ -1,8 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:swish_lab/constants.dart';
-import 'package:swish_lab/logger.dart';
+
+import '../constants.dart';
+import '../logger.dart';
 
 final loadLogger = AppLogger.scope('Credits');
 
@@ -41,7 +42,7 @@ Future<List<Map<String, dynamic>>> loadJsonRemoteOrAppState(
 
   // Parse JSON
   try {
-    final List<Map<String, dynamic>> data = json.decode(jsonString);
+    final data = (json.decode(jsonString) as List).cast<Map<String, dynamic>>();
     loadLogger.i("Parsed ${data.length} entries from JSON content : $data");
     return data;
   } catch (e, stack) {

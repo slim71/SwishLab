@@ -1,12 +1,12 @@
-import 'package:swish_lab/functions/fields_lookup_table.dart';
-import 'package:swish_lab/functions/get_section_name.dart';
+import 'fields_lookup_table.dart';
+import 'get_section_name.dart';
 
 /// Process the main subsection of the results JSON to extract relevant info
-List<dynamic> processFields(dynamic data) {
+List<dynamic> processFields(Map<String, dynamic> data) {
   return data.entries.where((entry) => entry.key != "scores").map((entry) {
     final key = entry.key;
     final value = entry.value;
-    final meta = fieldsLookupTable(key);
+    final dynamic meta = fieldsLookupTable(key);
 
     if (value is Map<String, dynamic>) {
       return {
@@ -14,14 +14,15 @@ List<dynamic> processFields(dynamic data) {
         "value": processFields(value),
       };
     } else {
-      final field = {
+      final Map<String, dynamic> field = {
         "name": getSectionName(key),
         "value": value,
       };
-      if (meta != null) {
+      if (meta is Map<String, dynamic>) {
         field["unit"] = meta["unit"];
         if (meta.containsKey("range")) {
-          field["range"] = "[${meta["range"]["min"]}-${meta["range"]["max"]}]";
+          final range = meta["range"] as Map<String, dynamic>;
+          field["range"] = "[${range["min"]}-${range["max"]}]";
         }
       }
       return field;

@@ -1,8 +1,8 @@
-import 'package:swish_lab/functions/get_section_name.dart';
+import 'get_section_name.dart';
 
 /// Process the "scores" subsection of the results JSON to extract relevant
 /// info
-List<dynamic> processScores(dynamic data) {
+List<dynamic> processScores(Map<String, dynamic> data) {
   if (!data.containsKey("scores") || data["scores"] is! Map<String, dynamic>) {
     return [];
   }

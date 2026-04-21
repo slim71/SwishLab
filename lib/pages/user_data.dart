@@ -2,19 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swish_lab/controllers/dropdown_controller.dart';
-import 'package:swish_lab/functions/is_field_valid.dart';
-import 'package:swish_lab/models/user_info_validation.dart';
-import 'package:swish_lab/models/users_row.dart';
-import 'package:swish_lab/providers/users_provider.dart';
-import 'package:swish_lab/state/app_state.dart';
-import 'package:swish_lab/styles/styles.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
-import 'package:swish_lab/widgets/app_bar.dart';
-import 'package:swish_lab/widgets/background.dart';
-import 'package:swish_lab/widgets/dark_button.dart';
-import 'package:swish_lab/widgets/drop_down.dart';
-import 'package:swish_lab/widgets/input_field.dart';
+
+import '../controllers/dropdown_controller.dart';
+import '../functions/is_field_valid.dart';
+import '../models/user_info_validation.dart';
+import '../models/users_row.dart';
+import '../providers/users_provider.dart';
+import '../state/app_state.dart';
+import '../styles/styles.dart';
+import '../styles/theme_manager.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/background.dart';
+import '../widgets/dark_button.dart';
+import '../widgets/drop_down.dart';
+import '../widgets/input_field.dart';
 
 /// Page showing user info and allowing changes
 class UserData extends ConsumerStatefulWidget {
@@ -28,7 +29,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
   /// Storage for validation states
   UserInfoValidation? validationStruct;
 
-  void updateValidationStructStruct(Function(UserInfoValidation) updateFn) {
+  void updateValidationStructStruct(dynamic Function(UserInfoValidation) updateFn) {
     updateFn(validationStruct ??= UserInfoValidation());
   }
 
@@ -63,7 +64,6 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    final appState = ref.read(appStateProvider);
     final userInfoAsync = ref.read(appUserProvider);
     final UsersRow? userInfo = userInfoAsync.value;
 
@@ -150,7 +150,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
 
     return Scaffold(
       backgroundColor: AppThemeManager.primaryBackground,
-      appBar: MyAppBar(
+      appBar: const MyAppBar(
         style: MyAppBarStyle.backButtonTitleLeft,
         title: 'User info',
       ),
@@ -409,7 +409,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
 
                         // Show success
                         if (!context.mounted) return;
-                        await showDialog(
+                        await showDialog<void>(
                           context: context,
                           builder: (alertDialogContext) {
                             return AlertDialog(

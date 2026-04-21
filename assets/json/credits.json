@@ -1,260 +1,260 @@
 [
   {
-    "author": "Visual Smugglers",
-    "url": "https://giphy.com/visuals_smugglers",
     "asset": "curry.gif",
-    "type": "gif"
+    "author": "Visual Smugglers",
+    "type": "gif",
+    "url": "https://giphy.com/visuals_smugglers"
   },
   {
-    "author": "NBA",
-    "url": "https://giphy.com/nba",
     "asset": "thompson.gif",
-    "type": "gif"
-  },
-  {
-    "author": "Unknown",
-    "url": "https://lottiefiles.com/",
-    "asset": "loader_basketball.json",
-    "type": "animation"
-  },
-  {
     "author": "NBA",
-    "url": "https://www.nba.com/warriors/",
+    "type": "gif",
+    "url": "https://giphy.com/nba"
+  },
+  {
+    "asset": "loader_basketball.json",
+    "author": "Unknown",
+    "type": "animation",
+    "url": "https://lottiefiles.com/"
+  },
+  {
     "asset": "curry_side.jpg",
-    "type": "image"
+    "author": "NBA",
+    "type": "image",
+    "url": "https://www.nba.com/warriors/"
   },
   {
-    "author": "ESPN Insights",
-    "url": "https://x.com/ESPNInsights/status/1087593296577228801?lang=bg",
     "asset": "thompson_front.jpg",
-    "type": "image"
+    "author": "ESPN Insights",
+    "type": "image",
+    "url": "https://x.com/ESPNInsights/status/1087593296577228801?lang=bg"
   },
   {
-    "author": "Good Ware",
-    "url": "https://www.flaticon.com/authors/good-ware",
     "asset": "default_icon.png",
-    "type": "icon"
+    "author": "Good Ware",
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/good-ware"
   },
   {
-    "author": "Freepik",
-    "url": "https://www.freepik.com/author/freepik/icons",
     "asset": "default_profile_female.png",
-    "type": "icon"
+    "author": "Freepik",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/freepik/icons"
   },
   {
-    "author": "Freepik",
-    "url": "https://www.freepik.com/author/freepik/icons",
     "asset": "default_profile_male.png",
-    "type": "icon"
+    "author": "Freepik",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/freepik/icons"
   },
   {
-    "author": "Freepik",
-    "url": "https://www.freepik.com/author/freepik/icons",
     "asset": "duration.png",
-    "type": "icon"
+    "author": "Freepik",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/freepik/icons"
   },
   {
-    "author": "Reion",
-    "url": "https://www.flaticon.com/authors/reion",
     "asset": "efficiency.png",
-    "type": "icon"
+    "author": "Reion",
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/reion"
   },
   {
-    "author": "Freepik",
-    "url": "https://www.freepik.com/author/freepik/icons",
     "asset": "elbow_angle.png",
-    "type": "icon"
+    "author": "Freepik",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/freepik/icons"
   },
   {
-    "author": "nawicon",
-    "url": "https://www.flaticon.com/authors/nawicon",
     "asset": "elbow_position.png",
-    "type": "icon"
+    "author": "nawicon",
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/nawicon"
   },
   {
-    "author": "Smashicons",
-    "url": "https://www.flaticon.com/authors/smashicons",
     "asset": "feet_direction.png",
-    "type": "icon"
+    "author": "Smashicons",
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/smashicons"
   },
   {
-    "author": "Pixel perfect",
-    "url": "https://www.flaticon.com/authors/pixel-perfect",
     "asset": "forward_distance.png",
-    "type": "icon"
+    "author": "Pixel perfect",
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/pixel-perfect"
   },
   {
-    "author": "Md Tanvirul Haque",
-    "url": "https://www.flaticon.com/authors/md-tanvirul-haque",
     "asset": "frames_held.png",
-    "type": "icon"
+    "author": "Md Tanvirul Haque",
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/md-tanvirul-haque"
   },
   {
-    "author": "Freepik",
-    "url": "https://www.freepik.com/author/freepik/icons",
     "asset": "held.png",
-    "type": "icon"
+    "author": "Freepik",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/freepik/icons"
   },
   {
-    "author": "shohanur.rahman13",
-    "url": "https://www.flaticon.com/authors/shohanurrahman13",
     "asset": "horizontal.png",
-    "type": "icon"
-  },
-  {
-    "author": "Elzicon",
-    "url": "https://www.flaticon.com/authors/elzicon",
-    "asset": "left_direction.png",
-    "type": "icon"
-  },
-  {
-    "author": "BZZRINCANTATION",
-    "url": "https://www.flaticon.com/authors/bzzrincantation",
-    "asset": "left_foot.png",
-    "type": "icon"
-  },
-  {
-    "author": "Uniconlabs",
-    "url": "https://www.flaticon.com/authors/uniconlabs",
-    "asset": "overall_distance.png",
-    "type": "icon"
-  },
-  {
-    "author": "Uniconlabs",
-    "url": "https://www.flaticon.com/authors/uniconlabs",
-    "asset": "phase.png",
-    "type": "icon"
-  },
-  {
-    "author": "O.moonstd",
-    "url": "https://www.flaticon.com/authors/omoonstd",
-    "asset": "right_angle.png",
-    "type": "icon"
-  },
-  {
-    "author": "kerismaker",
-    "url": "https://www.flaticon.com/authors/kerismaker",
-    "asset": "set_point.png",
-    "type": "icon"
-  },
-  {
-    "author": "Nikita Golubev",
-    "url": "https://www.flaticon.com/authors/nikita-golubev",
-    "asset": "shot_path.png",
-    "type": "icon"
-  },
-  {
-    "author": "Andrean Prabowo",
-    "url": "https://www.flaticon.com/authors/andrean-prabowo",
-    "asset": "side_distance.png",
-    "type": "icon"
-  },
-  {
-    "author": "Freepik",
-    "url": "https://www.freepik.com/author/freepik/icons",
-    "asset": "total.png",
-    "type": "icon"
-  },
-  {
     "author": "shohanur.rahman13",
-    "url": "https://www.flaticon.com/authors/shohanurrahman13",
-    "asset": "vertical.png",
-    "type": "icon"
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/shohanurrahman13"
   },
   {
-    "author": "Freepik",
-    "url": "https://www.freepik.com/author/freepik/icons",
-    "asset": "angle_variance.png",
-    "type": "icon"
+    "asset": "left_direction.png",
+    "author": "Elzicon",
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/elzicon"
   },
   {
-    "author": "Smashicons",
-    "url": "https://www.freepik.com/author/smashicons/icons",
-    "asset": "average_deviation.png",
-    "type": "icon"
+    "asset": "left_foot.png",
+    "author": "BZZRINCANTATION",
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/bzzrincantation"
   },
   {
+    "asset": "overall_distance.png",
+    "author": "Uniconlabs",
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/uniconlabs"
+  },
+  {
+    "asset": "phase.png",
+    "author": "Uniconlabs",
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/uniconlabs"
+  },
+  {
+    "asset": "right_angle.png",
+    "author": "O.moonstd",
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/omoonstd"
+  },
+  {
+    "asset": "set_point.png",
+    "author": "kerismaker",
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/kerismaker"
+  },
+  {
+    "asset": "shot_path.png",
     "author": "Nikita Golubev",
-    "url": "https://www.freepik.com/author/lastspark/icons",
-    "asset": "average_finger_velocity.png",
-    "type": "icon"
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/nikita-golubev"
   },
   {
+    "asset": "side_distance.png",
+    "author": "Andrean Prabowo",
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/andrean-prabowo"
+  },
+  {
+    "asset": "total.png",
     "author": "Freepik",
-    "url": "https://www.freepik.com/author/freepik/icons",
-    "asset": "average_wrist_angle.png",
-    "type": "icon"
+    "type": "icon",
+    "url": "https://www.freepik.com/author/freepik/icons"
   },
   {
-    "author": "Smalllikeart",
-    "url": "https://www.freepik.com/author/smalllikeart/icons",
-    "asset": "average_wrist_velocity.png",
-    "type": "icon"
+    "asset": "vertical.png",
+    "author": "shohanur.rahman13",
+    "type": "icon",
+    "url": "https://www.flaticon.com/authors/shohanurrahman13"
   },
   {
-    "author": "Pop Vectors",
-    "url": "https://www.freepik.com/author/pop-vectors/icons",
-    "asset": "ball_eye_distance.png",
-    "type": "icon"
-  },
-  {
-    "author": "jansenwebconcepts",
-    "url": "https://www.freepik.com/author/jansenwebconcepts/icons",
-    "asset": "deviation_ratio.png",
-    "type": "icon"
-  },
-  {
-    "author": "user16044990",
-    "url": "https://www.freepik.com/author/user16044990/icons",
-    "asset": "elbow_extension.png",
-    "type": "icon"
-  },
-  {
+    "asset": "angle_variance.png",
     "author": "Freepik",
-    "url": "https://www.freepik.com/author/freepik/icons",
-    "asset": "final_elbow_angle.png",
-    "type": "icon"
+    "type": "icon",
+    "url": "https://www.freepik.com/author/freepik/icons"
   },
   {
-    "author": "Freepik",
-    "url": "https://www.freepik.com/author/freepik/icons",
-    "asset": "follow_through.png",
-    "type": "icon"
-  },
-  {
+    "asset": "average_deviation.png",
     "author": "Smashicons",
-    "url": "https://www.freepik.com/author/smashicons/icons",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/smashicons/icons"
+  },
+  {
+    "asset": "average_finger_velocity.png",
+    "author": "Nikita Golubev",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/lastspark/icons"
+  },
+  {
+    "asset": "average_wrist_angle.png",
+    "author": "Freepik",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/freepik/icons"
+  },
+  {
+    "asset": "average_wrist_velocity.png",
+    "author": "Smalllikeart",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/smalllikeart/icons"
+  },
+  {
+    "asset": "ball_eye_distance.png",
+    "author": "Pop Vectors",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/pop-vectors/icons"
+  },
+  {
+    "asset": "deviation_ratio.png",
+    "author": "jansenwebconcepts",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/jansenwebconcepts/icons"
+  },
+  {
+    "asset": "elbow_extension.png",
+    "author": "user16044990",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/user16044990/icons"
+  },
+  {
+    "asset": "final_elbow_angle.png",
+    "author": "Freepik",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/freepik/icons"
+  },
+  {
+    "asset": "follow_through.png",
+    "author": "Freepik",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/freepik/icons"
+  },
+  {
     "asset": "hand_steadiness.png",
-    "type": "icon"
+    "author": "Smashicons",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/smashicons/icons"
   },
   {
-    "author": "Freepik",
-    "url": "https://www.freepik.com/author/freepik/icons",
     "asset": "jump.png",
-    "type": "icon"
+    "author": "Freepik",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/freepik/icons"
   },
   {
-    "author": "juicy_fish",
-    "url": "https://www.freepik.com/author/juicy-fish/icons",
     "asset": "max_deviation.png",
-    "type": "icon"
+    "author": "juicy_fish",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/juicy-fish/icons"
   },
   {
-    "author": "Freepik",
-    "url": "https://www.freepik.com/author/freepik/icons",
     "asset": "shoulder_angle.png",
-    "type": "icon"
+    "author": "Freepik",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/freepik/icons"
   },
   {
-    "author": "Freepik",
-    "url": "https://www.freepik.com/author/freepik/icons",
     "asset": "star.png",
-    "type": "icon"
+    "author": "Freepik",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/freepik/icons"
   },
   {
-    "author": "Freepik",
-    "url": "https://www.freepik.com/author/freepik/icons",
     "asset": "wrist_angle.png",
-    "type": "icon"
+    "author": "Freepik",
+    "type": "icon",
+    "url": "https://www.freepik.com/author/freepik/icons"
   }
 ]

@@ -1,5 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:swish_lab/models/users_row.dart';
+
+import '../models/users_row.dart';
 
 // Define connections to the Users row in Supabase
 class UsersRepository {
@@ -10,12 +11,11 @@ class UsersRepository {
   Future<List<UsersRow>> getUserById(String userId) async {
     final response = await _client.from('Users').select().eq('id', userId);
 
-    return (response as List).map((json) => UsersRow.fromJson(json)).toList();
+    return (response as List).map((json) => UsersRow.fromJson(json as Map<String, dynamic>)).toList();
   }
 
   Future<UsersRow?> getUserRow(String userId) async {
-    final response =
-        await _client.from('Users').select().eq('id', userId).maybeSingle();
+    final response = await _client.from('Users').select().eq('id', userId).maybeSingle();
 
     if (response == null) return null;
     return UsersRow.fromJson(response);

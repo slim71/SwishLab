@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_md/flutter_md.dart';
-import 'package:swish_lab/functions/load_markdown.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
-import 'package:swish_lab/widgets/app_bar.dart';
+
+import '../functions/load_markdown.dart';
+import '../styles/theme_manager.dart';
+import '../widgets/app_bar.dart';
 
 class MarkdownDocument extends StatefulWidget {
   final String fileName;
@@ -52,7 +53,7 @@ class _MarkdownDocumentState extends State<MarkdownDocument> {
           padding: const EdgeInsets.all(16),
           child: MarkdownWidget(
             markdown: Markdown.fromString(_markdownSource),
-            ),
+          ),
         ),
       ),
     );

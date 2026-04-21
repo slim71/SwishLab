@@ -3,36 +3,37 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:swish_lab/controllers/router_refresh_notifier.dart';
-import 'package:swish_lab/logger.dart';
-import 'package:swish_lab/models/custom_enums.dart';
-import 'package:swish_lab/pages/about.dart';
-import 'package:swish_lab/pages/analysis_results.dart';
-import 'package:swish_lab/pages/credits.dart';
-import 'package:swish_lab/pages/debug_utilities.dart';
-import 'package:swish_lab/pages/error_page.dart';
-import 'package:swish_lab/pages/front_details.dart';
-import 'package:swish_lab/pages/getting_started.dart';
-import 'package:swish_lab/pages/help.dart';
-import 'package:swish_lab/pages/home_page.dart';
-import 'package:swish_lab/pages/loading_page.dart';
-import 'package:swish_lab/pages/login.dart';
-import 'package:swish_lab/pages/markdown_document.dart';
-import 'package:swish_lab/pages/past_activity.dart';
-import 'package:swish_lab/pages/processing_video.dart';
-import 'package:swish_lab/pages/profile_page.dart';
-import 'package:swish_lab/pages/profile_picture.dart';
-import 'package:swish_lab/pages/settings.dart';
-import 'package:swish_lab/pages/side_details.dart';
-import 'package:swish_lab/pages/signup.dart';
-import 'package:swish_lab/pages/splash_screen.dart';
-import 'package:swish_lab/pages/success.dart';
-import 'package:swish_lab/pages/user_data.dart';
-import 'package:swish_lab/pages/video_pre_upload.dart';
-import 'package:swish_lab/providers/auth_providers.dart';
-import 'package:swish_lab/router/app_documents.dart';
-import 'package:swish_lab/router/app_transitions.dart';
-import 'package:swish_lab/widgets/nav_bar_scaffold.dart';
+
+import '../controllers/router_refresh_notifier.dart';
+import '../logger.dart';
+import '../models/custom_enums.dart';
+import '../pages/about.dart';
+import '../pages/analysis_results.dart';
+import '../pages/credits.dart';
+import '../pages/debug_utilities.dart';
+import '../pages/error_page.dart';
+import '../pages/front_details.dart';
+import '../pages/getting_started.dart';
+import '../pages/help.dart';
+import '../pages/home_page.dart';
+import '../pages/loading_page.dart';
+import '../pages/login.dart';
+import '../pages/markdown_document.dart';
+import '../pages/past_activity.dart';
+import '../pages/processing_video.dart';
+import '../pages/profile_page.dart';
+import '../pages/profile_picture.dart';
+import '../pages/settings.dart';
+import '../pages/side_details.dart';
+import '../pages/signup.dart';
+import '../pages/splash_screen.dart';
+import '../pages/success.dart';
+import '../pages/user_data.dart';
+import '../pages/video_pre_upload.dart';
+import '../providers/auth_providers.dart';
+import '../widgets/nav_bar_scaffold.dart';
+import 'app_documents.dart';
+import 'app_transitions.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 final routingLogger = AppLogger.scope('Router');
@@ -94,22 +95,22 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/home',
         name: 'home',
-        builder: (context, state) => NavBarScaffold(child: HomePage()),
+        builder: (context, state) => const NavBarScaffold(child: HomePage()),
       ),
       GoRoute(
         path: '/activity',
         name: 'activity',
-        builder: (context, state) => NavBarScaffold(child: PastActivity()),
+        builder: (context, state) => const NavBarScaffold(child: PastActivity()),
       ),
       GoRoute(
         path: '/profile',
         name: 'profile',
-        builder: (context, state) => NavBarScaffold(child: ProfilePage()),
+        builder: (context, state) => const NavBarScaffold(child: ProfilePage()),
       ),
       GoRoute(
           path: '/settings',
           name: 'settings',
-          builder: (context, state) => NavBarScaffold(child: Settings()),
+          builder: (context, state) => const NavBarScaffold(child: Settings()),
           routes: [
             GoRoute(
               path: 'about',
@@ -247,17 +248,17 @@ final routerProvider = Provider<GoRouter>((ref) {
 
 class _RouterObserver extends NavigatorObserver {
   @override
-  void didPush(Route route, Route? previousRoute) {
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     routingLogger.i('PUSH -> ${route.settings.name}');
   }
 
   @override
-  void didPop(Route route, Route? previousRoute) {
+  void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     routingLogger.i('POP ← ${route.settings.name}');
   }
 
   @override
-  void didReplace({Route? newRoute, Route? oldRoute}) {
+  void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
     routingLogger.i('REPLACE ${oldRoute?.settings.name} -> ${newRoute?.settings.name}');
   }
 }

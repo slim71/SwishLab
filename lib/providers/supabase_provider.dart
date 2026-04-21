@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:swish_lab/providers/auth_providers.dart';
 
 import '../state/app_state.dart';
+import 'auth_providers.dart';
 
 /// Supabase client: main entry point for interacting with Supabase services
 final supabaseProvider = Provider<SupabaseClient>((ref) {
@@ -22,7 +22,7 @@ final supabaseProvider = Provider<SupabaseClient>((ref) {
 final supabaseAuthListenerProvider = Provider<void>((ref) {
   final supabase = ref.watch(supabaseProvider);
 
-  StreamSubscription? sub;
+  StreamSubscription<AuthState>? sub;
 
   Future.microtask(() {
     final notifier = ref.read(appAuthStatusProvider.notifier);

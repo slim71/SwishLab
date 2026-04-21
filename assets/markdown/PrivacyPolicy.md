@@ -488,8 +488,8 @@ limited in some circumstances by applicable law. More information is provided be
 
 ### Categories of Personal Information We Collect
 
-The table below shows the categories of personal information we have collected in the past twelve (
-12) months. The table includes illustrative examples of each category and does not reflect the
+The table below shows the categories of personal information we have collected in the past twelve
+(12) months. The table includes illustrative examples of each category and does not reflect the
 personal information we collect from you. For a comprehensive inventory of all personal information
 we process, please refer to the
 section "[WHAT INFORMATION DO WE COLLECT?](#1-what-information-do-we-collect)"
@@ -694,8 +694,8 @@ If you are unsatisfied with the manner in which we address any complaint with re
 processing of personal information, you can contact the office of the regulator, the details of
 which are:
 
-[The Information Regulator (South Africa)](https://inforegulator.org.za/)  
-General enquiries: [enquiries@inforegulator.org.za](mailto:enquiries@inforegulator.org.za)  
+[The Information Regulator (South Africa)](https://inforegulator.org.za/)
+General enquiries: [enquiries@inforegulator.org.za](mailto:enquiries@inforegulator.org.za)
 Complaints (complete POPIA/PAIA form
 5): [PAIAComplaints@inforegulator.org.za](mailto:PAIAComplaints@inforegulator.org.za) & [POPIAComplaints@inforegulator.org.za](mailto:POPIAComplaints@inforegulator.org.za)
 

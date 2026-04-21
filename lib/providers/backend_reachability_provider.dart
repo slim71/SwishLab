@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
-import 'package:swish_lab/constants.dart';
-import 'package:swish_lab/providers/supabase_provider.dart';
+
+import '../constants.dart';
 
 /// Periodically checks whether the backend (Supabase) is reachable.
 ///
@@ -29,8 +29,6 @@ import 'package:swish_lab/providers/supabase_provider.dart';
 /// Used by [appStatusProvider] to determine whether the app should
 /// enter the [AppAuthStatus.offline] state.
 final backendReachabilityProvider = StreamProvider<bool>((ref) async* {
-  final supabase = ref.watch(supabaseProvider);
-
   bool? last;
 
   while (true) {
@@ -55,6 +53,6 @@ final backendReachabilityProvider = StreamProvider<bool>((ref) async* {
       last = current;
     }
 
-    await Future.delayed(const Duration(seconds: 5));
+    await Future<void>.delayed(const Duration(seconds: 5));
   }
 });

@@ -18,9 +18,9 @@ class ErrorPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
+            const Text(
               'Oops, something went wrong',
-              style: const TextStyle(fontSize: 18),
+              style: TextStyle(fontSize: 18),
             ),
             if (kDebugMode && message != null) ...[
               const SizedBox(height: 8),

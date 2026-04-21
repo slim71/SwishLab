@@ -1,6 +1,6 @@
 # Android / Gradle
 .gradle
-/build
+**/build/
 .externalNativeBuild
 .cxx
 
@@ -31,15 +31,32 @@ local.properties
 
 # Tests
 test-output/
+coverage/
 
 # Generated
 .dart_tool/
 .flutter-plugins-dependencies
 
-# Build system
-android/
-widgetbook/android/
-widgetbook/linux/
-widgetbook/macos/
-widgetbook/web/
-widgetbook/windows/
+# Flutter
+.flutter-plugins
+.packages
+
+# iOS / macOS
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Pods/
+ios/.symlinks/
+ios/Runner.xcworkspace/
+macos/Pods/
+macos/.symlinks/
+
+# Xcode workspace user data
+**/xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+**/xcworkspace/xcshareddata/WorkspaceSettings.xcsettings
+**/xcuserdata/
+
+# Logs
+*.log
+
+# VSCode (if you ever use it)
+.vscode/

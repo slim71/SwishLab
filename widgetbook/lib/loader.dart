@@ -41,7 +41,10 @@ Widget buildDarkButton(BuildContext context) {
 
 @widgetbook.UseCase(name: 'LightButton', type: LightButton)
 Widget buildLightButton(BuildContext context) {
-  return LightButton(text: 'Example', icon: FaIcon(FontAwesomeIcons.google, size: 15), onPressed: () async {});
+  return LightButton(
+      text: 'Example',
+      icon: FaIcon(FontAwesomeIcons.google, size: 15),
+      onPressed: () async {});
 }
 
 @widgetbook.UseCase(name: 'TransparentButton', type: TransparentButton)
@@ -53,20 +56,25 @@ Widget buildTransparentButton(BuildContext context) {
 @widgetbook.UseCase(name: 'IconActionButton', type: IconActionButton)
 Widget buildIconActionButton(BuildContext context) {
   return IconActionButton(
-      borderRadius: 30,
-      borderWidth: 1,
-      size: 50,
-      icon: Icons.paypal,
-      iconSize: 30,
-      onPressed: () async {},
+    borderRadius: 30,
+    borderWidth: 1,
+    size: 50,
+    icon: Icons.paypal,
+    iconSize: 30,
+    onPressed: () async {},
   );
 }
 
 @widgetbook.UseCase(name: 'SingleChoiceChip', type: SingleChoiceChip)
 Widget buildSingleChoiceChip(BuildContext context) {
-  final isSelected = context.knobs.boolean(label: 'Selected', initialValue: false);
+  final isSelected =
+  context.knobs.boolean(label: 'Selected', initialValue: false);
 
-  return SingleChoiceChip(label: 'Sample', icon: Icons.paypal, selected: isSelected, onTap: () async {});
+  return SingleChoiceChip(
+      label: 'Sample',
+      icon: Icons.paypal,
+      selected: isSelected,
+      onTap: () async {});
 }
 
 @widgetbook.UseCase(name: 'Dropdown', type: Dropdown)
@@ -87,10 +95,10 @@ Widget buildSocialIconButton(BuildContext context) {
 @widgetbook.UseCase(name: 'ToggleIcon', type: ToggleIcon)
 Widget buildToggleIcon(BuildContext context) {
   return ToggleIcon(
-      onPressed: () {},
-      value: true,
-      onIcon: Icon(Icons.search, size: 30),
-      offIcon: Icon(Icons.search_off, size: 30),
+    onPressed: () {},
+    value: true,
+    onIcon: Icon(Icons.search, size: 30),
+    offIcon: Icon(Icons.search_off, size: 30),
   );
 }
 
@@ -101,20 +109,21 @@ Widget buildText(BuildContext context) {
       builder: (_, _, _) {
         return Container(
             color: AppThemeManager.primaryBackground,
-            child: Text('some text', style: AppTextStyles.bodyMedium(context))
-        );
-      }
-  );
+            child: Text('some text', style: AppTextStyles.bodyMedium(context)));
+      });
 }
 
 @widgetbook.UseCase(name: 'CustomTextSpan', type: CustomTextSpan)
 Widget buildCustomTextSpan(BuildContext context) {
-  return RichText(text: CustomTextSpan(context, text: 'Sample', style: TextStyle(height: 2)));
+  return RichText(
+      text:
+      CustomTextSpan(context, text: 'Sample', style: TextStyle(height: 2)));
 }
 
 @widgetbook.UseCase(name: 'InputField', type: InputField)
 Widget buildInputField(BuildContext context) {
-  return InputField(controller: TextEditingController(), onChanged: (_) {}, label: 'Sample');
+  return InputField(
+      controller: TextEditingController(), onChanged: (_) {}, label: 'Sample');
 }
 
 @widgetbook.UseCase(name: 'SettingsRow', type: SettingsRow)
@@ -127,15 +136,19 @@ Widget buildSettingsRow(BuildContext context) {
   );
 
   return SettingsRow(
-    item: SettingsItem(title: 'Sample', background: settingsItemBackgrounds[backgroundIndex], onTap: (_) async {}),
+    item: SettingsItem(
+        title: 'Sample',
+        background: settingsItemBackgrounds[backgroundIndex],
+        onTap: (_) async {}),
   );
 }
 
 @widgetbook.UseCase(name: 'VideoPreview', type: VideoPreview)
 Widget buildVideoPreview(BuildContext context) {
   return VideoPreview(
-      source: NetworkVideoSource('https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
-      autoPlay: false,
+    source: NetworkVideoSource(
+        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
+    autoPlay: false,
   );
 }
 
@@ -159,12 +172,14 @@ Widget buildDynamicAssetAnimation(BuildContext context) {
     initialOption: "animation",
     labelBuilder: (value) => value,
   );
-  return DynamicAsset(width: 200, height: 200, name: objects[assetType]!, type: assetType);
+  return DynamicAsset(
+      width: 200, height: 200, name: objects[assetType]!, type: assetType);
 }
 
 @widgetbook.UseCase(name: 'NavBar', type: NavBar)
 Widget buildNavBar(BuildContext context) {
-  final index = context.knobs.int.slider(label: 'Active tab', initialValue: 0, min: 0, max: 3);
+  final index = context.knobs.int
+      .slider(label: 'Active tab', initialValue: 0, min: 0, max: 3);
 
   return NavBarView(
     currentIndex: index,
@@ -194,7 +209,8 @@ Widget buildMyAppBarTitleOnly(BuildContext context) {
         title: 'Sample',
         height: 100,
         onProfilePressed: () {},
-        profileImageUrl: 'https://yavuzceliker.github.io/sample-images/image-1021.jpg',
+        profileImageUrl:
+        'https://yavuzceliker.github.io/sample-images/image-1021.jpg',
       ),
       body: Center(child: Text('Body content here')),
     );
@@ -234,16 +250,18 @@ Widget buildBoxWithShadow(BuildContext context) {
           child: Container(
               width: 200,
               height: 200,
-              decoration: BoxWithShadow(border: Border.all(color: borderColors[borderIndex]))
-          )
-      )
-  );
+              decoration: BoxWithShadow(
+                  border: Border.all(color: borderColors[borderIndex])))));
 }
 
 @widgetbook.UseCase(name: 'StatsContainer', type: StatsContainer)
 Widget buildStatsContainer(BuildContext context) {
   final appColors = AppThemeManager.currentColors;
-  return StatsContainer(borderColor: appColors.alternateTwo, title: 'Sample', iconName: 'jump', text: 'Sample1');
+  return StatsContainer(
+      borderColor: appColors.alternateTwo,
+      title: 'Sample',
+      iconName: 'jump',
+      text: 'Sample1');
 }
 
 @widgetbook.UseCase(name: 'FaqItem', type: FaqItem)
@@ -251,20 +269,26 @@ Widget buildFaqItem(BuildContext context) {
   final isOpen = context.knobs.boolean(label: 'Open', initialValue: false);
 
   return FaqItem(
-      key: const Key('faq_sample'),
-      isOpen: isOpen,
-      title: 'Sample question',
-      description: 'Sample description',
-      onPressed: () async {},
+    key: const Key('faq_sample'),
+    isOpen: isOpen,
+    title: 'Sample question',
+    description: 'Sample description',
+    onPressed: () async {},
   );
 }
 
 @widgetbook.UseCase(name: 'DebugItem', type: DebugItem)
 Widget buildDebugItem(BuildContext context) {
-  return DebugItem(width: 300, title: 'Sample', buttonText: 'Sample', onPressed: () async {});
+  return DebugItem(
+      width: 300,
+      title: 'Sample',
+      buttonText: 'Sample',
+      onPressed: () async {});
 }
 
 @widgetbook.UseCase(name: 'SectionDetails', type: SectionDetails)
 Widget buildSectionDetails(BuildContext context) {
-  return SectionDetails(sectionJson: processAnalysisResults(jsonDecode(kDefaultResultsJson)["analysis"])[0]);
+  return SectionDetails(
+      sectionJson: processAnalysisResults(
+          jsonDecode(kDefaultResultsJson)["analysis"])[0]);
 }

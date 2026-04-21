@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swish_lab/providers/auth_providers.dart';
+
+import '../providers/auth_providers.dart';
 
 /// A bridge between Riverpod state and GoRouter's refresh mechanism.
 ///

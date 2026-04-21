@@ -67,9 +67,7 @@ class WidgetbookThemeWrapper extends StatelessWidget {
                         ],
                       ),
                     ),
-
                     const Divider(height: 1),
-
                     Expanded(
                       child: Container(
                         width: double.infinity,
@@ -80,9 +78,7 @@ class WidgetbookThemeWrapper extends StatelessWidget {
                       ),
                     ),
                   ],
-                )
-            )
-        );
+                )));
       },
     );
   }

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:swish_lab/providers/session.dart';
-import 'package:swish_lab/providers/supabase_provider.dart';
-import 'package:swish_lab/providers/users_provider.dart';
-import 'package:swish_lab/router/central_routing.dart' show routerProvider;
-import 'package:swish_lab/styles/colors.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
-import 'package:swish_lab/styles/themes.dart';
+
+import 'providers/session.dart';
+import 'providers/supabase_provider.dart';
+import 'providers/users_provider.dart';
+import 'router/central_routing.dart' show routerProvider;
+import 'styles/colors.dart';
+import 'styles/theme_manager.dart';
+import 'styles/themes.dart';
 
 // Expose the app title globally through this one provider
 final appTitleProvider = Provider((_) => 'SwishLab');
+
 // Root widget of the app
 class SwishLab extends ConsumerStatefulWidget {
   const SwishLab({super.key});

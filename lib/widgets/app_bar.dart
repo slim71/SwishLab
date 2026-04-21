@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:swish_lab/constants.dart';
-import 'package:swish_lab/styles/styles.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
-import 'package:swish_lab/widgets/icon_action_button.dart';
+
+import '../constants.dart';
+import '../styles/styles.dart';
+import '../styles/theme_manager.dart';
+import 'icon_action_button.dart';
 
 enum MyAppBarStyle {
   titleOnly,

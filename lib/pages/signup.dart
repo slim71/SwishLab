@@ -4,18 +4,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:swish_lab/functions/add_animation.dart';
-import 'package:swish_lab/models/users_row.dart';
-import 'package:swish_lab/providers/auth_providers.dart';
-import 'package:swish_lab/providers/users_provider.dart';
-import 'package:swish_lab/state/app_state.dart';
-import 'package:swish_lab/styles/styles.dart';
-import 'package:swish_lab/widgets/background.dart';
-import 'package:swish_lab/widgets/box_with_shadow.dart';
-import 'package:swish_lab/widgets/custom_text_span.dart';
-import 'package:swish_lab/widgets/dark_button.dart';
-import 'package:swish_lab/widgets/input_field.dart';
-import 'package:swish_lab/widgets/light_button.dart';
+
+import '../functions/add_animation.dart';
+import '../models/users_row.dart';
+import '../providers/auth_providers.dart';
+import '../providers/users_provider.dart';
+import '../state/app_state.dart';
+import '../styles/styles.dart';
+import '../widgets/background.dart';
+import '../widgets/box_with_shadow.dart';
+import '../widgets/custom_text_span.dart';
+import '../widgets/dark_button.dart';
+import '../widgets/input_field.dart';
+import '../widgets/light_button.dart';
 
 /// Page to create a new account
 class SignupPage extends ConsumerStatefulWidget {
@@ -25,8 +26,7 @@ class SignupPage extends ConsumerStatefulWidget {
   ConsumerState<SignupPage> createState() => _SignupPageState();
 }
 
-class _SignupPageState extends ConsumerState<SignupPage>
-    with TickerProviderStateMixin {
+class _SignupPageState extends ConsumerState<SignupPage> with TickerProviderStateMixin {
   // State field(s) for firstname widget.
   FocusNode? firstnameFocusNode;
   late TextEditingController firstnameController;
@@ -137,56 +137,56 @@ class _SignupPageState extends ConsumerState<SignupPage>
             // Row used to locate the whole signup page content
             Row(
           mainAxisSize: MainAxisSize.max,
-            children: [
-              // Container with the whole signup page form
-              Expanded(
-                flex: 6,
+          children: [
+            // Container with the whole signup page form
+            Expanded(
+              flex: 6,
               child: Background(
                 child: Container(
-                        width: 100,
-                        height: double.infinity,
-                        alignment: AlignmentDirectional(0, -1),
-                        child:
-                            // Scrolling column to allow scrolling for smaller devices
+                  width: 100,
+                  height: double.infinity,
+                  alignment: const AlignmentDirectional(0, -1),
+                  child:
+                      // Scrolling column to allow scrolling for smaller devices
                       SingleChildScrollView(
                     child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // Container to allow padding around the page title
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Container to allow padding around the page title
                         Container(
                           width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    alignment: AlignmentDirectional(0, 0),
-                                    child:
-                                        // App logo
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          alignment: const AlignmentDirectional(0, 0),
+                          child:
+                              // App logo
                               ClipRRect(
                             borderRadius: BorderRadius.circular(8),
-                                        child: Image.asset(
-                                          'assets/images/SwishLab_logo.png',
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
+                            child: Image.asset(
+                              'assets/images/SwishLab_logo.png',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
 
                         // Container with the signup form
-                                Padding(
-                                  padding: EdgeInsets.all(16),
+                        Padding(
+                          padding: const EdgeInsets.all(16),
                           child: addAnimation(
                             widget: Container(
                               width: double.infinity,
-                                      constraints: BoxConstraints(
-                                        maxWidth: 570,
-                                      ),
-                                      decoration: BoxWithShadow(),
-                                      child:
-                                          // Column with the signup form
-                                          Align(
-                                        alignment: AlignmentDirectional(0, 0),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(32),
+                              constraints: const BoxConstraints(
+                                maxWidth: 570,
+                              ),
+                              decoration: BoxWithShadow(),
+                              child:
+                                  // Column with the signup form
+                                  Align(
+                                alignment: const AlignmentDirectional(0, 0),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(32),
                                   child: Form(
                                     key: formKey,
                                     child: Column(
@@ -201,38 +201,38 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                         ),
 
                                         // Text to guide signup
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 24),
-                                                  child: Text(
-                                                    'Fill out the data below',
-                                                    textAlign: TextAlign.center,
-                                                    style: AppTextStyles.labelLarge(context),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                                  child: SizedBox(
-                                                    width: double.infinity,
-                                                    child: InputField(
-                                                        controller: firstnameController,
-                                                        focusNode: firstnameFocusNode,
-                                                        autofillHints: [AutofillHints.name],
-                                                        textCapitalization: TextCapitalization.words,
-                                                        label: 'First Name',
-                                                        validator: (value) => firstnameValidator.call(context, value),
-                                                        allowRegex: RegExp('^[A-Za-z\' -]+\$')),
-                                                  ),
-                                                ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 24),
+                                          child: Text(
+                                            'Fill out the data below',
+                                            textAlign: TextAlign.center,
+                                            style: AppTextStyles.labelLarge(context),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                          child: SizedBox(
+                                            width: double.infinity,
+                                            child: InputField(
+                                                controller: firstnameController,
+                                                focusNode: firstnameFocusNode,
+                                                autofillHints: const [AutofillHints.name],
+                                                textCapitalization: TextCapitalization.words,
+                                                label: 'First Name',
+                                                validator: (value) => firstnameValidator.call(context, value),
+                                                allowRegex: RegExp('^[A-Za-z\' -]+\$')),
+                                          ),
+                                        ),
 
                                         // Last name field
                                         Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                                           child: SizedBox(
                                             width: double.infinity,
                                             child: InputField(
                                                 controller: lastnameController,
                                                 focusNode: lastnameFocusNode,
-                                                autofillHints: [AutofillHints.name],
+                                                autofillHints: const [AutofillHints.name],
                                                 textCapitalization: TextCapitalization.words,
                                                 label: 'Last Name',
                                                 validator: (value) => lastnameValidator.call(context, value),
@@ -241,31 +241,31 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                         ),
 
                                         // Email address field
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                                  child: SizedBox(
-                                                    width: double.infinity,
-                                                    child: InputField(
-                                                      controller: emailAddressController,
-                                                      focusNode: emailAddressFocusNode,
-                                                      label: 'Email',
-                                                      autofillHints: [AutofillHints.email],
-                                                      validator: (value) => emailValidator.call(context, value),
-                                                      allowRegex: RegExp(r'[a-zA-Z0-9@._%+-]'),
-                                                    ),
-                                                  ),
-                                                ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                          child: SizedBox(
+                                            width: double.infinity,
+                                            child: InputField(
+                                              controller: emailAddressController,
+                                              focusNode: emailAddressFocusNode,
+                                              label: 'Email',
+                                              autofillHints: const [AutofillHints.email],
+                                              validator: (value) => emailValidator.call(context, value),
+                                              allowRegex: RegExp(r'[a-zA-Z0-9@._%+-]'),
+                                            ),
+                                          ),
+                                        ),
 
                                         // Password field
                                         Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                                           child: SizedBox(
                                             width: double.infinity,
                                             child: InputField(
                                               controller: passwordController,
                                               focusNode: passwordFocusNode,
                                               label: 'Password',
-                                              autofillHints: [AutofillHints.password],
+                                              autofillHints: const [AutofillHints.password],
                                               obscureText: true,
                                               validator: (value) => passwordValidator.call(context, value),
                                             ),
@@ -273,20 +273,20 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                         ),
 
                                         // Confirm password field
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                                  child: SizedBox(
-                                                    width: double.infinity,
-                                                    child: InputField(
-                                                      controller: confpswdController,
-                                                      focusNode: confpswdFocusNode,
-                                                      label: 'Confirm password',
-                                                      autofillHints: [AutofillHints.password],
-                                                      obscureText: true,
-                                                      validator: (value) => confpswdValidator.call(context, value),
-                                                    ),
-                                                  ),
-                                                ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
+                                          child: SizedBox(
+                                            width: double.infinity,
+                                            child: InputField(
+                                              controller: confpswdController,
+                                              focusNode: confpswdFocusNode,
+                                              label: 'Confirm password',
+                                              autofillHints: const [AutofillHints.password],
+                                              obscureText: true,
+                                              validator: (value) => confpswdValidator.call(context, value),
+                                            ),
+                                          ),
+                                        ),
 
                                         // Button to create an account with inserted data
                                         DarkButton(
@@ -303,29 +303,29 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                             }
 
                                             // Create auth user
-                                                    try {
-                                                      final authService = ref.read(authServiceProvider);
-                                                      final user = await authService.signUp(
-                                                        email: emailAddressController.text,
-                                                        password: passwordController.text,
-                                                      );
+                                            try {
+                                              final authService = ref.read(authServiceProvider);
+                                              final user = await authService.signUp(
+                                                email: emailAddressController.text,
+                                                password: passwordController.text,
+                                              );
 
                                               if (user == null || !mounted) {
                                                 return;
                                               }
 
                                               // Update app state
-                                                      ref.read(appStateProvider.notifier).setHasOpenedBefore(true);
+                                              ref.read(appStateProvider.notifier).setHasOpenedBefore(true);
 
                                               // Insert into Users table
                                               final usersRepo = ref.read(usersRepositoryProvider);
 
                                               await usersRepo.insertUser(
-                                                        id: user.id,
-                                                        email: emailAddressController.text,
-                                                        firstName: firstnameController.text,
-                                                        lastName: lastnameController.text,
-                                                      );
+                                                id: user.id,
+                                                email: emailAddressController.text,
+                                                firstName: firstnameController.text,
+                                                lastName: lastnameController.text,
+                                              );
 
                                               // Navigate
                                               if (!context.mounted) return;
@@ -348,14 +348,14 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                         ),
 
                                         // Or
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional.fromSTEB(16, 15, 16, 15),
-                                                  child: Text(
-                                                    'Or',
-                                                    textAlign: TextAlign.center,
-                                                    style: AppTextStyles.labelLarge(context),
-                                                  ),
-                                                ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional.fromSTEB(16, 15, 16, 15),
+                                          child: Text(
+                                            'Or',
+                                            textAlign: TextAlign.center,
+                                            style: AppTextStyles.labelLarge(context),
+                                          ),
+                                        ),
 
                                         // Button to create an account using Google
                                         LightButton(
@@ -364,58 +364,56 @@ class _SignupPageState extends ConsumerState<SignupPage>
                                             await authService.signInWithGoogle();
                                           },
                                           text: 'Signup with Google',
-                                          icon: FaIcon(
+                                          icon: const FaIcon(
                                             FontAwesomeIcons.google,
                                             size: 15,
                                           ),
                                         ),
 
                                         // Instructions to redirect to login
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
-                                                  child: InkWell(
-                                                    onTap: () async {
-                                                      context.goNamed('login');
-                                                    },
-                                                    child: RichText(
-                                                      textScaler: MediaQuery
-                                                          .of(context)
-                                                          .textScaler,
-                                                      text: CustomTextSpan(
-                                                        context,
-                                                        children: [
-                                                          CustomTextSpan(
-                                                            context,
-                                                            text: 'Already have an account?  ',
-                                                          ),
-                                                          CustomTextSpan(
-                                                            context,
-                                                            text: 'Login here',
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
+                                        Padding(
+                                          padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
+                                          child: InkWell(
+                                            onTap: () async {
+                                              context.goNamed('login');
+                                            },
+                                            child: RichText(
+                                              textScaler: MediaQuery.of(context).textScaler,
+                                              text: CustomTextSpan(
+                                                context,
+                                                children: [
+                                                  CustomTextSpan(
+                                                    context,
+                                                    text: 'Already have an account?  ',
                                                   ),
-                                                ),
-                                              ],
+                                                  CustomTextSpan(
+                                                    context,
+                                                    text: 'Login here',
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
-                            ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                             move: const MoveConfig(begin: Offset(0, 140)),
                             scale: const ScaleConfig(begin: Offset(0.9, 1.0)),
                             rotate: const RotateConfig(begin: -0.05), // visual approximation of -0.349 tilt
                           ),
-                                ),
-                              ],
-                            ),
-                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
-            ],
-          ),
+          ],
+        ),
       ),
     );
   }

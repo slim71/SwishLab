@@ -1,4 +1,4 @@
-import 'package:swish_lab/models/results_response.dart';
+import 'results_response.dart';
 
 sealed class AnalysisState {}
 

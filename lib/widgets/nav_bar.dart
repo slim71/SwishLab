@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
+
+import '../styles/theme_manager.dart';
 
 class NavBar extends StatelessWidget {
   final Widget child;

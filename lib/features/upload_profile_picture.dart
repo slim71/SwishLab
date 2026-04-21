@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:swish_lab/features/update_user_field.dart';
-import 'package:swish_lab/functions/local_image_from_url.dart';
-import 'package:swish_lab/repositories/storage_repository.dart';
-import 'package:swish_lab/repositories/users_repository.dart';
+import '../functions/local_image_from_url.dart';
+import '../repositories/storage_repository.dart';
+import '../repositories/users_repository.dart';
+import 'update_user_field.dart';
 
 class ChangeProfilePicture {
   final UsersRepository usersRepository;
@@ -47,4 +47,3 @@ class ChangeProfilePicture {
     return publicUrl;
   }
 }
-

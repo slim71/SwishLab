@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:swish_lab/functions/shadow_from_color.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
+
+import '../functions/shadow_from_color.dart';
+import '../styles/theme_manager.dart';
 
 class BoxWithShadow extends BoxDecoration {
   BoxWithShadow({

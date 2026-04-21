@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:swish_lab/styles/styles.dart';
+
+import '../styles/styles.dart';
 
 class CustomTextSpan extends TextSpan {
   CustomTextSpan(

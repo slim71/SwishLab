@@ -138,8 +138,7 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
     required Alignment begin,
     required Alignment end,
   }) {
-    final colorsList = primaryThree == null
-        ? [primaryOne, primaryTwo] : [primaryOne, primaryThree!, primaryTwo];
+    final colorsList = primaryThree == null ? [primaryOne, primaryTwo] : [primaryOne, primaryThree!, primaryTwo];
 
     return LinearGradient(
       colors: colorsList,
@@ -237,39 +236,23 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
       retroOne: Color.lerp(retroOne, other.retroOne, t)!,
       retroTwo: Color.lerp(retroTwo, other.retroTwo, t)!,
       retroThree: Color.lerp(retroThree, other.retroThree, t),
-      darkButtonBorders:
-          Color.lerp(darkButtonBorders, other.darkButtonBorders, t)!,
-      darkButtonBackground:
-          Color.lerp(darkButtonBackground, other.darkButtonBackground, t)!,
-      darkButtonTextColor:
-          Color.lerp(darkButtonTextColor, other.darkButtonTextColor, t)!,
-      lightButtonBorders:
-          Color.lerp(lightButtonBorders, other.lightButtonBorders, t)!,
-      lightButtonBackground:
-          Color.lerp(lightButtonBackground, other.lightButtonBackground, t)!,
-      lightButtonTextColor:
-          Color.lerp(lightButtonTextColor, other.lightButtonTextColor, t)!,
-      transparentButtonBorders: Color.lerp(
-          transparentButtonBorders, other.transparentButtonBorders, t)!,
-      transparentButtonBackground: Color.lerp(
-          transparentButtonBackground, other.transparentButtonBackground, t)!,
-      transparentButtonTextColor: Color.lerp(
-          transparentButtonTextColor, other.transparentButtonTextColor, t)!,
-      actionButtonBorders:
-          Color.lerp(actionButtonBorders, other.actionButtonBorders, t)!,
-      textFieldBorders:
-          Color.lerp(textFieldBorders, other.textFieldBorders, t)!,
+      darkButtonBorders: Color.lerp(darkButtonBorders, other.darkButtonBorders, t)!,
+      darkButtonBackground: Color.lerp(darkButtonBackground, other.darkButtonBackground, t)!,
+      darkButtonTextColor: Color.lerp(darkButtonTextColor, other.darkButtonTextColor, t)!,
+      lightButtonBorders: Color.lerp(lightButtonBorders, other.lightButtonBorders, t)!,
+      lightButtonBackground: Color.lerp(lightButtonBackground, other.lightButtonBackground, t)!,
+      lightButtonTextColor: Color.lerp(lightButtonTextColor, other.lightButtonTextColor, t)!,
+      transparentButtonBorders: Color.lerp(transparentButtonBorders, other.transparentButtonBorders, t)!,
+      transparentButtonBackground: Color.lerp(transparentButtonBackground, other.transparentButtonBackground, t)!,
+      transparentButtonTextColor: Color.lerp(transparentButtonTextColor, other.transparentButtonTextColor, t)!,
+      actionButtonBorders: Color.lerp(actionButtonBorders, other.actionButtonBorders, t)!,
+      textFieldBorders: Color.lerp(textFieldBorders, other.textFieldBorders, t)!,
       dropDownBorders: Color.lerp(dropDownBorders, other.dropDownBorders, t)!,
-      labelSelectedBackground: Color.lerp(
-          labelSelectedBackground, other.labelSelectedBackground, t)!,
-      labelSelectedBorders:
-          Color.lerp(labelSelectedBorders, other.labelSelectedBorders, t)!,
-      labelUnselectedBackground: Color.lerp(
-          labelUnselectedBackground, other.labelUnselectedBackground, t)!,
-      labelUnselectedBorders:
-          Color.lerp(labelUnselectedBorders, other.labelUnselectedBorders, t)!,
-      containersBorders:
-          Color.lerp(containersBorders, other.containersBorders, t)!,
+      labelSelectedBackground: Color.lerp(labelSelectedBackground, other.labelSelectedBackground, t)!,
+      labelSelectedBorders: Color.lerp(labelSelectedBorders, other.labelSelectedBorders, t)!,
+      labelUnselectedBackground: Color.lerp(labelUnselectedBackground, other.labelUnselectedBackground, t)!,
+      labelUnselectedBorders: Color.lerp(labelUnselectedBorders, other.labelUnselectedBorders, t)!,
+      containersBorders: Color.lerp(containersBorders, other.containersBorders, t)!,
       altContBorders: Color.lerp(altContBorders, other.altContBorders, t)!,
     );
   }

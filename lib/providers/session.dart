@@ -3,13 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:swish_lab/providers/supabase_provider.dart';
-import 'package:swish_lab/providers/users_provider.dart';
-import 'package:swish_lab/router/central_routing.dart' show rootNavigatorKey;
-import 'package:swish_lab/state/app_state.dart';
-import 'package:swish_lab/styles/styles.dart';
 
 import '../logger.dart';
+import '../router/central_routing.dart' show rootNavigatorKey;
+import '../state/app_state.dart';
+import '../styles/styles.dart';
+import 'supabase_provider.dart';
+import 'users_provider.dart';
 
 /// Helper provider to feed the BuildContext
 final navigationContextProvider = StateProvider<BuildContext?>((ref) => null);

@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swish_lab/models/statistics_row.dart';
-import 'package:swish_lab/providers/supabase_provider.dart';
-import 'package:swish_lab/repositories/statistics_repository.dart';
 
+import '../models/statistics_row.dart';
+import '../repositories/statistics_repository.dart';
+import 'supabase_provider.dart';
 import 'users_provider.dart';
 
 /// Repository provider

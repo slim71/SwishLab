@@ -1,4 +1,4 @@
-import 'package:swish_lab/logger.dart';
+import '../logger.dart';
 
 final sortLogger = AppLogger.scope('Credits');
 

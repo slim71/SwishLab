@@ -1,5 +1,6 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:swish_lab/models/statistics_row.dart';
+
+import '../models/statistics_row.dart';
 
 class StatisticsRepository {
   final SupabaseClient _client;
@@ -7,15 +8,10 @@ class StatisticsRepository {
   StatisticsRepository(this._client);
 
   Future<List<StatisticsRow>> getUserStatistics(String userId) async {
-    final response = await _client
-        .from('Statistics')
-        .select()
-        .eq('user_id', userId)
-        .order('created_at', ascending: true);
+    final response =
+        await _client.from('Statistics').select().eq('user_id', userId).order('created_at', ascending: true);
 
-    return (response as List)
-        .map((json) => StatisticsRow.fromJson(json))
-        .toList();
+    return (response as List).map((json) => StatisticsRow.fromJson(json as Map<String, dynamic>)).toList();
   }
 
   Future<void> insertAnalysisResults({

@@ -1,12 +1,12 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swish_lab/features/update_user_field.dart';
-import 'package:swish_lab/features/upload_profile_picture.dart';
-import 'package:swish_lab/models/users_row.dart';
-import 'package:swish_lab/providers/storage_providers.dart';
-import 'package:swish_lab/providers/supabase_provider.dart';
-import 'package:swish_lab/repositories/users_repository.dart';
 
+import '../features/update_user_field.dart';
+import '../features/upload_profile_picture.dart';
+import '../models/users_row.dart';
+import '../repositories/users_repository.dart';
 import 'auth_providers.dart';
+import 'storage_providers.dart';
+import 'supabase_provider.dart';
 
 // Provider used to load data from the Users table in Supabase
 

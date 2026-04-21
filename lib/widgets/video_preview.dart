@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:swish_lab/models/video_source.dart';
 import 'package:video_player/video_player.dart';
+
+import '../models/video_source.dart';
 
 class VideoPreview extends StatefulWidget {
   final VideoSource source;

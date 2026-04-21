@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:swish_lab/constants.dart';
-import 'package:swish_lab/logger.dart';
-import 'package:swish_lab/models/statistics_row.dart';
-import 'package:swish_lab/models/users_row.dart';
-import 'package:swish_lab/providers/statistics_provider.dart';
-import 'package:swish_lab/providers/users_provider.dart';
-import 'package:swish_lab/styles/styles.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
-import 'package:swish_lab/widgets/app_bar.dart';
-import 'package:swish_lab/widgets/background.dart';
-import 'package:swish_lab/widgets/box_with_shadow.dart';
-import 'package:swish_lab/widgets/dark_button.dart';
+
+import '../constants.dart';
+import '../logger.dart';
+import '../models/statistics_row.dart';
+import '../models/users_row.dart';
+import '../providers/statistics_provider.dart';
+import '../providers/users_provider.dart';
+import '../styles/styles.dart';
+import '../styles/theme_manager.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/background.dart';
+import '../widgets/box_with_shadow.dart';
+import '../widgets/dark_button.dart';
 
 /// Home page
 class HomePage extends ConsumerStatefulWidget {
@@ -54,7 +55,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                 (last.followThroughTotalScore ?? 0.0)) /
             6;
 
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -63,13 +63,13 @@ class _HomePageState extends ConsumerState<HomePage> {
       child: Scaffold(
           backgroundColor: AppThemeManager.secondaryBackground,
           appBar: MyAppBar(
-          style: MyAppBarStyle.titleWithProfileImage,
-          title: 'Home',
-          height: 100,
-          onProfilePressed: () async {
+            style: MyAppBarStyle.titleWithProfileImage,
+            title: 'Home',
+            height: 100,
+            onProfilePressed: () async {
               logger.d('Navigating...');
               context.goNamed('profile');
-          },
+            },
             profileImageUrl: userInfo?.profilePic ?? kDefaultProfilePictureUrl,
           ),
           body: Background(
@@ -79,14 +79,14 @@ class _HomePageState extends ConsumerState<HomePage> {
               height: double.infinity,
               child:
                   // Main column with all the content of the home page
-              SingleChildScrollView(
+                  SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Container with user data
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                       child: Container(
                         width: double.infinity,
                         decoration: BoxWithShadow(
@@ -97,7 +97,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                         child:
                             // Column to place user data
                             Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(12, 12, 12, 16),
+                          padding: const EdgeInsetsDirectional.fromSTEB(12, 12, 12, 16),
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -177,7 +177,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
                     // "Available checks" text
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
                       child: Text(
                         'Available checks',
                         style: AppTextStyles.titleMedium(context),
@@ -185,14 +185,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                     ),
                     if (!hasShootingHand)
                       Padding(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             // "Available checks" text
                             Expanded(
                               child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                                 child: Text(
                                   'You can\'t use these yet - tell us your shooting hand first!',
                                   style: AppTextStyles.titleMedium(context, color: Colors.red),
@@ -214,7 +214,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       children: [
                         // Item related to the Front View functionality
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                           child: InkWell(
                             onTap: () async {
                               if (hasShootingHand) {
@@ -232,13 +232,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                               child:
                                   // Row with the Front View overview
                                   Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     // Front View section image
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(0, 1, 1, 1),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(0, 1, 1, 1),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
                                         child: Image.asset(
@@ -253,7 +253,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     // Column to place the Front View overview
                                     Expanded(
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(8, 0, 4, 0),
+                                        padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 4, 0),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment: MainAxisAlignment.center,
@@ -283,7 +283,7 @@ class _HomePageState extends ConsumerState<HomePage> {
 
                         // Item related to the Side View functionality
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                          padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                           child: InkWell(
                             onTap: () async {
                               if (hasShootingHand) {
@@ -302,13 +302,13 @@ class _HomePageState extends ConsumerState<HomePage> {
                               child:
                                   // Row with the Side View overview
                                   Padding(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     // Side View section image
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(0, 1, 1, 1),
+                                      padding: const EdgeInsetsDirectional.fromSTEB(0, 1, 1, 1),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(8),
                                         child: Image.asset(
@@ -323,7 +323,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                                     // Column to place the Side View overview
                                     Expanded(
                                       child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(8, 0, 4, 0),
+                                        padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 4, 0),
                                         child: Column(
                                           mainAxisSize: MainAxisSize.max,
                                           mainAxisAlignment: MainAxisAlignment.center,

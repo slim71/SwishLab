@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:swish_lab/providers/supabase_provider.dart';
-import 'package:swish_lab/services/authentication.dart';
 
+import '../services/authentication.dart';
 import 'backend_reachability_provider.dart';
+import 'supabase_provider.dart';
 
 /// Represents the high-level authentication and connectivity state of the app.
 ///

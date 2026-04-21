@@ -307,9 +307,9 @@ that You are not listed on any US Government list of prohibited or restricted pa
 For general inquiries, complaints, questions or claims concerning the Licensed Application, please
 contact:
 
-Simone Vollaro  
-Rome  
-Italy  
+Simone Vollaro
+Rome
+Italy
 [slim71sv@gmail.com](mailto:slim71sv@gmail.com).
 
 ## 13. TERMINATION

@@ -1,10 +1,10 @@
-import 'package:swish_lab/functions/get_section_name.dart';
-import 'package:swish_lab/functions/process_fields.dart';
-import 'package:swish_lab/functions/process_scores.dart';
+import 'get_section_name.dart';
+import 'process_fields.dart';
+import 'process_scores.dart';
 
 /// Process the results JSON to extract relevant info
-List<dynamic> processAnalysisResults(dynamic analysisResults) {
-  return analysisResults.entries.map((entry) {
+List<dynamic> processAnalysisResults(Map<String, dynamic> analysisResults) {
+  return analysisResults.entries.map<Map<String, dynamic>>((entry) {
     final sectionName = entry.key;
     final sectionData = entry.value;
 
@@ -18,9 +18,9 @@ List<dynamic> processAnalysisResults(dynamic analysisResults) {
       return {
         "section": getSectionName(sectionName),
         "fields": [
-          {"name": getSectionName(sectionName), "value": sectionData}
+          <String, dynamic>{"name": getSectionName(sectionName), "value": sectionData}
         ],
-        "scores": [],
+        "scores": <Map<String, dynamic>>[],
       };
     }
   }).toList();

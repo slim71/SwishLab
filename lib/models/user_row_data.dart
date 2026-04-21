@@ -20,15 +20,13 @@ class UserRowData {
 
   // optional: factory from JSON if you store/load it
   factory UserRowData.fromJson(Map<String, dynamic> json) => UserRowData(
-        userID: json['UserID'],
-        firstName: json['firstName'],
-        lastName: json['lastName'],
-        eMail: json['eMail'],
-        profilePicture: json['profilePicture'],
-        registrationDate: json['registrationDate'] != null
-            ? DateTime.parse(json['registrationDate'])
-            : null,
-        shootingHand: json['shootingHand'],
+        userID: json['UserID'] as String,
+        firstName: json['firstName'] as String,
+        lastName: json['lastName'] as String,
+        eMail: json['eMail'] as String,
+        profilePicture: json['profilePicture'] as String,
+        registrationDate: json['registrationDate'] != null ? DateTime.parse(json['registrationDate'] as String) : null,
+        shootingHand: json['shootingHand'] as String?,
       );
 
   Map<String, dynamic> toJson() => {

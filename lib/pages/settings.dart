@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
-import 'package:swish_lab/constants.dart';
-import 'package:swish_lab/functions/add_animation.dart';
-import 'package:swish_lab/functions/load_json_remote_or_app_state.dart';
-import 'package:swish_lab/logger.dart';
-import 'package:swish_lab/providers/supabase_provider.dart';
-import 'package:swish_lab/state/app_state.dart';
-import 'package:swish_lab/styles/styles.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
-import 'package:swish_lab/widgets/app_bar.dart';
-import 'package:swish_lab/widgets/background.dart';
-import 'package:swish_lab/widgets/light_button.dart';
-import 'package:swish_lab/widgets/settings_item.dart';
-import 'package:swish_lab/widgets/settings_row.dart';
-import 'package:swish_lab/widgets/social_icon_button.dart';
+
+import '../constants.dart';
+import '../functions/add_animation.dart';
+import '../functions/load_json_remote_or_app_state.dart';
+import '../logger.dart';
+import '../providers/supabase_provider.dart';
+import '../state/app_state.dart';
+import '../styles/styles.dart';
+import '../styles/theme_manager.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/background.dart';
+import '../widgets/light_button.dart';
+import '../widgets/settings_item.dart';
+import '../widgets/settings_row.dart';
+import '../widgets/social_icon_button.dart';
 
 const slideDurationMs = 500; // [ms]
 const settleDurationMs = 250; // [ms]
@@ -39,8 +40,7 @@ class Settings extends ConsumerStatefulWidget {
   ConsumerState<Settings> createState() => _SettingsState();
 }
 
-class _SettingsState extends ConsumerState<Settings>
-    with TickerProviderStateMixin {
+class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMixin {
   List<Map<String, dynamic>>? faqsJsonList;
 
   late final List<_SettingsItemData> _settingsData = [
@@ -144,7 +144,7 @@ class _SettingsState extends ConsumerState<Settings>
 
     return Scaffold(
       backgroundColor: AppThemeManager.primaryBackground,
-      appBar: MyAppBar(
+      appBar: const MyAppBar(
         style: MyAppBarStyle.titleOnly,
         title: 'Settings',
       ),
@@ -153,17 +153,17 @@ class _SettingsState extends ConsumerState<Settings>
           Background(
         child: SingleChildScrollView(
           child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // List of available settings
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // List of available settings
               ListView.builder(
                 padding: EdgeInsets.zero,
-                            primary: false,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: items.length,
-                            itemBuilder: (context, index) {
+                primary: false,
+                shrinkWrap: true,
+                scrollDirection: Axis.vertical,
+                itemCount: items.length,
+                itemBuilder: (context, index) {
                   return addAnimation(
                     widget: SettingsRow(item: items[index]),
                     withFade: false,
@@ -176,117 +176,114 @@ class _SettingsState extends ConsumerState<Settings>
                         delay: Duration(milliseconds: (singleDelayMs * index) + slideDurationMs),
                         duration: const Duration(milliseconds: settleDurationMs)),
                   );
-                            },
-                          ),
+                },
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+                child: Container(
+                  decoration: const BoxDecoration(),
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        // "Follow us on" text
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
-                          child: Container(
-                            decoration: BoxDecoration(),
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  // "Follow us on" text
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 8),
+                          padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 0, 8),
                           child: Text(
                             'Follow us on',
                             style: AppTextStyles.labelMedium(context, color: Colors.black),
                           ),
-                                  ),
+                        ),
 
-                                  // Row with socials buttons
-                            Padding(
-                              padding:
-                              EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                        // Row with socials buttons
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    // Twitter button
-                                    SocialIconButton(
-                                            icon: FontAwesomeIcons.twitter,
-                                      onTap: () {
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              // Twitter button
+                              SocialIconButton(
+                                icon: FontAwesomeIcons.twitter,
+                                onTap: () {
                                   logger.d('twitterButton pressed ...');
                                 },
-                                    ),
-                                    const SizedBox(width: 8),
+                              ),
+                              const SizedBox(width: 8),
 
-                                          // Instagram button
-                                          SocialIconButton(
-                                            icon: FontAwesomeIcons.instagram,
-                                            onTap: () {
+                              // Instagram button
+                              SocialIconButton(
+                                icon: FontAwesomeIcons.instagram,
+                                onTap: () {
                                   logger.d('instagramButton pressed ...');
                                 },
-                                          ),
-                                          const SizedBox(width: 8),
+                              ),
+                              const SizedBox(width: 8),
 
-                                          // Facebook button
-                                    SocialIconButton(
-                                            icon: FontAwesomeIcons.facebookF,
-                                      onTap: () {
+                              // Facebook button
+                              SocialIconButton(
+                                icon: FontAwesomeIcons.facebookF,
+                                onTap: () {
                                   logger.d('facebookButton pressed ...');
                                 },
-                                    ),
-                                  ],
-                                ),
-                            ),
-                          ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // "App version" text
-                            Padding(
-                              padding:
-                              EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
+                child: Container(
+                  width: double.infinity,
+                  decoration: const BoxDecoration(),
+                  child: Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // "App version" text
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                           child: Text(
                             'App Versions',
                             style: AppTextStyles.titleLarge(context),
                           ),
-                            ),
+                        ),
 
-                                  // App version
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
+                        // App version
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
                           child: Text(
                             'v0.0.1',
                             style: AppTextStyles.labelMedium(context, color: Colors.black),
                           ),
-                                  ),
+                        ),
 
-                                  // Logout button
-                            Padding(
-                              padding:
-                              EdgeInsetsDirectional.fromSTEB(16, 16, 0, 0),
+                        // Logout button
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 0, 0),
                           child: LightButton(
                             onPressed: () async {
                               await ref.read(supabaseProvider).auth.signOut();
                             },
-                                  text: 'Log Out',
-                                ),
-                            ),
-                          ],
+                            text: 'Log Out',
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
+            ],
+          ),
+        ),
       ),
     );
   }

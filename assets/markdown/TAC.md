@@ -726,8 +726,8 @@ than electronic means.
 
 If any complaint with us is not satisfactorily resolved, you can contact the Complaint Assistance
 Unit of the Division of Consumer Services of the California Department of Consumer Affairs in
-writing at 1625 North Market Blvd., Suite N 112, Sacramento, California 95834 or by telephone at (
-800) 952-5210 or (916) 445-1254.
+writing at 1625 North Market Blvd., Suite N 112, Sacramento, California 95834 or by telephone at
+(800) 952-5210 or (916) 445-1254.
 
 ## 24. MISCELLANEOUS
 
@@ -751,8 +751,7 @@ execute these Legal Terms.
 In order to resolve a complaint regarding the Services or to receive further information regarding
 use of the Services, please contact us at:
 
-Simone Vollaro  
-Rome, Lazio  
-Italy  
+Simone Vollaro
+Rome, Lazio
+Italy
 [slim71sv@gmail.com](mailto:slim71sv@gmail.com)
-  

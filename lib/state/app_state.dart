@@ -1,18 +1,17 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swish_lab/models/credit_item.dart';
-import 'package:swish_lab/models/user_row_data.dart';
+
+import '../models/credit_item.dart';
+import '../models/user_row_data.dart';
 
 class AppState {
   // Riverpod requires immutable states
-  final bool
-      hasOpenedBefore; //  Whether this is the first time the user opens up the app or not
+  final bool hasOpenedBefore; //  Whether this is the first time the user opens up the app or not
   final bool userDataFetched; //  Whether the user data has been fetched or not
   final UserRowData? userData;
   final List<Credit> credits;
   final List<Map<String, dynamic>>?
       loadedFaqs; // Container to store FAQs loaded either from remote or from the default constant
-  final bool
-      sessionInitialized; // Flag to track whether the home page has been already shown or not before
+  final bool sessionInitialized; // Flag to track whether the home page has been already shown or not before
 
   const AppState({
     this.hasOpenedBefore = false,
@@ -77,5 +76,4 @@ class AppStateNotifier extends Notifier<AppState> {
   }
 }
 
-final appStateProvider =
-    NotifierProvider<AppStateNotifier, AppState>(() => AppStateNotifier());
+final appStateProvider = NotifierProvider<AppStateNotifier, AppState>(() => AppStateNotifier());

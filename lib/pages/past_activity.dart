@@ -2,10 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:swish_lab/styles/styles.dart';
-import 'package:swish_lab/styles/theme_manager.dart';
-import 'package:swish_lab/widgets/app_bar.dart';
-import 'package:swish_lab/widgets/background.dart';
+
+import '../styles/styles.dart';
+import '../styles/theme_manager.dart';
+import '../widgets/app_bar.dart';
+import '../widgets/background.dart';
 
 /// Page to show past user activity
 class PastActivity extends ConsumerStatefulWidget {
@@ -30,7 +31,7 @@ class _PastActivityState extends ConsumerState<PastActivity> {
 
     return Scaffold(
       backgroundColor: AppThemeManager.primaryBackground,
-      appBar: MyAppBar(
+      appBar: const MyAppBar(
         style: MyAppBarStyle.titleOnly,
         title: 'Past activity',
       ),
@@ -40,297 +41,252 @@ class _PastActivityState extends ConsumerState<PastActivity> {
             // Column to place actual content
             SingleChildScrollView(
           child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                // Container to have a colored background
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              // Container to have a colored background
               Background(
                 child: GestureDetector(
-                        onVerticalDragStart: (details) async {
-                          unawaited(
-                            () async {
-                              await activityListScrollController?.animateTo(
-                                activityListScrollController!
-                                    .position.maxScrollExtent,
-                                duration: Duration(milliseconds: 100),
-                                curve: Curves.ease,
-                              );
-                            }(),
-                          );
-                        },
-                        child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // "All Activity from this past month." text
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
+                  onVerticalDragStart: (details) async {
+                    unawaited(
+                      () async {
+                        await activityListScrollController?.animateTo(
+                          activityListScrollController!.position.maxScrollExtent,
+                          duration: const Duration(milliseconds: 100),
+                          curve: Curves.ease,
+                        );
+                      }(),
+                    );
+                  },
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // "All Activity from this past month." text
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
                         child: Text(
                           'All activity from this past month.',
                           style: AppTextStyles.titleSmall(context),
                         ),
-                              ),
+                      ),
 
-                              // List of activities to show
-                            Padding(
-                              padding:
-                              EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                      // List of activities to show
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                         child: ListView(
                           padding: EdgeInsets.zero,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  controller: activityListScrollController,
-                                  children: [
-                                    // Row for a general item in the activity list
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          16, 0, 0, 0),
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          controller: activityListScrollController,
+                          children: [
+                            // Row for a general item in the activity list
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                          children: [
-                                            // Colum to place the timeline related to an activity
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 12, 0),
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  // Colum to place the timeline related to an activity
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                     child: Column(
-                                      mainAxisSize:
-                                                  MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                                  children: [
-                                                    // Container to create a dot as starting point of the timeline
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        // Container to create a dot as starting point of the timeline
                                         Container(
                                           width: 16,
-                                                        height: 16,
-                                                        decoration:
-                                                        BoxDecoration(
-                                                          color: appColors
-                                                              .alternateOne,
-                                                          shape:
-                                                          BoxShape.circle,
-                                                        ),
-                                                      ),
+                                          height: 16,
+                                          decoration: BoxDecoration(
+                                            color: appColors.alternateOne,
+                                            shape: BoxShape.circle,
+                                          ),
+                                        ),
 
-                                                      // Timeline for a general activity
+                                        // Timeline for a general activity
                                         Container(
                                           width: 2,
-                                                          height: 110,
-                                                          decoration: BoxDecoration(
-                                                            color: appColors.alternateOne,
-                                                          ),
-                                                        ),
-                                                    ],
-                                                  ),
-                                              ),
+                                          height: 110,
+                                          decoration: BoxDecoration(
+                                            color: appColors.alternateOne,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
 
-                                              // Container to show activity related data
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 12, 0, 0),
+                                  // Container to show activity related data
+                                  Padding(
+                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                                     child: Container(
-                                      width:
-                                                  MediaQuery
-                                                      .sizeOf(context)
-                                                      .width *
-                                                      0.85,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius:
-                                                    BorderRadius.circular(
-                                                        8),
-                                                  ),
-                                                  child:
-                                                  // Column to place activity related data
+                                      width: MediaQuery.sizeOf(context).width * 0.85,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                      ),
+                                      child:
+                                          // Column to place activity related data
                                           Column(
-                                        mainAxisSize:
-                                                      MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .center,
-                                                      crossAxisAlignment:
-                                                      CrossAxisAlignment
-                                                          .start,
-                                                      children: [
-                                                        // Row to place the activity timestamp and the access icon
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          // Row to place the activity timestamp and the access icon
                                           Row(
-                                            mainAxisSize:
-                                                            MainAxisSize
-                                                                .max,
-                                                            mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                            children: [
-                                                              // Timestamp related to the activity item
-                                              Text(
-                                                '15, Jan. 2026',
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              // Timestamp related to the activity item
+                                              Text('15, Jan. 2026',
                                                   style: AppTextStyles.labelMedium(context, color: Colors.black)),
 
-                                                                // Icon to show the activity
-                                              Icon(
+                                              // Icon to show the activity
+                                              const Icon(
                                                 Icons.chevron_right_rounded,
-                                                                    color: Colors.black,
-                                                                    size: 24,
-                                                                  ),
-                                                              ],
-                                                            ),
+                                                color: Colors.black,
+                                                size: 24,
+                                              ),
+                                            ],
+                                          ),
 
-                                                          // Row to place the activity information
+                                          // Row to place the activity information
                                           Row(
-                                            mainAxisSize:
-                                                            MainAxisSize
-                                                                .max,
-                                                            children: [
-                                                              // Example test for an activity
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              // Example test for an activity
                                               Text(
                                                 'Created New User',
                                                 style: AppTextStyles.bodyLarge(context),
                                               ),
 
-                                                                // Example test for an activity, part 2
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
+                                              // Example test for an activity, part 2
+                                              Padding(
+                                                padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                                                 child: Text(
                                                   '<User>',
                                                   style: AppTextStyles.titleMedium(context),
                                                 ),
-                                                                ),
-                                                              ],
-                                                            ),
+                                              ),
+                                            ],
+                                          ),
 
-                                                          // Row to place activity data
-                                                        Padding(
-                                                          padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(0,
-                                                              4, 0, 0),
+                                          // Row to place activity data
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                             child: Row(
-                                              mainAxisSize:
-                                                              MainAxisSize
-                                                                  .max,
-                                                              mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .start,
-                                                              children: [
-                                                                // Example of an image related to the activity
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                // Example of an image related to the activity
                                                 Container(
                                                   width: 30,
-                                                                    height: 30,
-                                                                    clipBehavior:
-                                                                    Clip.antiAlias,
-                                                                    decoration:
-                                                                    BoxDecoration(
-                                                                      shape: BoxShape
-                                                                          .circle,
-                                                                    ),
-                                                                    child: Image
-                                                                        .asset(
-                                                                      'assets/icons/default_icon.png',
-                                                                    ),
-                                                                  ),
+                                                  height: 30,
+                                                  clipBehavior: Clip.antiAlias,
+                                                  decoration: const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: Image.asset(
+                                                    'assets/icons/default_icon.png',
+                                                  ),
+                                                ),
 
-                                                                  // Example description of an activity
-                                                                  Padding(
-                                                                    padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
+                                                // Example description of an activity
+                                                Padding(
+                                                  padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
                                                   child: Text(
                                                     '<User>',
                                                     style: AppTextStyles.labelMedium(context, color: Colors.black),
                                                   ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                    ),
-                                  ),
-                                            ],
-                                          ),
-                                      ),
-
-                                      // Row for the first item in the list in temporal order
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                        children: [
-                                          // Column to place the timeline for the first item
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                              children: [
-                                                // Timeline for the fist item in temporal order
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(23, 0, 0, 0),
-                                      child: Container(
-                                        width: 2,
-                                                      height: 152,
-                                                      decoration: BoxDecoration(
-                                                        color: appColors
-                                                            .alternateOne,
-                                                      ),
-                                                    ),
                                                 ),
                                               ],
                                             ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
 
-                                            // Container for the activity image
-                                            Padding(
-                                              padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                            // Row for the first item in the list in temporal order
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                // Column to place the timeline for the first item
+                                Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    // Timeline for the fist item in temporal order
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(23, 0, 0, 0),
+                                      child: Container(
+                                        width: 2,
+                                        height: 152,
+                                        decoration: BoxDecoration(
+                                          color: appColors.alternateOne,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                // Container for the activity image
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                                   child: Container(
                                     width: MediaQuery.sizeOf(context).width * 0.9,
-                                                  decoration: BoxDecoration(
-                                                    borderRadius: BorderRadius.circular(0),
-                                                  ),
-                                                  alignment: AlignmentDirectional(0, 0),
-                                                  child:
-                                                      // Image to showcase the activity section
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(0),
+                                    ),
+                                    alignment: const AlignmentDirectional(0, 0),
+                                    child:
+                                        // Image to showcase the activity section
                                         Image.asset(
                                       'assets/images/tasks.png',
-                                                      width: 300,
-                                                      height: 100,
-                                                      fit: BoxFit.fitHeight,
-                                                    ),
+                                      width: 300,
+                                      height: 100,
+                                      fit: BoxFit.fitHeight,
+                                    ),
                                   ),
                                 ),
-                                          ],
-                                        ),
-                                    ],
-                                  ),
-                              ),
-
-                              // "Beginning of Activity" text
-                            Padding(
-                              padding:
-                              EdgeInsetsDirectional.fromSTEB(16, 24, 0, 0),
-                        child: Text(
-                          'Beginning of Activity',
-                          style: AppTextStyles.bodyLarge(context),
-                        ),
+                              ],
                             ),
                           ],
                         ),
                       ),
-                    ),
 
-                // Column to place the WIP image
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                    children: [
-                      // Work in progress image
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                          child: Image.asset(
-                            'assets/images/wip.png',
-                            fit: BoxFit.cover,
-                          ),
+                      // "Beginning of Activity" text
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 0),
+                        child: Text(
+                          'Beginning of Activity',
+                          style: AppTextStyles.bodyLarge(context),
                         ),
+                      ),
                     ],
                   ),
-              ],
-            ),
+                ),
+              ),
+
+              // Column to place the WIP image
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  // Work in progress image
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'assets/images/wip.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
+        ),
       ),
     );
   }

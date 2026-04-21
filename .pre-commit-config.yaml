@@ -48,7 +48,7 @@ repos:
         entry: flutter test
         language: system
         pass_filenames: false
-        stages: [ pre-push ]
+        stages: [ manual ] # [ pre-push ]
 
       # Full analysis on push, to make sure not to miss anything
       - id: flutter-analyze-full

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'theme_manager.dart';
-
 class AppTextStyles {
   // ========== DISPLAY ==========
   static TextStyle displayLarge(
@@ -145,11 +143,10 @@ class AppTextStyles {
     BuildContext context, {
     Color? color,
   }) {
-    final colors = AppThemeManager.currentColors;
     return GoogleFonts.inter(
       fontSize: 16,
       fontWeight: FontWeight.w400,
-      color: color ?? colors.lightButtonTextColor,
+      color: color ?? Theme.of(context).colorScheme.onSurface,
     );
   }
 
@@ -157,11 +154,10 @@ class AppTextStyles {
     BuildContext context, {
     Color? color,
   }) {
-    final colors = AppThemeManager.currentColors;
     return GoogleFonts.inter(
       fontSize: 14,
       fontWeight: FontWeight.w400,
-      color: color ?? colors.lightButtonTextColor,
+      color: color ?? Theme.of(context).colorScheme.onSurface,
     );
   }
 
@@ -169,11 +165,10 @@ class AppTextStyles {
     BuildContext context, {
     Color? color,
   }) {
-    final colors = AppThemeManager.currentColors;
     return GoogleFonts.inter(
       fontSize: 12,
       fontWeight: FontWeight.w400,
-      color: color ?? colors.lightButtonTextColor,
+      color: color ?? Theme.of(context).colorScheme.onSurface,
     );
   }
 }

@@ -8,7 +8,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../functions/shadow_from_color.dart';
 import '../styles/styles.dart';
-import '../styles/theme_manager.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/background.dart';
 import '../widgets/box_with_shadow.dart';
@@ -92,7 +91,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                             children: [
                                               Text(
                                                 'Simone Vollaro',
-                                                style: AppTextStyles.headlineMedium(context),
+                                                style: AppTextStyles.headlineMedium(context, color: Colors.white),
                                               ),
                                             ],
                                           ),
@@ -107,7 +106,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                                 child: IconActionButton(
                                                   icon: Icons.paypal,
-                                                  iconColor: AppThemeManager.secondaryText,
+                                                  iconColor: Colors.white,
                                                   onPressed: () async {
                                                     await launchUrl(Uri.parse(
                                                         'https://www.paypal.com/donate/?hosted_button_id=TCJL6TZHSYJU8'));
@@ -118,7 +117,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                                 child: IconActionButton(
                                                   icon: Icons.email,
-                                                  iconColor: AppThemeManager.secondaryText,
+                                                  iconColor: Colors.white,
                                                   onPressed: () async {
                                                     await launchUrl(Uri(
                                                         scheme: 'mailto',
@@ -138,7 +137,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                                 child: IconActionButton(
                                                   icon: FontAwesomeIcons.github,
-                                                  iconColor: AppThemeManager.secondaryText,
+                                                  iconColor: Colors.white,
                                                   onPressed: () async {
                                                     await launchUrl(Uri.parse('https://github.com/slim71/'));
                                                   },
@@ -148,7 +147,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                                 child: IconActionButton(
                                                   icon: FontAwesomeIcons.linkedinIn,
-                                                  iconColor: AppThemeManager.secondaryText,
+                                                  iconColor: Colors.white,
                                                   onPressed: () async {
                                                     await launchUrl(Uri.parse(
                                                         'https://www.linkedin.com/in/simone-vollaro-325185152/'));
@@ -159,7 +158,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                                 child: IconActionButton(
                                                   icon: Icons.reddit_sharp,
-                                                  iconColor: AppThemeManager.secondaryText,
+                                                  iconColor: Colors.white,
                                                   onPressed: () async {
                                                     await launchUrl(Uri.parse('https://www.reddit.com/user/feller94/'));
                                                   },
@@ -284,7 +283,8 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                                               alignment: const AlignmentDirectional(0, 1),
                                                               child: Text(
                                                                 'Basketball has been part of my life since I was a kid. I played throughout my childhood and teenage years, and it had a huge impact on me. It made me more social, helped me find confidence around people, and gave me a way to stay in shape. ',
-                                                                style: AppTextStyles.bodyMedium(context),
+                                                                style: AppTextStyles.bodyMedium(context,
+                                                                    color: Colors.white),
                                                               ),
                                                             ),
                                                           ),
@@ -306,47 +306,39 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                           ),
                           Row(
                             mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Expanded(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: RichText(
-                                        textScaler: MediaQuery.of(context).textScaler,
-                                        text: CustomTextSpan(
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                  child: RichText(
+                                    textScaler: MediaQuery.of(context).textScaler,
+                                    text: CustomTextSpan(
+                                      context,
+                                      children: [
+                                        CustomTextSpan(
                                           context,
-                                          children: [
-                                            CustomTextSpan(
-                                              context,
-                                              text:
-                                                  'I was never a professional player, but I did reach some moments I’m still proud of, like being selected for the ',
-                                            ),
-                                            CustomTextSpan(context,
-                                                text: 'All-Star Toscana game', italic: true, bold: true),
-                                            CustomTextSpan(
-                                              context,
-                                              text: ' when I was 14.',
-                                            )
-                                          ],
+                                          text:
+                                              'I was never a professional player, but I did reach some moments I’m still proud of, like being selected for the ',
                                         ),
-                                      ),
+                                        CustomTextSpan(context,
+                                            text: 'All-Star Toscana game', italic: true, bold: true),
+                                        CustomTextSpan(
+                                          context,
+                                          text: ' when I was 14.',
+                                        )
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
-                              Flexible(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8),
-                                    child: Image.asset(
-                                      'assets/images/trophy.jpg',
-                                      width: MediaQuery.sizeOf(context).width * 0.2,
-                                      fit: BoxFit.cover,
-                                    ),
+                              Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.asset(
+                                    'assets/images/trophy.jpg',
+                                    width: MediaQuery.sizeOf(context).width * 0.2,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
                               ),
@@ -371,7 +363,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.all(4),
+                                padding: const EdgeInsets.all(8),
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8),
                                   child: Image.asset(
@@ -383,7 +375,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                               ),
                               Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsets.all(10),
+                                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                   child: RichText(
                                     textScaler: MediaQuery.of(context).textScaler,
                                     text: CustomTextSpan(

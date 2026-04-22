@@ -111,6 +111,11 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
       return null;
     };
 
+    shootingHandDropDownValue = userInfo?.shootingHand;
+    shootingHandDropDownValueController = DropdownController<String>(
+      value: shootingHandDropDownValue,
+    );
+
     firstNameAnim = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
@@ -331,10 +336,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                       child: Padding(
                                           padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                                           child: Dropdown<String>(
-                                            controller: shootingHandDropDownValueController ??=
-                                                DropdownController<String>(
-                                              value: userInfo?.shootingHand,
-                                            ),
+                                            controller: shootingHandDropDownValueController!,
                                             options: const ['Left', 'Right'],
                                             onChanged: (val) => setState(() => shootingHandDropDownValue = val),
                                             hintText: 'Select your shooting hand',
@@ -425,6 +427,9 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                             );
                           },
                         );
+
+                        if (!context.mounted) return;
+                        Navigator.pop(context);
                       } else {
                         HapticFeedback.lightImpact();
 

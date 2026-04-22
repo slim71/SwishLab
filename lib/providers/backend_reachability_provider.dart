@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
@@ -42,7 +41,7 @@ final backendReachabilityProvider = StreamProvider<bool>((ref) async* {
           .timeout(const Duration(seconds: 3));
 
       // If we get ANY response, backend is reachable
-      debugPrint('Reachability status code: ${response.statusCode}');
+      //debugPrint('Reachability status code: ${response.statusCode}');
       current = response.statusCode < 500;
     } catch (e) {
       current = false;

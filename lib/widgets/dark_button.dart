@@ -10,6 +10,7 @@ class DarkButton extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final EdgeInsetsGeometry iconPadding;
   final Widget? icon;
+  final bool isLoading;
 
   const DarkButton({
     required this.onPressed,
@@ -18,6 +19,7 @@ class DarkButton extends StatelessWidget {
     this.padding = const EdgeInsets.symmetric(horizontal: 16),
     this.iconPadding = EdgeInsets.zero,
     this.icon,
+    this.isLoading = false,
     super.key,
   });
 
@@ -31,7 +33,7 @@ class DarkButton extends StatelessWidget {
           return Container(
               color: Colors.transparent,
               child: ElevatedButton(
-                onPressed: onPressed,
+                onPressed: isLoading ? null : onPressed,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: appColors.darkButtonBackground,
                   elevation: 10,
@@ -45,18 +47,30 @@ class DarkButton extends StatelessWidget {
                   fixedSize: Size.fromHeight(height),
                   padding: padding,
                 ),
-                child: Row(mainAxisSize: MainAxisSize.min, children: [
-                  if (icon != null)
-                    Padding(
-                      padding: iconPadding,
-                      child: icon,
-                    ),
-                  if (icon != null) const SizedBox(width: 8),
-                  Text(
-                    text,
-                    style: AppTextStyles.titleLarge(context, color: appColors.darkButtonTextColor),
-                  ),
-                ]),
+                child: isLoading
+                    ? SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: CircularProgressIndicator(
+                          color: appColors.darkButtonTextColor,
+                          strokeWidth: 2,
+                        ),
+                      )
+                    : Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          if (icon != null)
+                            Padding(
+                              padding: iconPadding,
+                              child: icon,
+                            ),
+                          if (icon != null) const SizedBox(width: 8),
+                          Text(
+                            text,
+                            style: AppTextStyles.titleLarge(context, color: appColors.darkButtonTextColor),
+                          ),
+                        ],
+                      ),
               ));
         });
   }

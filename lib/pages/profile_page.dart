@@ -126,7 +126,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                       child: Text('${userInfo?.firstName} ${userInfo?.lastName}',
                           // "null null" if data missing
                           textAlign: TextAlign.center,
-                          style: AppTextStyles.headlineSmall(context)),
+                          style: AppTextStyles.headlineMedium(context)),
                     ),
 
                     // User email address
@@ -138,12 +138,8 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                 Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                               );
                         },
-                        child: Text(
-                          userInfo?.email ?? "user@email.com",
-                          style: AppTextStyles.labelSmall(context).copyWith(
-                            color: Colors.white, // required, actual color comes from shader
-                          ),
-                        ),
+                        child: Text(userInfo?.email ?? "user@email.com",
+                            style: AppTextStyles.labelSmall(context, color: Colors.black)),
                       ),
                     ),
 

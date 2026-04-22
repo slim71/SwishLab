@@ -45,23 +45,26 @@ class TransparentButton extends StatelessWidget {
                   fixedSize: Size.fromHeight(height),
                   padding: padding,
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (icon != null)
-                      Padding(
-                        padding: iconPadding,
-                        child: icon,
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (icon != null)
+                        Padding(
+                          padding: iconPadding,
+                          child: icon,
+                        ),
+                      if (icon != null) const SizedBox(width: 8),
+                      Text(
+                        text,
+                        style: AppTextStyles.titleLarge(
+                          context,
+                          color: appColors.transparentButtonTextColor,
+                        ),
                       ),
-                    if (icon != null) const SizedBox(width: 8),
-                    Text(
-                      text,
-                      style: AppTextStyles.titleLarge(
-                        context,
-                        color: appColors.transparentButtonTextColor,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ));
         });

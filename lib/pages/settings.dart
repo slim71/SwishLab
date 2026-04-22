@@ -191,9 +191,20 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                         // "Follow us on" text
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 0, 8),
-                          child: Text(
-                            'Follow us on',
-                            style: AppTextStyles.labelMedium(context, color: Colors.black),
+                          child: addAnimation(
+                            widget: Text(
+                              'Follow us on',
+                              style: AppTextStyles.labelMedium(context, color: Colors.black),
+                            ),
+                            withFade: false,
+                            slide: SlideConfig(
+                                begin: const Offset(0, 100),
+                                delay: Duration(milliseconds: singleDelayMs * items.length),
+                                duration: const Duration(milliseconds: slideDurationMs)),
+                            moveY: MoveYConfig(
+                                begin: 100,
+                                delay: Duration(milliseconds: (singleDelayMs * items.length) + slideDurationMs),
+                                duration: const Duration(milliseconds: settleDurationMs)),
                           ),
                         ),
 
@@ -205,29 +216,65 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               // Twitter button
-                              SocialIconButton(
-                                icon: FontAwesomeIcons.twitter,
-                                onTap: () {
-                                  logger.d('twitterButton pressed ...');
-                                },
+                              addAnimation(
+                                widget: SocialIconButton(
+                                  icon: FontAwesomeIcons.twitter,
+                                  onTap: () {
+                                    logger.d('twitterButton pressed ...');
+                                  },
+                                ),
+                                withFade: false,
+                                slide: SlideConfig(
+                                    begin: const Offset(0, 100),
+                                    delay: Duration(milliseconds: singleDelayMs * (items.length + 1)),
+                                    duration: const Duration(milliseconds: slideDurationMs)),
+                                moveY: MoveYConfig(
+                                    begin: 100,
+                                    delay:
+                                        Duration(milliseconds: (singleDelayMs * (items.length + 1)) + slideDurationMs),
+                                    duration: const Duration(milliseconds: settleDurationMs)),
                               ),
                               const SizedBox(width: 8),
 
                               // Instagram button
-                              SocialIconButton(
-                                icon: FontAwesomeIcons.instagram,
-                                onTap: () {
-                                  logger.d('instagramButton pressed ...');
-                                },
+                              addAnimation(
+                                widget: SocialIconButton(
+                                  icon: FontAwesomeIcons.instagram,
+                                  onTap: () {
+                                    logger.d('instagramButton pressed ...');
+                                  },
+                                ),
+                                withFade: false,
+                                slide: SlideConfig(
+                                    begin: const Offset(0, 100),
+                                    delay: Duration(milliseconds: singleDelayMs * (items.length + 2)),
+                                    duration: const Duration(milliseconds: slideDurationMs)),
+                                moveY: MoveYConfig(
+                                    begin: 100,
+                                    delay:
+                                        Duration(milliseconds: (singleDelayMs * (items.length + 2)) + slideDurationMs),
+                                    duration: const Duration(milliseconds: settleDurationMs)),
                               ),
                               const SizedBox(width: 8),
 
                               // Facebook button
-                              SocialIconButton(
-                                icon: FontAwesomeIcons.facebookF,
-                                onTap: () {
-                                  logger.d('facebookButton pressed ...');
-                                },
+                              addAnimation(
+                                widget: SocialIconButton(
+                                  icon: FontAwesomeIcons.facebookF,
+                                  onTap: () {
+                                    logger.d('facebookButton pressed ...');
+                                  },
+                                ),
+                                withFade: false,
+                                slide: SlideConfig(
+                                    begin: const Offset(0, 100),
+                                    delay: Duration(milliseconds: singleDelayMs * (items.length + 3)),
+                                    duration: const Duration(milliseconds: slideDurationMs)),
+                                moveY: MoveYConfig(
+                                    begin: 100,
+                                    delay:
+                                        Duration(milliseconds: (singleDelayMs * (items.length + 3)) + slideDurationMs),
+                                    duration: const Duration(milliseconds: settleDurationMs)),
                               ),
                             ],
                           ),
@@ -251,29 +298,62 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                         // "App version" text
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                          child: Text(
-                            'App Versions',
-                            style: AppTextStyles.titleLarge(context),
+                          child: addAnimation(
+                            widget: Text(
+                              'App Versions',
+                              style: AppTextStyles.titleLarge(context),
+                            ),
+                            withFade: false,
+                            slide: SlideConfig(
+                                begin: const Offset(0, 100),
+                                delay: Duration(milliseconds: singleDelayMs * (items.length + 4)),
+                                duration: const Duration(milliseconds: slideDurationMs)),
+                            moveY: MoveYConfig(
+                                begin: 100,
+                                delay: Duration(milliseconds: (singleDelayMs * (items.length + 4)) + slideDurationMs),
+                                duration: const Duration(milliseconds: settleDurationMs)),
                           ),
                         ),
 
                         // App version
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
-                          child: Text(
-                            'v0.0.1',
-                            style: AppTextStyles.labelMedium(context, color: Colors.black),
+                          child: addAnimation(
+                            widget: Text(
+                              'v0.0.1',
+                              style: AppTextStyles.labelMedium(context, color: Colors.black),
+                            ),
+                            withFade: false,
+                            slide: SlideConfig(
+                                begin: const Offset(0, 100),
+                                delay: Duration(milliseconds: singleDelayMs * (items.length + 5)),
+                                duration: const Duration(milliseconds: slideDurationMs)),
+                            moveY: MoveYConfig(
+                                begin: 100,
+                                delay: Duration(milliseconds: (singleDelayMs * (items.length + 5)) + slideDurationMs),
+                                duration: const Duration(milliseconds: settleDurationMs)),
                           ),
                         ),
 
                         // Logout button
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 0, 0),
-                          child: LightButton(
-                            onPressed: () async {
-                              await ref.read(supabaseProvider).auth.signOut();
-                            },
-                            text: 'Log Out',
+                          child: addAnimation(
+                            widget: LightButton(
+                              onPressed: () async {
+                                await ref.read(supabaseProvider).auth.signOut();
+                              },
+                              text: 'Log Out',
+                            ),
+                            withFade: false,
+                            slide: SlideConfig(
+                                begin: const Offset(0, 100),
+                                delay: Duration(milliseconds: singleDelayMs * (items.length + 6)),
+                                duration: const Duration(milliseconds: slideDurationMs)),
+                            moveY: MoveYConfig(
+                                begin: 100,
+                                delay: Duration(milliseconds: (singleDelayMs * (items.length + 6)) + slideDurationMs),
+                                duration: const Duration(milliseconds: settleDurationMs)),
                           ),
                         ),
                       ],

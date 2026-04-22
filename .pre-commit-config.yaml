@@ -3,24 +3,9 @@ repos:
     hooks:
       ############# COMMIT hooks ####################
 
-      # Analyze (fast fail). WARNING: may miss cross-file issues (rare, but possible)
-      - id: flutter-analyze-incremental
-        name: flutter analyze
-        entry: |
-          bash -c '
-            if [ "$#" -eq 0 ]; then
-              exit 0
-            fi
-            flutter analyze | tr "\\\\" "/"
-          '
-        language: system
-        pass_filenames: false
-        files: ^(lib|test)/.*\.dart$
-        stages: [ pre-commit ]
-
       # Auto-fix Dart issues (only on staged Dart files)
       - id: dart-fix
-        name: dart fix (project-wide)
+        name: dart fix
         entry: dart fix --apply
         language: system
         pass_filenames: false
@@ -29,13 +14,12 @@ repos:
 
       # Auto-format staged Dart files (only run if .dart files changed)
       - id: dart-format-smart
-        name: dart format (auto-fix + require review)
+        name: dart format
         entry: |
           bash -c '
             dart format -l 120 "$@" &&
             git diff --quiet -- "$@" || {
-              echo "❌ Dart formatting was applied."
-              echo "👉 Review changes, then run: git add ."
+              echo "❌ Formatting applied. Run: git add ."
               # git add "$@"   # <-- uncomment to auto-stage in future
               exit 1
             }
@@ -55,8 +39,8 @@ repos:
         stages: [ manual ] # [ pre-push ]
 
       # Full analysis on push, to make sure not to miss anything
-      - id: flutter-analyze-full
-        name: flutter analyze (full project)
+      - id: flutter-analyze
+        name: flutter analyze
         entry: flutter analyze
         language: system
         pass_filenames: false
@@ -77,3 +61,4 @@ repos:
       - id: detect-private-key
       - id: pretty-format-json
         args: [ "--autofix" ]
+        files: \.json$

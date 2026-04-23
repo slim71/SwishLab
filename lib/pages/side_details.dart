@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
@@ -28,6 +29,13 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
   @override
   void initState() {
     super.initState();
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    super.dispose();
   }
 
   @override
@@ -41,172 +49,193 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
       },
       child: Scaffold(
         backgroundColor: AppThemeManager.secondaryBackground,
-        body:
-            // Container with all content on the Front Details page
+        body: Stack(
+          children: [
+            // Background GIF
             Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-            color: AppThemeManager.secondaryBackground,
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              alignment: const AlignmentDirectional(0.3, 0),
-              image: Image.asset(
-                'assets/gifs/curry.gif',
-              ).image,
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                color: AppThemeManager.secondaryBackground,
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  alignment: const AlignmentDirectional(0.3, 0),
+                  image: Image.asset(
+                    'assets/gifs/curry.gif',
+                  ).image,
+                ),
+              ),
             ),
-          ),
-          child:
-              // Column with all content on the Side Details page
-              Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Row to place action buttons
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(16, 44, 16, 0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Back button row
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        // Back button
-                        addAnimation(
-                            widget: IconActionButton(
-                              size: 60,
-                              backgroundColor: AppThemeManager.secondaryBackground,
-                              icon: Icons.arrow_back_rounded,
-                              iconColor: AppThemeManager.primaryText,
-                              iconSize: 25,
-                              onPressed: () async {
-                                context.pop();
-                              },
-                            ),
-                            scale: const ScaleConfig(begin: Offset(0.5, 1.0))),
-                      ],
-                    ),
 
-                    // Upload button row
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        // Upload button
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
-                          child: addAnimation(
+            // Gradient Scrim to ensure text visibility
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withValues(alpha: 0.5),
+                    Colors.black.withValues(alpha: 0.0),
+                    Colors.black.withValues(alpha: 0.9),
+                  ],
+                  stops: const [0.0, 0.4, 1.0],
+                ),
+              ),
+            ),
+
+            // Column with all content on the Side Details page
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Row to place action buttons
+                Padding(
+                  padding: const EdgeInsetsDirectional.fromSTEB(16, 44, 16, 0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Back button row
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          // Back button
+                          addAnimation(
                               widget: IconActionButton(
                                 size: 60,
                                 backgroundColor: AppThemeManager.secondaryBackground,
-                                icon: FontAwesomeIcons.upload,
+                                icon: Icons.arrow_back_rounded,
                                 iconColor: AppThemeManager.primaryText,
                                 iconSize: 25,
                                 onPressed: () async {
-                                  final picker = ImagePicker();
-
-                                  // Pick video
-                                  final XFile? video = await picker.pickVideo(
-                                    source: ImageSource.gallery,
-                                  );
-                                  if (!context.mounted || video == null) return;
-
-                                  setState(() => isDataUploading = true);
-
-                                  try {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('Uploading file...')),
-                                    );
-
-                                    final File videoFile = File(video.path);
-
-                                    // Save locally or prepare preview path
-                                    chosenSideVideo = videoFile;
-                                  } catch (e) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(content: Text('Failed to upload data')),
-                                    );
-                                    return;
-                                  } finally {
-                                    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                                    setState(() => isDataUploading = false);
-                                  }
-
-                                  if (chosenSideVideo == null) return;
-
-                                  // Navigate
-                                  context.pushNamed(
-                                    'pre-upload',
-                                    extra: {
-                                      'originFunc': OriginFunc.front,
-                                      'videoFile': chosenSideVideo!,
-                                    },
-                                  );
+                                  context.pop();
                                 },
                               ),
                               scale: const ScaleConfig(begin: Offset(0.5, 1.0))),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-
-              // Column to place the overview of the side functionality
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Container to have a colored background for some text
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.black.withValues(alpha: 0.3), // subtle semi-transparent overlay
-                        borderRadius: BorderRadius.circular(8), // rounded corners
+                        ],
                       ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: BackdropFilter(
-                          filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4), // soft blur behind text
-                          child:
-                              // Section title
-                              Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+
+                      // Upload button row
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          // Upload button
+                          Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
                             child: addAnimation(
-                              widget: ShaderMask(
-                                shaderCallback: (bounds) => appColors.gradientText().createShader(bounds),
-                                blendMode: BlendMode.srcIn,
-                                child: Text(
-                                  'Side view analysis',
-                                  style: AppTextStyles.displaySmall(context),
+                                widget: IconActionButton(
+                                  size: 60,
+                                  backgroundColor: AppThemeManager.secondaryBackground,
+                                  icon: FontAwesomeIcons.upload,
+                                  iconColor: AppThemeManager.primaryText,
+                                  iconSize: 25,
+                                  onPressed: () async {
+                                    final picker = ImagePicker();
+
+                                    // Pick video
+                                    final XFile? video = await picker.pickVideo(
+                                      source: ImageSource.gallery,
+                                    );
+                                    if (!context.mounted || video == null) return;
+
+                                    setState(() => isDataUploading = true);
+
+                                    try {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(content: Text('Uploading file...')),
+                                      );
+
+                                      final File videoFile = File(video.path);
+
+                                      // Save locally or prepare preview path
+                                      chosenSideVideo = videoFile;
+                                    } catch (e) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(content: Text('Failed to upload data')),
+                                      );
+                                      return;
+                                    } finally {
+                                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                      setState(() => isDataUploading = false);
+                                    }
+
+                                    if (chosenSideVideo == null) return;
+
+                                    // Navigate
+                                    context.pushNamed(
+                                      'pre-upload',
+                                      extra: {
+                                        'originFunc': OriginFunc.front,
+                                        'videoFile': chosenSideVideo!,
+                                      },
+                                    );
+                                  },
                                 ),
+                                scale: const ScaleConfig(begin: Offset(0.5, 1.0))),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Column to place the overview of the side functionality
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Container to have a colored background for some text
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.black.withValues(alpha: 0.3), // subtle semi-transparent overlay
+                          borderRadius: BorderRadius.circular(8), // rounded corners
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8),
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4), // soft blur behind text
+                            child:
+                                // Section title
+                                Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                              child: addAnimation(
+                                widget: ShaderMask(
+                                  shaderCallback: (bounds) => appColors.gradientText().createShader(bounds),
+                                  blendMode: BlendMode.srcIn,
+                                  child: Text(
+                                    'Side view analysis',
+                                    style: AppTextStyles.displaySmall(context),
+                                  ),
+                                ),
+                                move: const MoveConfig(begin: Offset(0, 60)),
                               ),
-                              move: const MoveConfig(begin: Offset(0, 60)),
                             ),
                           ),
                         ),
                       ),
-                    ),
 
-                    // Section overview
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 24),
-                      child: addAnimation(
-                        widget: Text(
-                          'Take a video with the camera on either side.\nThis will analyze your body posture and flow when shooting.\nUseful to detect incorrect ball paths, flow ruptures, etc...',
-                          style: AppTextStyles.titleSmall(context),
+                      // Section overview
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 24),
+                        child: addAnimation(
+                          widget: Text(
+                            'Take a video with the camera on either side.\nThis will analyze your body posture and flow when shooting.\nUseful to detect incorrect ball paths, flow ruptures, etc...',
+                            style: AppTextStyles.titleSmall(context, color: Colors.white),
+                          ),
+                          move: const MoveConfig(begin: Offset(0, 120)),
                         ),
-                        move: const MoveConfig(begin: Offset(0, 120)),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
     );

@@ -14,7 +14,6 @@ import '../widgets/background.dart';
 import '../widgets/dark_button.dart';
 import '../widgets/faq_item.dart';
 import '../widgets/input_field.dart';
-import '../widgets/toggle_icon.dart';
 
 class HelpPage extends ConsumerStatefulWidget {
   const HelpPage({super.key});
@@ -28,7 +27,7 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
   int? openIndex = -1;
 
   /// Filter to apply to the search
-  String? faqSearchQuery;
+  String faqSearchQuery = '';
 
   /// Page State to show the search bar
   bool searchActive = false;
@@ -60,13 +59,13 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    final appState = ref.watch(appStateProvider);
+    final appState = ref.read(appStateProvider);
 
     // Start with all FAQs
-    filteredFaqsPageState = appState.loadedFaqs!.toList();
+    filteredFaqsPageState = appState.loadedFaqs?.toList() ?? [];
 
     // Apply filter asynchronously
-    if (faqSearchQuery != null && faqSearchQuery!.isNotEmpty) {
+    if (faqSearchQuery.isNotEmpty) {
       _filterFaqs();
     }
     searchFieldTextController = TextEditingController();
@@ -74,10 +73,11 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
   }
 
   Future<void> _filterFaqs() async {
-    final appState = ref.watch(appStateProvider);
+    final appState = ref.read(appStateProvider);
+    final faqs = appState.loadedFaqs?.toList() ?? [];
     final filtered = await filterFaqs(
-      appState.loadedFaqs!.toList(),
-      faqSearchQuery!,
+      faqs,
+      faqSearchQuery,
     );
     filteredFaqsPageState = filtered.toList();
     if (mounted) setState(() {});
@@ -87,6 +87,12 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
   Widget build(BuildContext context) {
     final appState = ref.watch(appStateProvider);
     final appColors = AppThemeManager.currentColors;
+
+    // Determine which FAQs to show: either the filtered ones (if searching) or all of them
+    final List<dynamic> baseFaqs =
+        (searchActive && faqSearchQuery.isNotEmpty) ? filteredFaqsPageState : (appState.loadedFaqs ?? []);
+
+    final faqsList = sortByOrder(baseFaqs.toList()).toList();
 
     return GestureDetector(
       onTap: () {
@@ -147,6 +153,7 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                               .join('&')));
                                     },
                                     text: 'Email Us',
+                                    height: 60,
                                     icon: const Icon(
                                       Icons.email,
                                       size: 30,
@@ -155,14 +162,16 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                   move: const MoveConfig(begin: Offset(0, 110)),
                                 ),
                               ),
+
                               const SizedBox(width: 12),
-                              // Container to simulate a button for the search filter
+
+                              // Button to simulate a search filter
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                                   child: addAnimation(
-                                    widget: InkWell(
-                                      onTap: () async {
+                                    widget: DarkButton(
+                                      onPressed: () async {
                                         // Immediate UI state changes
                                         setState(() {
                                           searchActive = !searchActive;
@@ -176,8 +185,8 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
 
                                         // Async computation
                                         final result = await filterFaqs(
-                                          appState.loadedFaqs!.toList(),
-                                          faqSearchQuery!,
+                                          appState.loadedFaqs?.toList() ?? [],
+                                          faqSearchQuery,
                                         );
                                         if (!mounted) return;
 
@@ -187,69 +196,19 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                           filteredFaqsPageState = result.toList().cast<dynamic>();
                                         });
                                       },
-                                      child: Material(
-                                        color: Colors.transparent,
-                                        elevation: 10,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(12),
-                                        ),
-                                        child: Container(
-                                          width: 190,
-                                          height: 80,
-                                          constraints: const BoxConstraints(
-                                            maxWidth: 500,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: appColors.darkButtonBackground,
-                                            borderRadius: BorderRadius.circular(12),
-                                            border: Border.all(
-                                              color: appColors.darkButtonBorders,
-                                              width: 2,
-                                            ),
-                                          ),
-                                          child:
-                                              // Column to place the search button content
-                                              Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              // Column to place the search button content
-                                              Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  // Toggle search icon
-                                                  ToggleIcon(
-                                                    onPressed: () {
-                                                      setState(() {
-                                                        searchActive = !searchActive;
-                                                      });
-                                                    },
-                                                    value: searchActive,
-                                                    onIcon: Icon(
-                                                      Icons.search,
-                                                      color: appColors.darkButtonTextColor,
-                                                      size: 30,
-                                                    ),
-                                                    offIcon: Icon(
-                                                      Icons.search_off,
-                                                      color: appColors.darkButtonTextColor,
-                                                      size: 30,
-                                                    ),
-                                                  ),
-
-                                                  // "Search FAQs" text
-                                                  Text(
-                                                    'Search FAQs',
-                                                    textAlign: TextAlign.center,
-                                                    style: AppTextStyles.titleLarge(context,
-                                                        color: appColors.darkButtonTextColor),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                      text: 'Search FAQs',
+                                      height: 60,
+                                      borderRadius: 12,
+                                      iconValue: searchActive,
+                                      onIcon: Icon(
+                                        Icons.search,
+                                        color: appColors.darkButtonTextColor,
+                                        size: 30,
+                                      ),
+                                      offIcon: Icon(
+                                        Icons.search_off,
+                                        color: appColors.darkButtonTextColor,
+                                        size: 30,
                                       ),
                                     ),
                                     move: const MoveConfig(begin: Offset(0, 110)),
@@ -299,8 +258,8 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
 
                                               // Perform the async filtering
                                               final result = await filterFaqs(
-                                                appState.loadedFaqs!.toList(),
-                                                faqSearchQuery!,
+                                                appState.loadedFaqs?.toList() ?? [],
+                                                faqSearchQuery,
                                               );
                                               if (!mounted) return;
 
@@ -341,40 +300,34 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                             ),
 
                           // Wrap containing all FAQs
-                          Builder(
-                            builder: (context) {
-                              final faqsList = sortByOrder(filteredFaqsPageState.toList()).toList();
-
-                              return Wrap(
-                                spacing: 0,
-                                runSpacing: 0,
-                                alignment: WrapAlignment.start,
-                                crossAxisAlignment: WrapCrossAlignment.start,
-                                direction: Axis.horizontal,
-                                runAlignment: WrapAlignment.start,
-                                verticalDirection: VerticalDirection.down,
-                                clipBehavior: Clip.none,
-                                children: List.generate(faqsList.length, (faqsListIndex) {
-                                  final faqsListItem = faqsList[faqsListIndex];
-                                  return
-                                      // Dynamically generated item containing each FAQ
-                                      Padding(
-                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                    child: FaqItem(
-                                      key: Key('faq_$faqsListIndex'),
-                                      isOpen: openIndex == faqsListIndex,
-                                      title: faqsListItem['question'].toString(),
-                                      description: faqsListItem['answer'].toString(),
-                                      onPressed: () async {
-                                        setState(() {
-                                          openIndex = openIndex == faqsListIndex ? -1 : faqsListIndex;
-                                        });
-                                      },
-                                    ),
-                                  );
-                                }),
+                          Wrap(
+                            spacing: 0,
+                            runSpacing: 0,
+                            alignment: WrapAlignment.start,
+                            crossAxisAlignment: WrapCrossAlignment.start,
+                            direction: Axis.horizontal,
+                            runAlignment: WrapAlignment.start,
+                            verticalDirection: VerticalDirection.down,
+                            clipBehavior: Clip.none,
+                            children: List.generate(faqsList.length, (faqsListIndex) {
+                              final faqsListItem = faqsList[faqsListIndex];
+                              return
+                                  // Dynamically generated item containing each FAQ
+                                  Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+                                child: FaqItem(
+                                  key: ValueKey(faqsListItem['question']),
+                                  isOpen: openIndex == faqsListIndex,
+                                  title: faqsListItem['question'].toString(),
+                                  description: faqsListItem['answer'].toString(),
+                                  onPressed: () async {
+                                    setState(() {
+                                      openIndex = openIndex == faqsListIndex ? -1 : faqsListIndex;
+                                    });
+                                  },
+                                ),
                               );
-                            },
+                            }),
                           ),
                         ],
                       ),

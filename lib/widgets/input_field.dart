@@ -111,7 +111,6 @@ class _InputField extends State<InputField> {
                               _isVisible = !_isVisible;
                             });
                           },
-                          focusNode: FocusNode(skipTraversal: true),
                           child: Icon(
                             _isVisible ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                             color: AppThemeManager.secondaryText.withAlpha(0xCC), // ~80% opacity

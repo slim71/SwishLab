@@ -33,6 +33,27 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this, duration: 600.ms);
+    if (widget.isOpen) {
+      _controller.value = 1.0;
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(FaqItem oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isOpen != oldWidget.isOpen) {
+      if (widget.isOpen) {
+        _controller.forward();
+      } else {
+        _controller.reverse();
+      }
+    }
   }
 
   @override
@@ -42,107 +63,87 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
     return ValueListenableBuilder(
         valueListenable: AppThemeManager.notifier,
         builder: (_, __, ___) {
-          return Container(
+          return Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
+            child: Material(
               color: AppThemeManager.primaryBackground,
-              child:
-                  // Main container for the whole content of the widget
-                  Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
-                child: InkWell(
-                  onTap: () async {
-                    _controller.forward(from: 0.0);
-                    await widget.onPressed?.call();
-                  },
-                  child: Material(
-                    color: Colors.transparent,
-                    elevation: widget.isOpen == true ? 10.0 : 0.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 100),
-                      curve: Curves.easeInOut,
+              clipBehavior: Clip.antiAlias, // Ensures children and ripple are clipped
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(color: appColors.containersBorders),
+              ),
+              child: InkWell(
+                onTap: () async {
+                  _controller.forward(from: 0.0);
+                  await widget.onPressed?.call();
+                },
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Title section with conditional background
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 200),
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        color: AppThemeManager.primaryBackground,
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(
-                          color: appColors.containersBorders,
+                        color: widget.isOpen ? AppThemeManager.secondaryBackground : Colors.transparent,
+                        // Providing explicit radius to avoid clipping artifacts at the corners
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12),
                         ),
                       ),
-                      child:
-                          // Main column for the whole content of the widget
-                          Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 16),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Row containing the title or header of the item, always shown
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                // Container for the item title, always shown
-                                Expanded(
-                                  child: Container(
-                                    decoration: const BoxDecoration(),
-                                    child:
-                                        // Item title, always shown
-                                        Text(
-                                      widget.title,
-                                      style: AppTextStyles.bodyLarge(context),
-                                    ),
-                                  ),
-                                ),
-
-                                // Transform widget to rotate the underlying icon
-                                Transform.rotate(
-                                  angle: (widget.isOpen == true ? 180.0 : 0.0) * (math.pi / 180),
-                                  child:
-                                      // Arrow icon
-                                      Icon(
-                                    Icons.arrow_drop_down,
-                                    color: AppThemeManager.primaryText,
-                                    size: 24,
-                                  ),
-                                ),
-                              ],
+                      padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 12),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          // Item title
+                          Expanded(
+                            child: Text(
+                              widget.title,
+                              style: AppTextStyles.bodyLarge(context),
                             ),
+                          ),
 
-                            // Container for the description text, hideable
-                            if (widget.isOpen == true)
-                              Material(
-                                color: Colors.transparent,
-                                elevation: widget.isOpen == true ? 10.0 : 0.0,
-                                child: Container(
-                                  decoration: const BoxDecoration(),
-                                  child:
-                                      // Description text, hideable
-                                      Visibility(
-                                    visible: widget.isOpen == true,
-                                    child: Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                                      child: Text(
-                                        widget.description,
-                                        style: AppTextStyles.labelMedium(context),
-                                      ).animate(controller: _controller).fade(
-                                            begin: 0,
-                                            end: 1,
-                                            duration: 600.ms,
-                                            curve: Curves.easeInOut,
-                                          ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
+                          // Transform widget to rotate the underlying icon
+                          Transform.rotate(
+                            angle: (widget.isOpen == true ? 180.0 : 0.0) * (math.pi / 180),
+                            child: Icon(
+                              Icons.arrow_drop_down,
+                              color: AppThemeManager.primaryText,
+                              size: 24,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
+
+                    // Separator line and description text, hideable
+                    if (widget.isOpen == true) ...[
+                      Divider(
+                        height: 1,
+                        thickness: 1,
+                        color: appColors.containersBorders,
+                      ),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 16),
+                        child: Text(
+                          widget.description,
+                          style: AppTextStyles.labelMedium(context),
+                        ).animate(controller: _controller).fade(
+                              begin: 0,
+                              end: 1,
+                              duration: 600.ms,
+                              curve: Curves.easeInOut,
+                            ),
+                      ),
+                    ],
+                  ],
                 ),
-              ));
+              ),
+            ),
+          );
         });
   }
 }

@@ -53,6 +53,25 @@ class _MarkdownDocumentState extends State<MarkdownDocument> {
           padding: const EdgeInsets.all(16),
           child: MarkdownWidget(
             markdown: Markdown.fromString(_markdownSource),
+            theme: MarkdownThemeData.mergeTheme(
+              Theme.of(context),
+              textStyle: TextStyle(
+                color: AppThemeManager.primaryText,
+                fontSize: 16,
+              ),
+              h1Style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                    color: AppThemeManager.primaryText,
+                    fontWeight: FontWeight.bold,
+                  ),
+              h2Style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                    color: AppThemeManager.primaryText,
+                    fontWeight: FontWeight.bold,
+                  ),
+              h3Style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                    color: AppThemeManager.primaryText,
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
           ),
         ),
       ),

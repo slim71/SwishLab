@@ -45,8 +45,12 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
     final state = ref.watch(shootingAnalysisProvider);
 
     // To be sure we have data to show
-    if (state is! AnalysisSuccess) {
-      return const SizedBox.shrink();
+    if (state is! AnalysisSuccess && widget.videoDataJson.isEmpty) {
+      return const Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
     }
 
     return GestureDetector(
@@ -178,7 +182,7 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                     scoreToRating(
                                                       (((analysisResultListedItem['scores'] as List?)?.firstWhere(
                                                             (e) => e['name'] == 'Total',
-                                                            orElse: () => null,
+                                                            orElse: () => <String, dynamic>{},
                                                           )?['value'] as num?)
                                                               ?.toDouble() ??
                                                           0.0),
@@ -193,7 +197,7 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                   child: Text(
                                                     (((analysisResultListedItem['scores'] as List?)?.firstWhere(
                                                           (e) => e['name'] == 'Total',
-                                                          orElse: () => null,
+                                                          orElse: () => <String, dynamic>{},
                                                         )?['value'])
                                                             ?.toString() ??
                                                         ''),

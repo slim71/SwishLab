@@ -23,12 +23,17 @@ class SectionDetails extends ConsumerStatefulWidget {
 }
 
 class _SectionDetailsState extends ConsumerState<SectionDetails> {
-  double? sheetHeight = 100.0;
+  double? sheetHeight;
   double? dragDelta = 69.69;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        sheetHeight = MediaQuery.sizeOf(context).height * 0.5;
+      });
+    });
   }
 
   @override
@@ -39,7 +44,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
         valueListenable: AppThemeManager.notifier,
         builder: (_, __, ___) {
           return Container(
-              color: AppThemeManager.primaryBackground,
+              color: Colors.transparent,
               child:
                   // Stack to place the whole bottom sheet content
                   SizedBox(
@@ -47,14 +52,24 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                 height: double.infinity,
                 child: Stack(
                   children: [
+                    // GestureDetector to close the bottom sheet when clicking outside
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        width: double.infinity,
+                        height: double.infinity,
+                        color: Colors.transparent,
+                      ),
+                    ),
+
                     // Container for the actual bottom sheet
                     Align(
                       alignment: const AlignmentDirectional(0, 1),
                       child: Container(
                         width: double.infinity,
-                        height: sheetHeight,
+                        height: sheetHeight ?? 100,
                         decoration: BoxDecoration(
-                          color: AppThemeManager.primaryBackground,
+                          gradient: appColors.gradientBackground(),
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(0),
                             bottomRight: Radius.circular(0),
@@ -117,6 +132,12 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                 ),
                               ),
 
+                              const Divider(
+                                height: 1,
+                                thickness: 1,
+                                color: Colors.black,
+                              ),
+
                               // Column where to place the bottom sheet content
                               SingleChildScrollView(
                                 primary: false,
@@ -138,109 +159,132 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                         ),
                                       ],
                                     ),
+
                                     Material(
-                                      elevation: 10,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
+                                      color: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(16),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(8),
+                                          color: AppThemeManager.secondaryBackground.withValues(alpha: 0.4),
+                                          borderRadius: BorderRadius.circular(16),
                                           border: Border.all(
-                                            color: appColors.alternateTwo,
+                                            color: appColors.alternateTwo.withValues(alpha: .5),
                                             width: 1,
                                           ),
                                         ),
                                         child:
                                             // Wrap to dynamically generate content for the Details section
                                             Padding(
-                                          padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                                          padding: const EdgeInsets.symmetric(horizontal: 4),
                                           child: Builder(
                                             builder: (context) {
                                               final List<dynamic> sectionFields =
                                                   (widget.sectionJson['fields'] as List<dynamic>? ?? []);
 
-                                              return Wrap(
-                                                spacing: 0,
-                                                runSpacing: 0,
-                                                alignment: WrapAlignment.start,
-                                                crossAxisAlignment: WrapCrossAlignment.start,
-                                                direction: Axis.horizontal,
-                                                runAlignment: WrapAlignment.start,
-                                                verticalDirection: VerticalDirection.down,
-                                                clipBehavior: Clip.none,
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment: CrossAxisAlignment.stretch,
                                                 children: List.generate(sectionFields.length, (sectionFieldsIndex) {
                                                   final sectionFieldsItem = sectionFields[sectionFieldsIndex];
-                                                  return
+                                                  return Column(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: [
                                                       // Row to place details of an item
                                                       Padding(
-                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                                    child: Row(
-                                                      mainAxisSize: MainAxisSize.max,
-                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                      children: [
-                                                        // Row to place the item's icon and name
-                                                        Row(
+                                                        padding: const EdgeInsetsDirectional.fromSTEB(12, 16, 12, 16),
+                                                        child: Row(
                                                           mainAxisSize: MainAxisSize.max,
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
-                                                            // Icon related to the detail in focus, dynamically gathered from its name
-                                                            SizedBox(
-                                                              width: 25,
-                                                              height: 25,
-                                                              child: DynamicIconImage(
-                                                                width: 25,
-                                                                height: 25,
-                                                                imageName: sectionFieldsItem['name']?.toString() ?? '',
+                                                            // Row to place the item's icon and name
+                                                            Expanded(
+                                                              flex: 2,
+                                                              child: Row(
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                children: [
+                                                                  // Icon related to the detail in focus, dynamically gathered from its name
+                                                                  SizedBox(
+                                                                    width: 25,
+                                                                    height: 25,
+                                                                    child: DynamicIconImage(
+                                                                      width: 25,
+                                                                      height: 25,
+                                                                      imageName:
+                                                                          sectionFieldsItem['name']?.toString() ?? '',
+                                                                    ),
+                                                                  ),
+
+                                                                  // Item's name
+                                                                  Expanded(
+                                                                    child: Padding(
+                                                                      padding: const EdgeInsetsDirectional.fromSTEB(
+                                                                          8, 0, 0, 0),
+                                                                      child: Text(
+                                                                        sectionFieldsItem['name']?.toString() ?? '',
+                                                                        style: AppTextStyles.bodyMedium(context),
+                                                                        overflow: TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ),
 
-                                                            // Item's name
-                                                            Padding(
-                                                              padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
-                                                              child: Text(
-                                                                sectionFieldsItem['name']?.toString() ?? '',
-                                                                style: AppTextStyles.bodyMedium(context),
+                                                            // Row to place an item's value and unit
+                                                            Expanded(
+                                                              flex: 1,
+                                                              child: Row(
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                                children: [
+                                                                  // Item's value
+                                                                  Text(
+                                                                    sectionFieldsItem['value']?.toString() ?? '',
+                                                                    style: AppTextStyles.bodyMedium(context).copyWith(
+                                                                      fontWeight: FontWeight.bold,
+                                                                    ),
+                                                                  ),
+
+                                                                  const SizedBox(width: 4),
+
+                                                                  // Item's unit of measurement
+                                                                  Text(
+                                                                    sectionFieldsItem['unit']?.toString() ?? '',
+                                                                    style: AppTextStyles.bodySmall(context),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+
+                                                            // Row to place the considered range of the item's value
+                                                            Expanded(
+                                                              flex: 1,
+                                                              child: Row(
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                mainAxisAlignment: MainAxisAlignment.end,
+                                                                children: [
+                                                                  // Item's value range
+                                                                  Text(
+                                                                    sectionFieldsItem['range']?.toString() ?? '',
+                                                                    style: AppTextStyles.bodySmall(context).copyWith(
+                                                                      color: AppThemeManager.secondaryText,
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ),
                                                           ],
                                                         ),
-                                                        const SizedBox(width: 20),
-
-                                                        // Row to place an item's value and unit
-                                                        Row(
-                                                          mainAxisSize: MainAxisSize.max,
-                                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                          children: [
-                                                            // Item's value
-                                                            Text(
-                                                              sectionFieldsItem['value']?.toString() ?? '',
-                                                              style: AppTextStyles.bodyMedium(context),
-                                                            ),
-
-                                                            const SizedBox(width: 5),
-
-                                                            // Item's unit of measurement
-                                                            Text(
-                                                              sectionFieldsItem['unit']?.toString() ?? '',
-                                                              style: AppTextStyles.bodyMedium(context),
-                                                            ),
-                                                          ],
+                                                      ),
+                                                      if (sectionFieldsIndex < sectionFields.length - 1)
+                                                        Divider(
+                                                          height: 1,
+                                                          thickness: 1,
+                                                          indent: 12,
+                                                          endIndent: 12,
+                                                          color: appColors.alternateTwo.withValues(alpha: .3),
                                                         ),
-                                                        const SizedBox(width: 20),
-
-                                                        // Row to place the considered range of the item's value
-                                                        Row(
-                                                          mainAxisSize: MainAxisSize.max,
-                                                          children: [
-                                                            // Item's value range
-                                                            Text(
-                                                              sectionFieldsItem['range']?.toString() ?? '',
-                                                              style: AppTextStyles.bodyMedium(context),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
+                                                    ],
                                                   );
                                                 }),
                                               );
@@ -267,49 +311,40 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                     ),
 
                                     Material(
-                                      elevation: 10,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
+                                      color: Colors.transparent,
+                                      borderRadius: BorderRadius.circular(16),
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(8),
+                                          color: AppThemeManager.secondaryBackground.withValues(alpha: .4),
+                                          borderRadius: BorderRadius.circular(16),
                                           border: Border.all(
-                                            color: appColors.alternateTwo,
+                                            color: appColors.alternateTwo.withValues(alpha: .5),
                                           ),
                                         ),
                                         child:
                                             // Wrap to dynamically generate content for the Scores section
                                             Padding(
-                                          padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
+                                          padding: const EdgeInsets.symmetric(horizontal: 4),
                                           child: Builder(
                                             builder: (context) {
                                               final scoresJson = (widget.sectionJson['scores'] as List<dynamic>?) ?? [];
 
-                                              return Wrap(
-                                                spacing: 0,
-                                                runSpacing: 0,
-                                                alignment: WrapAlignment.start,
-                                                crossAxisAlignment: WrapCrossAlignment.start,
-                                                direction: Axis.horizontal,
-                                                runAlignment: WrapAlignment.start,
-                                                verticalDirection: VerticalDirection.down,
-                                                clipBehavior: Clip.none,
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                crossAxisAlignment: CrossAxisAlignment.stretch,
                                                 children: List.generate(scoresJson.length, (scoresJsonIndex) {
                                                   final scoresJsonItem = scoresJson[scoresJsonIndex];
-                                                  return
+                                                  return Column(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: [
                                                       // Container to place each feedback item
                                                       Padding(
-                                                    padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                                    child: Container(
-                                                      decoration: const BoxDecoration(),
-                                                      child: Column(
-                                                        mainAxisSize: MainAxisSize.max,
-                                                        children: [
-                                                          // Row to place the score of an item
-                                                          Padding(
-                                                            padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
-                                                            child: Row(
+                                                        padding: const EdgeInsetsDirectional.fromSTEB(12, 16, 12, 16),
+                                                        child: Column(
+                                                          mainAxisSize: MainAxisSize.max,
+                                                          children: [
+                                                            // Row to place the score of an item
+                                                            Row(
                                                               mainAxisSize: MainAxisSize.max,
                                                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                               children: [
@@ -332,10 +367,13 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                     // Item's name
                                                                     Padding(
                                                                       padding: const EdgeInsetsDirectional.fromSTEB(
-                                                                          5, 0, 0, 0),
+                                                                          8, 0, 0, 0),
                                                                       child: Text(
                                                                         scoresJsonItem['name']?.toString() ?? '',
-                                                                        style: AppTextStyles.bodyMedium(context),
+                                                                        style:
+                                                                            AppTextStyles.bodyMedium(context).copyWith(
+                                                                          fontWeight: FontWeight.bold,
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                   ],
@@ -348,13 +386,16 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                     // Score value
                                                                     Text(
                                                                       scoresJsonItem['value']?.toString() ?? '',
-                                                                      style: AppTextStyles.bodyMedium(context),
+                                                                      style: AppTextStyles.bodyMedium(context).copyWith(
+                                                                        fontWeight: FontWeight.bold,
+                                                                        color: AppThemeManager.primaryText,
+                                                                      ),
                                                                     ),
 
                                                                     // Star icon
                                                                     const Padding(
                                                                       padding:
-                                                                          EdgeInsetsDirectional.fromSTEB(5, 0, 0, 0),
+                                                                          EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                                                                       child: SizedBox(
                                                                         width: 20,
                                                                         height: 20,
@@ -369,49 +410,56 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                 ),
                                                               ],
                                                             ),
-                                                          ),
 
-                                                          // Row to place the feedback text
-                                                          Padding(
-                                                            padding: const EdgeInsetsDirectional.fromSTEB(25, 0, 0, 0),
-                                                            child: Row(
-                                                              mainAxisSize: MainAxisSize.max,
-                                                              children: [
-                                                                // Container to place the feedback text
-                                                                Expanded(
-                                                                  child: Material(
-                                                                    color: Colors.transparent,
-                                                                    elevation: 10,
-                                                                    shape: RoundedRectangleBorder(
-                                                                      borderRadius: BorderRadius.circular(8),
-                                                                    ),
+                                                            // Row to place the feedback text
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
+                                                              child: Row(
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                children: [
+                                                                  // Container to place the feedback text
+                                                                  Expanded(
                                                                     child: Container(
                                                                       decoration: BoxDecoration(
-                                                                        color: AppThemeManager.primaryBackground,
-                                                                        borderRadius: BorderRadius.circular(8),
+                                                                        color: AppThemeManager.primaryBackground
+                                                                            .withValues(alpha: .5),
+                                                                        borderRadius: BorderRadius.circular(12),
                                                                         border: Border.all(
-                                                                          color: appColors.altContBorders,
+                                                                          color: appColors.altContBorders
+                                                                              .withValues(alpha: .5),
                                                                         ),
                                                                       ),
                                                                       child:
                                                                           // Feedback related to the user's score for this category
                                                                           Padding(
-                                                                        padding: const EdgeInsets.all(5),
+                                                                        padding: const EdgeInsets.all(12),
                                                                         child: Text(
                                                                           'Some feedback to download or I don\'t know how to gather',
                                                                           textAlign: TextAlign.start,
-                                                                          style: AppTextStyles.bodyMedium(context),
+                                                                          style:
+                                                                              AppTextStyles.bodySmall(context).copyWith(
+                                                                            fontStyle: FontStyle.italic,
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                     ),
                                                                   ),
-                                                                ),
-                                                              ],
+                                                                ],
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ],
+                                                          ],
+                                                        ),
                                                       ),
-                                                    ),
+                                                      if (scoresJsonIndex < scoresJson.length - 1)
+                                                        Divider(
+                                                          height: 1,
+                                                          thickness: 1,
+                                                          indent: 12,
+                                                          endIndent: 12,
+                                                          color: appColors.alternateTwo.withValues(alpha: .3),
+                                                        ),
+                                                    ],
                                                   );
                                                 }),
                                               );

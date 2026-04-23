@@ -107,7 +107,7 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                               final defaultJson = jsonDecode(kDefaultResultsJson);
 
                               context.go(
-                                'results',
+                                '/results',
                                 extra: defaultJson,
                               );
                             },

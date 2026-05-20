@@ -52,8 +52,8 @@ class _DynamicAssetState extends State<DynamicAsset> {
     final parts = widget.name.split('.');
     final nameWithoutExtension = parts.first;
     fileExtension = parts.length > 1 ? parts.last.toLowerCase() : null;
-    // Normalize name: lowercase and replace spaces with underscores
-    normalizedName = nameWithoutExtension.toLowerCase().replaceAll(' ', '_');
+    // Normalize name: lowercase and replace spaces/dashes with underscores
+    normalizedName = nameWithoutExtension.toLowerCase().trim().replaceAll(RegExp(r'[\s\-_]+'), '_');
 
     // Convert string from JSON to enum
     typeEnum = {
@@ -108,6 +108,7 @@ class _DynamicAssetState extends State<DynamicAsset> {
   }
 
   Widget _next() {
+    final path = _candidates[_currentIndex];
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         setState(() => _currentIndex++);
@@ -147,7 +148,6 @@ class _DynamicAssetState extends State<DynamicAsset> {
                       path,
                       width: widget.width,
                       height: widget.height,
-                      package: 'SwishLab',
                       errorBuilder: (_, __, ___) => _next(),
                     ));
               });
@@ -160,8 +160,7 @@ class _DynamicAssetState extends State<DynamicAsset> {
               color: AppThemeManager.primaryBackground,
               child: Image(
                 image: path.startsWith('http')
-                    ? NetworkImage(path)
-                    : AssetImage(path, package: 'SwishLab') as ImageProvider,
+                    ? NetworkImage(path) : AssetImage(path) as ImageProvider,
                 width: widget.width,
                 height: widget.height,
                 errorBuilder: (_, __, ___) => _next(),

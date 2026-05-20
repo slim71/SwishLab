@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -11,7 +14,16 @@ import '../widgets/background.dart';
 import '../widgets/transparent_button.dart';
 
 class ProcessingVideo extends ConsumerStatefulWidget {
-  const ProcessingVideo({super.key});
+  final File videoFile;
+  final String shootingHand;
+  final String pointOfView;
+
+  const ProcessingVideo({
+    super.key,
+    required this.videoFile,
+    required this.shootingHand,
+    required this.pointOfView,
+  });
 
   @override
   ConsumerState<ProcessingVideo> createState() => _ProcessingVideoState();
@@ -21,6 +33,13 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(shootingAnalysisProvider.notifier).start(
+            videoFile: widget.videoFile,
+            shootingHand: widget.shootingHand,
+            pointOfView: widget.pointOfView,
+          );
+    });
   }
 
   @override
@@ -31,15 +50,24 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
       shootingAnalysisProvider,
       (previous, next) {
         if (next is AnalysisSuccess) {
-          context.goNamed('results');
+          context.goNamed('results', extra: next.result.raw);
         }
 
         if (next is AnalysisFailure) {
+          String errorMessage = next.error.toString();
+          if (next.error is DioException) {
+            final e = next.error as DioException;
+            errorMessage =
+                'Network Error: ${e.type}\nStatus: ${e.response?.statusCode}\nURL: ${e.requestOptions.uri}\nMessage: ${e.message}';
+          }
+
           showDialog<void>(
             context: context,
             builder: (_) => AlertDialog(
               title: const Text('Analysis failed'),
-              content: const Text('Error! Navigate home?'),
+              content: SingleChildScrollView(
+                child: Text('Reason: $errorMessage\n\nNavigate home?'),
+              ),
               actions: [
                 TextButton(
                   onPressed: () => context.pop(),
@@ -85,7 +113,7 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
                   children: [
                     // Loading animation
                     Lottie.asset(
-                      'assets/jsons/loader_basketball.json',
+                      'assets/lottie/loader_basketball.json',
                       width: 400,
                       height: 400,
                       fit: BoxFit.contain,

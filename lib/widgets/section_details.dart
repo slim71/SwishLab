@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -83,64 +81,74 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                         ),
                         child:
                             // Column containing the bottom sheet
-                            SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              // Container for the top bar of the bottom sheet
-                              GestureDetector(
-                                onVerticalDragUpdate: (details) async {
-                                  sheetHeight = math.max(
-                                      100,
-                                      math.min(
-                                          (sheetHeight!) - details.delta.dy, MediaQuery.sizeOf(context).height * 0.9));
-                                  setState(() {});
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    gradient: appColors.gradientBackground(),
-                                    borderRadius: const BorderRadius.only(
-                                      bottomLeft: Radius.circular(0),
-                                      bottomRight: Radius.circular(0),
-                                      topLeft: Radius.circular(25),
-                                      topRight: Radius.circular(25),
-                                    ),
+                            Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            // Container for the top bar of the bottom sheet
+                            GestureDetector(
+                              onVerticalDragUpdate: (details) {
+                                setState(() {
+                                  sheetHeight = (sheetHeight! - details.delta.dy)
+                                      .clamp(0.0, MediaQuery.sizeOf(context).height * 0.9);
+                                });
+                              },
+                              onVerticalDragEnd: (details) {
+                                // If dragged down too much or with high velocity, close the sheet
+                                if (sheetHeight! < MediaQuery.sizeOf(context).height * 0.2 ||
+                                    (details.primaryVelocity ?? 0) > 600) {
+                                  Navigator.pop(context);
+                                } else if (sheetHeight! < 150) {
+                                  // Snap back to a minimum height if not closed
+                                  setState(() {
+                                    sheetHeight = 150;
+                                  });
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  gradient: appColors.gradientBackground(),
+                                  borderRadius: const BorderRadius.only(
+                                    bottomLeft: Radius.circular(0),
+                                    bottomRight: Radius.circular(0),
+                                    topLeft: Radius.circular(25),
+                                    topRight: Radius.circular(25),
                                   ),
-                                  child:
-                                      // Row to place the top bar of the bottom sheet
-                                      InkWell(
-                                    onTap: () async {
-                                      Navigator.pop(context);
-                                    },
-                                    child: const Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        // Icon to highlight the top bar of the bottom sheet and give hints on how to handle it
-                                        Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
-                                          child: FaIcon(
-                                            FontAwesomeIcons.gripLines,
-                                            color: Colors.black,
-                                            size: 25,
-                                          ),
+                                ),
+                                child:
+                                    // Row to place the top bar of the bottom sheet
+                                    InkWell(
+                                  onTap: () async {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      // Icon to highlight the top bar of the bottom sheet and give hints on how to handle it
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+                                        child: FaIcon(
+                                          FontAwesomeIcons.gripLines,
+                                          color: Colors.black,
+                                          size: 25,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
+                            ),
 
-                              const Divider(
-                                height: 1,
-                                thickness: 1,
-                                color: Colors.black,
-                              ),
+                            const Divider(
+                              height: 1,
+                              thickness: 1,
+                              color: Colors.black,
+                            ),
 
-                              // Column where to place the bottom sheet content
-                              SingleChildScrollView(
-                                primary: false,
+                            // Column where to place the bottom sheet content
+                            Expanded(
+                              child: SingleChildScrollView(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
@@ -154,10 +162,43 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                           padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                                           child: Text(
                                             'Details',
-                                            style: AppTextStyles.titleLarge(context),
+                                            style: AppTextStyles.titleLarge(context, color: Colors.black),
                                           ),
                                         ),
                                       ],
+                                    ),
+
+                                    // Row to place the reference header
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(16, 10, 16, 0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            flex: 2,
+                                            child: Text(
+                                              'Area',
+                                              style: AppTextStyles.bodySmall(context, color: Colors.black),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Text(
+                                              'Measured',
+                                              textAlign: TextAlign.center,
+                                              style: AppTextStyles.bodySmall(context, color: Colors.black),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            flex: 1,
+                                            child: Text(
+                                              'Ideal',
+                                              textAlign: TextAlign.end,
+                                              style: AppTextStyles.bodySmall(context, color: Colors.black),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
 
                                     Material(
@@ -239,7 +280,23 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                 children: [
                                                                   // Item's value
                                                                   Text(
-                                                                    sectionFieldsItem['value']?.toString() ?? '',
+                                                                    (() {
+                                                                      final val = sectionFieldsItem['value'];
+                                                                      if (val == null) return '';
+
+                                                                      // Try to parse as double for 2-digit formatting
+                                                                      double? dVal;
+                                                                      if (val is num) {
+                                                                        dVal = val.toDouble();
+                                                                      } else if (val is String) {
+                                                                        dVal = double.tryParse(val);
+                                                                      }
+
+                                                                      if (dVal != null) {
+                                                                        return dVal.toStringAsFixed(2);
+                                                                      }
+                                                                      return val.toString();
+                                                                    })(),
                                                                     style: AppTextStyles.bodyMedium(context).copyWith(
                                                                       fontWeight: FontWeight.bold,
                                                                     ),
@@ -266,9 +323,8 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                   // Item's value range
                                                                   Text(
                                                                     sectionFieldsItem['range']?.toString() ?? '',
-                                                                    style: AppTextStyles.bodySmall(context).copyWith(
-                                                                      color: AppThemeManager.secondaryText,
-                                                                    ),
+                                                                    style: AppTextStyles.bodySmall(context)
+                                                                        .copyWith(color: Colors.black),
                                                                   ),
                                                                 ],
                                                               ),
@@ -304,7 +360,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                           padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
                                           child: Text(
                                             'Scores',
-                                            style: AppTextStyles.titleLarge(context),
+                                            style: AppTextStyles.titleLarge(context, color: Colors.black),
                                           ),
                                         ),
                                       ],
@@ -471,8 +527,8 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

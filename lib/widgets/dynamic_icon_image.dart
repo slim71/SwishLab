@@ -17,7 +17,7 @@ class DynamicIconImage extends StatelessWidget {
   });
 
   // Normalize the name to match your asset naming convention
-  String get _normalized => imageName.toLowerCase().replaceAll(' ', '_');
+  String get _normalized => imageName.toLowerCase().trim().replaceAll(RegExp(r'[\s\-_]+'), '_');
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,6 @@ class DynamicIconImage extends StatelessWidget {
                     defaultPath,
                     width: width,
                     height: height,
-                    package: 'SwishLab',
                   );
                 },
               ));

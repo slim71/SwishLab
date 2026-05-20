@@ -235,7 +235,14 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/processing',
         name: 'processing',
-        builder: (context, state) => const ProcessingVideo(),
+        builder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>;
+          return ProcessingVideo(
+            videoFile: extra['videoFile'] as File,
+            shootingHand: extra['shootingHand'] as String,
+            pointOfView: extra['pointOfView'] as String,
+          );
+        },
       ),
       GoRoute(
         path: '/loading',

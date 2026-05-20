@@ -6,14 +6,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../functions/add_animation.dart';
-import '../functions/upload_video_to_gradio.dart';
 import '../models/analysis_response.dart';
 import '../models/custom_enums.dart';
 import '../models/results_response.dart';
 import '../models/statistics_row.dart';
 import '../models/video_source.dart';
-import '../providers/shooting_analysis_provider.dart';
-import '../state/app_state.dart';
+import '../providers/users_provider.dart';
 import '../styles/styles.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/background.dart';
@@ -70,35 +68,6 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
 
     videoNameFocusNode ??= FocusNode();
     videoDescriptionFocusNode ??= FocusNode();
-  }
-
-  Future<String?> uploadVideo(BuildContext context) async {
-    final gradioTempUrl = await uploadVideoToGradio(widget.videoFile);
-
-    if (gradioTempUrl == null || gradioTempUrl.isEmpty) {
-      if (!context.mounted) return null;
-
-      await showDialog<void>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Upload failed'),
-          actions: [
-            TextButton(
-              onPressed: () => context.pop(),
-              child: const Text('Ok'),
-            ),
-          ],
-        ),
-      );
-
-      // Exit loading page
-      if (context.mounted && context.canPop()) {
-        context.pop();
-      }
-      return null;
-    }
-
-    return gradioTempUrl;
   }
 
   @override
@@ -232,38 +201,43 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
                               widget: DarkButton(
                                 text: 'Upload and Analyze',
                                 onPressed: () async {
-                                  final appState = ref.watch(appStateProvider);
+                                  final userInfo = ref.read(appUserProvider).value;
 
                                   // Check required parameters
-                                  final shootingHand = appState.userData?.shootingHand;
+                                  final shootingHand = userInfo?.shootingHand;
                                   final perspective = widget.perspective?.name;
                                   if (shootingHand == null || perspective == null) {
+                                    final List<String> missingFields = [];
+                                    if (shootingHand == null) {
+                                      missingFields.add('shooting hand');
+                                    }
+                                    if (perspective == null) {
+                                      missingFields.add('point of view');
+                                    }
+
                                     if (!context.mounted) return;
 
                                     await showDialog<void>(
                                       context: context,
-                                      builder: (context) => const AlertDialog(
-                                        title: Text('Invalid data'),
-                                        content: Text('Missing shooting hand or point of view.'),
+                                      builder: (context) => AlertDialog(
+                                        title: const Text('Invalid data'),
+                                        content: Text('Missing: ${missingFields.join(' and ')}.',
+                                            style: AppTextStyles.bodyLarge(context, color: Colors.black)),
                                       ),
                                     );
                                     return;
                                   }
 
-                                  // Upload video to Gradio
-                                  final gradioUrl = await uploadVideo(context);
-                                  if (gradioUrl == null) return;
-
-                                  // Trigger analysis
-                                  ref.read(shootingAnalysisProvider.notifier).start(
-                                        sourceVideo: gradioUrl,
-                                        shootingHand: shootingHand,
-                                        pointOfView: perspective,
-                                      );
-
-                                  // Navigate to loading page
+                                  // Navigate to processing page
                                   if (!context.mounted) return;
-                                  context.pushNamed('loading');
+                                  context.pushNamed(
+                                    'processing',
+                                    extra: {
+                                      'videoFile': widget.videoFile,
+                                      'shootingHand': shootingHand,
+                                      'pointOfView': perspective,
+                                    },
+                                  );
                                 },
                               ),
                               withFade: false,

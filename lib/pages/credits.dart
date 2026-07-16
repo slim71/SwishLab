@@ -33,10 +33,9 @@ class _CreditsState extends ConsumerState<Credits> {
       final appState = ref.read(appStateProvider);
       final appStateNotifier = ref.read(appStateProvider.notifier);
 
-      if (appState.credits.isNotEmpty) {
+      if (appState.credits.isEmpty) {
         final creditsLoaded = await loadCredits();
         appStateNotifier.setCredits(creditsLoaded);
-        setState(() {}); // if needed, to update UI
       }
     });
   }
@@ -161,8 +160,6 @@ class _CreditsState extends ConsumerState<Credits> {
                                 borderRadius: BorderRadius.circular(25),
                               ),
                               child: Container(
-                                width: 100,
-                                height: 100,
                                 decoration: BoxDecoration(
                                   color: AppThemeManager.primaryBackground,
                                   borderRadius: BorderRadius.circular(25),
@@ -171,26 +168,43 @@ class _CreditsState extends ConsumerState<Credits> {
                                     color: appColors.containersBorders,
                                   ),
                                 ),
-                                alignment: const AlignmentDirectional(0, 1),
                                 child: InkWell(
                                   onTap: () async {
-                                    await launchUrl(creditsItem.url as Uri);
+                                    final String urlString = creditsItem.url.trim();
+                                    if (urlString.isEmpty) return;
+                                    final Uri url = Uri.parse(urlString);
+                                    try {
+                                      // Try launching externally first
+                                      final success = await launchUrl(url, mode: LaunchMode.externalApplication);
+                                      if (!success) {
+                                        // Fallback to in-app if external fails
+                                        await launchUrl(url, mode: LaunchMode.platformDefault);
+                                      }
+                                    } catch (e) {
+                                      if (mounted) {
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(content: Text('Error: $e')),
+                                        );
+                                      }
+                                    }
                                   },
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       SizedBox(
-                                        width: 50,
-                                        height: 50,
+                                        width: 60,
+                                        height: 60,
                                         child: DynamicAsset(
-                                          width: 50,
-                                          height: 50,
+                                          width: 60,
+                                          height: 60,
                                           name: creditsItem.asset,
                                           type: creditsItem.type,
                                         ),
                                       ),
                                       Divider(
-                                        thickness: 2,
+                                        thickness: 1,
+                                        height: 8,
                                         color: appColors.alternateOne,
                                       ),
                                       Padding(
@@ -198,7 +212,9 @@ class _CreditsState extends ConsumerState<Credits> {
                                         child: Text(
                                           creditsItem.author,
                                           textAlign: TextAlign.center,
-                                          style: AppTextStyles.titleSmall(context),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: AppTextStyles.bodySmall(context),
                                         ),
                                       ),
                                     ],

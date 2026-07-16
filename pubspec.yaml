@@ -14,7 +14,7 @@ dependencies:
   flutter_animate: ^4.5.0
 
   # Text
-  font_awesome_flutter: ^10.12.0
+  font_awesome_flutter: ^11.0.0
   google_fonts: ^8.0.0
   flutter_md: ^0.0.8
 
@@ -60,7 +60,6 @@ flutter:
     - assets/images/
     - assets/lottie/
     - assets/json/
-    - assets/fonts/
     - assets/icons/
     - assets/gifs/
     - assets/markdown/

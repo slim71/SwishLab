@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../providers/auth_providers.dart';
+import '../state/app_state.dart';
 
 /// A bridge between Riverpod state and GoRouter's refresh mechanism.
 ///
@@ -10,16 +11,18 @@ import '../providers/auth_providers.dart';
 /// this class adapts Riverpod state changes into ChangeNotifier updates.
 ///
 /// It listens to [appStatusProvider] (which combines auth + connectivity)
-/// and calls [notifyListeners] whenever the app status changes,
+/// and [appStateProvider] (for onboarding state)
+/// and calls [notifyListeners] whenever either changes,
 /// triggering a router refresh.
-///
-/// This ensures that navigation reacts immediately to:
-/// - authentication changes (login/logout)
-/// - backend reachability changes (online/offline)
 class RouterRefreshNotifier extends ChangeNotifier {
   RouterRefreshNotifier(this.ref) {
     ref.listen<AppAuthStatus>(appStatusProvider, (_, __) {
       notifyListeners();
+    });
+    ref.listen<AppState>(appStateProvider, (prev, next) {
+      if (prev?.hasOpenedBefore != next.hasOpenedBefore) {
+        notifyListeners();
+      }
     });
   }
 

@@ -262,7 +262,8 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                           8, 0, 0, 0),
                                                                       child: Text(
                                                                         sectionFieldsItem['name']?.toString() ?? '',
-                                                                        style: AppTextStyles.bodyMedium(context),
+                                                                        style: AppTextStyles.bodyMedium(context,
+                                                                            color: Colors.black),
                                                                         overflow: TextOverflow.ellipsis,
                                                                       ),
                                                                     ),
@@ -282,7 +283,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                   Text(
                                                                     (() {
                                                                       final val = sectionFieldsItem['value'];
-                                                                      if (val == null) return '';
+                                                                      if (val == null) return 'NA';
 
                                                                       // Try to parse as double for 2-digit formatting
                                                                       double? dVal;
@@ -297,7 +298,9 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                       }
                                                                       return val.toString();
                                                                     })(),
-                                                                    style: AppTextStyles.bodyMedium(context).copyWith(
+                                                                    style: AppTextStyles.bodyMedium(context,
+                                                                            color: Colors.black)
+                                                                        .copyWith(
                                                                       fontWeight: FontWeight.bold,
                                                                     ),
                                                                   ),
@@ -307,7 +310,8 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                   // Item's unit of measurement
                                                                   Text(
                                                                     sectionFieldsItem['unit']?.toString() ?? '',
-                                                                    style: AppTextStyles.bodySmall(context),
+                                                                    style: AppTextStyles.bodySmall(context,
+                                                                        color: Colors.black),
                                                                   ),
                                                                 ],
                                                               ),
@@ -441,7 +445,23 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                   children: [
                                                                     // Score value
                                                                     Text(
-                                                                      scoresJsonItem['value']?.toString() ?? '',
+                                                                      (() {
+                                                                        final val = scoresJsonItem['value'];
+                                                                        if (val == null) return 'NA';
+
+                                                                        // Try to parse as double for 2-digit formatting
+                                                                        double? dVal;
+                                                                        if (val is num) {
+                                                                          dVal = val.toDouble();
+                                                                        } else if (val is String) {
+                                                                          dVal = double.tryParse(val);
+                                                                        }
+
+                                                                        if (dVal != null) {
+                                                                          return dVal.toStringAsFixed(2);
+                                                                        }
+                                                                        return val.toString();
+                                                                      })(),
                                                                       style: AppTextStyles.bodyMedium(context).copyWith(
                                                                         fontWeight: FontWeight.bold,
                                                                         color: AppThemeManager.primaryText,

@@ -11,6 +11,7 @@ import '../styles/theme_manager.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/background.dart';
 import '../widgets/debug_item.dart';
+import 'loading_page.dart';
 
 /// Page with debug utilities
 class DebugUtilities extends ConsumerStatefulWidget {
@@ -78,7 +79,7 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                         children: [
                           // Container for the reset flag functionality
                           DebugItem(
-                            title: 'Reset hasBeenOpened flag',
+                            title: 'Reset hasOpenedBefore flag',
                             buttonText: 'Unset',
                             onPressed: () async {
                               // Reset flag
@@ -109,6 +110,22 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                               context.go(
                                 '/results',
                                 extra: defaultJson,
+                              );
+                            },
+                          ),
+
+                          const SizedBox(height: 1),
+
+                          // Container for testing the loading page
+                          DebugItem(
+                            title: 'Test loading page',
+                            buttonText: 'Test',
+                            onPressed: () async {
+                              // Bypass GoRouter to avoid authenticated redirect
+                              Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (context) => const LoadingPage(),
+                                ),
                               );
                             },
                           ),

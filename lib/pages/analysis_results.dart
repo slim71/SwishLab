@@ -60,9 +60,7 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
       },
       child: Scaffold(
         appBar: const MyAppBar(
-          style: MyAppBarStyle.backButtonTitleCentered,
-          title: 'Analysis results',
-        ),
+            style: MyAppBarStyle.backButtonTitleCentered, title: 'Analysis results', backIcon: Icons.home),
         body: SafeArea(
           top: true,
           child:
@@ -131,6 +129,7 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                               width: 3,
                                             ),
                                           ),
+                                          width: 120,
                                           child:
                                               // Column containing scores for each category of the analyzed video
                                               InkWell(
@@ -199,7 +198,9 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                           (e) => e['name'] == 'Total',
                                                           orElse: () => <String, dynamic>{},
                                                         )?['value'])
-                                                            ?.toString() ??
+                                                            ?.toDouble()
+                                                            .toStringAsFixed(2)
+                                                            .toString() ??
                                                         ''),
                                                     style: AppTextStyles.bodySmall(context),
                                                   ),

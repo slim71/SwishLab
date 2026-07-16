@@ -2,12 +2,14 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 
+import '../logger.dart';
 import '../models/analysis_response.dart';
 import '../models/results_response.dart';
 import 'api_client.dart';
 
 class EndpointAddressApi {
   final ApiClient _client;
+  final _logger = AppLogger.scope('EndpointApi');
 
   EndpointAddressApi(this._client);
 
@@ -21,6 +23,7 @@ class EndpointAddressApi {
     required String pointOfView,
   }) async {
     final url = '${_client.dio.options.baseUrl}/gradio_api/call/api_endpoint';
+    _logger.i('POST to $url');
     try {
       final response = await _client.dio.post<Map<String, dynamic>>(
         '/gradio_api/call/api_endpoint',
@@ -38,8 +41,14 @@ class EndpointAddressApi {
           ]
         },
       );
+      _logger.i('Response from analyzeShootingForm: ${response.data}');
       return AnalysisResponse.fromJson(response.data as Map<String, dynamic>);
-    } on DioException {
+    } on DioException catch (e) {
+      _logger.e('DioException in analyzeShootingForm', error: e);
+      if (e.response?.statusCode == 404) {
+        _logger.e(
+            '404 Error: The endpoint /gradio_api/call/api_endpoint was not found. Base URL: ${_client.dio.options.baseUrl}');
+      }
       rethrow;
     }
   }
@@ -52,6 +61,7 @@ class EndpointAddressApi {
     required String hfEventId,
   }) async* {
     final url = '/gradio_api/call/api_endpoint/$hfEventId';
+    _logger.i('GET (Stream) from ${_client.dio.options.baseUrl}$url');
 
     try {
       final response = await _client.dio.get<ResponseBody>(
@@ -65,6 +75,7 @@ class EndpointAddressApi {
 
       final stream = response.data?.stream;
       if (stream == null) {
+        _logger.w('Stream is null for event $hfEventId');
         return;
       }
 
@@ -83,6 +94,8 @@ class EndpointAddressApi {
     String? currentData;
     final fullBuffer = StringBuffer();
 
+    _logger.i('Listening for SSE completion on event $hfEventId');
+
     try {
       await for (final line in getShootingFormResults(hfEventId: hfEventId)) {
         final trimmed = line.trim();
@@ -95,9 +108,11 @@ class EndpointAddressApi {
 
         if (trimmed.isEmpty) {
           if (currentEvent == 'complete' && currentData != null) {
+            _logger.i('Success! Received "complete" event.');
             final decoded = jsonDecode(currentData);
 
             if (decoded is List) {
+              _logger.i('Decoded data is a List. Taking the first element if available.');
               if (decoded.isNotEmpty) {
                 final first = decoded.first;
                 if (first is Map<String, dynamic>) {
@@ -110,6 +125,7 @@ class EndpointAddressApi {
             } else if (decoded is Map<String, dynamic>) {
               return ResultsResponse(decoded);
             } else {
+              _logger.w('Decoded data is of unexpected type: ${decoded.runtimeType}');
               return ResultsResponse({'raw_data': decoded});
             }
           }
@@ -124,10 +140,15 @@ class EndpointAddressApi {
           final data = trimmed.substring(5).trim();
           currentData = (currentData == null) ? data : '$currentData$data';
         } else if (trimmed.startsWith('error:')) {
+          _logger.e('Backend reported error event: $trimmed');
           throw Exception('Backend Error: ${trimmed.substring(6)}');
         }
       }
-    } catch (e) {
+    } catch (e, stack) {
+      _logger.e('Stream error while waiting for result', error: e, stackTrace: stack);
+      if (fullBuffer.isNotEmpty) {
+        _logger.d('Last bits of data received before crash: \n${fullBuffer.toString()}');
+      }
       rethrow;
     }
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:lottie/lottie.dart';
 
 import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
 import '../widgets/background.dart';
+import '../widgets/dynamic_asset.dart';
 
 class LoadingPage extends ConsumerStatefulWidget {
   const LoadingPage({super.key});
@@ -46,12 +46,11 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // Loading animation
-                    Lottie.asset(
-                      'assets/lottie/loader_basketball.json',
-                      width: 400,
-                      height: 400,
-                      fit: BoxFit.contain,
-                      animate: true,
+                    const DynamicAsset(
+                      name: 'loader_basketball.json',
+                      type: 'animation',
+                      width: 300,
+                      height: 300,
                     ),
 
                     // "Processing Video" text
@@ -59,7 +58,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                       padding: const EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
                       child: Text(
                         'Loading',
-                        style: AppTextStyles.headlineLarge(context),
+                        style: AppTextStyles.headlineLarge(context, color: Colors.black),
                       ),
                     ),
 
@@ -69,7 +68,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                       child: Text(
                         'Please wait...',
                         textAlign: TextAlign.center,
-                        style: AppTextStyles.labelLarge(context),
+                        style: AppTextStyles.labelLarge(context, color: Colors.black),
                       ),
                     ),
                   ],

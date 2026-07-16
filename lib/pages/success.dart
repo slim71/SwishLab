@@ -29,6 +29,8 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup> with Ti
   @override
   Widget build(BuildContext context) {
     final appColors = AppThemeManager.currentColors;
+
+    // Force a fresh fetch of user data to avoid "template data"
     final userInfoAsync = ref.watch(appUserProvider);
     final UsersRow? userInfo = userInfoAsync.value;
 
@@ -133,7 +135,7 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup> with Ti
                                 child: addAnimation(
                                   widget: Text(
                                     'Success!',
-                                    style: AppTextStyles.displaySmall(context, color: AppThemeManager.secondaryText),
+                                    style: AppTextStyles.displaySmall(context, color: Colors.black),
                                   ),
                                   fade: FadeConfig(duration: 300.ms),
                                   move: const MoveConfig(begin: Offset(0, 20)),
@@ -146,7 +148,7 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup> with Ti
                                 child: addAnimation(
                                   widget: Text(
                                     'Account created',
-                                    style: AppTextStyles.labelMedium(context, color: AppThemeManager.secondaryText),
+                                    style: AppTextStyles.labelMedium(context, color: Colors.black),
                                   ),
                                   fade: FadeConfig(delay: 150.ms, duration: 300.ms),
                                   scale: const ScaleConfig(begin: Offset(0.8, 0.8)),
@@ -182,8 +184,7 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup> with Ti
                                         // "Your new user ID is" text
                                         Text(
                                           'Your registered email is',
-                                          style:
-                                              AppTextStyles.labelMedium(context, color: AppThemeManager.secondaryText),
+                                          style: AppTextStyles.labelMedium(context, color: Colors.black),
                                         ),
                                         const SizedBox(width: 4),
 
@@ -191,8 +192,7 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup> with Ti
                                         Text(
                                           userInfo?.email ?? 'na@email.com',
                                           textAlign: TextAlign.end,
-                                          style:
-                                              AppTextStyles.labelMedium(context, color: AppThemeManager.secondaryText),
+                                          style: AppTextStyles.labelMedium(context, color: Colors.black),
                                         ),
                                         const SizedBox(width: 4),
 
@@ -208,19 +208,19 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup> with Ti
                                                   context,
                                                   text: 'Navigate to ',
                                                   style: AppTextStyles.labelMedium(context),
-                                                  color: AppThemeManager.secondaryText,
+                                                  color: Colors.black,
                                                 ),
                                                 CustomTextSpan(
                                                   context,
                                                   text: 'Settings > User Info',
-                                                  color: AppThemeManager.secondaryText,
+                                                  color: Colors.black,
                                                   bold: true,
                                                   italic: true,
                                                 ),
                                                 CustomTextSpan(
                                                   context,
                                                   text: ' page to customize your profile',
-                                                  color: AppThemeManager.secondaryText,
+                                                  color: Colors.black,
                                                 )
                                               ],
                                               style: AppTextStyles.labelMedium(context),
@@ -239,13 +239,13 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup> with Ti
                             ),
                             const SizedBox(width: 8),
 
-                            // Home button
+                            // Getting Started button
                             addAnimation(
                               widget: DarkButton(
                                 onPressed: () async {
-                                  context.goNamed('home');
+                                  context.goNamed('getting-started');
                                 },
-                                text: 'Go Home',
+                                text: 'Get Started',
                               ),
                               fade: FadeConfig(delay: 350.ms, duration: 300.ms),
                               scale: const ScaleConfig(begin: Offset(0.8, 0.8)),

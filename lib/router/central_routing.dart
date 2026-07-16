@@ -31,6 +31,7 @@ import '../pages/success.dart';
 import '../pages/user_data.dart';
 import '../pages/video_pre_upload.dart';
 import '../providers/auth_providers.dart';
+import '../state/app_state.dart';
 import '../widgets/nav_bar_scaffold.dart';
 import 'app_documents.dart';
 import 'app_transitions.dart';
@@ -51,8 +52,6 @@ final routerProvider = Provider<GoRouter>((ref) {
       final status = ref.read(appStatusProvider);
       final location = state.matchedLocation;
 
-      debugPrint('\t\t going to $location');
-
       // Public routes that should always be accessible
       const publicRoutes = ['/splash', '/login', '/signup'];
 
@@ -62,20 +61,23 @@ final routerProvider = Provider<GoRouter>((ref) {
 
       switch (status) {
         case AppAuthStatus.loading:
-          debugPrint('\t\t loading');
-          return location == '/loading' ? null : '/loading';
+          // Stay on root loading or explicit loading page
+          if (location == '/' || location == '/loading') return null;
+          return '/loading';
 
         case AppAuthStatus.offline:
-          debugPrint('\t\t offline');
-          return location == '/splash' ? null : '/splash';
+          // Stay where we are on network blips, don't force logout
+          return null;
 
         case AppAuthStatus.unauthenticated:
-          debugPrint('\t\t unauthenticated');
           return location == '/splash' ? null : '/splash';
 
         case AppAuthStatus.authenticated:
-          debugPrint('\t\t authenticated');
           if (location == '/' || location == '/loading') {
+            final hasOpened = ref.read(appStateProvider).hasOpenedBefore;
+            if (!hasOpened) {
+              return '/settings/getting-started';
+            }
             return '/home';
           }
           return null;

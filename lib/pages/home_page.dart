@@ -180,7 +180,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                       padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
                       child: Text(
                         'Available checks',
-                        style: AppTextStyles.titleMedium(context),
+                        style: AppTextStyles.titleMedium(context, color: Colors.black),
                       ),
                     ),
                     if (!hasShootingHand)

@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../models/credit_item.dart';
 import '../models/user_row_data.dart';
+import '../providers/shared_preferences_provider.dart';
 
 class AppState {
   // Riverpod requires immutable states
@@ -44,11 +45,21 @@ class AppState {
 
 // Riverpod notifier
 class AppStateNotifier extends Notifier<AppState> {
+  static const String _hasOpenedBeforeKey = 'hasOpenedBefore';
+
   @override
-  AppState build() => const AppState();
+  AppState build() {
+    final prefs = ref.watch(sharedPreferencesProvider);
+    final hasOpenedBefore = prefs.getBool(_hasOpenedBeforeKey) ?? false;
+
+    return AppState(
+      hasOpenedBefore: hasOpenedBefore,
+    );
+  }
 
   void setHasOpenedBefore(bool value) {
     state = state.copyWith(hasOpenedBefore: value);
+    ref.read(sharedPreferencesProvider).setBool(_hasOpenedBeforeKey, value);
   }
 
   void setUserDataFetched(bool value) {
@@ -72,7 +83,8 @@ class AppStateNotifier extends Notifier<AppState> {
   }
 
   void reset() {
-    state = const AppState();
+    final hasOpenedBefore = state.hasOpenedBefore;
+    state = AppState(hasOpenedBefore: hasOpenedBefore);
   }
 }
 

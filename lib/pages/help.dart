@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../constants.dart';
 import '../functions/add_animation.dart';
 import '../functions/filter_faqs.dart';
 import '../functions/sort_by_order.dart';
+import '../logger.dart';
 import '../state/app_state.dart';
 import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
@@ -23,76 +27,54 @@ class HelpPage extends ConsumerStatefulWidget {
 }
 
 class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMixin {
-  /// Index of the currently opened FAQ
+  static final _logger = AppLogger.scope('HelpPage');
   int? openIndex = -1;
-
-  /// Filter to apply to the search
   String faqSearchQuery = '';
-
-  /// Page State to show the search bar
   bool searchActive = false;
 
-  /// List of FAQs properly filtered through the search field
-  List<dynamic> filteredFaqsPageState = [];
-
-  void addToFilteredFaqsPageState(dynamic item) => filteredFaqsPageState.add(item);
-
-  void removeFromFilteredFaqsPageState(dynamic item) => filteredFaqsPageState.remove(item);
-
-  void removeAtIndexFromFilteredFaqsPageState(int index) => filteredFaqsPageState.removeAt(index);
-
-  void insertAtIndexInFilteredFaqsPageState(int index, dynamic item) => filteredFaqsPageState.insert(index, item);
-
-  void updateFilteredFaqsPageStateAtIndex(int index, dynamic Function(dynamic) updateFn) =>
-      filteredFaqsPageState[index] = updateFn(filteredFaqsPageState[index]);
-
-  List<dynamic>? filteredFaqsAction;
-
-  List<dynamic>? filteredFaqsActionContainer;
-
-  // State field(s) for searchField widget.
   FocusNode? searchFieldFocusNode;
   late final TextEditingController searchFieldTextController;
-
-  List<dynamic>? filteredFaqsActionOnChange;
 
   @override
   void initState() {
     super.initState();
-    final appState = ref.read(appStateProvider);
-
-    // Start with all FAQs
-    filteredFaqsPageState = appState.loadedFaqs?.toList() ?? [];
-
-    // Apply filter asynchronously
-    if (faqSearchQuery.isNotEmpty) {
-      _filterFaqs();
-    }
     searchFieldTextController = TextEditingController();
-    searchFieldFocusNode ??= FocusNode();
+    searchFieldFocusNode = FocusNode();
   }
 
-  Future<void> _filterFaqs() async {
-    final appState = ref.read(appStateProvider);
-    final faqs = appState.loadedFaqs?.toList() ?? [];
-    final filtered = await filterFaqs(
-      faqs,
-      faqSearchQuery,
-    );
-    filteredFaqsPageState = filtered.toList();
-    if (mounted) setState(() {});
+  @override
+  void dispose() {
+    searchFieldTextController.dispose();
+    searchFieldFocusNode?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final appState = ref.watch(appStateProvider);
     final appColors = AppThemeManager.currentColors;
 
-    // Determine which FAQs to show: either the filtered ones (if searching) or all of them
-    final List<dynamic> baseFaqs =
-        (searchActive && faqSearchQuery.isNotEmpty) ? filteredFaqsPageState : (appState.loadedFaqs ?? []);
+    // Watch the FAQs from state
+    var allFaqs = ref.watch(appStateProvider.select((s) => s.loadedFaqs)) ?? [];
 
-    final faqsList = sortByOrder(baseFaqs.toList()).toList();
+    _logger.d('Initial FAQs from state: ${allFaqs.length}');
+
+    // Emergency Fallback: If state is empty, try parsing the default JSON directly
+    if (allFaqs.isEmpty) {
+      try {
+        allFaqs = (json.decode(kDefaultFaqsJson) as List).cast<Map<String, dynamic>>();
+        _logger.d('Using fallback FAQs: ${allFaqs.length}');
+      } catch (e) {
+        _logger.e('Fallback parse error: $e');
+      }
+    }
+
+    // Filter based on search query
+    final filtered = filterFaqs(allFaqs, faqSearchQuery);
+    _logger.d('Filtered count for "$faqSearchQuery": ${filtered.length}');
+
+    // Sort the results
+    final faqsList = sortByOrder(filtered);
+    _logger.d('Final sorted list count: ${faqsList.length}');
 
     return GestureDetector(
       onTap: () {
@@ -106,13 +88,10 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
         ),
         body: SafeArea(
           top: true,
-          child:
-              // Background container
-              Background(
+          child: Background(
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                // Column used to scroll the page
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
@@ -121,7 +100,6 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // "How can we help you?" text
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                             child: Text(
@@ -130,11 +108,10 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                             ),
                           ),
 
-                          // Row to place the functionality widgets
+                          // Action Buttons Row
                           Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              // Button to send an email
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                                 child: addAnimation(
@@ -144,56 +121,36 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                                           scheme: 'mailto',
                                           path: 'slim71sv@gmail.com',
                                           query: {
-                                            'subject': 'Enter the subject',
-                                            'body': 'AMA',
+                                            'subject': 'SwishLab Support',
+                                            'body': 'Hi, I need help with...',
                                           }
                                               .entries
-                                              .map((MapEntry<String, String> e) =>
+                                              .map((e) =>
                                                   '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
                                               .join('&')));
                                     },
                                     text: 'Email Us',
                                     height: 60,
-                                    icon: const Icon(
-                                      Icons.email,
-                                      size: 30,
-                                    ),
+                                    icon: const Icon(Icons.email, size: 30),
                                   ),
                                   move: const MoveConfig(begin: Offset(0, 110)),
                                 ),
                               ),
-
                               const SizedBox(width: 12),
-
-                              // Button to simulate a search filter
                               Expanded(
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                                   child: addAnimation(
                                     widget: DarkButton(
-                                      onPressed: () async {
-                                        // Immediate UI state changes
+                                      onPressed: () {
                                         setState(() {
                                           searchActive = !searchActive;
-                                          searchFieldTextController.clear();
-                                          faqSearchQuery = '';
-                                        });
-
-                                        // Delay
-                                        await Future<void>.delayed(const Duration(milliseconds: 300));
-                                        if (!mounted) return;
-
-                                        // Async computation
-                                        final result = await filterFaqs(
-                                          appState.loadedFaqs?.toList() ?? [],
-                                          faqSearchQuery,
-                                        );
-                                        if (!mounted) return;
-
-                                        // Apply result
-                                        setState(() {
-                                          filteredFaqsActionContainer = result;
-                                          filteredFaqsPageState = result.toList().cast<dynamic>();
+                                          if (!searchActive) {
+                                            searchFieldTextController.clear();
+                                            faqSearchQuery = '';
+                                          } else {
+                                            searchFieldFocusNode?.requestFocus();
+                                          }
                                         });
                                       },
                                       text: 'Search FAQs',
@@ -218,72 +175,38 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                             ],
                           ),
 
-                          // Row to put the search bar into
-                          Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                // Container to put the search bar into
-                                Expanded(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child:
-                                        // Search bar input field
-                                        Visibility(
-                                      visible: searchActive,
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-                                        child: InputField(
-                                          controller: searchFieldTextController,
-                                          focusNode: searchFieldFocusNode,
-                                          onChanged: (_) => EasyDebounce.debounce(
-                                            'searchFieldTextController',
-                                            const Duration(milliseconds: 2000),
-                                            () async {
-                                              if (!mounted) return;
-
-                                              await Future<void>.delayed(
-                                                const Duration(
-                                                  milliseconds: 300,
-                                                ),
-                                              );
-                                              // Update the query from the controller
-                                              final query = searchFieldTextController.text;
-                                              setState(() {
-                                                faqSearchQuery = query;
-                                              });
-
-                                              // Perform the async filtering
-                                              final result = await filterFaqs(
-                                                appState.loadedFaqs?.toList() ?? [],
-                                                faqSearchQuery,
-                                              );
-                                              if (!mounted) return;
-
-                                              // Update the filtered list
-                                              setState(() {
-                                                filteredFaqsActionOnChange = result;
-                                                filteredFaqsPageState = result.toList();
-                                              });
-                                            },
-                                          ),
-                                          textCapitalization: TextCapitalization.none,
-                                          label: 'Search filter',
-                                          validator: null,
-                                          denyRegex: RegExp(r'[\x00-\x1F\x7F]'), // control characters only
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                          // Search Bar Visibility
+                          if (searchActive)
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                              child: addAnimation(
+                                widget: InputField(
+                                  controller: searchFieldTextController,
+                                  focusNode: searchFieldFocusNode,
+                                  label: 'Search filter',
+                                  onChanged: (value) {
+                                    _logger.d('onChanged triggered with: $value');
+                                    EasyDebounce.debounce(
+                                      'helpSearchDebounce',
+                                      const Duration(milliseconds: 200),
+                                      () {
+                                        if (mounted) {
+                                          _logger.d('Setting search query state: $value');
+                                          setState(() {
+                                            faqSearchQuery = value;
+                                            openIndex = -1;
+                                          });
+                                        }
+                                      },
+                                    );
+                                  },
+                                  textCapitalization: TextCapitalization.none,
+                                  denyRegex: RegExp(r'[\x00-\x1F\x7F]'),
                                 ),
-                              ],
+                                move: const MoveConfig(begin: Offset(0, -20)),
+                              ),
                             ),
-                          ),
 
-                          // "Frequently Asked Questions" text
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 4),
                             child: Text(
@@ -292,43 +215,36 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                             ),
                           ),
 
-                          // "No results found." text
-                          if (!(filteredFaqsPageState.isNotEmpty))
-                            Text(
-                              'No results found.',
-                              style: AppTextStyles.titleLarge(context),
+                          // List items
+                          if (faqsList.isEmpty)
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                              child: Text(
+                                'No results found.',
+                                style: AppTextStyles.titleLarge(context),
+                              ),
+                            )
+                          else
+                            Column(
+                              children: List.generate(faqsList.length, (index) {
+                                final item = faqsList[index];
+                                return Padding(
+                                  padding: const EdgeInsets.only(bottom: 10),
+                                  child: FaqItem(
+                                    key: ValueKey(item['question']),
+                                    isOpen: openIndex == index,
+                                    title: item['question'].toString(),
+                                    description: item['answer'].toString(),
+                                    onPressed: () async {
+                                      setState(() {
+                                        openIndex = openIndex == index ? -1 : index;
+                                      });
+                                    },
+                                  ),
+                                );
+                              }),
                             ),
-
-                          // Wrap containing all FAQs
-                          Wrap(
-                            spacing: 0,
-                            runSpacing: 0,
-                            alignment: WrapAlignment.start,
-                            crossAxisAlignment: WrapCrossAlignment.start,
-                            direction: Axis.horizontal,
-                            runAlignment: WrapAlignment.start,
-                            verticalDirection: VerticalDirection.down,
-                            clipBehavior: Clip.none,
-                            children: List.generate(faqsList.length, (faqsListIndex) {
-                              final faqsListItem = faqsList[faqsListIndex];
-                              return
-                                  // Dynamically generated item containing each FAQ
-                                  Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                                child: FaqItem(
-                                  key: ValueKey(faqsListItem['question']),
-                                  isOpen: openIndex == faqsListIndex,
-                                  title: faqsListItem['question'].toString(),
-                                  description: faqsListItem['answer'].toString(),
-                                  onPressed: () async {
-                                    setState(() {
-                                      openIndex = openIndex == faqsListIndex ? -1 : faqsListIndex;
-                                    });
-                                  },
-                                ),
-                              );
-                            }),
-                          ),
+                          const SizedBox(height: 32),
                         ],
                       ),
                     ),

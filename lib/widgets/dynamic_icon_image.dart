@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../logger.dart';
 import '../styles/theme_manager.dart';
 
 /// Widget to display an icon from local assets.
 /// Falls back to a default icon if the requested one is missing.
 class DynamicIconImage extends StatelessWidget {
+  static final _logger = AppLogger.scope('DynamicIconImage');
   final double? width;
   final double? height;
   final String imageName;
@@ -34,6 +36,7 @@ class DynamicIconImage extends StatelessWidget {
                 width: width,
                 height: height,
                 errorBuilder: (_, __, ___) {
+                  _logger.w('Icon not found: $assetPath. Falling back to $defaultPath');
                   // Fallback to default icon
                   return Image.asset(
                     defaultPath,

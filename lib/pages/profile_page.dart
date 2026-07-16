@@ -126,7 +126,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                       child: Text('${userInfo?.firstName} ${userInfo?.lastName}',
                           // "null null" if data missing
                           textAlign: TextAlign.center,
-                          style: AppTextStyles.headlineMedium(context)),
+                          style: AppTextStyles.headlineMedium(context, color: Colors.black)),
                     ),
 
                     // User email address

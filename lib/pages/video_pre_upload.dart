@@ -48,6 +48,8 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
   FocusNode? videoDescriptionFocusNode;
   late final TextEditingController videoDescriptionTextController;
 
+  int? selectedHandIndex;
+
   // Stores action output result for [Custom Action - uploadVideoToGradio] action in uploadButton widget.
   String? gradioTempUrl;
 
@@ -68,6 +70,14 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
 
     videoNameFocusNode ??= FocusNode();
     videoDescriptionFocusNode ??= FocusNode();
+
+    // Initialize shooting hand from user profile
+    final userInfo = ref.read(appUserProvider).value;
+    if (userInfo?.shootingHand != null) {
+      final handStr = userInfo!.shootingHand!.toLowerCase();
+      selectedHandIndex = Handedness.values.indexWhere((e) => e.name == handStr);
+      if (selectedHandIndex == -1) selectedHandIndex = null;
+    }
   }
 
   @override
@@ -165,7 +175,7 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
                                           // "Category" text
                                           Text(
                                             'Category',
-                                            style: AppTextStyles.labelMedium(context),
+                                            style: AppTextStyles.labelMedium(context, color: Colors.black),
                                           ),
                                           const SizedBox(height: 12),
 
@@ -175,6 +185,23 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
                                             labels: OriginFunc.values.map((e) => e.name).toList(),
                                             selectedIndex: widget.perspective!.index,
                                             // preselect "side"
+                                            onChanged: (_) {}, // no interaction
+                                          ),
+                                          const SizedBox(height: 24),
+
+                                          // "Shooting hand" text
+                                          Text(
+                                            'Shooting hand',
+                                            style: AppTextStyles.labelMedium(context, color: Colors.black),
+                                          ),
+                                          const SizedBox(height: 12),
+
+                                          // Label to differentiate the shooting hand
+                                          ChoiceChipsGroup<String>(
+                                            labels: Handedness.values
+                                                .map((e) => e.name == 'left' ? 'Left' : 'Right')
+                                                .toList(),
+                                            selectedIndex: selectedHandIndex,
                                             onChanged: (_) {}, // no interaction
                                           ),
                                         ],
@@ -204,7 +231,9 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
                                   final userInfo = ref.read(appUserProvider).value;
 
                                   // Check required parameters
-                                  final shootingHand = userInfo?.shootingHand;
+                                  final shootingHand = selectedHandIndex != null
+                                      ? Handedness.values[selectedHandIndex!].name
+                                      : userInfo?.shootingHand;
                                   final perspective = widget.perspective?.name;
                                   if (shootingHand == null || perspective == null) {
                                     final List<String> missingFields = [];

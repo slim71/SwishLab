@@ -225,6 +225,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                           validator: (value) =>
                                               firstNameFieldTextControllerValidator.call(context, value),
                                           allowRegex: RegExp('^[A-Za-z\' -]+\$'),
+                                          fillColor: AppThemeManager.primaryBackground,
                                         ).animate(controller: firstNameAnim).shake(
                                               duration: 1000.ms,
                                               hz: 5,
@@ -265,6 +266,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                           obscureText: false,
                                           validator: (value) =>
                                               lastNameFieldTextControllerValidator.call(context, value),
+                                          fillColor: AppThemeManager.primaryBackground,
                                         ).animate(controller: lastNameAnim).shake(
                                               duration: 1000.ms,
                                               hz: 5,
@@ -304,6 +306,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                           textCapitalization: TextCapitalization.none,
                                           obscureText: false,
                                           validator: (value) => emailFieldTextControllerValidator.call(context, value),
+                                          fillColor: AppThemeManager.primaryBackground,
                                         ).animate(controller: emailAnim).shake(
                                               duration: 1000.ms,
                                               hz: 5,
@@ -340,6 +343,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                                             options: const ['Left', 'Right'],
                                             onChanged: (val) => setState(() => shootingHandDropDownValue = val),
                                             hintText: 'Select your shooting hand',
+                                            fillColor: AppThemeManager.primaryBackground,
                                           ).animate(controller: shootingHandAnim).shake(
                                                 duration: 1000.ms,
                                                 hz: 5,

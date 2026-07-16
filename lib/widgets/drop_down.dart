@@ -9,6 +9,7 @@ class Dropdown<T> extends StatefulWidget {
   final List<T> options;
   final ValueChanged<T?>? onChanged;
   final String hintText;
+  final Color? fillColor;
 
   const Dropdown({
     super.key,
@@ -16,6 +17,7 @@ class Dropdown<T> extends StatefulWidget {
     required this.options,
     this.onChanged,
     this.hintText = '',
+    this.fillColor,
   });
 
   @override
@@ -38,56 +40,54 @@ class _DropdownState<T> extends State<Dropdown<T>> {
     return ValueListenableBuilder(
         valueListenable: AppThemeManager.notifier,
         builder: (_, __, ___) {
-          return Container(
-              color: AppThemeManager.primaryBackground,
-              child: Theme(
-                  data: Theme.of(context).copyWith(
-                    // Background of the dropdown menu
-                    canvasColor: AppThemeManager.secondaryBackground,
-                    // Default text style for menu items
-                    dropdownMenuTheme: DropdownMenuThemeData(
-                      textStyle: AppTextStyles.bodyMedium(context),
-                    ),
+          return Theme(
+              data: Theme.of(context).copyWith(
+                // Background of the dropdown menu
+                canvasColor: AppThemeManager.secondaryBackground,
+                // Default text style for menu items
+                dropdownMenuTheme: DropdownMenuThemeData(
+                  textStyle: AppTextStyles.bodyMedium(context),
+                ),
+              ),
+              child: DropdownButtonFormField<T>(
+                initialValue: widget.controller.value,
+                items: widget.options
+                    .map(
+                      (opt) => DropdownMenuItem<T>(
+                        value: opt,
+                        child: Text(opt.toString(), style: AppTextStyles.bodyMedium(context)),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (val) {
+                  setState(() {
+                    widget.controller.value = val;
+                  });
+                  widget.onChanged?.call(val);
+                },
+                // Style of the field itself
+                decoration: InputDecoration(
+                  hintText: widget.hintText,
+                  filled: widget.fillColor != null,
+                  fillColor: widget.fillColor,
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: appColors.dropDownBorders, width: 2),
                   ),
-                  child: DropdownButtonFormField<T>(
-                    initialValue: widget.controller.value,
-                    items: widget.options
-                        .map(
-                          (opt) => DropdownMenuItem<T>(
-                            value: opt,
-                            child: Text(opt.toString(), style: AppTextStyles.bodyMedium(context)),
-                          ),
-                        )
-                        .toList(),
-                    onChanged: (val) {
-                      setState(() {
-                        widget.controller.value = val;
-                      });
-                      widget.onChanged?.call(val);
-                    },
-                    // Style of the field itself
-                    decoration: InputDecoration(
-                      hintText: widget.hintText,
-                      filled: true,
-                      fillColor: AppThemeManager.secondaryBackground,
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: appColors.dropDownBorders, width: 2),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: BorderSide(color: appColors.dropDownBorders, width: 2),
-                      ),
-                    ),
-                    icon: Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: AppThemeManager.secondaryText,
-                      size: 24,
-                    ),
-                    style: AppTextStyles.bodyMedium(context),
-                    elevation: 10,
-                  )));
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide(color: appColors.dropDownBorders, width: 2),
+                  ),
+                ),
+                icon: Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  color: AppThemeManager.secondaryText,
+                  size: 24,
+                ),
+                style: AppTextStyles.bodyMedium(context),
+                elevation: 10,
+              ));
         });
   }
 }

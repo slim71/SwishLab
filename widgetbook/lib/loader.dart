@@ -56,10 +56,8 @@ Widget buildTransparentButton(BuildContext context) {
 @widgetbook.UseCase(name: 'IconActionButton', type: IconActionButton)
 Widget buildIconActionButton(BuildContext context) {
   return IconActionButton(
+    const Icon(Icons.paypal),
     borderRadius: 30,
-    borderWidth: 1,
-    size: 50,
-    icon: Icons.paypal,
     iconSize: 30,
     onPressed: () async {},
   );
@@ -89,7 +87,7 @@ Widget buildDropdown(BuildContext context) {
 
 @widgetbook.UseCase(name: 'SocialIconButton', type: SocialIconButton)
 Widget buildSocialIconButton(BuildContext context) {
-  return SocialIconButton(icon: FontAwesomeIcons.twitter, onTap: () {});
+  return SocialIconButton(const FaIcon(FontAwesomeIcons.twitter), onTap: () {});
 }
 
 @widgetbook.UseCase(name: 'ToggleIcon', type: ToggleIcon)

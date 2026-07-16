@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../constants.dart';
 import '../functions/add_animation.dart';
 import '../providers/auth_providers.dart';
+import '../providers/users_provider.dart';
 import '../state/app_state.dart';
 import '../styles/styles.dart';
 import '../widgets/background.dart';
@@ -213,7 +214,7 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                             }
 
                                             ref.read(appStateProvider.notifier).setHasOpenedBefore(true);
-
+                                            ref.invalidate(appUserProvider);
                                             context.goNamed('home');
                                           } on AuthException catch (e) {
                                             if (!context.mounted) return;
@@ -275,6 +276,9 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                                 CustomTextSpan(
                                                   context,
                                                   text: 'Sign Up',
+                                                  italic: true,
+                                                  underline: true,
+                                                  color: Theme.of(context).colorScheme.primary,
                                                 )
                                               ],
                                             ),

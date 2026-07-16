@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_md/flutter_md.dart';
+import 'package:go_router/go_router.dart';
 
 import '../functions/load_markdown.dart';
+import '../router/app_documents.dart';
 import '../styles/theme_manager.dart';
 import '../widgets/app_bar.dart';
 
@@ -55,6 +57,18 @@ class _MarkdownDocumentState extends State<MarkdownDocument> {
             markdown: Markdown.fromString(_markdownSource),
             theme: MarkdownThemeData.mergeTheme(
               Theme.of(context),
+              onLinkTap: (title, url) {
+                if (url.startsWith('app://')) {
+                  final target = url.replaceFirst('app://', '');
+                  if (appDocuments.containsKey(target)) {
+                    context.pushNamed('document', pathParameters: {'name': target});
+                  } else {
+                    context.pushNamed(target);
+                  }
+                } else if (appDocuments.containsKey(url)) {
+                  context.pushNamed('document', pathParameters: {'name': url});
+                }
+              },
               textStyle: TextStyle(
                 color: AppThemeManager.primaryText,
                 fontSize: 16,

@@ -105,9 +105,8 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                           // Back button
                           addAnimation(
                             widget: IconActionButton(
+                              const Icon(Icons.arrow_back_rounded),
                               size: 60,
-                              backgroundColor: AppThemeManager.secondaryBackground,
-                              icon: Icons.arrow_back_rounded,
                               iconColor: AppThemeManager.primaryText,
                               iconSize: 25,
                               onPressed: () async {
@@ -129,9 +128,8 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                             padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 16, 0),
                             child: addAnimation(
                                 widget: IconActionButton(
+                                  const FaIcon(FontAwesomeIcons.upload),
                                   size: 60,
-                                  backgroundColor: AppThemeManager.secondaryBackground,
-                                  icon: FontAwesomeIcons.upload,
                                   iconColor: AppThemeManager.primaryText,
                                   iconSize: 25,
                                   onPressed: () async {

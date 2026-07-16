@@ -17,11 +17,11 @@ dynamic fieldsLookupTable(String key) {
     "vertical": {"unit": "px"},
     "horizontal": {"unit": "px"},
     "left_direction": {
-      "unit": "°",
+      "unit": "",
       "range": {"min": -90, "max": 90}
     },
     "right_direction": {
-      "unit": "°",
+      "unit": "",
       "range": {"min": -90, "max": 90}
     },
     "left_angle": {

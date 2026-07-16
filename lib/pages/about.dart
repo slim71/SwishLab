@@ -105,7 +105,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                               Padding(
                                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                                 child: IconActionButton(
-                                                  icon: Icons.paypal,
+                                                  const Icon(Icons.paypal),
                                                   iconColor: Colors.white,
                                                   onPressed: () async {
                                                     await launchUrl(Uri.parse(
@@ -116,7 +116,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                               Padding(
                                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                                 child: IconActionButton(
-                                                  icon: Icons.email,
+                                                  const Icon(Icons.email),
                                                   iconColor: Colors.white,
                                                   onPressed: () async {
                                                     await launchUrl(Uri(
@@ -136,7 +136,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                               Padding(
                                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                                 child: IconActionButton(
-                                                  icon: FontAwesomeIcons.github,
+                                                  const FaIcon(FontAwesomeIcons.github),
                                                   iconColor: Colors.white,
                                                   onPressed: () async {
                                                     await launchUrl(Uri.parse('https://github.com/slim71/'));
@@ -146,7 +146,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                               Padding(
                                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                                 child: IconActionButton(
-                                                  icon: FontAwesomeIcons.linkedinIn,
+                                                  const FaIcon(FontAwesomeIcons.linkedinIn),
                                                   iconColor: Colors.white,
                                                   onPressed: () async {
                                                     await launchUrl(Uri.parse(
@@ -157,7 +157,7 @@ class _AboutUsState extends ConsumerState<AboutUs> {
                                               Padding(
                                                 padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 12, 0),
                                                 child: IconActionButton(
-                                                  icon: Icons.reddit_sharp,
+                                                  const Icon(Icons.reddit_sharp),
                                                   iconColor: Colors.white,
                                                   onPressed: () async {
                                                     await launchUrl(Uri.parse('https://www.reddit.com/user/feller94/'));

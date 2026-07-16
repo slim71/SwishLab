@@ -218,7 +218,7 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                               // Twitter button
                               addAnimation(
                                 widget: SocialIconButton(
-                                  icon: FontAwesomeIcons.twitter,
+                                  const FaIcon(FontAwesomeIcons.twitter),
                                   onTap: () {
                                     logger.d('twitterButton pressed ...');
                                   },
@@ -239,7 +239,7 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                               // Instagram button
                               addAnimation(
                                 widget: SocialIconButton(
-                                  icon: FontAwesomeIcons.instagram,
+                                  const FaIcon(FontAwesomeIcons.instagram),
                                   onTap: () {
                                     logger.d('instagramButton pressed ...');
                                   },
@@ -260,7 +260,7 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                               // Facebook button
                               addAnimation(
                                 widget: SocialIconButton(
-                                  icon: FontAwesomeIcons.facebookF,
+                                  const FaIcon(FontAwesomeIcons.facebookF),
                                   onTap: () {
                                     logger.d('facebookButton pressed ...');
                                   },
@@ -301,7 +301,7 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                           child: addAnimation(
                             widget: Text(
                               'App Versions',
-                              style: AppTextStyles.titleLarge(context),
+                              style: AppTextStyles.titleLarge(context, color: Colors.black),
                             ),
                             withFade: false,
                             slide: SlideConfig(

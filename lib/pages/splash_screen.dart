@@ -194,48 +194,44 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                             CustomTextSpan(
                                               context,
                                               text: 'Use the ',
-                                              style: AppTextStyles.labelLarge(context,
-                                                  color: AppThemeManager.primaryBackground),
+                                              color: Colors.black,
                                             ),
                                             CustomTextSpan(
                                               context,
                                               text: 'front view ',
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                              bold: true,
+                                              color: Colors.black,
                                             ),
                                             CustomTextSpan(
                                               context,
                                               text: 'to keep your shot straight and balanced. Spot',
-                                              style: const TextStyle(),
+                                              color: Colors.black,
                                             ),
                                             CustomTextSpan(
                                               context,
                                               text: ' side drift, arm flare',
-                                              style: const TextStyle(
-                                                fontStyle: FontStyle.italic,
-                                              ),
+                                              color: Colors.black,
+                                              italic: true,
                                             ),
                                             CustomTextSpan(
                                               context,
                                               text: ', or ',
-                                              style: const TextStyle(),
+                                              color: Colors.black,
                                             ),
                                             CustomTextSpan(
                                               context,
                                               text: '“chicken wing” ',
-                                              style: const TextStyle(
-                                                fontStyle: FontStyle.italic,
-                                              ),
+                                              italic: true,
+                                              color: Colors.black,
                                             ),
                                             CustomTextSpan(
                                               context,
                                               text: 'motion, and build a clean, consistent shooting line every time.',
-                                              style: const TextStyle(),
+                                              color: Colors.black,
                                             )
                                           ],
-                                          style: AppTextStyles.labelLarge(context,
-                                              color: AppThemeManager.primaryBackground),
+                                          style: AppTextStyles.labelLarge(context),
+                                          color: Colors.black,
                                         ),
                                       ),
                                     ),
@@ -287,68 +283,60 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                                             CustomTextSpan(
                                               context,
                                               text: 'See your shot in full motion. The ',
-                                              style: AppTextStyles.labelLarge(context,
-                                                  color: AppThemeManager.primaryBackground),
+                                              color: Colors.black,
                                             ),
                                             CustomTextSpan(
                                               context,
                                               text: 'side view',
-                                              style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontStyle: FontStyle.normal,
-                                              ),
+                                              bold: true,
+                                              color: Colors.black,
                                             ),
                                             CustomTextSpan(
                                               context,
                                               text: ' shows ',
-                                              style: const TextStyle(),
+                                              color: Colors.black,
                                             ),
                                             CustomTextSpan(
                                               context,
                                               text: 'how close',
-                                              style: const TextStyle(
-                                                fontStyle: FontStyle.italic,
-                                              ),
+                                              italic: true,
+                                              color: Colors.black,
                                             ),
                                             CustomTextSpan(
                                               context,
                                               text: ' the ball stays to your body, your ',
-                                              style: const TextStyle(),
+                                              color: Colors.black,
                                             ),
                                             CustomTextSpan(
                                               context,
                                               text: 'set ',
-                                              style: const TextStyle(
-                                                fontStyle: FontStyle.italic,
-                                              ),
+                                              italic: true,
+                                              color: Colors.black,
                                             ),
                                             CustomTextSpan(
                                               context,
                                               text: 'and ',
-                                              style: const TextStyle(),
+                                              color: Colors.black,
                                             ),
                                             CustomTextSpan(
                                               context,
                                               text: 'release points',
-                                              style: const TextStyle(
-                                                fontStyle: FontStyle.italic,
-                                              ),
+                                              italic: true,
+                                              color: Colors.black,
                                             ),
                                             CustomTextSpan(
                                               context,
                                               text: ', and whether your shot follows a ',
-                                              style: const TextStyle(),
+                                              color: Colors.black,
                                             ),
                                             CustomTextSpan(
                                               context,
                                               text: 'smooth forward path.',
-                                              style: const TextStyle(
-                                                fontStyle: FontStyle.italic,
-                                              ),
+                                              italic: true,
+                                              color: Colors.black,
                                             )
                                           ],
-                                          style: AppTextStyles.labelLarge(context,
-                                              color: AppThemeManager.primaryBackground),
+                                          style: AppTextStyles.labelLarge(context),
                                         ),
                                       ),
                                     ),

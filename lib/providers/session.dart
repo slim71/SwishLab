@@ -4,7 +4,9 @@ import 'package:flutter_riverpod/legacy.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../constants.dart';
 import '../logger.dart';
+import '../models/user_row_data.dart';
 import '../router/central_routing.dart' show rootNavigatorKey;
 import '../state/app_state.dart';
 import '../styles/styles.dart';
@@ -24,6 +26,17 @@ final sessionBootstrapProvider = Provider<void>((ref) {
     // Only run if session not yet initialized
     final sessionInitialized = ref.read(appStateProvider).sessionInitialized;
     if (sessionInitialized) return;
+
+    // Sync user data to appState
+    ref.read(appStateProvider.notifier).setUserData(UserRowData(
+          userID: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          eMail: user.email,
+          profilePicture: user.profilePic ?? kDefaultProfilePictureUrl,
+          registrationDate: user.createdAt,
+          shootingHand: user.shootingHand,
+        ));
 
     // Show dialog AFTER build frame
     if (user.shootingHand?.isEmpty ?? true) {

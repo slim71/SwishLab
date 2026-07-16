@@ -4,13 +4,13 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lottie/lottie.dart';
 
 import '../models/analysis_state.dart';
 import '../providers/shooting_analysis_provider.dart';
 import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
 import '../widgets/background.dart';
+import '../widgets/dynamic_asset.dart';
 import '../widgets/transparent_button.dart';
 
 class ProcessingVideo extends ConsumerStatefulWidget {
@@ -66,13 +66,9 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
             builder: (_) => AlertDialog(
               title: const Text('Analysis failed'),
               content: SingleChildScrollView(
-                child: Text('Reason: $errorMessage\n\nNavigate home?'),
+                child: Text('Reason: $errorMessage'),
               ),
               actions: [
-                TextButton(
-                  onPressed: () => context.pop(),
-                  child: const Text('Stay'),
-                ),
                 TextButton(
                   onPressed: () {
                     context.pop();
@@ -112,12 +108,11 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // Loading animation
-                    Lottie.asset(
-                      'assets/lottie/loader_basketball.json',
-                      width: 400,
-                      height: 400,
-                      fit: BoxFit.contain,
-                      animate: true,
+                    const DynamicAsset(
+                      name: 'loader_basketball.json',
+                      type: 'animation',
+                      width: 300,
+                      height: 300,
                     ),
 
                     // "Processing Video" text
@@ -125,7 +120,7 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
                       padding: const EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
                       child: Text(
                         'Processing Video',
-                        style: AppTextStyles.headlineLarge(context),
+                        style: AppTextStyles.headlineLarge(context, color: Colors.black),
                       ),
                     ),
 
@@ -135,7 +130,7 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
                       child: Text(
                         'Please wait while we prepare your video',
                         textAlign: TextAlign.center,
-                        style: AppTextStyles.labelLarge(context),
+                        style: AppTextStyles.labelLarge(context, color: Colors.black),
                       ),
                     ),
 
@@ -168,7 +163,7 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
                       child: Text(
                         'This may take a moment depending on the video size',
                         textAlign: TextAlign.center,
-                        style: AppTextStyles.labelLarge(context),
+                        style: AppTextStyles.labelLarge(context, color: Colors.black),
                       ),
                     ),
 

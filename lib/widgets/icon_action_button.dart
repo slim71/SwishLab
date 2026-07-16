@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../styles/theme_manager.dart';
 
 class IconActionButton extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final VoidCallback onPressed;
   final double size;
   final double iconSize;
@@ -16,9 +16,9 @@ class IconActionButton extends StatelessWidget {
   final BoxShape shape;
   final bool wrapped;
 
-  const IconActionButton({
+  const IconActionButton(
+    this.icon, {
     super.key,
-    required this.icon,
     required this.onPressed,
     this.size = 50,
     this.iconSize = 30,
@@ -56,7 +56,7 @@ class IconActionButton extends StatelessWidget {
               onPressed: onPressed,
               iconSize: iconSize,
               color: iconColor ?? AppThemeManager.primaryText,
-              icon: Icon(icon),
+              icon: icon,
               padding: padding,
               alignment: alignment,
               splashRadius: size / 2,

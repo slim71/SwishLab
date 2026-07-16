@@ -20,6 +20,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onProfilePressed;
   final String? profileImageUrl;
   final double height;
+  final IconData? backIcon;
 
   const MyAppBar({
     super.key,
@@ -29,6 +30,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onProfilePressed,
     this.profileImageUrl,
     this.height = kToolbarHeight,
+    this.backIcon,
   });
 
   @override
@@ -62,7 +64,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       return Padding(
         padding: const EdgeInsets.all(8),
         child: IconActionButton(
-          icon: Icons.arrow_back_rounded,
+          Icon(backIcon ?? Icons.arrow_back_rounded),
           iconColor: Colors.white,
           onPressed: onBackPressed ??
               () {

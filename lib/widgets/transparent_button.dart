@@ -28,45 +28,43 @@ class TransparentButton extends StatelessWidget {
     return ValueListenableBuilder(
         valueListenable: AppThemeManager.notifier,
         builder: (_, __, ___) {
-          return Container(
-              color: AppThemeManager.primaryBackground,
-              child: ElevatedButton(
-                onPressed: onPressed,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: appColors.transparentButtonBackground,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    side: BorderSide(
-                      color: appColors.transparentButtonBorders,
-                      width: 2,
+          return ElevatedButton(
+            onPressed: onPressed,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: appColors.transparentButtonBackground,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+                side: BorderSide(
+                  color: appColors.transparentButtonBorders,
+                  width: 2,
+                ),
+              ),
+              fixedSize: Size.fromHeight(height),
+              padding: padding,
+            ),
+            child: FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (icon != null)
+                    Padding(
+                      padding: iconPadding,
+                      child: icon,
+                    ),
+                  if (icon != null) const SizedBox(width: 8),
+                  Text(
+                    text,
+                    style: AppTextStyles.titleLarge(
+                      context,
+                      color: appColors.transparentButtonTextColor,
                     ),
                   ),
-                  fixedSize: Size.fromHeight(height),
-                  padding: padding,
-                ),
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      if (icon != null)
-                        Padding(
-                          padding: iconPadding,
-                          child: icon,
-                        ),
-                      if (icon != null) const SizedBox(width: 8),
-                      Text(
-                        text,
-                        style: AppTextStyles.titleLarge(
-                          context,
-                          color: appColors.transparentButtonTextColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ));
+                ],
+              ),
+            ),
+          );
         });
   }
 }

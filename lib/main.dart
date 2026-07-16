@@ -1,12 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'app.dart';
 import 'logger.dart';
+import 'providers/shared_preferences_provider.dart';
 import 'styles/theme_manager.dart';
 
 class Root extends StatelessWidget {
@@ -35,6 +35,13 @@ Future<void> main() async {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNjcXZ0cGlsdG93anBvZ2JqbXBkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY4MDU0NDQsImV4cCI6MjA3MjM4MTQ0NH0.rCMRBmdjrpXug8_MCHD1L5K5XdSy4SdDO9eZtSS1B58',
   );
 
+  final prefs = await SharedPreferences.getInstance();
+
   await dotenv.load(fileName: ".env"); // TODO: use later
-  runApp(const ProviderScope(child: Root()));
+  runApp(ProviderScope(
+    overrides: [
+      sharedPreferencesProvider.overrideWithValue(prefs),
+    ],
+    child: const Root(),
+  ));
 }

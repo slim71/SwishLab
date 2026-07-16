@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../styles/theme_manager.dart';
 
 class SocialIconButton extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final VoidCallback onTap;
 
   final double size;
@@ -12,9 +11,9 @@ class SocialIconButton extends StatelessWidget {
   final double borderRadius;
   final double borderWidth;
 
-  const SocialIconButton({
+  const SocialIconButton(
+    this.icon, {
     super.key,
-    required this.icon,
     required this.onTap,
     this.size = 48,
     this.iconSize = 24,
@@ -44,11 +43,7 @@ class SocialIconButton extends StatelessWidget {
                     ),
                   ),
                   child: Center(
-                    child: FaIcon(
-                      icon,
-                      size: iconSize,
-                      color: AppThemeManager.secondaryText,
-                    ),
+                    child: icon,
                   ),
                 ),
               ));

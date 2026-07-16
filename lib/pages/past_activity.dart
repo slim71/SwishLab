@@ -7,6 +7,7 @@ import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/background.dart';
+import '../widgets/custom_text_span.dart';
 
 /// Page to show past user activity
 class PastActivity extends ConsumerStatefulWidget {
@@ -66,7 +67,7 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                         padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
                         child: Text(
                           'All activity from this past month.',
-                          style: AppTextStyles.titleSmall(context),
+                          style: AppTextStyles.titleSmall(context, color: Colors.black),
                         ),
                       ),
 
@@ -155,7 +156,7 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                               // Example test for an activity
                                               Text(
                                                 'Created New User',
-                                                style: AppTextStyles.bodyLarge(context),
+                                                style: AppTextStyles.bodyLarge(context, color: Colors.black),
                                               ),
 
                                               // Example test for an activity, part 2
@@ -163,7 +164,7 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                                                 padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                                                 child: Text(
                                                   '<User>',
-                                                  style: AppTextStyles.titleMedium(context),
+                                                  style: AppTextStyles.titleMedium(context, color: Colors.black),
                                                 ),
                                               ),
                                             ],
@@ -260,9 +261,14 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                       // "Beginning of Activity" text
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 0, 0),
-                        child: Text(
-                          'Beginning of Activity',
-                          style: AppTextStyles.bodyLarge(context),
+                        child: RichText(
+                          textScaler: MediaQuery.of(context).textScaler,
+                          text: CustomTextSpan(
+                            context,
+                            text: 'Beginning of Activity',
+                            style: AppTextStyles.bodyLarge(context),
+                            color: Colors.black,
+                          ),
                         ),
                       ),
                     ],

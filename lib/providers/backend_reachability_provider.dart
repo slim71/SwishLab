@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants.dart';
+import '../logger.dart';
 
 /// Periodically checks whether the backend (Supabase) is reachable.
 ///
@@ -27,29 +28,44 @@ import '../constants.dart';
 ///
 /// Used by [appStatusProvider] to determine whether the app should
 /// enter the [AppAuthStatus.offline] state.
+/// Requires 3 consecutive failures to report as unreachable to avoid
+/// blips triggering logouts.
 final backendReachabilityProvider = StreamProvider<bool>((ref) async* {
   bool? last;
+  int consecutiveFailures = 0;
+  final logger = AppLogger.scope('BackendReachability');
 
   while (true) {
-    bool current;
+    bool currentReachable;
 
     try {
-      final response = await http
-          .get(
-            Uri.parse('$supabaseDomain/rest/v1/'),
-          )
-          .timeout(const Duration(seconds: 3));
+      final response = await http.get(Uri.parse('$supabaseDomain/rest/v1/')).timeout(const Duration(seconds: 3));
 
       // If we get ANY response, backend is reachable
-      //debugPrint('Reachability status code: ${response.statusCode}');
-      current = response.statusCode < 500;
+      currentReachable = response.statusCode < 500;
     } catch (e) {
-      current = false;
+      currentReachable = false;
     }
 
-    if (current != last) {
-      yield current;
-      last = current;
+    bool reportedStatus;
+    if (currentReachable) {
+      consecutiveFailures = 0;
+      reportedStatus = true;
+    } else {
+      logger.d('Backend unreachable; consecutive failures: $consecutiveFailures');
+      consecutiveFailures++;
+      // Only report as unreachable if it failed 3 times in a row
+      if (consecutiveFailures >= 3) {
+        reportedStatus = false;
+      } else {
+        // Keep the previous status (likely true) until 3 failures reached
+        reportedStatus = last ?? true;
+      }
+    }
+
+    if (reportedStatus != last) {
+      yield reportedStatus;
+      last = reportedStatus;
     }
 
     await Future<void>.delayed(const Duration(seconds: 5));

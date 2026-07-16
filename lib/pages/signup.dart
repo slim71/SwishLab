@@ -314,9 +314,6 @@ class _SignupPageState extends ConsumerState<SignupPage> with TickerProviderStat
                                                 return;
                                               }
 
-                                              // Update app state
-                                              ref.read(appStateProvider.notifier).setHasOpenedBefore(true);
-
                                               // Insert into Users table
                                               final usersRepo = ref.read(usersRepositoryProvider);
 
@@ -326,6 +323,12 @@ class _SignupPageState extends ConsumerState<SignupPage> with TickerProviderStat
                                                 firstName: firstnameController.text,
                                                 lastName: lastnameController.text,
                                               );
+
+                                              // Reset onboarding flag for the new user on this device
+                                              ref.read(appStateProvider.notifier).setHasOpenedBefore(false);
+
+                                              // Invalidate user provider so it fetches the new row
+                                              ref.invalidate(appUserProvider);
 
                                               // Navigate
                                               if (!context.mounted) return;
@@ -389,6 +392,9 @@ class _SignupPageState extends ConsumerState<SignupPage> with TickerProviderStat
                                                   CustomTextSpan(
                                                     context,
                                                     text: 'Login here',
+                                                    italic: true,
+                                                    underline: true,
+                                                    color: Theme.of(context).colorScheme.primary,
                                                   )
                                                 ],
                                               ),

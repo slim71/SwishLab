@@ -19,3 +19,9 @@ enum ChipsDirection {
   horizontal,
   vertical,
 }
+
+//
+enum Handedness {
+  left,
+  right,
+}

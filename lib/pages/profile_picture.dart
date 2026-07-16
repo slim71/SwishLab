@@ -270,7 +270,7 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                         Text(
                           'Tap to select a picture',
                           textAlign: TextAlign.center,
-                          style: AppTextStyles.bodyLarge(context),
+                          style: AppTextStyles.bodyLarge(context, color: Colors.black),
                         ),
                       ],
                     ),
@@ -301,7 +301,7 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                 // Simple text to guide picture selection
                                 Text(
                                   'Select Image Source',
-                                  style: AppTextStyles.labelLarge(context, color: Colors.black),
+                                  style: AppTextStyles.labelLarge(context, color: Colors.white),
                                 ),
                                 const SizedBox(height: 12),
 
@@ -382,6 +382,7 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                         focusNode: urlFieldFocusNode,
                                         autofillHints: const [AutofillHints.url],
                                         validator: (value) => urlFieldTextControllerValidator.call(context, value),
+                                        fillColor: AppThemeManager.primaryBackground,
                                       ),
                                     ),
                                     const SizedBox(height: 12),

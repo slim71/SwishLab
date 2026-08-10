@@ -24,11 +24,23 @@ const singleDelayMs = 100; // [ms]
 
 class _SettingsItemData {
   final String title;
+  final IconData icon;
   final Future<void> Function(BuildContext context) onTap;
 
   const _SettingsItemData({
     required this.title,
+    required this.icon,
     required this.onTap,
+  });
+}
+
+class _SettingsSection {
+  final String title;
+  final List<_SettingsItemData> items;
+
+  const _SettingsSection({
+    required this.title,
+    required this.items,
   });
 }
 
@@ -43,95 +55,141 @@ class Settings extends ConsumerStatefulWidget {
 class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMixin {
   List<Map<String, dynamic>>? faqsJsonList;
 
-  late final List<_SettingsItemData> _settingsData = [
-    _SettingsItemData(
-        title: 'User Info',
-        onTap: (context) async {
-          context.pushNamed('user');
-        }),
-    _SettingsItemData(
-      title: 'Getting Started',
-      onTap: (context) async {
-        context.pushNamed('getting-started');
-      },
+  late final List<_SettingsSection> _sections = [
+    _SettingsSection(
+      title: 'Account',
+      items: [
+        _SettingsItemData(
+            title: 'User Info',
+            icon: Icons.person_rounded,
+            onTap: (context) async {
+              context.pushNamed('user');
+            }),
+      ],
     ),
-    _SettingsItemData(
-      title: 'About Us',
-      onTap: (context) async {
-        context.pushNamed('about');
-      },
-    ),
-    _SettingsItemData(
-      title: 'Help',
-      onTap: (context) async {
-        final appStateNotifier = ref.read(appStateProvider.notifier);
+    _SettingsSection(
+      title: 'Help & Support',
+      items: [
+        _SettingsItemData(
+          title: 'Getting Started',
+          icon: Icons.rocket_launch_rounded,
+          onTap: (context) async {
+            context.pushNamed('getting-started');
+          },
+        ),
+        _SettingsItemData(
+          title: 'About Us',
+          icon: Icons.info_rounded,
+          onTap: (context) async {
+            context.pushNamed('about');
+          },
+        ),
+        _SettingsItemData(
+          title: 'Help',
+          icon: Icons.help_rounded,
+          onTap: (context) async {
+            final appStateNotifier = ref.read(appStateProvider.notifier);
 
-        faqsJsonList = await loadJsonRemoteOrAppState(
-          'faqs',
-          kDefaultFaqsJson,
-        );
-        appStateNotifier.setLoadedFaqs(faqsJsonList!);
+            faqsJsonList = await loadJsonRemoteOrAppState(
+              'faqs',
+              kDefaultFaqsJson,
+            );
+            appStateNotifier.setLoadedFaqs(faqsJsonList!);
 
-        if (!context.mounted) return;
-        context.pushNamed('help');
+            if (!context.mounted) return;
+            context.pushNamed('help');
 
-        setState(() {});
-      },
+            setState(() {});
+          },
+        ),
+        _SettingsItemData(
+          title: 'Credits',
+          icon: Icons.favorite_rounded,
+          onTap: (context) async {
+            context.pushNamed('credits');
+          },
+        ),
+      ],
     ),
-    _SettingsItemData(
-      title: 'Privacy Policy',
-      onTap: (context) async {
-        context.pushNamed('document', pathParameters: {'name': 'PRIVACY'});
-      },
+    _SettingsSection(
+      title: 'Legal',
+      items: [
+        _SettingsItemData(
+          title: 'Privacy Policy',
+          icon: Icons.privacy_tip_rounded,
+          onTap: (context) async {
+            context.pushNamed('document', pathParameters: {'name': 'PRIVACY'});
+          },
+        ),
+        _SettingsItemData(
+          title: 'Terms & Conditions',
+          icon: Icons.description_rounded,
+          onTap: (context) async {
+            context.pushNamed('document', pathParameters: {'name': 'TAC'});
+          },
+        ),
+        _SettingsItemData(
+          title: 'EULA',
+          icon: Icons.gavel_rounded,
+          onTap: (context) async {
+            context.pushNamed('document', pathParameters: {'name': 'EULA'});
+          },
+        ),
+        _SettingsItemData(
+          title: 'Disclaimer',
+          icon: Icons.warning_rounded,
+          onTap: (context) async {
+            context.pushNamed('document', pathParameters: {'name': 'DISCLAIMER'});
+          },
+        ),
+        _SettingsItemData(
+          title: 'Acceptable Use Policy',
+          icon: Icons.rule_rounded,
+          onTap: (context) async {
+            context.pushNamed('document', pathParameters: {'name': 'USE'});
+          },
+        ),
+      ],
     ),
-    _SettingsItemData(
-      title: 'Terms & Conditions',
-      onTap: (context) async {
-        context.pushNamed('document', pathParameters: {'name': 'TAC'});
-      },
-    ),
-    _SettingsItemData(
-      title: 'EULA',
-      onTap: (context) async {
-        context.pushNamed('document', pathParameters: {'name': 'EULA'});
-      },
-    ),
-    _SettingsItemData(
-      title: 'Disclaimer',
-      onTap: (context) async {
-        context.pushNamed('document', pathParameters: {'name': 'DISCLAIMER'});
-      },
-    ),
-    _SettingsItemData(
-      title: 'Acceptable Use Policy',
-      onTap: (context) async {
-        context.pushNamed('document', pathParameters: {'name': 'USE'});
-      },
-    ),
-    _SettingsItemData(
-      title: 'Credits',
-      onTap: (context) async {
-        context.pushNamed('credits');
-      },
-    ),
-    _SettingsItemData(
-      title: 'Debug utilities',
-      onTap: (context) async {
-        context.pushNamed('debug');
-      },
+    _SettingsSection(
+      title: 'Developer',
+      items: [
+        _SettingsItemData(
+          title: 'Debug utilities',
+          icon: Icons.bug_report_rounded,
+          onTap: (context) async {
+            context.pushNamed('debug');
+          },
+        ),
+      ],
     ),
   ];
 
-  List<SettingsItem> get items => List.generate(_settingsData.length, (index) {
-        final data = _settingsData[index];
-        final color = settingsItemBackgrounds[index % settingsItemBackgrounds.length];
+  Widget _buildSectionHeader(String title, int animationIndex) {
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(24, 24, 16, 8),
+      child: addAnimation(
+        widget: Text(
+          title.toUpperCase(),
+          style: AppTextStyles.labelSmall(
+            context,
+            color: Colors.black.withValues(alpha: 0.5),
+          ).copyWith(letterSpacing: 1.2, fontWeight: FontWeight.bold),
+        ),
+        withFade: false,
+        slide: SlideConfig(
+            begin: const Offset(0, 100),
+            delay: Duration(milliseconds: singleDelayMs * animationIndex),
+            duration: const Duration(milliseconds: slideDurationMs)),
+        moveY: MoveYConfig(
+            begin: 100,
+            delay: Duration(milliseconds: (singleDelayMs * animationIndex) + slideDurationMs),
+            duration: const Duration(milliseconds: settleDurationMs)),
+      ),
+    );
+  }
 
-        return SettingsItem(
-          title: data.title,
-          background: color,
-          onTap: data.onTap,
-        );
-      });
+  int get _totalItemsCount => _sections.fold(0, (sum, section) => sum + section.items.length);
 
   @override
   void initState() {
@@ -156,28 +214,43 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // List of available settings
-              ListView.builder(
-                padding: EdgeInsets.zero,
-                primary: false,
-                shrinkWrap: true,
-                scrollDirection: Axis.vertical,
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  return addAnimation(
-                    widget: SettingsRow(item: items[index]),
-                    withFade: false,
-                    slide: SlideConfig(
-                        begin: const Offset(0, 100),
-                        delay: Duration(milliseconds: singleDelayMs * index),
-                        duration: const Duration(milliseconds: slideDurationMs)),
-                    moveY: MoveYConfig(
-                        begin: 100,
-                        delay: Duration(milliseconds: (singleDelayMs * index) + slideDurationMs),
-                        duration: const Duration(milliseconds: settleDurationMs)),
-                  );
-                },
-              ),
+              ..._sections.expand((section) {
+                final sectionIndex = _sections.indexOf(section);
+                // Calculate animation index based on previous sections and their items
+                int animationIndex = 0;
+                for (int i = 0; i < sectionIndex; i++) {
+                  animationIndex += _sections[i].items.length + 1; // +1 for the header
+                }
+
+                return [
+                  _buildSectionHeader(section.title, animationIndex),
+                  ...List.generate(section.items.length, (index) {
+                    final data = section.items[index];
+                    final color = settingsItemBackgrounds[(animationIndex + index) % settingsItemBackgrounds.length];
+                    final itemAnimationIndex = animationIndex + index + 1;
+
+                    final settingsItem = SettingsItem(
+                      title: data.title,
+                      background: color,
+                      icon: data.icon,
+                      onTap: data.onTap,
+                    );
+
+                    return addAnimation(
+                      widget: SettingsRow(item: settingsItem),
+                      withFade: false,
+                      slide: SlideConfig(
+                          begin: const Offset(0, 100),
+                          delay: Duration(milliseconds: singleDelayMs * itemAnimationIndex),
+                          duration: const Duration(milliseconds: slideDurationMs)),
+                      moveY: MoveYConfig(
+                          begin: 100,
+                          delay: Duration(milliseconds: (singleDelayMs * itemAnimationIndex) + slideDurationMs),
+                          duration: const Duration(milliseconds: settleDurationMs)),
+                    );
+                  }),
+                ];
+              }),
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
                 child: Container(
@@ -199,11 +272,13 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                             withFade: false,
                             slide: SlideConfig(
                                 begin: const Offset(0, 100),
-                                delay: Duration(milliseconds: singleDelayMs * items.length),
+                                delay: Duration(milliseconds: singleDelayMs * (_totalItemsCount + _sections.length)),
                                 duration: const Duration(milliseconds: slideDurationMs)),
                             moveY: MoveYConfig(
                                 begin: 100,
-                                delay: Duration(milliseconds: (singleDelayMs * items.length) + slideDurationMs),
+                                delay: Duration(
+                                    milliseconds:
+                                        (singleDelayMs * (_totalItemsCount + _sections.length)) + slideDurationMs),
                                 duration: const Duration(milliseconds: settleDurationMs)),
                           ),
                         ),
@@ -226,12 +301,14 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                                 withFade: false,
                                 slide: SlideConfig(
                                     begin: const Offset(0, 100),
-                                    delay: Duration(milliseconds: singleDelayMs * (items.length + 1)),
+                                    delay: Duration(
+                                        milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 1)),
                                     duration: const Duration(milliseconds: slideDurationMs)),
                                 moveY: MoveYConfig(
                                     begin: 100,
-                                    delay:
-                                        Duration(milliseconds: (singleDelayMs * (items.length + 1)) + slideDurationMs),
+                                    delay: Duration(
+                                        milliseconds: (singleDelayMs * (_totalItemsCount + _sections.length + 1)) +
+                                            slideDurationMs),
                                     duration: const Duration(milliseconds: settleDurationMs)),
                               ),
                               const SizedBox(width: 8),
@@ -247,12 +324,14 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                                 withFade: false,
                                 slide: SlideConfig(
                                     begin: const Offset(0, 100),
-                                    delay: Duration(milliseconds: singleDelayMs * (items.length + 2)),
+                                    delay: Duration(
+                                        milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 2)),
                                     duration: const Duration(milliseconds: slideDurationMs)),
                                 moveY: MoveYConfig(
                                     begin: 100,
-                                    delay:
-                                        Duration(milliseconds: (singleDelayMs * (items.length + 2)) + slideDurationMs),
+                                    delay: Duration(
+                                        milliseconds: (singleDelayMs * (_totalItemsCount + _sections.length + 2)) +
+                                            slideDurationMs),
                                     duration: const Duration(milliseconds: settleDurationMs)),
                               ),
                               const SizedBox(width: 8),
@@ -268,12 +347,14 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                                 withFade: false,
                                 slide: SlideConfig(
                                     begin: const Offset(0, 100),
-                                    delay: Duration(milliseconds: singleDelayMs * (items.length + 3)),
+                                    delay: Duration(
+                                        milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 3)),
                                     duration: const Duration(milliseconds: slideDurationMs)),
                                 moveY: MoveYConfig(
                                     begin: 100,
-                                    delay:
-                                        Duration(milliseconds: (singleDelayMs * (items.length + 3)) + slideDurationMs),
+                                    delay: Duration(
+                                        milliseconds: (singleDelayMs * (_totalItemsCount + _sections.length + 3)) +
+                                            slideDurationMs),
                                     duration: const Duration(milliseconds: settleDurationMs)),
                               ),
                             ],
@@ -306,11 +387,14 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                             withFade: false,
                             slide: SlideConfig(
                                 begin: const Offset(0, 100),
-                                delay: Duration(milliseconds: singleDelayMs * (items.length + 4)),
+                                delay:
+                                    Duration(milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 4)),
                                 duration: const Duration(milliseconds: slideDurationMs)),
                             moveY: MoveYConfig(
                                 begin: 100,
-                                delay: Duration(milliseconds: (singleDelayMs * (items.length + 4)) + slideDurationMs),
+                                delay: Duration(
+                                    milliseconds:
+                                        (singleDelayMs * (_totalItemsCount + _sections.length + 4)) + slideDurationMs),
                                 duration: const Duration(milliseconds: settleDurationMs)),
                           ),
                         ),
@@ -326,11 +410,14 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                             withFade: false,
                             slide: SlideConfig(
                                 begin: const Offset(0, 100),
-                                delay: Duration(milliseconds: singleDelayMs * (items.length + 5)),
+                                delay:
+                                    Duration(milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 5)),
                                 duration: const Duration(milliseconds: slideDurationMs)),
                             moveY: MoveYConfig(
                                 begin: 100,
-                                delay: Duration(milliseconds: (singleDelayMs * (items.length + 5)) + slideDurationMs),
+                                delay: Duration(
+                                    milliseconds:
+                                        (singleDelayMs * (_totalItemsCount + _sections.length + 5)) + slideDurationMs),
                                 duration: const Duration(milliseconds: settleDurationMs)),
                           ),
                         ),
@@ -348,11 +435,14 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                             withFade: false,
                             slide: SlideConfig(
                                 begin: const Offset(0, 100),
-                                delay: Duration(milliseconds: singleDelayMs * (items.length + 6)),
+                                delay:
+                                    Duration(milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 6)),
                                 duration: const Duration(milliseconds: slideDurationMs)),
                             moveY: MoveYConfig(
                                 begin: 100,
-                                delay: Duration(milliseconds: (singleDelayMs * (items.length + 6)) + slideDurationMs),
+                                delay: Duration(
+                                    milliseconds:
+                                        (singleDelayMs * (_totalItemsCount + _sections.length + 6)) + slideDurationMs),
                                 duration: const Duration(milliseconds: settleDurationMs)),
                           ),
                         ),

@@ -17,6 +17,7 @@ class InputField extends StatefulWidget {
   final RegExp? denyRegex;
   final List<TextInputFormatter> additionalFormatters;
   final Widget? suffixIcon;
+  final Widget? prefixIcon;
   final void Function(String)? onChanged;
   final Color? fillColor;
 
@@ -34,6 +35,7 @@ class InputField extends StatefulWidget {
     this.denyRegex,
     this.additionalFormatters = const [],
     this.suffixIcon,
+    this.prefixIcon,
     this.onChanged,
     this.fillColor,
   });
@@ -105,6 +107,7 @@ class _InputField extends State<InputField> {
                   width: 2,
                 ),
               ),
+              prefixIcon: widget.prefixIcon,
               suffixIcon: widget.obscureText
                   ? InkWell(
                       onTap: () {

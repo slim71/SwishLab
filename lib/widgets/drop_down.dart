@@ -10,6 +10,7 @@ class Dropdown<T> extends StatefulWidget {
   final ValueChanged<T?>? onChanged;
   final String hintText;
   final Color? fillColor;
+  final Widget? prefixIcon;
 
   const Dropdown({
     super.key,
@@ -18,6 +19,7 @@ class Dropdown<T> extends StatefulWidget {
     this.onChanged,
     this.hintText = '',
     this.fillColor,
+    this.prefixIcon,
   });
 
   @override
@@ -70,6 +72,7 @@ class _DropdownState<T> extends State<Dropdown<T>> {
                   hintText: widget.hintText,
                   filled: widget.fillColor != null,
                   fillColor: widget.fillColor,
+                  prefixIcon: widget.prefixIcon,
                   contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8),

@@ -114,22 +114,23 @@ const String kFieldsLookupTableJson = '''
 }
 ''';
 
-final List<Color> kMyColors = [
-  AppThemeManager.currentColors.primaryOne,
-  AppThemeManager.currentColors.primaryTwo,
-  AppThemeManager.currentColors.alternateOne,
-  AppThemeManager.currentColors.alternateTwo,
-  AppThemeManager.currentColors.retroOne,
-  AppThemeManager.currentColors.retroTwo,
-  if (AppThemeManager.currentColors.primaryThree != null) AppThemeManager.currentColors.primaryThree!,
-  if (AppThemeManager.currentColors.alternateThree != null) AppThemeManager.currentColors.alternateThree!,
-  if (AppThemeManager.currentColors.retroThree != null) AppThemeManager.currentColors.retroThree!,
-];
-final List<Color> settingsItemBackgrounds = [
-  AppThemeManager.currentColors.alternateTwo,
-  AppThemeManager.currentColors.primaryOne,
-  AppThemeManager.currentColors.retroThree ?? AppThemeManager.currentColors.retroOne,
-];
+List<Color> get kMyColors => [
+      AppThemeManager.currentColors.primaryOne,
+      AppThemeManager.currentColors.primaryTwo,
+      AppThemeManager.currentColors.alternateOne,
+      AppThemeManager.currentColors.alternateTwo,
+      AppThemeManager.currentColors.retroOne,
+      AppThemeManager.currentColors.retroTwo,
+      if (AppThemeManager.currentColors.primaryThree != null) AppThemeManager.currentColors.primaryThree!,
+      if (AppThemeManager.currentColors.alternateThree != null) AppThemeManager.currentColors.alternateThree!,
+      if (AppThemeManager.currentColors.retroThree != null) AppThemeManager.currentColors.retroThree!,
+    ];
+
+List<Color> get settingsItemBackgrounds => [
+      AppThemeManager.currentColors.alternateTwo,
+      AppThemeManager.currentColors.primaryOne,
+      AppThemeManager.currentColors.retroThree ?? AppThemeManager.currentColors.retroOne,
+    ];
 
 const String kDefaultFaqsJson = '''
 [

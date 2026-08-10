@@ -48,16 +48,20 @@ class _SwishLabState extends ConsumerState<SwishLab> {
           data: (session) async {
             if (session == null) return;
 
-            final usersRepo = ref.read(usersRepositoryProvider);
-            final existing = await usersRepo.getUserRow(session.user.id);
+            try {
+              final usersRepo = ref.read(usersRepositoryProvider);
+              final existing = await usersRepo.getUserRow(session.user.id);
 
-            if (existing == null) {
-              await usersRepo.insertUser(
-                id: session.user.id,
-                email: session.user.email ?? '',
-                firstName: '',
-                lastName: '',
-              );
+              if (existing == null) {
+                await usersRepo.insertUser(
+                  id: session.user.id,
+                  email: session.user.email ?? '',
+                  firstName: '',
+                  lastName: '',
+                );
+              }
+            } catch (e) {
+              // Network or DB error, ignore for now as it's a background sync
             }
           },
           loading: () {},

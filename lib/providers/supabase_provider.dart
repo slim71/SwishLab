@@ -24,16 +24,23 @@ final supabaseAuthListenerProvider = Provider<void>((ref) {
 
   StreamSubscription<AuthState>? sub;
 
-  Future.microtask(() {
+  Future.microtask(() async {
     final notifier = ref.read(appAuthStatusProvider.notifier);
 
-    // Initial session
-    final session = supabase.auth.currentSession;
+    try {
+      // Initial session
+      final session = supabase.auth.currentSession;
 
-    if (session?.accessToken == null) {
-      notifier.setUnauthenticated();
-    } else {
-      notifier.setAuthenticated();
+      if (session?.accessToken == null) {
+        notifier.setUnauthenticated();
+      } else {
+        notifier.setAuthenticated();
+      }
+    } catch (e) {
+      // If offline, we might get a SocketException or AuthRetryableFetchException
+      // We set unauthenticated or offline based on intent,
+      // but here we just want to avoid crashing.
+      notifier.setOffline();
     }
 
     // Listen to changes

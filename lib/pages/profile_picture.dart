@@ -301,7 +301,7 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                                 // Simple text to guide picture selection
                                 Text(
                                   'Select Image Source',
-                                  style: AppTextStyles.labelLarge(context, color: Colors.white),
+                                  style: AppTextStyles.labelLarge(context, color: Colors.black),
                                 ),
                                 const SizedBox(height: 12),
 

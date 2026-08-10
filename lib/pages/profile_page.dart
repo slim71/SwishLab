@@ -22,9 +22,26 @@ class ProfilePage extends ConsumerStatefulWidget {
 }
 
 class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderStateMixin {
-  @override
-  void initState() {
-    super.initState();
+  final ValueNotifier<double> _sheetExtent = ValueNotifier(0.4);
+  final double _minExtent = 0.4;
+  final double _maxExtent = 0.9;
+
+  String _getMonthName(int month) {
+    const months = [
+      'JANUARY',
+      'FEBRUARY',
+      'MARCH',
+      'APRIL',
+      'MAY',
+      'JUNE',
+      'JULY',
+      'AUGUST',
+      'SEPTEMBER',
+      'OCTOBER',
+      'NOVEMBER',
+      'DECEMBER'
+    ];
+    return months[month - 1];
   }
 
   @override
@@ -45,243 +62,352 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
-        body:
-            // Container used for background purposes
-            Align(
-          alignment: const AlignmentDirectional(0, 0),
-          child: Background(
-            child: SizedBox(
-              width: double.infinity,
-              height: double.infinity,
-              child:
-                  // Column containing the whole content on screen
-                  Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    // Row to place the profile picture
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Colored border around the profile picture
-                        addAnimation(
-                            widget: Container(
-                              width: 200,
-                              height: 200,
-                              decoration: BoxDecoration(
-                                gradient: appColors.gradientBackground(
-                                  stops: [0.3, 0.4, 0.9],
-                                ),
-                                shape: BoxShape.circle,
-                              ),
-                              alignment: const AlignmentDirectional(0, 0),
-                              child:
-                                  // Container with profile picture inside
-                                  Align(
-                                alignment: const AlignmentDirectional(0, 0),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4),
-                                  child: ClipOval(
-                                    child: Container(
-                                      width: 200,
-                                      height: 200,
+        body: Background(
+          child: Stack(
+            children: [
+              // --- BACKGROUND LAYER: User Info ---
+              ValueListenableBuilder<double>(
+                valueListenable: _sheetExtent,
+                builder: (context, extent, child) {
+                  // Normalize extent progress (0.0 collapsed, 1.0 expanded)
+                  final progress = ((extent - _minExtent) / (_maxExtent - _minExtent)).clamp(0.0, 1.0);
+
+                  return Opacity(
+                    opacity: 1.0 - (progress * 0.8), // Fades to 20% opacity
+                    child: Transform.translate(
+                      offset: Offset(0, -progress * 100), // Moves up
+                      child: Transform.scale(
+                        scale: 1.0 - (progress * 0.2), // Shrinks to 80%
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              // Profile picture
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  addAnimation(
+                                    widget: Container(
+                                      width: 180,
+                                      height: 180,
                                       decoration: BoxDecoration(
-                                        color: appColors.altContBorders,
+                                        gradient: appColors.gradientBackground(stops: [0.3, 0.4, 0.9]),
                                         shape: BoxShape.circle,
                                       ),
-                                      child:
-                                          // Actual profile picture
-                                          Padding(
+                                      alignment: const AlignmentDirectional(0, 0),
+                                      child: Padding(
                                         padding: const EdgeInsets.all(4),
                                         child: InkWell(
-                                          onTap: () async {
-                                            context.pushNamed('pic');
-                                          },
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(50),
+                                          onTap: () => context.pushNamed('pic'),
+                                          child: ClipOval(
                                             child: Image.network(
                                               userInfo?.profilePic ?? kDefaultProfilePictureUrl,
-                                              width: 100,
-                                              height: 100,
+                                              width: 180,
+                                              height: 180,
                                               fit: BoxFit.cover,
+                                              loadingBuilder: (context, child, loadingProgress) {
+                                                if (loadingProgress == null) return child;
+                                                return Center(
+                                                  child: CircularProgressIndicator(
+                                                    value: loadingProgress.expectedTotalBytes != null
+                                                        ? loadingProgress.cumulativeBytesLoaded /
+                                                            loadingProgress.expectedTotalBytes!
+                                                        : null,
+                                                  ),
+                                                );
+                                              },
+                                              errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                'assets/icons/default_profile_male.png',
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
+                                    withFade: false,
+                                    moveY: const MoveYConfig(begin: 100, duration: Duration(seconds: 1)),
                                   ),
-                                ),
+                                ],
                               ),
-                            ),
-                            withFade: false,
-                            moveY: const MoveYConfig(begin: 100, duration: Duration(seconds: 1))),
-                      ],
-                    ),
 
-                    // Complete user name
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                      child: Text('${userInfo?.firstName} ${userInfo?.lastName}',
-                          // "null null" if data missing
-                          textAlign: TextAlign.center,
-                          style: AppTextStyles.headlineMedium(context, color: Colors.black)),
-                    ),
-
-                    // User email address
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 16, 0),
-                      child: ShaderMask(
-                        shaderCallback: (bounds) {
-                          return appColors.gradientText().createShader(
-                                Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-                              );
-                        },
-                        child: Text(userInfo?.email ?? "user@email.com",
-                            style: AppTextStyles.labelSmall(context, color: Colors.black)),
-                      ),
-                    ),
-
-                    // Container with user statistics
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 44, 0, 0),
-                        child: Container(
-                          width: double.infinity,
-                          height: 400,
-                          decoration: BoxWithShadow(
-                            shadowOffset: const Offset(0, -10),
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(16),
-                              topRight: Radius.circular(16),
-                            ),
-                          ),
-                          child:
-                              // Column with user statistics
+                              // Name & Info Chips
                               addAnimation(
-                            widget: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Statistics section title
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 0, 0),
-                                  child: Text(
-                                    'Latest Stats',
-                                    textAlign: TextAlign.start,
-                                    style: AppTextStyles.headlineMedium(context),
-                                  ),
+                                withFade: true,
+                                moveY: const MoveYConfig(
+                                  begin: 30,
+                                  duration: Duration(milliseconds: 800),
+                                  delay: Duration(milliseconds: 200),
                                 ),
+                                widget: Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                                      child: Text(
+                                        (userInfo?.firstName != null && userInfo!.firstName.isNotEmpty)
+                                            ? '${userInfo.firstName} ${userInfo.lastName}'.toUpperCase()
+                                            : 'N/A',
+                                        textAlign: TextAlign.center,
+                                        style: AppTextStyles.headlineLarge(context, color: Colors.white).copyWith(
+                                          letterSpacing: 2,
+                                          fontWeight: FontWeight.w900,
+                                          shadows: [
+                                            Shadow(
+                                              color: Colors.black.withValues(alpha: 0.5),
+                                              offset: const Offset(2, 2),
+                                              blurRadius: 6,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    if (userInfo?.createdAt != null)
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 4),
+                                        child: Text(
+                                          'MEMBER SINCE ${_getMonthName(userInfo!.createdAt!.month)} ${userInfo.createdAt!.year}',
+                                          style: AppTextStyles.labelSmall(context,
+                                                  color: Colors.white.withValues(alpha: 0.8))
+                                              .copyWith(
+                                            letterSpacing: 1.5,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
 
-                                // Expanded container to allow inner column to scroll on its own
-                                Expanded(
-                                  child: Container(
-                                    decoration: const BoxDecoration(),
-                                    child:
-                                        // Low-level column where user statistics are shown
-                                        Padding(
-                                      padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 16),
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                    // Compactable Chips Area
+                                    Opacity(
+                                      opacity: (1.0 - progress * 2.0).clamp(0.0, 1.0),
+                                      child: Padding(
+                                        padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+                                        child: Wrap(
+                                          alignment: WrapAlignment.center,
+                                          spacing: 12,
+                                          runSpacing: 12,
                                           children: [
-                                            // Wrap to show stats cleanly
-                                            Align(
-                                              alignment: const AlignmentDirectional(0, 0),
-                                              child: Padding(
-                                                padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                                                child: Wrap(
-                                                  spacing: 16,
-                                                  runSpacing: 16,
-                                                  alignment: WrapAlignment.start,
-                                                  crossAxisAlignment: WrapCrossAlignment.start,
-                                                  direction: Axis.horizontal,
-                                                  runAlignment: WrapAlignment.start,
-                                                  verticalDirection: VerticalDirection.down,
-                                                  clipBehavior: Clip.none,
-                                                  children: [
-                                                    // Container for setpoint statistics
-                                                    StatsContainer(
-                                                      borderColor: appColors.alternateOne,
-                                                      title: 'Set point',
-                                                      iconName: 'set_point',
-                                                      text: statisticsDataDecreasing?.firstOrNull?.setPointTotalScore
-                                                          ?.toString(),
-                                                    ),
-
-                                                    // Container for jump statistics
-                                                    StatsContainer(
-                                                      borderColor: appColors.alternateTwo,
-                                                      title: 'Jump',
-                                                      iconName: 'jump',
-                                                      text: statisticsDataDecreasing?.firstOrNull?.jumpTotalScore
-                                                          ?.toString(),
-                                                    ),
-
-                                                    // Container for elbow position statistics
-                                                    StatsContainer(
-                                                      borderColor: appColors.alternateThree ?? Colors.white,
-                                                      title: 'Elbow position',
-                                                      iconName: 'elbow_position',
-                                                      text: statisticsDataDecreasing
-                                                          ?.firstOrNull?.elbowPositionTotalScore
-                                                          ?.toString(),
-                                                    ),
-
-                                                    // Container for feet direction statistics
-                                                    StatsContainer(
-                                                      borderColor: appColors.retroOne,
-                                                      title: 'Feet direction',
-                                                      iconName: 'feet_direction',
-                                                      text: statisticsDataDecreasing
-                                                          ?.firstOrNull?.feetDirectionTotalScore
-                                                          ?.toString(),
-                                                    ),
-
-                                                    // Container for shot path statistics
-                                                    StatsContainer(
-                                                      borderColor: appColors.retroTwo,
-                                                      title: 'Shot path',
-                                                      iconName: 'shot_path',
-                                                      text: statisticsDataDecreasing?.firstOrNull?.shotPathTotalScore
-                                                          ?.toString(),
-                                                    ),
-
-                                                    // Container for follow through statistics
-                                                    StatsContainer(
-                                                      borderColor: appColors.retroThree ?? Colors.red,
-                                                      title: 'Follow through',
-                                                      iconName: 'follow_through',
-                                                      text: statisticsDataDecreasing
-                                                          ?.firstOrNull?.followThroughTotalScore
-                                                          ?.toString(),
-                                                    ),
-                                                  ],
-                                                ),
+                                            _buildInfoChip(
+                                              context,
+                                              icon: Icons.email_rounded,
+                                              text: userInfo?.email ?? "N/A",
+                                              borderColor: appColors.alternateOne,
+                                            ),
+                                            _buildInfoChip(
+                                              context,
+                                              icon: Icons.front_hand_rounded,
+                                              text: userInfo?.shootingHand != null && userInfo!.shootingHand!.isNotEmpty
+                                                  ? '${userInfo.shootingHand} hand'
+                                                  : 'Hand: N/A',
+                                              borderColor: appColors.primaryTwo,
+                                            ),
+                                            InkWell(
+                                              onTap: () => context.pushNamed('user'),
+                                              child: _buildInfoChip(
+                                                context,
+                                                icon: Icons.edit_note_rounded,
+                                                text: 'Edit',
+                                                borderColor: appColors.retroThree ?? Colors.red,
+                                                isAction: true,
                                               ),
                                             ),
                                           ],
                                         ),
                                       ),
                                     ),
-                                  ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                            withFade: false,
-                            moveY: const MoveYConfig(begin: 100, duration: Duration(seconds: 1)),
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
-                  ],
+                  );
+                },
+              ),
+
+              // --- FOREGROUND LAYER: Draggable Stats Panel ---
+              NotificationListener<DraggableScrollableNotification>(
+                onNotification: (notification) {
+                  _sheetExtent.value = notification.extent;
+                  return true;
+                },
+                child: DraggableScrollableSheet(
+                  initialChildSize: _minExtent,
+                  minChildSize: _minExtent,
+                  maxChildSize: _maxExtent,
+                  snap: true,
+                  builder: (context, scrollController) {
+                    return Container(
+                      decoration: BoxWithShadow(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            AppThemeManager.secondaryBackground,
+                            AppThemeManager.primaryBackground.withValues(alpha: 0.9),
+                          ],
+                        ),
+                        shadowOffset: const Offset(0, -10),
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(32),
+                          topRight: Radius.circular(32),
+                        ),
+                      ),
+                      child: Stack(
+                        children: [
+                          // Handle
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 12),
+                              child: Container(
+                                width: 40,
+                                height: 4,
+                                decoration: BoxDecoration(
+                                  color: appColors.alternateTwo.withValues(alpha: 0.3),
+                                  borderRadius: BorderRadius.circular(2),
+                                ),
+                              ),
+                            ),
+                          ),
+
+                          // Content
+                          Padding(
+                            padding: const EdgeInsets.only(top: 24),
+                            child: ListView(
+                              controller: scrollController,
+                              padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
+                              children: [
+                                Text(
+                                  'Latest Stats',
+                                  style: AppTextStyles.headlineMedium(context, color: AppThemeManager.primaryText),
+                                ),
+                                const SizedBox(height: 16),
+                                Wrap(
+                                  spacing: 16,
+                                  runSpacing: 16,
+                                  alignment: WrapAlignment.center,
+                                  children: [
+                                    StatsContainer(
+                                      borderColor: appColors.alternateOne,
+                                      title: 'Set point',
+                                      iconName: 'set_point',
+                                      text: statisticsDataDecreasing?.firstOrNull?.setPointTotalScore?.toString(),
+                                    ),
+                                    StatsContainer(
+                                      borderColor: appColors.alternateTwo,
+                                      title: 'Jump',
+                                      iconName: 'jump',
+                                      text: statisticsDataDecreasing?.firstOrNull?.jumpTotalScore?.toString(),
+                                    ),
+                                    StatsContainer(
+                                      borderColor: appColors.alternateThree ?? Colors.white,
+                                      title: 'Elbow position',
+                                      iconName: 'elbow_position',
+                                      text: statisticsDataDecreasing?.firstOrNull?.elbowPositionTotalScore?.toString(),
+                                    ),
+                                    StatsContainer(
+                                      borderColor: appColors.retroOne,
+                                      title: 'Feet direction',
+                                      iconName: 'feet_direction',
+                                      text: statisticsDataDecreasing?.firstOrNull?.feetDirectionTotalScore?.toString(),
+                                    ),
+                                    StatsContainer(
+                                      borderColor: appColors.retroTwo,
+                                      title: 'Shot path',
+                                      iconName: 'shot_path',
+                                      text: statisticsDataDecreasing?.firstOrNull?.shotPathTotalScore?.toString(),
+                                    ),
+                                    StatsContainer(
+                                      borderColor: appColors.retroThree ?? Colors.red,
+                                      title: 'Follow through',
+                                      iconName: 'follow_through',
+                                      text: statisticsDataDecreasing?.firstOrNull?.followThroughTotalScore?.toString(),
+                                    ),
+                                  ],
+                                ),
+
+                                // Extra space at bottom
+                                const SizedBox(height: 100),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ),
-            ),
+
+              // --- FLOATING EDIT BUTTON ---
+              ValueListenableBuilder<double>(
+                valueListenable: _sheetExtent,
+                builder: (context, extent, child) {
+                  final progress = ((extent - _minExtent) / (_maxExtent - _minExtent)).clamp(0.0, 1.0);
+                  return Positioned(
+                    right: 20,
+                    top: MediaQuery.of(context).padding.top + 20,
+                    child: Opacity(
+                      opacity: progress,
+                      child: IgnorePointer(
+                        ignoring: progress < 0.5,
+                        child: FloatingActionButton.small(
+                          heroTag: null, // Disables Hero to prevent duplicate tag errors during transitions
+                          backgroundColor: appColors.retroThree ?? Colors.red,
+                          onPressed: () => context.pushNamed('user'),
+                          child: const Icon(Icons.edit_note_rounded, color: Colors.white),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildInfoChip(
+    BuildContext context, {
+    required IconData icon,
+    required String text,
+    required Color borderColor,
+    bool isAction = false,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: AppThemeManager.secondaryBackground.withValues(alpha: 0.9),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: borderColor, width: 2),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 18, color: borderColor),
+          const SizedBox(width: 8),
+          Text(
+            text,
+            style: AppTextStyles.bodyMedium(
+              context,
+              color: AppThemeManager.primaryText,
+            ),
+          ),
+          if (isAction) ...[
+            const SizedBox(width: 4),
+            Icon(Icons.chevron_right_rounded, size: 16, color: borderColor),
+          ],
+        ],
       ),
     );
   }

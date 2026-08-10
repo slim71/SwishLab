@@ -387,53 +387,63 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                       setState(() {});
 
                       if (validationStruct?.isAllValid ?? false) {
-                        // Update the user's info in the DB
-                        updatedRow = await ref.read(updateUserProvider).execute(
-                          userId: userId!,
-                          data: {
-                            'first_name': firstNameFieldTextController.text,
-                            'last_name': lastNameFieldTextController.text,
-                            'email': emailFieldTextController.text,
-                            'shooting_hand': shootingHandDropDownValue,
-                          },
-                        );
+                        try {
+                          // Update the user's info in the DB
+                          updatedRow = await ref.read(updateUserProvider).execute(
+                            userId: userId!,
+                            data: {
+                              'first_name': firstNameFieldTextController.text,
+                              'last_name': lastNameFieldTextController.text,
+                              'email': emailFieldTextController.text,
+                              'shooting_hand': shootingHandDropDownValue,
+                            },
+                          );
 
-                        // Update the related app state
-                        ref.read(appStateProvider.notifier).setUserData(
-                              appState.userData!.copyWith(
-                                firstName: updatedRow.firstName,
-                                lastName: updatedRow.lastName,
-                                eMail: updatedRow.email,
-                                shootingHand: updatedRow.shootingHand,
-                              ),
-                            );
-
-                        // Refresh appUserProvider
-                        ref.invalidate(appUserProvider);
-
-                        setState(() {});
-
-                        // Show success
-                        if (!context.mounted) return;
-                        await showDialog<void>(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: const Text('Success'),
-                              content: Text('New data has been set successfully',
-                                  style: AppTextStyles.bodyLarge(context, color: Colors.black)),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(alertDialogContext),
-                                  child: const Text('Ok'),
+                          // Update the related app state
+                          ref.read(appStateProvider.notifier).setUserData(
+                                appState.userData!.copyWith(
+                                  firstName: updatedRow.firstName,
+                                  lastName: updatedRow.lastName,
+                                  eMail: updatedRow.email,
+                                  shootingHand: updatedRow.shootingHand,
                                 ),
-                              ],
-                            );
-                          },
-                        );
+                              );
 
-                        if (!context.mounted) return;
-                        Navigator.pop(context);
+                          // Refresh appUserProvider
+                          ref.invalidate(appUserProvider);
+
+                          setState(() {});
+
+                          // Show success
+                          if (!context.mounted) return;
+                          await showDialog<void>(
+                            context: context,
+                            builder: (alertDialogContext) {
+                              return AlertDialog(
+                                title: const Text('Success'),
+                                content: Text('New data has been set successfully',
+                                    style: AppTextStyles.bodyLarge(context, color: Colors.black)),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(alertDialogContext),
+                                    child: const Text('Ok'),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+
+                          if (!context.mounted) return;
+                          Navigator.pop(context);
+                        } catch (e) {
+                          if (!context.mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Failed to update. Check your internet connection.'),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
                       } else {
                         HapticFeedback.lightImpact();
 

@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -57,75 +59,54 @@ class _CreditsState extends ConsumerState<Credits> {
         ),
         body: SafeArea(
           top: true,
-          child:
-              // Container with all the Credits page content
-              Background(
+          child: Background(
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Container for a small introduction
+                // Glassmorphism Introduction
                 Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppThemeManager.secondaryBackground,
-                      borderRadius: BorderRadius.circular(25),
-                      shape: BoxShape.rectangle,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        // Small page introduction
-                        Padding(
-                          padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 16, 8),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(24),
+                    child: BackdropFilter(
+                      filter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: AppThemeManager.secondaryBackground.withValues(alpha: 0.4),
+                          borderRadius: BorderRadius.circular(24),
+                          border: Border.all(
+                            color: Colors.white.withValues(alpha: 0.2),
+                            width: 1.5,
+                          ),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20),
                           child: RichText(
                             textScaler: MediaQuery.of(context).textScaler,
                             text: CustomTextSpan(
                               context,
+                              style: AppTextStyles.bodyMedium(context, color: AppThemeManager.primaryText),
                               children: [
                                 CustomTextSpan(
                                   context,
                                   text:
-                                      'This project uses a mix of freely available icons, illustrations, and animations created by ',
+                                      'This project is built upon the incredible work of designers and developers worldwide.\n\n',
                                 ),
                                 CustomTextSpan(
                                   context,
-                                  text: 'amazing designers and developers around the world.\n\n',
+                                  text: 'Tap on any item ',
+                                  style: AppTextStyles.titleSmall(context, color: appColors.primaryTwo),
                                 ),
                                 CustomTextSpan(
                                   context,
-                                  text: 'I’ve done my best to give ',
+                                  text: 'to visit the author\'s page and show some love.',
                                 ),
-                                CustomTextSpan(
-                                  context,
-                                  text: 'proper credit',
-                                ),
-                                CustomTextSpan(
-                                  context,
-                                  text: ' to everyone whose work helped bring this project to life. You can',
-                                ),
-                                CustomTextSpan(
-                                  context,
-                                  text: ' click on any item ',
-                                ),
-                                CustomTextSpan(
-                                  context,
-                                  text: 'to visit the author\'s page.\n\n',
-                                ),
-                                CustomTextSpan(
-                                  context,
-                                  text: 'If I’ve missed anyone or got something wrong, please let me know - ',
-                                ),
-                                CustomTextSpan(
-                                  context,
-                                  text: 'any correction or contribution is always appreciated!',
-                                )
                               ],
                             ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -135,49 +116,41 @@ class _CreditsState extends ConsumerState<Credits> {
                       final List<Credit> creditsList = appState.credits;
 
                       return GridView.builder(
-                        padding: EdgeInsets.zero,
+                        padding: const EdgeInsets.all(16),
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3,
-                          crossAxisSpacing: 10,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 1,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                          childAspectRatio: 0.85,
                         ),
-                        scrollDirection: Axis.vertical,
                         itemCount: creditsList.length,
-                        itemBuilder: (context, creditsListIndex) {
-                          if (creditsListIndex >= creditsList.length) {
-                            // return an empty container or SizedBox if index is invalid
-                            return const SizedBox.shrink();
-                          }
-                          final Credit creditsItem = creditsList[creditsListIndex]; // now non-null
+                        itemBuilder: (context, index) {
+                          if (index >= creditsList.length) return const SizedBox.shrink();
+                          final creditsItem = creditsList[index];
 
-                          return Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Material(
-                              color: Colors.transparent,
-                              elevation: 10,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppThemeManager.primaryBackground,
-                                  borderRadius: BorderRadius.circular(25),
-                                  shape: BoxShape.rectangle,
-                                  border: Border.all(
-                                    color: appColors.containersBorders,
-                                  ),
+                          return Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withValues(alpha: 0.1),
+                                  blurRadius: 10,
+                                  offset: const Offset(0, 4),
                                 ),
+                              ],
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(24),
+                              child: Material(
+                                color: Colors.transparent,
                                 child: InkWell(
                                   onTap: () async {
                                     final String urlString = creditsItem.url.trim();
                                     if (urlString.isEmpty) return;
                                     final Uri url = Uri.parse(urlString);
                                     try {
-                                      // Try launching externally first
                                       final success = await launchUrl(url, mode: LaunchMode.externalApplication);
                                       if (!success) {
-                                        // Fallback to in-app if external fails
                                         await launchUrl(url, mode: LaunchMode.platformDefault);
                                       }
                                     } catch (e) {
@@ -188,36 +161,46 @@ class _CreditsState extends ConsumerState<Credits> {
                                       }
                                     }
                                   },
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      SizedBox(
-                                        width: 60,
-                                        height: 60,
-                                        child: DynamicAsset(
-                                          width: 60,
-                                          height: 60,
-                                          name: creditsItem.asset,
-                                          type: creditsItem.type,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [
+                                          AppThemeManager.secondaryBackground.withValues(alpha: 0.8),
+                                          AppThemeManager.secondaryBackground.withValues(alpha: 0.5),
+                                        ],
+                                      ),
+                                      border: Border.all(
+                                        color: appColors.containersBorders.withValues(alpha: 0.3),
+                                        width: 1,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(12),
+                                            child: DynamicAsset(
+                                              name: creditsItem.asset,
+                                              type: creditsItem.type,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                      Divider(
-                                        thickness: 1,
-                                        height: 8,
-                                        color: appColors.alternateOne,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
-                                        child: Text(
-                                          creditsItem.author,
-                                          textAlign: TextAlign.center,
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: AppTextStyles.bodySmall(context),
+                                        Container(
+                                          padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 12),
+                                          child: Text(
+                                            creditsItem.author,
+                                            textAlign: TextAlign.center,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: AppTextStyles.labelSmall(context,
+                                                color: AppThemeManager.primaryText.withValues(alpha: 0.8)),
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),

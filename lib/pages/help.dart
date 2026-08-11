@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui' as ui;
 
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
@@ -93,18 +94,51 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
               mainAxisSize: MainAxisSize.max,
               children: [
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                    child: SingleChildScrollView(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // Glass Header
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                            child: Text(
-                              'How can we help you?',
-                              style: AppTextStyles.headlineMedium(context),
+                            padding: const EdgeInsetsDirectional.fromSTEB(0, 4, 0, 16),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(24),
+                              child: BackdropFilter(
+                                filter: ui.ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: AppThemeManager.secondaryBackground.withValues(alpha: 0.4),
+                                    borderRadius: BorderRadius.circular(24),
+                                    border: Border.all(
+                                      color: Colors.white.withValues(alpha: 0.2),
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'How can we help you?',
+                                          style:
+                                              AppTextStyles.headlineMedium(context, color: AppThemeManager.primaryText),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          'Find answers to common questions or reach out to our support team.',
+                                          style: AppTextStyles.bodyMedium(context,
+                                              color: AppThemeManager.primaryText.withValues(alpha: 0.7)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
 
@@ -112,64 +146,79 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                           Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                              Expanded(
                                 child: addAnimation(
                                   widget: DarkButton(
                                     onPressed: () async {
-                                      await launchUrl(Uri(
-                                          scheme: 'mailto',
-                                          path: 'slim71sv@gmail.com',
-                                          query: {
-                                            'subject': 'SwishLab Support',
-                                            'body': 'Hi, I need help with...',
-                                          }
-                                              .entries
-                                              .map((e) =>
-                                                  '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
-                                              .join('&')));
+                                      final Uri emailUri = Uri(
+                                        scheme: 'mailto',
+                                        path: 'slim71sv@gmail.com',
+                                        query: {
+                                          'subject': 'SwishLab Support',
+                                          'body': 'Hi, I need help with...',
+                                        }
+                                            .entries
+                                            .map((e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
+                                            .join('&'),
+                                      );
+
+                                      try {
+                                        if (await canLaunchUrl(emailUri)) {
+                                          await launchUrl(emailUri);
+                                        } else {
+                                          throw 'Could not launch email app';
+                                        }
+                                      } catch (e) {
+                                        _logger.e('Error launching email: $e');
+                                        if (context.mounted) {
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            const SnackBar(
+                                              content: Text('No email app found on this device.'),
+                                              duration: Duration(seconds: 3),
+                                            ),
+                                          );
+                                        }
+                                      }
                                     },
                                     text: 'Email Us',
                                     height: 60,
-                                    icon: const Icon(Icons.email, size: 30),
+                                    borderRadius: 16,
+                                    icon: const Icon(Icons.email_rounded, size: 28),
                                   ),
-                                  move: const MoveConfig(begin: Offset(0, 110)),
+                                  move: const MoveConfig(begin: Offset(0, 30)),
                                 ),
                               ),
                               const SizedBox(width: 12),
                               Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                                  child: addAnimation(
-                                    widget: DarkButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          searchActive = !searchActive;
-                                          if (!searchActive) {
-                                            searchFieldTextController.clear();
-                                            faqSearchQuery = '';
-                                          } else {
-                                            searchFieldFocusNode?.requestFocus();
-                                          }
-                                        });
-                                      },
-                                      text: 'Search FAQs',
-                                      height: 60,
-                                      borderRadius: 12,
-                                      iconValue: searchActive,
-                                      onIcon: Icon(
-                                        Icons.search,
-                                        color: appColors.darkButtonTextColor,
-                                        size: 30,
-                                      ),
-                                      offIcon: Icon(
-                                        Icons.search_off,
-                                        color: appColors.darkButtonTextColor,
-                                        size: 30,
-                                      ),
+                                child: addAnimation(
+                                  widget: DarkButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        searchActive = !searchActive;
+                                        if (!searchActive) {
+                                          searchFieldTextController.clear();
+                                          faqSearchQuery = '';
+                                        } else {
+                                          searchFieldFocusNode?.requestFocus();
+                                        }
+                                      });
+                                    },
+                                    text: 'Search',
+                                    height: 60,
+                                    borderRadius: 16,
+                                    iconValue: searchActive,
+                                    onIcon: Icon(
+                                      Icons.search_rounded,
+                                      color: appColors.darkButtonTextColor,
+                                      size: 28,
                                     ),
-                                    move: const MoveConfig(begin: Offset(0, 110)),
+                                    offIcon: Icon(
+                                      Icons.search_off_rounded,
+                                      color: appColors.darkButtonTextColor,
+                                      size: 28,
+                                    ),
                                   ),
+                                  move: const MoveConfig(begin: Offset(0, 30)),
                                 ),
                               ),
                             ],
@@ -208,10 +257,10 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
                             ),
 
                           Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 4),
+                            padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 12),
                             child: Text(
                               'Frequently Asked Questions',
-                              style: AppTextStyles.headlineSmall(context),
+                              style: AppTextStyles.headlineSmall(context, color: AppThemeManager.primaryText),
                             ),
                           ),
 

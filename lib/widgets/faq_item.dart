@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -64,82 +65,87 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
         valueListenable: AppThemeManager.notifier,
         builder: (_, __, ___) {
           return Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
-            child: Material(
-              color: AppThemeManager.primaryBackground,
-              clipBehavior: Clip.antiAlias, // Ensures children and ripple are clipped
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-                side: BorderSide(color: appColors.containersBorders),
-              ),
-              child: InkWell(
-                onTap: () async {
-                  _controller.forward(from: 0.0);
-                  await widget.onPressed?.call();
-                },
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Title section with conditional background
-                    AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: widget.isOpen ? AppThemeManager.secondaryBackground : Colors.transparent,
-                        // Providing explicit radius to avoid clipping artifacts at the corners
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(12),
-                          topRight: Radius.circular(12),
-                        ),
-                      ),
-                      padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 12),
-                      child: Row(
+            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: BackdropFilter(
+                filter: ui.ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppThemeManager.secondaryBackground.withValues(alpha: 0.3),
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: Colors.white.withValues(alpha: 0.1),
+                      width: 1,
+                    ),
+                  ),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () async {
+                        _controller.forward(from: 0.0);
+                        await widget.onPressed?.call();
+                      },
+                      child: Column(
                         mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Item title
-                          Expanded(
-                            child: Text(
-                              widget.title,
-                              style: AppTextStyles.bodyLarge(context),
+                          // Title section
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsetsDirectional.fromSTEB(20, 16, 20, 16),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // Item title
+                                Expanded(
+                                  child: Text(
+                                    widget.title,
+                                    style: AppTextStyles.titleMedium(context, color: AppThemeManager.primaryText),
+                                  ),
+                                ),
+
+                                // Transform widget to rotate the underlying icon
+                                Transform.rotate(
+                                  angle: (widget.isOpen == true ? 180.0 : 0.0) * (math.pi / 180),
+                                  child: Icon(
+                                    Icons.keyboard_arrow_down_rounded,
+                                    color: AppThemeManager.primaryText.withValues(alpha: 0.7),
+                                    size: 28,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
 
-                          // Transform widget to rotate the underlying icon
-                          Transform.rotate(
-                            angle: (widget.isOpen == true ? 180.0 : 0.0) * (math.pi / 180),
-                            child: Icon(
-                              Icons.arrow_drop_down,
-                              color: AppThemeManager.primaryText,
-                              size: 24,
+                          // Separator line and description text, hideable
+                          if (widget.isOpen == true) ...[
+                            Divider(
+                              height: 1,
+                              thickness: 1,
+                              color: Colors.white.withValues(alpha: 0.1),
+                              indent: 20,
+                              endIndent: 20,
                             ),
-                          ),
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(20, 12, 20, 20),
+                              child: Text(
+                                widget.description,
+                                style: AppTextStyles.bodyMedium(context,
+                                    color: AppThemeManager.primaryText.withValues(alpha: 0.8)),
+                              ).animate(controller: _controller).fade(
+                                    begin: 0,
+                                    end: 1,
+                                    duration: 600.ms,
+                                    curve: Curves.easeInOut,
+                                  ),
+                            ),
+                          ],
                         ],
                       ),
                     ),
-
-                    // Separator line and description text, hideable
-                    if (widget.isOpen == true) ...[
-                      Divider(
-                        height: 1,
-                        thickness: 1,
-                        color: appColors.containersBorders,
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 16),
-                        child: Text(
-                          widget.description,
-                          style: AppTextStyles.labelMedium(context),
-                        ).animate(controller: _controller).fade(
-                              begin: 0,
-                              end: 1,
-                              duration: 600.ms,
-                              curve: Curves.easeInOut,
-                            ),
-                      ),
-                    ],
-                  ],
+                  ),
                 ),
               ),
             ),

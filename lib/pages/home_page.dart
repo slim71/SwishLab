@@ -8,6 +8,7 @@ import '../models/statistics_row.dart';
 import '../models/users_row.dart';
 import '../providers/statistics_provider.dart';
 import '../providers/users_provider.dart';
+import '../state/app_state.dart';
 import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
 import '../widgets/app_bar.dart';
@@ -30,6 +31,43 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _checkFirstSession());
+  }
+
+  void _checkFirstSession() {
+    final appState = ref.read(appStateProvider);
+    final userInfo = appState.userData;
+
+    // Only trigger if session is NOT initialized AND shooting hand is missing
+    if (!appState.sessionInitialized && (userInfo?.shootingHand?.isEmpty ?? true)) {
+      AppLogger.scope('HomePage').i('First session & missing hand detected. Showing prompt.');
+
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Info needed'),
+          content: Text(
+            'One quick step before you continue: tell us your shooting hand.',
+            style: AppTextStyles.bodyLarge(context, color: Colors.black),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                // Mark initialized so it doesn't show again
+                ref.read(appStateProvider.notifier).setSessionInitialized(true);
+                Navigator.pop(ctx);
+                context.goNamed('user');
+              },
+              child: const Text('Ok'),
+            ),
+          ],
+        ),
+      );
+    } else {
+      // If we land here and don't need the prompt, still mark as initialized
+      ref.read(appStateProvider.notifier).setSessionInitialized(true);
+    }
   }
 
   @override

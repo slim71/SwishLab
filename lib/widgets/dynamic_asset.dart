@@ -123,7 +123,7 @@ class _DynamicAssetState extends State<DynamicAsset> {
 
       case AssetType.json:
       case AssetType.animation:
-        final List<String> exts = ['json', 'lottie'];
+        final List<String> exts = ['json', 'lottie', 'dotlottie'];
         if (fileExtension != null && !exts.contains(fileExtension)) {
           exts.insert(0, fileExtension!);
         }
@@ -147,10 +147,11 @@ class _DynamicAssetState extends State<DynamicAsset> {
   void _onLoadError(String failedPath, dynamic error) {
     if (_failedPaths.contains(failedPath)) return;
 
-    if (_currentIndex < _candidates.length && _candidates[_currentIndex] == failedPath) {
-      _failedPaths.add(failedPath);
-      DynamicAsset._logger.d('Failed to load asset: $failedPath. Error: $error. Trying next candidate...');
+    _failedPaths.add(failedPath);
+    DynamicAsset._logger.w('Failed to load asset: $failedPath. Error: $error.');
 
+    if (_currentIndex < _candidates.length - 1) {
+      DynamicAsset._logger.i('Trying next candidate...');
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (mounted) {
           setState(() {
@@ -158,6 +159,8 @@ class _DynamicAssetState extends State<DynamicAsset> {
           });
         }
       });
+    } else {
+      DynamicAsset._logger.e('All candidates exhausted for "${widget.name}".');
     }
   }
 

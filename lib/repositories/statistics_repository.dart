@@ -18,7 +18,7 @@ class StatisticsRepository {
     required String userId,
     required Map<String, dynamic> analysisData,
   }) async {
-    await _client.from('Statistics').insert({
+    await _client.from('statistics').insert({
       'user_id': userId,
       'set_point_total_score': analysisData['set_point']?['scores']?['total'],
       'jump_total_score': analysisData['jump']?['scores']?['total'],
@@ -33,5 +33,9 @@ class StatisticsRepository {
       'shot_path': analysisData['shot_path'],
       'follow_through': analysisData['follow_through'],
     });
+  }
+
+  Future<void> clearStatistics(String userId) async {
+    await _client.from('statistics').delete().eq('user_id', userId);
   }
 }

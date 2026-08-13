@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import 'providers/debug_provider.dart';
 import 'providers/session.dart';
 import 'providers/supabase_provider.dart';
 import 'providers/users_provider.dart';
@@ -37,6 +38,7 @@ class _SwishLabState extends ConsumerState<SwishLab> {
   Widget build(BuildContext context) {
     final router = ref.watch(routerProvider);
     final title = ref.watch(appTitleProvider);
+    final debugState = ref.watch(debugProvider);
     ref.watch(supabaseAuthListenerProvider); // triggers creation
     ref.watch(sessionBootstrapProvider); // triggers shooting hand check
 
@@ -76,6 +78,7 @@ class _SwishLabState extends ConsumerState<SwishLab> {
       theme: buildTheme(),
       darkTheme: buildTheme(),
       themeMode: ThemeMode.system, // Auto-switch based on device
+      showPerformanceOverlay: debugState.showPerformanceOverlay,
     );
   }
 }

@@ -11,11 +11,6 @@ class NavBarScaffold extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Delay the provider update and the dialog creation until after build completion
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(navigationContextProvider.notifier).state = context;
-    });
-
     // Trigger session bootstrap: used for one-time only actions
     ref.watch(sessionBootstrapProvider);
 

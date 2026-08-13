@@ -48,7 +48,7 @@ class UsersRepository {
 
   Future<UsersRow?> updateShootingHand({
     required String userId,
-    required String shootingHand,
+    required String? shootingHand,
   }) {
     return update(
       userId: userId,

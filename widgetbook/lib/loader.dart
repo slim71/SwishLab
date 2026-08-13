@@ -279,8 +279,10 @@ Widget buildFaqItem(BuildContext context) {
 Widget buildDebugItem(BuildContext context) {
   return DebugItem(
       width: 300,
-      title: 'Sample',
-      buttonText: 'Sample',
+      title: 'Sample Utility',
+      subtitle: 'This is a subtitle for the utility',
+      icon: Icons.bug_report_rounded,
+      buttonText: 'Action',
       onPressed: () async {});
 }
 

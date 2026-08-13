@@ -4,7 +4,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../constants.dart';
 import '../functions/add_animation.dart';
 import '../providers/auth_providers.dart';
 import '../providers/users_provider.dart';
@@ -57,15 +56,6 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
     };
     passwordTextControllerValidator = (context, value) {
       if (value == null || value.isEmpty) return 'Password required';
-      if (value.length < passwordMinSize) {
-        return 'At least $passwordMinSize characters';
-      }
-      if (!RegExp(r'(?=.*[A-Za-z])').hasMatch(value)) {
-        return 'Must contain a letter';
-      }
-      if (!RegExp(r'(?=.*\d)').hasMatch(value)) {
-        return 'Must contain a number';
-      }
       return null;
     };
   }

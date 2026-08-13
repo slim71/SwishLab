@@ -15,11 +15,6 @@ class LoadingPage extends ConsumerStatefulWidget {
 
 class _LoadingPageState extends ConsumerState<LoadingPage> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -30,15 +25,11 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
         backgroundColor: AppThemeManager.secondaryBackground,
         body: SafeArea(
           top: true,
-          child:
-              // Container with the content for the loading page
-              Background(
+          child: Background(
             child: SizedBox(
               width: double.infinity,
               height: double.infinity,
-              child:
-                  // Column to place the content for the loading page
-                  Padding(
+              child: Padding(
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
@@ -53,7 +44,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                       height: 300,
                     ),
 
-                    // "Processing Video" text
+                    // "Loading" text
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
                       child: Text(
@@ -62,7 +53,7 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                       ),
                     ),
 
-                    // Text to ask the user to wait a bit
+                    // Subtext
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(32, 8, 32, 0),
                       child: Text(

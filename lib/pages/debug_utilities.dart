@@ -174,6 +174,15 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                       );
                     },
                   ),
+                  DebugItem(
+                    title: 'Theme Color Test',
+                    subtitle: 'View all theme colors & components',
+                    icon: Icons.color_lens_rounded,
+                    buttonText: 'View',
+                    onPressed: () {
+                      context.pushNamed('theme-test');
+                    },
+                  ),
                 ]),
               ),
 

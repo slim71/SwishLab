@@ -9,8 +9,10 @@ import '../logger.dart';
 import '../models/custom_enums.dart';
 import '../pages/about.dart';
 import '../pages/analysis_results.dart';
+import '../pages/appearance_settings.dart';
 import '../pages/credits.dart';
 import '../pages/debug_utilities.dart';
+import '../pages/theme_test_page.dart';
 import '../pages/error_page.dart';
 import '../pages/front_details.dart';
 import '../pages/getting_started.dart';
@@ -136,6 +138,16 @@ final routerProvider = Provider<GoRouter>((ref) {
               path: 'credits',
               name: 'credits',
               builder: (context, state) => const Credits(),
+            ),
+            GoRoute(
+              path: 'appearance',
+              name: 'appearance',
+              builder: (context, state) => const AppearanceSettings(),
+            ),
+            GoRoute(
+              path: 'theme-test',
+              name: 'theme-test',
+              builder: (context, state) => const ThemeTestPage(),
             ),
             GoRoute(
               path: '/doc/:name',

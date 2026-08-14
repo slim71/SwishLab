@@ -12,6 +12,9 @@ const pictonBlue = Color(0xFF0096FF);
 const airForceBlue = Color(0xFF41729F);
 const oxfordBlue = Color(0xFF001F4D);
 const transparentGold = Color(0x45ffc72c);
+const upbeatCrimson = Color(0xFFBA0C2F);
+const vividBlack = Color(0xFF010101);
+const transparentWhite = Color(0x45ffffff);
 
 const primaryBackgroundLight = Color(0xFFF5F3EE);
 const secondaryBackgroundLight = Color(0xFFFFFFFF);
@@ -259,7 +262,7 @@ class AppColorSet extends ThemeExtension<AppColorSet> {
 }
 
 const theBay = AppColorSet(
-    name: "theBay",
+    name: "The Bay",
     primaryOne: royalBlue,
     primaryTwo: goldenYellow,
     primaryThree: white,
@@ -289,4 +292,34 @@ const theBay = AppColorSet(
     altContBorders: pictonBlue // or airForceBlue
     );
 
-const List<AppColorSet> themeList = [theBay];
+const bullCity = AppColorSet(
+    name: "Bull City",
+    primaryOne: upbeatCrimson,
+    primaryTwo: vividBlack,
+    primaryThree: white,
+    alternateOne: vividBlack,
+    alternateTwo: upbeatCrimson,
+    alternateThree: white,
+    retroOne: white,
+    retroTwo: upbeatCrimson,
+    retroThree: vividBlack,
+    darkButtonBorders: upbeatCrimson,
+    lightButtonBorders: white,
+    transparentButtonBorders: upbeatCrimson,
+    darkButtonBackground: vividBlack,
+    lightButtonBackground: upbeatCrimson,
+    transparentButtonBackground: transparentWhite,
+    darkButtonTextColor: white,
+    lightButtonTextColor: vividBlack,
+    transparentButtonTextColor: vividBlack,
+    actionButtonBorders: upbeatCrimson,
+    textFieldBorders: upbeatCrimson,
+    dropDownBorders: upbeatCrimson,
+    labelSelectedBackground: upbeatCrimson,
+    labelSelectedBorders: vividBlack,
+    labelUnselectedBackground: vividBlack,
+    labelUnselectedBorders: upbeatCrimson,
+    containersBorders: upbeatCrimson,
+    altContBorders: vividBlack);
+
+const List<AppColorSet> themeList = [theBay, bullCity];

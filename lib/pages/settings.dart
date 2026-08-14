@@ -11,6 +11,7 @@ import '../logger.dart';
 import '../providers/debug_provider.dart';
 import '../providers/supabase_provider.dart';
 import '../providers/users_provider.dart';
+import '../router/central_routing.dart' show rootScaffoldMessengerKey;
 import '../state/app_state.dart';
 import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
@@ -60,6 +61,18 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
   int _debugTapCount = 0;
 
   late final List<_SettingsSection> _sections = [
+    _SettingsSection(
+      title: 'Preferences',
+      items: [
+        _SettingsItemData(
+          title: 'Appearance',
+          icon: Icons.palette_rounded,
+          onTap: (context) async {
+            context.pushNamed('appearance');
+          },
+        ),
+      ],
+    ),
     _SettingsSection(
       title: 'Account',
       items: [
@@ -177,7 +190,7 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
           title.toUpperCase(),
           style: AppTextStyles.labelSmall(
             context,
-            color: Colors.black.withValues(alpha: 0.5),
+            color: AppThemeManager.primaryText.withValues(alpha: 0.5),
           ).copyWith(letterSpacing: 1.2, fontWeight: FontWeight.bold),
         ),
         withFade: false,
@@ -207,301 +220,290 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
     final showDebug = debugState.isDeveloperModeEnabled;
     final visibleSections = _sections.where((s) => s.title != 'Developer' || showDebug).toList();
 
-    return Scaffold(
-      backgroundColor: AppThemeManager.primaryBackground,
-      appBar: const MyAppBar(
-        style: MyAppBarStyle.titleOnly,
-        title: 'Settings',
-      ),
-      body: Builder(
-        builder: (innerContext) {
-          return Background(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ...visibleSections.expand((section) {
-                    final sectionIndex = visibleSections.indexOf(section);
-                    // Calculate animation index based on visible sections and their items
-                    int animationIndex = 0;
-                    for (int i = 0; i < sectionIndex; i++) {
-                      animationIndex += visibleSections[i].items.length + 1; // +1 for the header
-                    }
+    return ValueListenableBuilder<int>(
+      valueListenable: AppThemeManager.notifier,
+      builder: (context, _, __) {
+        return Scaffold(
+          backgroundColor: AppThemeManager.primaryBackground,
+          appBar: const MyAppBar(
+            style: MyAppBarStyle.titleOnly,
+            title: 'Settings',
+          ),
+          body: Builder(
+            builder: (innerContext) {
+              return Background(
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ...visibleSections.expand((section) {
+                        final sectionIndex = visibleSections.indexOf(section);
+                        int animationIndex = 0;
+                        for (int i = 0; i < sectionIndex; i++) {
+                          animationIndex += visibleSections[i].items.length + 1;
+                        }
 
-                    return [
-                      _buildSectionHeader(section.title, animationIndex),
-                      ...List.generate(section.items.length, (index) {
-                        final data = section.items[index];
-                        final color = settingsItemBackgrounds[(animationIndex + index) % settingsItemBackgrounds.length];
-                        final itemAnimationIndex = animationIndex + index + 1;
+                        return [
+                          _buildSectionHeader(section.title, animationIndex),
+                          ...List.generate(section.items.length, (index) {
+                            final data = section.items[index];
+                            final color =
+                                settingsItemBackgrounds[(animationIndex + index) % settingsItemBackgrounds.length];
+                            final itemAnimationIndex = animationIndex + index + 1;
 
-                        final settingsItem = SettingsItem(
-                          title: data.title,
-                          background: color,
-                          icon: data.icon,
-                          onTap: data.onTap,
-                        );
+                            final settingsItem = SettingsItem(
+                              title: data.title,
+                              background: color,
+                              icon: data.icon,
+                              onTap: data.onTap,
+                            );
 
-                        return addAnimation(
-                          widget: SettingsRow(item: settingsItem),
-                          withFade: false,
-                          slide: SlideConfig(
-                              begin: const Offset(0, 100),
-                              delay: Duration(milliseconds: singleDelayMs * itemAnimationIndex),
-                              duration: const Duration(milliseconds: slideDurationMs)),
-                          moveY: MoveYConfig(
-                              begin: 100,
-                              delay: Duration(milliseconds: (singleDelayMs * itemAnimationIndex) + slideDurationMs),
-                              duration: const Duration(milliseconds: settleDurationMs)),
-                        );
+                            return addAnimation(
+                              widget: SettingsRow(item: settingsItem),
+                              withFade: false,
+                              slide: SlideConfig(
+                                  begin: const Offset(0, 100),
+                                  delay: Duration(milliseconds: singleDelayMs * itemAnimationIndex),
+                                  duration: const Duration(milliseconds: slideDurationMs)),
+                              moveY: MoveYConfig(
+                                  begin: 100,
+                                  delay: Duration(milliseconds: (singleDelayMs * itemAnimationIndex) + slideDurationMs),
+                                  duration: const Duration(milliseconds: settleDurationMs)),
+                            );
+                          }),
+                        ];
                       }),
-                    ];
-                  }),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
-                    child: Container(
-                      decoration: const BoxDecoration(),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            // "Follow us on" text
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 0, 8),
-                              child: addAnimation(
-                                widget: Text(
-                                  'Follow us on',
-                                  style: AppTextStyles.labelMedium(context, color: Colors.black),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+                        child: Container(
+                          decoration: const BoxDecoration(),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 0, 8),
+                                  child: addAnimation(
+                                    widget: Text(
+                                      'Follow us on',
+                                      style: AppTextStyles.labelMedium(context, color: AppThemeManager.primaryText),
+                                    ),
+                                    withFade: false,
+                                    slide: SlideConfig(
+                                        begin: const Offset(0, 100),
+                                        delay: Duration(
+                                            milliseconds: singleDelayMs * (_totalItemsCount + _sections.length)),
+                                        duration: const Duration(milliseconds: slideDurationMs)),
+                                    moveY: MoveYConfig(
+                                        begin: 100,
+                                        delay: Duration(
+                                            milliseconds: (singleDelayMs * (_totalItemsCount + _sections.length)) +
+                                                slideDurationMs),
+                                        duration: const Duration(milliseconds: settleDurationMs)),
+                                  ),
                                 ),
-                                withFade: false,
-                                slide: SlideConfig(
-                                    begin: const Offset(0, 100),
-                                    delay: Duration(milliseconds: singleDelayMs * (_totalItemsCount + _sections.length)),
-                                    duration: const Duration(milliseconds: slideDurationMs)),
-                                moveY: MoveYConfig(
-                                    begin: 100,
-                                    delay: Duration(
-                                        milliseconds:
-                                            (singleDelayMs * (_totalItemsCount + _sections.length)) + slideDurationMs),
-                                    duration: const Duration(milliseconds: settleDurationMs)),
-                              ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      addAnimation(
+                                        widget: SocialIconButton(
+                                          const FaIcon(FontAwesomeIcons.twitter),
+                                          onTap: () {
+                                            logger.d('twitterButton pressed ...');
+                                          },
+                                        ),
+                                        withFade: false,
+                                        slide: SlideConfig(
+                                            begin: const Offset(0, 100),
+                                            delay: Duration(
+                                                milliseconds:
+                                                    singleDelayMs * (_totalItemsCount + _sections.length + 1)),
+                                            duration: const Duration(milliseconds: slideDurationMs)),
+                                        moveY: MoveYConfig(
+                                            begin: 100,
+                                            delay: Duration(
+                                                milliseconds:
+                                                    (singleDelayMs * (_totalItemsCount + _sections.length + 1)) +
+                                                        slideDurationMs),
+                                            duration: const Duration(milliseconds: settleDurationMs)),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      addAnimation(
+                                        widget: SocialIconButton(
+                                          const FaIcon(FontAwesomeIcons.instagram),
+                                          onTap: () {
+                                            logger.d('instagramButton pressed ...');
+                                          },
+                                        ),
+                                        withFade: false,
+                                        slide: SlideConfig(
+                                            begin: const Offset(0, 100),
+                                            delay: Duration(
+                                                milliseconds:
+                                                    singleDelayMs * (_totalItemsCount + _sections.length + 2)),
+                                            duration: const Duration(milliseconds: slideDurationMs)),
+                                        moveY: MoveYConfig(
+                                            begin: 100,
+                                            delay: Duration(
+                                                milliseconds:
+                                                    (singleDelayMs * (_totalItemsCount + _sections.length + 2)) +
+                                                        slideDurationMs),
+                                            duration: const Duration(milliseconds: settleDurationMs)),
+                                      ),
+                                      const SizedBox(width: 8),
+                                      addAnimation(
+                                        widget: SocialIconButton(
+                                          const FaIcon(FontAwesomeIcons.facebookF),
+                                          onTap: () {
+                                            logger.d('facebookButton pressed ...');
+                                          },
+                                        ),
+                                        withFade: false,
+                                        slide: SlideConfig(
+                                            begin: const Offset(0, 100),
+                                            delay: Duration(
+                                                milliseconds:
+                                                    singleDelayMs * (_totalItemsCount + _sections.length + 3)),
+                                            duration: const Duration(milliseconds: slideDurationMs)),
+                                        moveY: MoveYConfig(
+                                            begin: 100,
+                                            delay: Duration(
+                                                milliseconds:
+                                                    (singleDelayMs * (_totalItemsCount + _sections.length + 3)) +
+                                                        slideDurationMs),
+                                            duration: const Duration(milliseconds: settleDurationMs)),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
                             ),
-
-                            // Row with socials buttons
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  // Twitter button
-                                  addAnimation(
-                                    widget: SocialIconButton(
-                                      const FaIcon(FontAwesomeIcons.twitter),
-                                      onTap: () {
-                                        logger.d('twitterButton pressed ...');
-                                      },
-                                    ),
-                                    withFade: false,
-                                    slide: SlideConfig(
-                                        begin: const Offset(0, 100),
-                                        delay: Duration(
-                                            milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 1)),
-                                        duration: const Duration(milliseconds: slideDurationMs)),
-                                    moveY: MoveYConfig(
-                                        begin: 100,
-                                        delay: Duration(
-                                            milliseconds: (singleDelayMs * (_totalItemsCount + _sections.length + 1)) +
-                                                slideDurationMs),
-                                        duration: const Duration(milliseconds: settleDurationMs)),
-                                  ),
-                                  const SizedBox(width: 8),
-
-                                  // Instagram button
-                                  addAnimation(
-                                    widget: SocialIconButton(
-                                      const FaIcon(FontAwesomeIcons.instagram),
-                                      onTap: () {
-                                        logger.d('instagramButton pressed ...');
-                                      },
-                                    ),
-                                    withFade: false,
-                                    slide: SlideConfig(
-                                        begin: const Offset(0, 100),
-                                        delay: Duration(
-                                            milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 2)),
-                                        duration: const Duration(milliseconds: slideDurationMs)),
-                                    moveY: MoveYConfig(
-                                        begin: 100,
-                                        delay: Duration(
-                                            milliseconds: (singleDelayMs * (_totalItemsCount + _sections.length + 2)) +
-                                                slideDurationMs),
-                                        duration: const Duration(milliseconds: settleDurationMs)),
-                                  ),
-                                  const SizedBox(width: 8),
-
-                                  // Facebook button
-                                  addAnimation(
-                                    widget: SocialIconButton(
-                                      const FaIcon(FontAwesomeIcons.facebookF),
-                                      onTap: () {
-                                        logger.d('facebookButton pressed ...');
-                                      },
-                                    ),
-                                    withFade: false,
-                                    slide: SlideConfig(
-                                        begin: const Offset(0, 100),
-                                        delay: Duration(
-                                            milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 3)),
-                                        duration: const Duration(milliseconds: slideDurationMs)),
-                                    moveY: MoveYConfig(
-                                        begin: 100,
-                                        delay: Duration(
-                                            milliseconds: (singleDelayMs * (_totalItemsCount + _sections.length + 3)) +
-                                                slideDurationMs),
-                                        duration: const Duration(milliseconds: settleDurationMs)),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: const BoxDecoration(),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // "App version" text
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                              child: addAnimation(
-                                widget: Text(
-                                  'App Versions',
-                                  style: AppTextStyles.titleLarge(context, color: Colors.black),
-                                ),
-                                withFade: false,
-                                slide: SlideConfig(
-                                    begin: const Offset(0, 100),
-                                    delay:
-                                        Duration(milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 4)),
-                                    duration: const Duration(milliseconds: slideDurationMs)),
-                                moveY: MoveYConfig(
-                                    begin: 100,
-                                    delay: Duration(
-                                        milliseconds:
-                                            (singleDelayMs * (_totalItemsCount + _sections.length + 4)) + slideDurationMs),
-                                    duration: const Duration(milliseconds: settleDurationMs)),
-                              ),
-                            ),
-
-                            // App version
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
-                              child: GestureDetector(
-                                behavior: HitTestBehavior.opaque,
-                                onTap: () {
-                                  if (showDebug) return;
-
-                                  setState(() {
-                                    _debugTapCount++;
-                                    final stepsLeft = 10 - _debugTapCount;
-
-                                  if (stepsLeft == 0) {
-                                    ref.read(debugProvider.notifier).setDeveloperMode(true);
-                                    _debugTapCount = 0;
-                                    HapticFeedback.mediumImpact();
-
-                                    ScaffoldMessenger.of(context).clearSnackBars();
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text('Developer mode enabled!'),
-                                        backgroundColor: Colors.green,
-                                      ),
-                                    );
-                                  } else if (stepsLeft > 0 && stepsLeft <= 3) {
-                                    ScaffoldMessenger.of(context).clearSnackBars();
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('You are now $stepsLeft steps away from being a developer.'),
-                                        duration: const Duration(seconds: 1),
-                                      ),
-                                    );
-                                  }
-                                });
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                                  child: Text(
-                                    'v0.0.1',
-                                    style: AppTextStyles.labelMedium(context, color: Colors.black),
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
+                        child: Container(
+                          width: double.infinity,
+                          decoration: const BoxDecoration(),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
+                                  child: addAnimation(
+                                    widget: Text(
+                                      'App Versions',
+                                      style: AppTextStyles.titleLarge(context, color: AppThemeManager.primaryText),
+                                    ),
+                                    withFade: false,
+                                    slide: SlideConfig(
+                                        begin: const Offset(0, 100),
+                                        delay: Duration(
+                                            milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 4)),
+                                        duration: const Duration(milliseconds: slideDurationMs)),
+                                    moveY: MoveYConfig(
+                                        begin: 100,
+                                        delay: Duration(
+                                            milliseconds: (singleDelayMs * (_totalItemsCount + _sections.length + 4)) +
+                                                slideDurationMs),
+                                        duration: const Duration(milliseconds: settleDurationMs)),
                                   ),
                                 ),
-                              ),
-                            ),
-
-                            // Logout button
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 0, 0),
-                              child: addAnimation(
-                                widget: LightButton(
-                                  onPressed: () async {
-                                    logger.w('LOGOUT triggered. Resetting all provider states...');
-
-                                    // Capture required objects BEFORE the async gap/unmount
-                                    final supabase = ref.read(supabaseProvider);
-                                    final debugNotifier = ref.read(debugProvider.notifier);
-                                    final appStateNotifier = ref.read(appStateProvider.notifier);
-                                    final container = ProviderScope.containerOf(context);
-
-                                    // 1. Sign out from Supabase
-                                    await supabase.auth.signOut();
-
-                                    // 2. Force reset states using captured notifiers
-                                    debugNotifier.reset();
-                                    appStateNotifier.reset();
-                                    container.invalidate(appUserProvider);
-
-                                    logger.i('Providers reset complete.');
-                                  },
-                                  text: 'Log Out',
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
+                                  child: GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
+                                    onTap: () {
+                                      if (showDebug) return;
+                                      setState(() {
+                                        _debugTapCount++;
+                                        final stepsLeft = 10 - _debugTapCount;
+                                        if (stepsLeft == 0) {
+                                          ref.read(debugProvider.notifier).setDeveloperMode(true);
+                                          _debugTapCount = 0;
+                                          HapticFeedback.mediumImpact();
+                                          rootScaffoldMessengerKey.currentState?.clearSnackBars();
+                                          rootScaffoldMessengerKey.currentState?.showSnackBar(
+                                            const SnackBar(
+                                                content: Text('Developer mode enabled!'),
+                                                backgroundColor: Colors.green),
+                                          );
+                                        } else if (stepsLeft > 0 && stepsLeft <= 3) {
+                                          rootScaffoldMessengerKey.currentState?.clearSnackBars();
+                                          rootScaffoldMessengerKey.currentState?.showSnackBar(
+                                            SnackBar(
+                                                content:
+                                                    Text('You are now $stepsLeft steps away from being a developer.'),
+                                                duration: const Duration(seconds: 1)),
+                                          );
+                                        }
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                                      child: Text(
+                                        'v0.0.1',
+                                        style: AppTextStyles.labelMedium(context, color: AppThemeManager.primaryText),
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                withFade: false,
-                                slide: SlideConfig(
-                                    begin: const Offset(0, 100),
-                                    delay:
-                                        Duration(milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 6)),
-                                    duration: const Duration(milliseconds: slideDurationMs)),
-                                moveY: MoveYConfig(
-                                    begin: 100,
-                                    delay: Duration(
-                                        milliseconds:
-                                            (singleDelayMs * (_totalItemsCount + _sections.length + 6)) + slideDurationMs),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 0, 0),
+                                  child: addAnimation(
+                                    widget: LightButton(
+                                      onPressed: () async {
+                                        logger.w('LOGOUT triggered. Resetting states...');
+                                        final supabase = ref.read(supabaseProvider);
+                                        final debugNotifier = ref.read(debugProvider.notifier);
+                                        final appStateNotifier = ref.read(appStateProvider.notifier);
+                                        final container = ProviderScope.containerOf(context);
+
+                                        await supabase.auth.signOut();
+                                        debugNotifier.reset();
+                                        appStateNotifier.reset();
+                                        container.invalidate(appUserProvider);
+                                        logger.i('Logout reset complete.');
+                                      },
+                                      text: 'Log Out',
+                                    ),
+                                    withFade: false,
+                                    slide: SlideConfig(
+                                        begin: const Offset(0, 100),
+                                        delay: Duration(
+                                            milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 6)),
+                                        duration: const Duration(milliseconds: slideDurationMs)),
+                                    moveY: MoveYConfig(
+                                        begin: 100,
+                                        delay: Duration(
+                                            milliseconds: (singleDelayMs * (_totalItemsCount + _sections.length + 6)) +
+                                                slideDurationMs),
                                         duration: const Duration(milliseconds: settleDurationMs)),
-                              ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          );
-        }
-      ),
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

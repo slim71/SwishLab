@@ -7,7 +7,6 @@ import 'providers/session.dart';
 import 'providers/supabase_provider.dart';
 import 'providers/users_provider.dart';
 import 'router/central_routing.dart' show routerProvider, rootScaffoldMessengerKey;
-import 'styles/colors.dart';
 import 'styles/theme_manager.dart';
 import 'styles/themes.dart';
 
@@ -23,17 +22,6 @@ class SwishLab extends ConsumerStatefulWidget {
 }
 
 class _SwishLabState extends ConsumerState<SwishLab> {
-  AppColorSet currentColors = theBay;
-  Brightness brightness = Brightness.light;
-
-  void updateTheme(AppColorSet newColors, Brightness newBrightness) {
-    setState(() {
-      currentColors = newColors;
-      brightness = newBrightness;
-      AppThemeManager.setColors(newColors);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final router = ref.watch(routerProvider);
@@ -41,6 +29,13 @@ class _SwishLabState extends ConsumerState<SwishLab> {
     final debugState = ref.watch(debugProvider);
     ref.watch(supabaseAuthListenerProvider); // triggers creation
     ref.watch(sessionBootstrapProvider); // triggers shooting hand check
+
+    // Map AppThemeManager.brightness to ThemeMode
+    final themeMode = switch (AppThemeManager.brightness) {
+      AppBrightness.system => ThemeMode.system,
+      AppBrightness.light => ThemeMode.light,
+      AppBrightness.dark => ThemeMode.dark,
+    };
 
     // Listener to add the user to the DB
     ref.listen<AsyncValue<Session?>>(
@@ -78,7 +73,7 @@ class _SwishLabState extends ConsumerState<SwishLab> {
       scaffoldMessengerKey: rootScaffoldMessengerKey,
       theme: buildTheme(),
       darkTheme: buildTheme(),
-      themeMode: ThemeMode.system, // Auto-switch based on device
+      themeMode: themeMode,
       showPerformanceOverlay: debugState.showPerformanceOverlay,
     );
   }

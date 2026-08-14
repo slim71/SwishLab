@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../logger.dart';
 import 'colors.dart';
@@ -15,24 +16,54 @@ class AppThemeManager extends ChangeNotifier {
   static AppBrightness brightness = AppBrightness.system;
   static final logger = AppLogger.scope('AppThemeManager');
 
-  // Used by Widgetbook / app root to rebuild
+  static const String _brightnessKey = 'theme_brightness';
+  static const String _colorSetKey = 'theme_color_set';
+
+  // Used by components to know when to rebuild
   static final ValueNotifier<int> notifier = ValueNotifier(0);
+
+  static Future<void> init() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Load brightness
+    final bIndex = prefs.getInt(_brightnessKey);
+    if (bIndex != null) {
+      brightness = AppBrightness.values[bIndex];
+    }
+
+    // Load color set
+    final setName = prefs.getString(_colorSetKey);
+    if (setName != null) {
+      currentColors = themeList.firstWhere((set) => set.name == setName, orElse: () => theBay);
+    }
+
+    _notify();
+  }
+
+  /// Public bridge to protected notifyListeners()
+  void triggerRefresh() {
+    notifyListeners();
+  }
 
   static void _notify() {
     notifier.value++;
+    // Notify through the singleton instance
+    instance.triggerRefresh();
   }
 
   static void setBrightness(AppBrightness newBrightness) {
-    if (brightness == newBrightness) return; // prevents useless rebuilds
-    logger.d("setting brightness to $newBrightness");
+    if (brightness == newBrightness) return;
+    logger.d("Setting brightness to $newBrightness");
     brightness = newBrightness;
+    SharedPreferences.getInstance().then((prefs) => prefs.setInt(_brightnessKey, newBrightness.index));
     _notify();
   }
 
   static void setColors(AppColorSet newColors) {
-    if (currentColors == newColors) return; // prevents useless rebuilds
-    logger.d("setting colors to $newColors");
+    if (currentColors == newColors) return;
+    logger.d("Setting colors to ${newColors.name}");
     currentColors = newColors;
+    SharedPreferences.getInstance().then((prefs) => prefs.setString(_colorSetKey, newColors.name));
     _notify();
   }
 

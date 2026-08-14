@@ -27,6 +27,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await AppLogger.init();
+  await AppThemeManager.init();
 
   // Initialize Supabase connection
   await Supabase.initialize(

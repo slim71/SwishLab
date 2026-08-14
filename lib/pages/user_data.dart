@@ -362,100 +362,100 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
                 child: DarkButton(
                   onPressed: () async {
                     validationStruct = UserInfoValidation(
-                        firstNameValid: firstNameFieldTextController.text.isNotEmpty &&
-                            isFieldValid(
-                              firstNameFieldTextController.text,
-                              r"^[A-Za-z' -]+$",
-                            ),
-                        lastNameValid: lastNameFieldTextController.text.isNotEmpty &&
-                            isFieldValid(
-                              lastNameFieldTextController.text,
-                              r"^[A-Za-z' -]+$",
-                            ),
-                        emailValid: emailFieldTextController.text.isNotEmpty &&
-                            isFieldValid(
-                              emailFieldTextController.text,
-                              r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[A-Za-z]{2,}$',
-                            ),
-                        shootingHandValid: shootingHandDropDownValue != null && shootingHandDropDownValue!.isNotEmpty,
-                      );
+                      firstNameValid: firstNameFieldTextController.text.isNotEmpty &&
+                          isFieldValid(
+                            firstNameFieldTextController.text,
+                            r"^[A-Za-z' -]+$",
+                          ),
+                      lastNameValid: lastNameFieldTextController.text.isNotEmpty &&
+                          isFieldValid(
+                            lastNameFieldTextController.text,
+                            r"^[A-Za-z' -]+$",
+                          ),
+                      emailValid: emailFieldTextController.text.isNotEmpty &&
+                          isFieldValid(
+                            emailFieldTextController.text,
+                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[A-Za-z]{2,}$',
+                          ),
+                      shootingHandValid: shootingHandDropDownValue != null && shootingHandDropDownValue!.isNotEmpty,
+                    );
 
-                      setState(() {});
+                    setState(() {});
 
-                      if (validationStruct?.isAllValid ?? false) {
-                        try {
-                          // Update the user's info in the DB
-                          updatedRow = await ref.read(updateUserProvider).execute(
-                            userId: userId!,
-                            data: {
-                              'first_name': firstNameFieldTextController.text,
-                              'last_name': lastNameFieldTextController.text,
-                              'email': emailFieldTextController.text,
-                              'shooting_hand': shootingHandDropDownValue,
-                            },
-                          );
+                    if (validationStruct?.isAllValid ?? false) {
+                      try {
+                        // Update the user's info in the DB
+                        updatedRow = await ref.read(updateUserProvider).execute(
+                          userId: userId!,
+                          data: {
+                            'first_name': firstNameFieldTextController.text,
+                            'last_name': lastNameFieldTextController.text,
+                            'email': emailFieldTextController.text,
+                            'shooting_hand': shootingHandDropDownValue,
+                          },
+                        );
 
-                          // Update the related app state
-                          ref.read(appStateProvider.notifier).setUserData(
-                                appState.userData!.copyWith(
-                                  firstName: updatedRow.firstName,
-                                  lastName: updatedRow.lastName,
-                                  eMail: updatedRow.email,
-                                  shootingHand: updatedRow.shootingHand,
+                        // Update the related app state
+                        ref.read(appStateProvider.notifier).setUserData(
+                              appState.userData!.copyWith(
+                                firstName: updatedRow.firstName,
+                                lastName: updatedRow.lastName,
+                                eMail: updatedRow.email,
+                                shootingHand: updatedRow.shootingHand,
+                              ),
+                            );
+
+                        // Refresh appUserProvider
+                        ref.invalidate(appUserProvider);
+
+                        setState(() {});
+
+                        // Show success
+                        if (!context.mounted) return;
+                        await showDialog<void>(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: const Text('Success'),
+                              content: Text('New data has been set successfully',
+                                  style: AppTextStyles.bodyLarge(context, color: Colors.black)),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(alertDialogContext),
+                                  child: const Text('Ok'),
                                 ),
-                              );
+                              ],
+                            );
+                          },
+                        );
 
-                          // Refresh appUserProvider
-                          ref.invalidate(appUserProvider);
-
-                          setState(() {});
-
-                          // Show success
-                          if (!context.mounted) return;
-                          await showDialog<void>(
-                            context: context,
-                            builder: (alertDialogContext) {
-                              return AlertDialog(
-                                title: const Text('Success'),
-                                content: Text('New data has been set successfully',
-                                    style: AppTextStyles.bodyLarge(context, color: Colors.black)),
-                                actions: [
-                                  TextButton(
-                                    onPressed: () => Navigator.pop(alertDialogContext),
-                                    child: const Text('Ok'),
-                                  ),
-                                ],
-                              );
-                            },
-                          );
-
-                          if (!context.mounted) return;
-                          Navigator.pop(context);
-                        } catch (e) {
-                          if (!context.mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Failed to update. Check your internet connection.'),
-                              backgroundColor: Colors.red,
-                            ),
-                          );
-                        }
-                      } else {
-                        HapticFeedback.lightImpact();
+                        if (!context.mounted) return;
+                        Navigator.pop(context);
+                      } catch (e) {
+                        if (!context.mounted) return;
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Failed to update. Check your internet connection.'),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
+                    } else {
+                      HapticFeedback.lightImpact();
 
                       await Future.wait(
                           _fields!.where((f) => !f.isValid()).map((f) => f.animationController.forward(from: 0)));
                     }
 
-                      setState(() {});
-                    },
-                    text: 'Save Changes',
-                  ),
+                    setState(() {});
+                  },
+                  text: 'Save Changes',
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 }

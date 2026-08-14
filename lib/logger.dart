@@ -5,7 +5,7 @@ import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 
 class AppLogger {
-  static late final Logger _baseLogger; // singleton
+  static Logger? _baseLogger; // singleton
 
   /// Must be called in main() before runApp()
   static Future<void> init() async {
@@ -25,28 +25,28 @@ class AppLogger {
     StackTrace? stackTrace,
   ) async {
     // TODO: send to Supabase or backend
-    // try {
-    //   await supabase.from('app_logs').insert({
-    //     'message': message,
-    //     'error': error?.toString(),
-    //     'stacktrace': stackTrace?.toString(),
-    //     'timestamp': DateTime.now().toIso8601String(),
-    //   });
-    // } catch (_) {}
   }
 
   /// Optional file logging
-  static Future<File> _getLogFile() async {
-    final dir = await getApplicationDocumentsDirectory();
-    return File('${dir.path}/app_logs.txt'); // Created if it doesn't exist
+  static Future<File?> _getLogFile() async {
+    try {
+      final dir = await getApplicationDocumentsDirectory();
+      return File('${dir.path}/app_logs.txt');
+    } catch (_) {
+      return null;
+    }
   }
 
   static Future<void> logToFile(String message) async {
-    final file = await _getLogFile();
-    await file.writeAsString(
-      '${DateTime.now()} : $message\n',
-      mode: FileMode.append,
-    );
+    try {
+      final file = await _getLogFile();
+      if (file != null) {
+        await file.writeAsString(
+          '${DateTime.now()} : $message\n',
+          mode: FileMode.append,
+        );
+      }
+    } catch (_) {}
   }
 
   /// Manual scope
@@ -60,7 +60,13 @@ class AppLogger {
   }
 
   /// Internal access for ScopedLogger
-  static Logger get _logger => _baseLogger;
+  static Logger get _logger {
+    _baseLogger ??= Logger(
+      level: Level.debug,
+      printer: SimplePrinter(colors: true),
+    );
+    return _baseLogger!;
+  }
 }
 
 class ScopedLogger {
@@ -105,10 +111,12 @@ class ScopedLogger {
   Future<void> _writeToFile(String message) async {
     try {
       final file = await AppLogger._getLogFile();
-      await file.writeAsString(
-        '${DateTime.now()} : $message\n',
-        mode: FileMode.append,
-      );
+      if (file != null) {
+        await file.writeAsString(
+          '${DateTime.now()} : $message\n',
+          mode: FileMode.append,
+        );
+      }
     } catch (_) {
       // silently ignore file errors
     }

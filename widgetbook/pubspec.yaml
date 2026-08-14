@@ -19,7 +19,7 @@ dependencies:
   widgetbook_annotation: ^3.9.0
 
   # text
-  font_awesome_flutter: ^10.12.0
+  font_awesome_flutter: ^11.0.0
 
   lottie: ^3.3.2
 

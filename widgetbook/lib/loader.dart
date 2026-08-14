@@ -31,6 +31,7 @@ import 'package:swish_lab/widgets/stats_container.dart';
 import 'package:swish_lab/widgets/toggle_icon.dart';
 import 'package:swish_lab/widgets/transparent_button.dart';
 import 'package:swish_lab/widgets/video_preview.dart';
+import 'package:swish_lab/pages/theme_test_page.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -291,4 +292,9 @@ Widget buildSectionDetails(BuildContext context) {
   return SectionDetails(
       sectionJson: processAnalysisResults(
           jsonDecode(kDefaultResultsJson)["analysis"])[0]);
+}
+
+@widgetbook.UseCase(name: 'Theme Color Test', type: ThemeTestPage)
+Widget buildThemeTestPage(BuildContext context) {
+  return const ThemeTestPage();
 }

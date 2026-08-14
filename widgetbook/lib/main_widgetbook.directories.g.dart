@@ -15,6 +15,20 @@ import 'package:widgetbook_ws/loader.dart' as _widgetbook_ws_loader;
 
 final directories = <_widgetbook.WidgetbookNode>[
   _widgetbook.WidgetbookFolder(
+    name: 'pages',
+    children: [
+      _widgetbook.WidgetbookComponent(
+        name: 'ThemeTestPage',
+        useCases: [
+          _widgetbook.WidgetbookUseCase(
+            name: 'Theme Color Test',
+            builder: _widgetbook_ws_loader.buildThemeTestPage,
+          ),
+        ],
+      ),
+    ],
+  ),
+  _widgetbook.WidgetbookFolder(
     name: 'widgets',
     children: [
       _widgetbook.WidgetbookComponent(

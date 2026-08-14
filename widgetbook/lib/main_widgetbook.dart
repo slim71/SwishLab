@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+import 'package:swish_lab/logger.dart';
+import 'package:swish_lab/styles/theme_manager.dart';
 import 'package:widgetbook_ws/main_widgetbook.directories.g.dart';
 import 'package:widgetbook_ws/widgetbook_theme_wrapper.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await AppLogger.init();
+  await AppThemeManager.init();
   runApp(const WidgetbookApp());
 }
 

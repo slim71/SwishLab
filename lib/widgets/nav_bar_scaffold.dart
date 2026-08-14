@@ -14,9 +14,6 @@ class NavBarScaffold extends ConsumerWidget {
     // Trigger session bootstrap: used for one-time only actions
     ref.watch(sessionBootstrapProvider);
 
-    return Scaffold(
-      bottomNavigationBar: NavBar(child: child),
-      body: child,
-    );
+    return NavBar(child: child);
   }
 }

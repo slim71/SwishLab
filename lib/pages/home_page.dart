@@ -31,48 +31,52 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _checkFirstSession());
   }
 
-  void _checkFirstSession() {
-    final appState = ref.read(appStateProvider);
-    final userInfo = appState.userData;
-
-    // Only trigger if session is NOT initialized AND shooting hand is missing
-    if (!appState.sessionInitialized && (userInfo?.shootingHand?.isEmpty ?? true)) {
-      AppLogger.scope('HomePage').i('First session & missing hand detected. Showing prompt.');
-
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Info needed'),
-          content: Text(
-            'One quick step before you continue: tell us your shooting hand.',
-            style: AppTextStyles.bodyLarge(context, color: Colors.black),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                // Mark initialized so it doesn't show again
-                ref.read(appStateProvider.notifier).setSessionInitialized(true);
-                Navigator.pop(ctx);
-                context.goNamed('user');
-              },
-              child: const Text('Ok'),
-            ),
-          ],
+  void _showShootingHandPrompt() {
+    AppLogger.scope('HomePage').i('Showing shooting hand prompt.');
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Info needed'),
+        content: Text(
+          'One quick step before you continue: tell us your shooting hand.',
+          style: AppTextStyles.bodyLarge(context, color: Colors.black),
         ),
-      );
-    } else {
-      // If we land here and don't need the prompt, still mark as initialized
-      ref.read(appStateProvider.notifier).setSessionInitialized(true);
-    }
+        actions: [
+          TextButton(
+            onPressed: () {
+              ref.read(appStateProvider.notifier).setSessionInitialized(true);
+              Navigator.pop(ctx);
+              context.goNamed('user');
+            },
+            child: const Text('Ok'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     final logger = AppLogger.forClass(this);
+
+    // Listen for user data changes to trigger the one-time prompt
+    ref.listen<AsyncValue<UsersRow?>>(appUserProvider, (previous, next) {
+      next.whenData((user) {
+        if (user == null) return;
+
+        final appState = ref.read(appStateProvider);
+        if (!appState.sessionInitialized && (user.shootingHand?.isEmpty ?? true)) {
+          _showShootingHandPrompt();
+        } else if (!appState.sessionInitialized) {
+          // If hand is there but session not marked, mark it now
+          ref.read(appStateProvider.notifier).setSessionInitialized(true);
+        }
+      });
+    });
+
     final userInfoAsync = ref.watch(appUserProvider);
     final UsersRow? userInfo = userInfoAsync.value;
     final hasShootingHand = (userInfo?.shootingHand?.isNotEmpty ?? false);

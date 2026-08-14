@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../logger.dart';
 import '../models/credit_item.dart';
 import '../models/user_row_data.dart';
 import '../providers/shared_preferences_provider.dart';
@@ -46,11 +47,14 @@ class AppState {
 // Riverpod notifier
 class AppStateNotifier extends Notifier<AppState> {
   static const String _hasOpenedBeforeKey = 'hasOpenedBefore';
+  final _logger = AppLogger.scope('AppStateNotifier');
 
   @override
   AppState build() {
     final prefs = ref.watch(sharedPreferencesProvider);
     final hasOpenedBefore = prefs.getBool(_hasOpenedBeforeKey) ?? false;
+
+    _logger.d('Building AppState. hasOpenedBefore=$hasOpenedBefore');
 
     return AppState(
       hasOpenedBefore: hasOpenedBefore,
@@ -58,6 +62,7 @@ class AppStateNotifier extends Notifier<AppState> {
   }
 
   void setHasOpenedBefore(bool value) {
+    _logger.i('Setting hasOpenedBefore to: $value');
     state = state.copyWith(hasOpenedBefore: value);
     ref.read(sharedPreferencesProvider).setBool(_hasOpenedBeforeKey, value);
   }
@@ -83,7 +88,9 @@ class AppStateNotifier extends Notifier<AppState> {
   }
 
   void reset() {
-    final hasOpenedBefore = state.hasOpenedBefore;
+    final prefs = ref.read(sharedPreferencesProvider);
+    final hasOpenedBefore = prefs.getBool(_hasOpenedBeforeKey) ?? false;
+    _logger.w('Resetting AppState. Preserving hasOpenedBefore=$hasOpenedBefore');
     state = AppState(hasOpenedBefore: hasOpenedBefore);
   }
 }

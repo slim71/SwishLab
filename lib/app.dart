@@ -6,7 +6,7 @@ import 'providers/debug_provider.dart';
 import 'providers/session.dart';
 import 'providers/supabase_provider.dart';
 import 'providers/users_provider.dart';
-import 'router/central_routing.dart' show routerProvider;
+import 'router/central_routing.dart' show routerProvider, rootScaffoldMessengerKey;
 import 'styles/colors.dart';
 import 'styles/theme_manager.dart';
 import 'styles/themes.dart';
@@ -75,6 +75,7 @@ class _SwishLabState extends ConsumerState<SwishLab> {
     return MaterialApp.router(
       title: title,
       routerConfig: router,
+      scaffoldMessengerKey: rootScaffoldMessengerKey,
       theme: buildTheme(),
       darkTheme: buildTheme(),
       themeMode: ThemeMode.system, // Auto-switch based on device

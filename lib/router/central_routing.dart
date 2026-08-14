@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -37,6 +37,7 @@ import 'app_documents.dart';
 import 'app_transitions.dart';
 
 final rootNavigatorKey = GlobalKey<NavigatorState>();
+final rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 final routingLogger = AppLogger.scope('Router');
 
 // Basically all app's navigation routes
@@ -52,33 +53,25 @@ final routerProvider = Provider<GoRouter>((ref) {
       final status = ref.read(appStatusProvider);
       final location = state.matchedLocation;
 
-      // Public routes that should always be accessible
+      // Public routes
       const publicRoutes = ['/splash', '/login', '/signup'];
-
-      if (publicRoutes.contains(location)) {
-        return null;
-      }
 
       switch (status) {
         case AppAuthStatus.loading:
-          // Stay on root loading or explicit loading page
           if (location == '/' || location == '/loading') return null;
           return '/loading';
 
         case AppAuthStatus.offline:
-          // Stay where we are on network blips, don't force logout
           return null;
 
         case AppAuthStatus.unauthenticated:
-          return location == '/splash' ? null : '/splash';
+          return publicRoutes.contains(location) ? null : '/splash';
 
         case AppAuthStatus.authenticated:
-          if (location == '/' || location == '/loading') {
+          // If the user is on a public page but is already logged in, send them home/guide
+          if (publicRoutes.contains(location) || location == '/' || location == '/loading') {
             final hasOpened = ref.read(appStateProvider).hasOpenedBefore;
-            if (!hasOpened) {
-              return '/settings/getting-started';
-            }
-            return '/home';
+            return hasOpened ? '/home' : '/settings/getting-started';
           }
           return null;
       }

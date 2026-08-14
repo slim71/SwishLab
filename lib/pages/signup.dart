@@ -324,15 +324,15 @@ class _SignupPageState extends ConsumerState<SignupPage> with TickerProviderStat
                                                 lastName: lastnameController.text,
                                               );
 
-                                              // Reset onboarding flag for the new user on this device
+                                              // Ensure onboarding shows for new users
                                               ref.read(appStateProvider.notifier).setHasOpenedBefore(false);
 
                                               // Invalidate user provider so it fetches the new row
                                               ref.invalidate(appUserProvider);
 
-                                              // Navigate
+                                              // Navigate to root to trigger correct redirect
                                               if (!context.mounted) return;
-                                              context.goNamed('success');
+                                              context.go('/');
                                             } on AuthException catch (e) {
                                               if (!context.mounted) return;
 

@@ -9,6 +9,7 @@ import '../providers/auth_providers.dart';
 import '../providers/debug_provider.dart';
 import '../providers/statistics_provider.dart';
 import '../providers/users_provider.dart';
+import '../router/central_routing.dart' show rootScaffoldMessengerKey;
 import '../state/app_state.dart';
 import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
@@ -123,6 +124,26 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                           }
                         }
                       }
+                    },
+                  ),
+                  DebugItem(
+                    title: 'Disable Developer Mode',
+                    subtitle: 'Hide this menu from settings',
+                    icon: Icons.lock_open_rounded,
+                    buttonText: 'Disable',
+                    onPressed: () {
+                      ref.read(debugProvider.notifier).setDeveloperMode(false);
+                      context.pop(); // Go back to settings immediately
+
+                      rootScaffoldMessengerKey.currentState?.clearSnackBars();
+                      rootScaffoldMessengerKey.currentState?.showSnackBar(
+                        const SnackBar(
+                          content: Text('Developer mode disabled.'),
+                          duration: Duration(seconds: 2),
+                          behavior: SnackBarBehavior.floating,
+                          margin: EdgeInsets.only(bottom: 120, left: 20, right: 20),
+                        ),
+                      );
                     },
                   ),
                 ]),
@@ -242,7 +263,7 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
   }
 
   void _showDone(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
+    rootScaffoldMessengerKey.currentState?.showSnackBar(
       SnackBar(
         content: Text(message, style: TextStyle(color: AppThemeManager.primaryText)),
         duration: const Duration(seconds: 3),

@@ -4,10 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../logger.dart';
 import '../functions/add_animation.dart';
 import '../providers/auth_providers.dart';
 import '../providers/users_provider.dart';
-import '../state/app_state.dart';
 import '../styles/styles.dart';
 import '../widgets/background.dart';
 import '../widgets/box_with_shadow.dart';
@@ -195,6 +195,10 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                                   emailAddressTextController.text,
                                                   passwordTextController.text,
                                                 );
+
+                                            AppLogger.scope('LoginPage')
+                                                .i('Login result: user=${user?.email ?? 'null'}');
+
                                             if (!context.mounted) return;
                                             if (user == null) {
                                               ScaffoldMessenger.of(context).showSnackBar(
@@ -203,9 +207,8 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                               return;
                                             }
 
-                                            ref.read(appStateProvider.notifier).setHasOpenedBefore(true);
                                             ref.invalidate(appUserProvider);
-                                            context.goNamed('home');
+                                            context.go('/');
                                           } on AuthException catch (e) {
                                             if (!context.mounted) return;
 

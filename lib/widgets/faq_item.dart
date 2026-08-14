@@ -59,8 +59,6 @@ class _FaqItemState extends State<FaqItem> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = AppThemeManager.currentColors;
-
     return ValueListenableBuilder(
         valueListenable: AppThemeManager.notifier,
         builder: (_, __, ___) {

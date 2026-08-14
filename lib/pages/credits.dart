@@ -154,11 +154,10 @@ class _CreditsState extends ConsumerState<Credits> {
                                         await launchUrl(url, mode: LaunchMode.platformDefault);
                                       }
                                     } catch (e) {
-                                      if (mounted) {
-                                        ScaffoldMessenger.of(context).showSnackBar(
-                                          SnackBar(content: Text('Error: $e')),
-                                        );
-                                      }
+                                      if (!context.mounted) return;
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(content: Text('Error: $e')),
+                                      );
                                     }
                                   },
                                   child: Container(

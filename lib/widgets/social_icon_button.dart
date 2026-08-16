@@ -7,18 +7,20 @@ class SocialIconButton extends StatelessWidget {
   final VoidCallback onTap;
 
   final double size;
-  final double iconSize;
   final double borderRadius;
   final double borderWidth;
+  final Color? borderColor;
+  final Color? backgroundColor;
 
   const SocialIconButton(
     this.icon, {
     super.key,
     required this.onTap,
     this.size = 48,
-    this.iconSize = 24,
     this.borderRadius = 12,
-    this.borderWidth = 1,
+    this.borderWidth = 1.5,
+    this.borderColor,
+    this.backgroundColor,
   });
 
   @override
@@ -26,27 +28,31 @@ class SocialIconButton extends StatelessWidget {
     return ValueListenableBuilder(
         valueListenable: AppThemeManager.notifier,
         builder: (_, __, ___) {
-          return Container(
-              color: AppThemeManager.primaryBackground,
-              child: InkWell(
-                borderRadius: BorderRadius.circular(borderRadius),
-                onTap: onTap,
-                child: Ink(
-                  width: size,
-                  height: size,
-                  decoration: BoxDecoration(
-                    color: AppThemeManager.primaryBackground,
-                    borderRadius: BorderRadius.circular(borderRadius),
-                    border: Border.all(
-                      color: AppThemeManager.secondaryBackground,
-                      width: borderWidth,
-                    ),
-                  ),
-                  child: Center(
-                    child: icon,
+          final effectiveBorderColor = borderColor ?? AppThemeManager.secondaryBackground;
+          final effectiveBackgroundColor = backgroundColor ?? AppThemeManager.secondaryBackground.withValues(alpha: 0.3);
+
+          return Material(
+            color: Colors.transparent,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(borderRadius),
+              onTap: onTap,
+              child: Ink(
+                width: size,
+                height: size,
+                decoration: BoxDecoration(
+                  color: effectiveBackgroundColor,
+                  borderRadius: BorderRadius.circular(borderRadius),
+                  border: Border.all(
+                    color: effectiveBorderColor,
+                    width: borderWidth,
                   ),
                 ),
-              ));
+                child: Center(
+                  child: icon,
+                ),
+              ),
+            ),
+          );
         });
   }
 }

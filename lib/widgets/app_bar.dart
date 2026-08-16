@@ -38,20 +38,25 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appColors = AppThemeManager.currentColors;
+    return ValueListenableBuilder<int>(
+      valueListenable: AppThemeManager.notifier,
+      builder: (context, _, __) {
+        final appColors = AppThemeManager.currentColors;
 
-    return AppBar(
-      backgroundColor: appColors.primaryOne,
-      automaticallyImplyLeading: false,
-      centerTitle: _isTitleCentered,
-      elevation: 10,
-      toolbarHeight: height,
-      title: Text(
-        title,
-        style: AppTextStyles.displaySmall(context, color: appColors.primaryTwo),
-      ),
-      leading: _buildLeading(context),
-      actions: _buildActions(context),
+        return AppBar(
+          backgroundColor: appColors.primaryOne,
+          automaticallyImplyLeading: false,
+          centerTitle: _isTitleCentered,
+          elevation: 10,
+          toolbarHeight: height,
+          title: Text(
+            title,
+            style: AppTextStyles.displaySmall(context, color: appColors.primaryTwo),
+          ),
+          leading: _buildLeading(context),
+          actions: _buildActions(context),
+        );
+      },
     );
   }
 

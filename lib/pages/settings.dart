@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,6 +20,7 @@ import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/background.dart';
+import '../widgets/box_with_shadow.dart';
 import '../widgets/light_button.dart';
 import '../widgets/settings_item.dart';
 import '../widgets/settings_row.dart';
@@ -24,7 +28,7 @@ import '../widgets/social_icon_button.dart';
 
 const slideDurationMs = 500; // [ms]
 const settleDurationMs = 250; // [ms]
-const singleDelayMs = 100; // [ms]
+const singleDelayMs = 80; // [ms]
 
 class _SettingsItemData {
   final String title;
@@ -184,14 +188,52 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
 
   Widget _buildSectionHeader(String title, int animationIndex) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(24, 24, 16, 8),
+      padding: const EdgeInsetsDirectional.fromSTEB(32, 24, 16, 8),
       child: addAnimation(
         widget: Text(
           title.toUpperCase(),
           style: AppTextStyles.labelSmall(
             context,
-            color: AppThemeManager.primaryText.withValues(alpha: 0.5),
-          ).copyWith(letterSpacing: 1.2, fontWeight: FontWeight.bold),
+            color: AppThemeManager.primaryText.withValues(alpha: 0.4),
+          ).copyWith(
+            letterSpacing: 2.0,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+        withFade: false,
+        slide: SlideConfig(
+            begin: const Offset(0, 100),
+            delay: Duration(milliseconds: singleDelayMs * animationIndex),
+            duration: const Duration(milliseconds: slideDurationMs)),
+        moveY: MoveYConfig(
+            begin: 100,
+            delay: Duration(milliseconds: (singleDelayMs * animationIndex) + slideDurationMs),
+            duration: const Duration(milliseconds: settleDurationMs)),
+      ),
+    );
+  }
+
+  Widget _buildIsland(List<Widget> children, int animationIndex) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      child: addAnimation(
+        widget: Container(
+          decoration: BoxWithShadow(
+            borderRadius: BorderRadius.circular(24),
+            // Transparent background to let the row colors be the primary feature
+            color: Colors.transparent,
+            border: Border.all(
+              color: AppThemeManager.currentColors.containersBorders.withValues(alpha: 0.15),
+              width: 1.5,
+            ),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(24),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+              child: Column(children: children),
+            ),
+          ),
         ),
         withFade: false,
         slide: SlideConfig(
@@ -229,278 +271,193 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
             style: MyAppBarStyle.titleOnly,
             title: 'Settings',
           ),
-          body: Builder(
-            builder: (innerContext) {
-              return Background(
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ...visibleSections.expand((section) {
-                        final sectionIndex = visibleSections.indexOf(section);
-                        int animationIndex = 0;
-                        for (int i = 0; i < sectionIndex; i++) {
-                          animationIndex += visibleSections[i].items.length + 1;
-                        }
+          body: Background(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ...visibleSections.expand((section) {
+                    final sectionIndex = visibleSections.indexOf(section);
+                    int animationIndex = 0;
+                    for (int i = 0; i < sectionIndex; i++) {
+                      animationIndex += visibleSections[i].items.length + 1;
+                    }
 
-                        return [
-                          _buildSectionHeader(section.title, animationIndex),
-                          ...List.generate(section.items.length, (index) {
-                            final data = section.items[index];
-                            final color =
-                                settingsItemBackgrounds[(animationIndex + index) % settingsItemBackgrounds.length];
-                            final itemAnimationIndex = animationIndex + index + 1;
+                    return [
+                      _buildSectionHeader(section.title, animationIndex),
+                      _buildIsland(
+                        List.generate(section.items.length, (index) {
+                          final data = section.items[index];
+                          // Restore the distinctive colors from the lookup table
+                          final color =
+                              settingsItemBackgrounds[(animationIndex + index) % settingsItemBackgrounds.length];
 
-                            final settingsItem = SettingsItem(
+                          return SettingsRow(
+                            item: SettingsItem(
                               title: data.title,
                               background: color,
                               icon: data.icon,
                               onTap: data.onTap,
-                            );
+                            ),
+                            showSeparator: index != section.items.length - 1,
+                          );
+                        }),
+                        animationIndex + 1,
+                      ),
+                    ];
+                  }),
 
-                            return addAnimation(
-                              widget: SettingsRow(item: settingsItem),
-                              withFade: false,
-                              slide: SlideConfig(
-                                  begin: const Offset(0, 100),
-                                  delay: Duration(milliseconds: singleDelayMs * itemAnimationIndex),
-                                  duration: const Duration(milliseconds: slideDurationMs)),
-                              moveY: MoveYConfig(
-                                  begin: 100,
-                                  delay: Duration(milliseconds: (singleDelayMs * itemAnimationIndex) + slideDurationMs),
-                                  duration: const Duration(milliseconds: settleDurationMs)),
-                            );
-                          }),
-                        ];
-                      }),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
-                        child: Container(
-                          decoration: const BoxDecoration(),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                  // Redesigned Footer Card
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 40, 16, 40),
+                    child: addAnimation(
+                      widget: Container(
+                        padding: const EdgeInsets.all(24),
+                        decoration: BoxWithShadow(
+                          borderRadius: BorderRadius.circular(24),
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              AppThemeManager.secondaryBackground,
+                              AppThemeManager.primaryBackground.withValues(alpha: 0.5),
+                            ],
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 0, 8),
-                                  child: addAnimation(
-                                    widget: Text(
-                                      'Follow us on',
-                                      style: AppTextStyles.labelMedium(context, color: AppThemeManager.primaryText),
-                                    ),
-                                    withFade: false,
-                                    slide: SlideConfig(
-                                        begin: const Offset(0, 100),
-                                        delay: Duration(
-                                            milliseconds: singleDelayMs * (_totalItemsCount + _sections.length)),
-                                        duration: const Duration(milliseconds: slideDurationMs)),
-                                    moveY: MoveYConfig(
-                                        begin: 100,
-                                        delay: Duration(
-                                            milliseconds: (singleDelayMs * (_totalItemsCount + _sections.length)) +
-                                                slideDurationMs),
-                                        duration: const Duration(milliseconds: settleDurationMs)),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                                GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                    if (showDebug) return;
+                                    setState(() {
+                                      _debugTapCount++;
+                                      final stepsLeft = 10 - _debugTapCount;
+                                      if (stepsLeft == 0) {
+                                        ref.read(debugProvider.notifier).setDeveloperMode(true);
+                                        _debugTapCount = 0;
+                                        HapticFeedback.mediumImpact();
+                                        rootScaffoldMessengerKey.currentState?.clearSnackBars();
+                                        rootScaffoldMessengerKey.currentState?.showSnackBar(
+                                          const SnackBar(
+                                              content: Text('Developer mode enabled!'), backgroundColor: Colors.green),
+                                        );
+                                      } else if (stepsLeft > 0 && stepsLeft <= 3) {
+                                        rootScaffoldMessengerKey.currentState?.clearSnackBars();
+                                        rootScaffoldMessengerKey.currentState?.showSnackBar(
+                                          SnackBar(
+                                              content:
+                                                  Text('You are now $stepsLeft steps away from being a developer.'),
+                                              duration: const Duration(seconds: 1)),
+                                        );
+                                      }
+                                    });
+                                  },
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      addAnimation(
-                                        widget: SocialIconButton(
-                                          const FaIcon(FontAwesomeIcons.twitter),
-                                          onTap: () {
-                                            logger.d('twitterButton pressed ...');
-                                          },
+                                      Text(
+                                        'SwishLab',
+                                        style: AppTextStyles.headlineSmall(context).copyWith(
+                                          fontWeight: FontWeight.w900,
+                                          letterSpacing: 1,
                                         ),
-                                        withFade: false,
-                                        slide: SlideConfig(
-                                            begin: const Offset(0, 100),
-                                            delay: Duration(
-                                                milliseconds:
-                                                    singleDelayMs * (_totalItemsCount + _sections.length + 1)),
-                                            duration: const Duration(milliseconds: slideDurationMs)),
-                                        moveY: MoveYConfig(
-                                            begin: 100,
-                                            delay: Duration(
-                                                milliseconds:
-                                                    (singleDelayMs * (_totalItemsCount + _sections.length + 1)) +
-                                                        slideDurationMs),
-                                            duration: const Duration(milliseconds: settleDurationMs)),
                                       ),
-                                      const SizedBox(width: 8),
-                                      addAnimation(
-                                        widget: SocialIconButton(
-                                          const FaIcon(FontAwesomeIcons.instagram),
-                                          onTap: () {
-                                            logger.d('instagramButton pressed ...');
-                                          },
-                                        ),
-                                        withFade: false,
-                                        slide: SlideConfig(
-                                            begin: const Offset(0, 100),
-                                            delay: Duration(
-                                                milliseconds:
-                                                    singleDelayMs * (_totalItemsCount + _sections.length + 2)),
-                                            duration: const Duration(milliseconds: slideDurationMs)),
-                                        moveY: MoveYConfig(
-                                            begin: 100,
-                                            delay: Duration(
-                                                milliseconds:
-                                                    (singleDelayMs * (_totalItemsCount + _sections.length + 2)) +
-                                                        slideDurationMs),
-                                            duration: const Duration(milliseconds: settleDurationMs)),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      addAnimation(
-                                        widget: SocialIconButton(
-                                          const FaIcon(FontAwesomeIcons.facebookF),
-                                          onTap: () {
-                                            logger.d('facebookButton pressed ...');
-                                          },
-                                        ),
-                                        withFade: false,
-                                        slide: SlideConfig(
-                                            begin: const Offset(0, 100),
-                                            delay: Duration(
-                                                milliseconds:
-                                                    singleDelayMs * (_totalItemsCount + _sections.length + 3)),
-                                            duration: const Duration(milliseconds: slideDurationMs)),
-                                        moveY: MoveYConfig(
-                                            begin: 100,
-                                            delay: Duration(
-                                                milliseconds:
-                                                    (singleDelayMs * (_totalItemsCount + _sections.length + 3)) +
-                                                        slideDurationMs),
-                                            duration: const Duration(milliseconds: settleDurationMs)),
+                                      Text(
+                                        'Version 0.0.1',
+                                        style: AppTextStyles.labelSmall(context,
+                                            color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
-                        child: Container(
-                          width: double.infinity,
-                          decoration: const BoxDecoration(),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
-                                  child: addAnimation(
-                                    widget: Text(
-                                      'App Versions',
-                                      style: AppTextStyles.titleLarge(context, color: AppThemeManager.primaryText),
-                                    ),
-                                    withFade: false,
-                                    slide: SlideConfig(
-                                        begin: const Offset(0, 100),
-                                        delay: Duration(
-                                            milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 4)),
-                                        duration: const Duration(milliseconds: slideDurationMs)),
-                                    moveY: MoveYConfig(
-                                        begin: 100,
-                                        delay: Duration(
-                                            milliseconds: (singleDelayMs * (_totalItemsCount + _sections.length + 4)) +
-                                                slideDurationMs),
-                                        duration: const Duration(milliseconds: settleDurationMs)),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
-                                  child: GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {
-                                      if (showDebug) return;
-                                      setState(() {
-                                        _debugTapCount++;
-                                        final stepsLeft = 10 - _debugTapCount;
-                                        if (stepsLeft == 0) {
-                                          ref.read(debugProvider.notifier).setDeveloperMode(true);
-                                          _debugTapCount = 0;
-                                          HapticFeedback.mediumImpact();
-                                          rootScaffoldMessengerKey.currentState?.clearSnackBars();
-                                          rootScaffoldMessengerKey.currentState?.showSnackBar(
-                                            const SnackBar(
-                                                content: Text('Developer mode enabled!'),
-                                                backgroundColor: Colors.green),
-                                          );
-                                        } else if (stepsLeft > 0 && stepsLeft <= 3) {
-                                          rootScaffoldMessengerKey.currentState?.clearSnackBars();
-                                          rootScaffoldMessengerKey.currentState?.showSnackBar(
-                                            SnackBar(
-                                                content:
-                                                    Text('You are now $stepsLeft steps away from being a developer.'),
-                                                duration: const Duration(seconds: 1)),
-                                          );
-                                        }
-                                      });
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                                      child: Text(
-                                        'v0.0.1',
-                                        style: AppTextStyles.labelMedium(context, color: AppThemeManager.primaryText),
+                                Row(
+                                  children: [
+                                    SocialIconButton(
+                                      const FaIcon(
+                                        FontAwesomeIcons.twitter,
+                                        size: 18,
+                                        color: Color(0xFF1DA1F2),
                                       ),
+                                      borderColor: const Color(0xFF1DA1F2).withValues(alpha: 0.3),
+                                      backgroundColor: const Color(0xFF1DA1F2).withValues(alpha: 0.1),
+                                      onTap: () => logger.d('twitter'),
                                     ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(16, 16, 0, 0),
-                                  child: addAnimation(
-                                    widget: LightButton(
-                                      onPressed: () async {
-                                        logger.w('LOGOUT triggered. Resetting states...');
-                                        final supabase = ref.read(supabaseProvider);
-                                        final debugNotifier = ref.read(debugProvider.notifier);
-                                        final appStateNotifier = ref.read(appStateProvider.notifier);
-                                        final container = ProviderScope.containerOf(context);
-
-                                        await supabase.auth.signOut();
-                                        debugNotifier.reset();
-                                        appStateNotifier.reset();
-                                        container.invalidate(appUserProvider);
-                                        logger.i('Logout reset complete.');
-                                      },
-                                      text: 'Log Out',
+                                    const SizedBox(width: 8),
+                                    SocialIconButton(
+                                      const FaIcon(
+                                        FontAwesomeIcons.instagram,
+                                        size: 18,
+                                        color: Color(0xFFE1306C),
+                                      ),
+                                      borderColor: const Color(0xFFE1306C).withValues(alpha: 0.3),
+                                      backgroundColor: const Color(0xFFE1306C).withValues(alpha: 0.1),
+                                      onTap: () => logger.d('instagram'),
                                     ),
-                                    withFade: false,
-                                    slide: SlideConfig(
-                                        begin: const Offset(0, 100),
-                                        delay: Duration(
-                                            milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 6)),
-                                        duration: const Duration(milliseconds: slideDurationMs)),
-                                    moveY: MoveYConfig(
-                                        begin: 100,
-                                        delay: Duration(
-                                            milliseconds: (singleDelayMs * (_totalItemsCount + _sections.length + 6)) +
-                                                slideDurationMs),
-                                        duration: const Duration(milliseconds: settleDurationMs)),
-                                  ),
+                                    const SizedBox(width: 8),
+                                    SocialIconButton(
+                                      const FaIcon(
+                                        FontAwesomeIcons.facebookF,
+                                        size: 18,
+                                        color: Color(0xFF1877F2),
+                                      ),
+                                      borderColor: const Color(0xFF1877F2).withValues(alpha: 0.3),
+                                      backgroundColor: const Color(0xFF1877F2).withValues(alpha: 0.1),
+                                      onTap: () => logger.d('facebook'),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ),
+                            const Divider(height: 32),
+                            Text(
+                              'Made with ❤️ for the game',
+                              style: AppTextStyles.labelMedium(context,
+                                  color: AppThemeManager.primaryText.withValues(alpha: 0.3)),
+                            ),
+                            const SizedBox(height: 20),
+                            LightButton(
+                              onPressed: () async {
+                                logger.w('LOGOUT triggered. Resetting states...');
+                                final supabase = ref.read(supabaseProvider);
+                                final debugNotifier = ref.read(debugProvider.notifier);
+                                final appStateNotifier = ref.read(appStateProvider.notifier);
+                                final container = ProviderScope.containerOf(context);
+
+                                await supabase.auth.signOut();
+                                await debugNotifier.reset();
+                                appStateNotifier.reset();
+                                container.invalidate(appUserProvider);
+                                container.invalidate(debugProvider);
+                                logger.i('Logout reset complete.');
+                              },
+                              text: 'Log Out',
+                            ),
+                          ],
                         ),
                       ),
-                    ],
+                      withFade: false,
+                      slide: SlideConfig(
+                        begin: const Offset(0, 100),
+                        delay: Duration(milliseconds: singleDelayMs * (_totalItemsCount + _sections.length + 5)),
+                        duration: const Duration(milliseconds: slideDurationMs),
+                      ),
+                      moveY: MoveYConfig(
+                        begin: 100,
+                        delay: Duration(
+                            milliseconds:
+                                (singleDelayMs * (_totalItemsCount + _sections.length + 5)) + slideDurationMs),
+                        duration: const Duration(milliseconds: settleDurationMs),
+                      ),
+                    ),
                   ),
-                ),
-              );
-            },
+                ],
+              ),
+            ),
           ),
         );
       },

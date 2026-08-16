@@ -50,9 +50,9 @@ class DebugNotifier extends Notifier<DebugState> {
     ref.read(sharedPreferencesProvider).setBool(_devModeKey, enabled);
   }
 
-  void reset() {
+  Future<void> reset() async {
     _logger.w('Resetting DebugState. Clearing SharedPreferences key: $_devModeKey');
-    ref.read(sharedPreferencesProvider).setBool(_devModeKey, false);
+    await ref.read(sharedPreferencesProvider).setBool(_devModeKey, false);
     state = const DebugState(
       showPerformanceOverlay: false,
       isDeveloperModeEnabled: false,

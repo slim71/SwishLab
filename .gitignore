@@ -60,3 +60,5 @@ macos/.symlinks/
 
 # VSCode (if you ever use it)
 .vscode/
+
+.artifacts/

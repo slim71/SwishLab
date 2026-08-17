@@ -131,14 +131,32 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                       child: Image.asset(
                                         (() {
                                           final section = widget.sectionJson['section']?.toString().toLowerCase() ?? '';
-                                          if (section.contains('side')) return 'assets/images/ai_side.png';
-                                          if (section.contains('front')) return 'assets/images/ai_front.jpg';
-                                          if (section.contains('jump')) return 'assets/images/gs_4.png';
-                                          return 'assets/images/ai_general.jpg';
+                                          final fileName = section.replaceAll(' ', '_');
+
+                                          // Map of section filenames to their specific extensions based on assets/images
+                                          final Map<String, String> extensions = {
+                                            'jump': 'png',
+                                            'set_point': 'png',
+                                            'shot_path': 'png',
+                                            'elbow_position': 'png',
+                                            'feet_direction': 'jpg',
+                                            'follow_through': 'png',
+                                          };
+
+                                          final ext = extensions[fileName] ?? 'jpg';
+                                          return 'assets/images/$fileName.$ext';
                                         })(),
                                         height: 300,
                                         width: double.infinity,
                                         fit: BoxFit.cover,
+                                        errorBuilder: (context, error, stackTrace) {
+                                          return Image.asset(
+                                            'assets/images/ai_general.jpg',
+                                            height: 300,
+                                            width: double.infinity,
+                                            fit: BoxFit.cover,
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),

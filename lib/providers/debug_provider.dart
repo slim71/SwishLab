@@ -29,14 +29,12 @@ class DebugNotifier extends Notifier<DebugState> {
 
   @override
   DebugState build() {
-    final prefs = ref.watch(sharedPreferencesProvider);
-    final isDev = prefs.getBool(_devModeKey) ?? false;
+    // Session-only: do not read from SharedPreferences on build
+    _logger.d('Building DebugState. Resetting to defaults (Session-only).');
 
-    _logger.d('Building DebugState. Source: SharedPreferences, Value: $isDev');
-
-    return DebugState(
+    return const DebugState(
       showPerformanceOverlay: false,
-      isDeveloperModeEnabled: isDev,
+      isDeveloperModeEnabled: false,
     );
   }
 
@@ -45,13 +43,14 @@ class DebugNotifier extends Notifier<DebugState> {
   }
 
   void setDeveloperMode(bool enabled) {
-    _logger.i('Setting Developer Mode to: $enabled');
+    _logger.i('Setting Developer Mode to: $enabled (Session-only)');
     state = state.copyWith(isDeveloperModeEnabled: enabled);
-    ref.read(sharedPreferencesProvider).setBool(_devModeKey, enabled);
+    // Session-only: removed SharedPreferences write
   }
 
   Future<void> reset() async {
-    _logger.w('Resetting DebugState. Clearing SharedPreferences key: $_devModeKey');
+    _logger.w('Resetting DebugState.');
+    // Keep clearing pref just in case old persisted values exist
     await ref.read(sharedPreferencesProvider).setBool(_devModeKey, false);
     state = const DebugState(
       showPerformanceOverlay: false,

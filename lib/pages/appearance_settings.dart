@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../styles/colors.dart';
 import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
+import '../state/app_state.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/background.dart';
 
@@ -68,6 +69,14 @@ class _AppearanceSettingsState extends ConsumerState<AppearanceSettings> {
                   const SizedBox(height: 24),
                   _buildSectionHeader('Color Set'),
                   ...themeList.map((set) => _buildColorSetItem(set, currentColors)),
+                  const SizedBox(height: 24),
+                  _buildSectionHeader('Analysis Display'),
+                  _buildAnalysisToggle(
+                    'Show Performance Profile',
+                    'Display the radar chart in analysis results',
+                    ref.watch(appStateProvider).showRadarChart == true,
+                    (val) => ref.read(appStateProvider.notifier).setShowRadarChart(val),
+                  ),
                   const SizedBox(height: 44),
                 ],
               ),
@@ -75,6 +84,28 @@ class _AppearanceSettingsState extends ConsumerState<AppearanceSettings> {
           ),
         );
       },
+    );
+  }
+
+  Widget _buildAnalysisToggle(String title, String subtitle, bool value, ValueChanged<bool> onChanged) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppThemeManager.primaryText.withValues(alpha: 0.03),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: AppThemeManager.primaryText.withValues(alpha: 0.05)),
+        ),
+        child: SwitchListTile.adaptive(
+          title: Text(title, style: AppTextStyles.titleMedium(context)),
+          subtitle: Text(subtitle, style: AppTextStyles.bodySmall(context, color: AppThemeManager.secondaryText)),
+          value: value,
+          onChanged: onChanged,
+          activeTrackColor: AppThemeManager.currentColors.primaryOne,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        ),
+      ),
     );
   }
 

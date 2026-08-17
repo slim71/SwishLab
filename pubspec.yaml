@@ -44,6 +44,9 @@ dependencies:
   url_launcher: ^6.1.7
   http: ^1.6.0
 
+  # Data Visualization
+  fl_chart: ^0.70.0
+
   # Others
   logger: ^2.0.2
 

@@ -6,14 +6,13 @@ import '../models/user_row_data.dart';
 import '../providers/shared_preferences_provider.dart';
 
 class AppState {
-  // Riverpod requires immutable states
-  final bool hasOpenedBefore; //  Whether this is the first time the user opens up the app or not
-  final bool userDataFetched; //  Whether the user data has been fetched or not
+  final bool hasOpenedBefore;
+  final bool userDataFetched;
   final UserRowData? userData;
   final List<Credit> credits;
-  final List<Map<String, dynamic>>?
-      loadedFaqs; // Container to store FAQs loaded either from remote or from the default constant
-  final bool sessionInitialized; // Flag to track whether the home page has been already shown or not before
+  final List<Map<String, dynamic>>? loadedFaqs;
+  final bool sessionInitialized;
+  final bool showRadarChart;
 
   const AppState({
     this.hasOpenedBefore = false,
@@ -22,9 +21,9 @@ class AppState {
     this.credits = const [],
     this.loadedFaqs,
     this.sessionInitialized = false,
+    this.showRadarChart = true,
   });
 
-  // Helper function to avoid having to rebuild all fields manually every time
   AppState copyWith({
     bool? hasOpenedBefore,
     bool? userDataFetched,
@@ -32,6 +31,7 @@ class AppState {
     List<Credit>? credits,
     List<Map<String, dynamic>>? loadedFaqs,
     bool? sessionInitialized,
+    bool? showRadarChart,
   }) {
     return AppState(
       hasOpenedBefore: hasOpenedBefore ?? this.hasOpenedBefore,
@@ -40,24 +40,27 @@ class AppState {
       credits: credits ?? this.credits,
       loadedFaqs: loadedFaqs ?? this.loadedFaqs,
       sessionInitialized: sessionInitialized ?? this.sessionInitialized,
+      showRadarChart: showRadarChart ?? this.showRadarChart,
     );
   }
 }
 
-// Riverpod notifier
 class AppStateNotifier extends Notifier<AppState> {
   static const String _hasOpenedBeforeKey = 'hasOpenedBefore';
+  static const String _showRadarChartKey = 'showRadarChart';
   final _logger = AppLogger.scope('AppStateNotifier');
 
   @override
   AppState build() {
     final prefs = ref.watch(sharedPreferencesProvider);
     final hasOpenedBefore = prefs.getBool(_hasOpenedBeforeKey) ?? false;
+    final showRadar = prefs.getBool(_showRadarChartKey) ?? true;
 
-    _logger.d('Building AppState. hasOpenedBefore=$hasOpenedBefore');
+    _logger.d('Building AppState. hasOpenedBefore=$hasOpenedBefore, showRadar=$showRadar');
 
     return AppState(
       hasOpenedBefore: hasOpenedBefore,
+      showRadarChart: showRadar,
     );
   }
 
@@ -65,6 +68,12 @@ class AppStateNotifier extends Notifier<AppState> {
     _logger.i('Setting hasOpenedBefore to: $value');
     state = state.copyWith(hasOpenedBefore: value);
     ref.read(sharedPreferencesProvider).setBool(_hasOpenedBeforeKey, value);
+  }
+
+  void setShowRadarChart(bool value) {
+    _logger.i('Setting showRadarChart to: $value');
+    state = state.copyWith(showRadarChart: value);
+    ref.read(sharedPreferencesProvider).setBool(_showRadarChartKey, value);
   }
 
   void setUserDataFetched(bool value) {
@@ -91,7 +100,10 @@ class AppStateNotifier extends Notifier<AppState> {
     final prefs = ref.read(sharedPreferencesProvider);
     final hasOpenedBefore = prefs.getBool(_hasOpenedBeforeKey) ?? false;
     _logger.w('Resetting AppState. Preserving hasOpenedBefore=$hasOpenedBefore');
-    state = AppState(hasOpenedBefore: hasOpenedBefore);
+    state = AppState(
+      hasOpenedBefore: hasOpenedBefore,
+      showRadarChart: true, // Explicitly provide default on reset
+    );
   }
 }
 

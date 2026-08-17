@@ -83,11 +83,12 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
+        extendBodyBehindAppBar: true,
         appBar: const MyAppBar(
-            style: MyAppBarStyle.backButtonTitleCentered, title: 'Analysis results', backIcon: Icons.home),
-        body: SafeArea(
-          top: true,
-          child: Background(
+            style: MyAppBarStyle.backButtonTitleLeft, title: 'Analysis Results', backIcon: Icons.home),
+        body: Background(
+          child: SafeArea(
+            top: true,
             child: Padding(
               padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
               child: Column(

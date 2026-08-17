@@ -86,7 +86,9 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
 
     // Trigger prompt on initial load or state reset if needed
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (userInfo != null && !sessionInitialized && (userInfo.shootingHand == null || userInfo.shootingHand!.isEmpty)) {
+      if (userInfo != null &&
+          !sessionInitialized &&
+          (userInfo.shootingHand == null || userInfo.shootingHand!.isEmpty)) {
         _showShootingHandPrompt();
       }
     });
@@ -136,12 +138,12 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
+        extendBodyBehindAppBar: true,
         backgroundColor: AppThemeManager.primaryBackground,
         appBar: MyAppBar(
           style: MyAppBarStyle.titleWithProfileImage,
           title: 'Home',
           height: 80,
-          elevation: 0,
           onProfilePressed: () async {
             logger.d('Navigating...');
             context.goNamed('profile');
@@ -159,12 +161,16 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                       top: -100,
                       right: -100,
                       child: _buildBlurCircle(300, appColors.primaryOne.withValues(alpha: 0.06)),
-                    ).animate(onPlay: (c) => c.repeat(reverse: true)).move(duration: 10.seconds, begin: const Offset(-50, 50), end: const Offset(50, -50)),
+                    )
+                        .animate(onPlay: (c) => c.repeat(reverse: true))
+                        .move(duration: 10.seconds, begin: const Offset(-50, 50), end: const Offset(50, -50)),
                     Positioned(
                       bottom: -50,
                       left: -50,
                       child: _buildBlurCircle(250, appColors.alternateTwo.withValues(alpha: 0.04)),
-                    ).animate(onPlay: (c) => c.repeat(reverse: true)).move(duration: 8.seconds, begin: const Offset(30, -30), end: const Offset(-30, 30)),
+                    )
+                        .animate(onPlay: (c) => c.repeat(reverse: true))
+                        .move(duration: 8.seconds, begin: const Offset(30, -30), end: const Offset(-30, 30)),
                   ],
                 ),
               ),
@@ -177,121 +183,122 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // --- Glassmorphic Hero Card ---
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
-                      child: _buildGlassCard(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Welcome back,',
-                                      style: AppTextStyles.labelMedium(context,
-                                          color: AppThemeManager.primaryText.withValues(alpha: 0.6)),
-                                    ),
-                                    Text(
-                                      userInfo?.firstName ?? 'Athlete',
-                                      style: AppTextStyles.headlineMedium(context, color: AppThemeManager.primaryText)
-                                          .copyWith(fontWeight: FontWeight.w900),
-                                    ),
-                                  ],
-                                ),
-                                _buildHeroStat(
-                                  context,
-                                  label: 'Sessions',
-                                  value: checkedForms.length.toString(),
-                                  icon: Icons.analytics_outlined,
-                                ),
-                              ],
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 20),
-                              child: Divider(height: 1, thickness: 0.5, color: Colors.black12),
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                // Overall Health
-                                Expanded(
-                                  child: Row(
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(16, 20, 16, 0),
+                        child: _buildGlassCard(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      _buildShotHealthIndicator(overallAvgScore, overallColor),
-                                      const SizedBox(width: 10),
-                                      Flexible(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Overall Avg',
-                                              style: AppTextStyles.labelSmall(context,
-                                                  color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
-                                            ),
-                                            Text(
-                                              '${(overallAvgScore * 100).toInt()}%',
-                                              style: AppTextStyles.titleMedium(context, color: overallColor)
-                                                  .copyWith(fontWeight: FontWeight.w900),
-                                            ),
-                                          ],
-                                        ),
+                                      Text(
+                                        'Welcome back,',
+                                        style: AppTextStyles.labelMedium(context,
+                                            color: AppThemeManager.primaryText.withValues(alpha: 0.6)),
+                                      ),
+                                      Text(
+                                        userInfo?.firstName ?? 'Athlete',
+                                        style: AppTextStyles.headlineMedium(context, color: AppThemeManager.primaryText)
+                                            .copyWith(fontWeight: FontWeight.w900),
                                       ),
                                     ],
                                   ),
-                                ),
-                                const SizedBox(width: 8),
-                                // Last Session
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      _buildShotHealthIndicator(lastSessionScore, lastColor),
-                                      const SizedBox(width: 10),
-                                      Flexible(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Last Session',
-                                              style: AppTextStyles.labelSmall(context,
-                                                  color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
-                                            ),
-                                            Text(
-                                              '${(lastSessionScore * 100).toInt()}%',
-                                              style: AppTextStyles.titleMedium(context, color: lastColor)
-                                                  .copyWith(fontWeight: FontWeight.w900),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+                                  _buildHeroStat(
+                                    context,
+                                    label: 'Sessions',
+                                    value: checkedForms.length.toString(),
+                                    icon: Icons.analytics_outlined,
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20),
+                                child: Divider(height: 1, thickness: 0.5, color: Colors.black12),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // Overall Health
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        _buildShotHealthIndicator(overallAvgScore, overallColor),
+                                        const SizedBox(width: 10),
+                                        Flexible(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Overall Avg',
+                                                style: AppTextStyles.labelSmall(context,
+                                                    color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
+                                              ),
+                                              Text(
+                                                '${(overallAvgScore * 100).toInt()}%',
+                                                style: AppTextStyles.titleMedium(context, color: overallColor)
+                                                    .copyWith(fontWeight: FontWeight.w900),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  // Last Session
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        _buildShotHealthIndicator(lastSessionScore, lastColor),
+                                        const SizedBox(width: 10),
+                                        Flexible(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Last Session',
+                                                style: AppTextStyles.labelSmall(context,
+                                                    color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
+                                              ),
+                                              Text(
+                                                '${(lastSessionScore * 100).toInt()}%',
+                                                style: AppTextStyles.titleMedium(context, color: lastColor)
+                                                    .copyWith(fontWeight: FontWeight.w900),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                    ).animate().fade(duration: 600.ms).slideY(begin: 0.1, curve: Curves.easeOutBack),
+                      ).animate().fade(duration: 600.ms).slideY(begin: 0.1, curve: Curves.easeOutBack),
 
                       Padding(
                         padding: const EdgeInsets.fromLTRB(24, 32, 24, 16),
                         child: Text(
                           'SHOOT ANALYSIS MODES',
-                          style: AppTextStyles.labelSmall(context, color: AppThemeManager.primaryText.withValues(alpha: 0.4))
+                          style: AppTextStyles.labelSmall(context,
+                                  color: AppThemeManager.primaryText.withValues(alpha: 0.4))
                               .copyWith(letterSpacing: 2, fontWeight: FontWeight.bold),
                         ),
                       ),
 
-                      if (!hasShootingHand)
-                        _buildActionRequiredBanner(),
+                      if (!hasShootingHand) _buildActionRequiredBanner(),
 
                       _buildFeatureCard(
                         context,
                         title: 'Front View',
-                        description: 'Helps identify lateral deviations in the shot path and arm alignment ("chicken wing")',
+                        description:
+                            'Helps identify lateral deviations in the shot path and arm alignment ("chicken wing")',
                         imagePath: 'assets/images/thompson_front.jpg',
                         isLocked: !hasShootingHand,
                         onTap: () => context.pushNamed('front'),
@@ -301,7 +308,8 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                       _buildFeatureCard(
                         context,
                         title: 'Side View',
-                        description: 'Focuses on ball motion toward/away from the body - useful for refining release consistency',
+                        description:
+                            'Focuses on ball motion toward/away from the body - useful for refining release consistency',
                         imagePath: 'assets/images/curry_side.jpg',
                         isLocked: !hasShootingHand,
                         onTap: () => context.pushNamed('side'),
@@ -372,7 +380,8 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(label, style: AppTextStyles.labelSmall(context, color: AppThemeManager.primaryText.withValues(alpha: 0.4))),
+            Text(label,
+                style: AppTextStyles.labelSmall(context, color: AppThemeManager.primaryText.withValues(alpha: 0.4))),
             Text(value, style: AppTextStyles.titleLarge(context).copyWith(fontWeight: FontWeight.w900)),
           ],
         ),
@@ -442,7 +451,8 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                     const SizedBox(height: 4),
                     Text(
                       description,
-                      style: AppTextStyles.bodySmall(context, color: AppThemeManager.primaryText.withValues(alpha: 0.6)),
+                      style:
+                          AppTextStyles.bodySmall(context, color: AppThemeManager.primaryText.withValues(alpha: 0.6)),
                     ),
                   ],
                 ),

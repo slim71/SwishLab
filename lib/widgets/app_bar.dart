@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -45,18 +47,34 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       builder: (context, _, __) {
         final appColors = AppThemeManager.currentColors;
 
-        return AppBar(
-          backgroundColor: appColors.primaryOne,
-          automaticallyImplyLeading: false,
-          centerTitle: _isTitleCentered,
-          elevation: elevation,
-          toolbarHeight: height,
-          title: Text(
-            title,
-            style: AppTextStyles.displaySmall(context, color: appColors.primaryTwo),
+        return ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+            child: AppBar(
+              backgroundColor: appColors.primaryOne.withValues(alpha: 0.7),
+              automaticallyImplyLeading: false,
+              centerTitle: _isTitleCentered,
+              elevation: 0,
+              toolbarHeight: height,
+              // Subtle bottom border instead of shadow
+              shape: Border(
+                bottom: BorderSide(
+                  color: Colors.white.withValues(alpha: 0.1),
+                  width: 0.5,
+                ),
+              ),
+              title: Text(
+                title,
+                style: AppTextStyles.displaySmall(context).copyWith(
+                  color: AppThemeManager.primaryText,
+                  fontWeight: FontWeight.w900,
+                  letterSpacing: -0.5,
+                ),
+              ),
+              leading: _buildLeading(context),
+              actions: _buildActions(context),
+            ),
           ),
-          leading: _buildLeading(context),
-          actions: _buildActions(context),
         );
       },
     );
@@ -72,7 +90,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
         padding: const EdgeInsets.all(8),
         child: IconActionButton(
           Icon(backIcon ?? Icons.arrow_back_rounded),
-          iconColor: Colors.white,
+          iconColor: AppThemeManager.primaryText,
           onPressed: onBackPressed ??
               () {
                 if (GoRouter.of(context).canPop()) {

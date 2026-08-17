@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 
 import '../styles/theme_manager.dart';
@@ -18,6 +21,9 @@ class NavBar extends StatelessWidget {
   }
 
   void _onTap(BuildContext context, int index) {
+    // Add Haptic Feedback
+    HapticFeedback.lightImpact();
+
     switch (index) {
       case 0:
         context.go('/home');
@@ -62,45 +68,92 @@ class NavBarView extends StatelessWidget {
 
     return Scaffold(
       body: child,
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: appColors.primaryOne,
-        currentIndex: currentIndex,
-        onTap: onTap,
-        selectedItemColor: appColors.primaryTwo,
-        unselectedItemColor: Colors.white,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(
-              currentIndex == 0 ? Icons.home : Icons.home_outlined,
-              size: currentIndex == 0 ? 30 : 24,
+      extendBody: true, // Content flows behind the floating nav bar
+      bottomNavigationBar: SafeArea(
+        top: false,
+        child: Container(
+          margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+          height: 70,
+          decoration: BoxDecoration(
+            color: appColors.primaryOne.withValues(alpha: 0.85),
+            borderRadius: BorderRadius.circular(35),
+            border: Border.all(
+              color: Colors.white.withValues(alpha: 0.15),
+              width: 1.5,
             ),
-            label: 'Home',
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.2),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              currentIndex == 1 ? Icons.history_rounded : Icons.history,
-              size: currentIndex == 1 ? 30 : 24,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(35),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildNavItem(0, Icons.home_rounded, Icons.home_outlined, 'Home'),
+                  _buildNavItem(1, Icons.history_rounded, Icons.history_outlined, 'Activity'),
+                  _buildNavItem(2, Icons.person_rounded, Icons.person_outline_rounded, 'Profile'),
+                  _buildNavItem(3, Icons.settings_rounded, Icons.settings_outlined, 'Settings'),
+                ],
+              ),
             ),
-            label: 'PastActivity',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              currentIndex == 2 ? Icons.person : Icons.person_outline,
-              size: currentIndex == 2 ? 30 : 24,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNavItem(int index, IconData activeIcon, IconData inactiveIcon, String label) {
+    final isSelected = currentIndex == index;
+    final appColors = AppThemeManager.currentColors;
+
+    return Expanded(
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () => onTap?.call(index),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOutBack,
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: isSelected ? appColors.primaryTwo.withValues(alpha: 0.1) : Colors.transparent,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                isSelected ? activeIcon : inactiveIcon,
+                color: isSelected ? appColors.primaryTwo : Colors.white.withValues(alpha: 0.6),
+                size: isSelected ? 30 : 26,
+              ),
             ),
-            label: 'Profile',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              currentIndex == 3 ? Icons.settings : Icons.settings_outlined,
-              size: currentIndex == 3 ? 30 : 24,
-            ),
-            label: 'Settings',
-          ),
-        ],
+            if (isSelected)
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                width: 4,
+                height: 4,
+                margin: const EdgeInsets.only(top: 2),
+                decoration: BoxDecoration(
+                  color: appColors.primaryTwo,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: appColors.primaryTwo.withValues(alpha: 0.5),
+                      blurRadius: 4,
+                      spreadRadius: 1,
+                    ),
+                  ],
+                ),
+              ),
+          ],
+        ),
       ),
     );
   }

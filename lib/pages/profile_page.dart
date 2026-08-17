@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -88,43 +90,68 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   addAnimation(
-                                    widget: Container(
-                                      width: 180,
-                                      height: 180,
-                                      decoration: BoxDecoration(
-                                        gradient: appColors.gradientBackground(stops: [0.3, 0.4, 0.9]),
-                                        shape: BoxShape.circle,
-                                      ),
-                                      alignment: const AlignmentDirectional(0, 0),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4),
-                                        child: InkWell(
-                                          onTap: () => context.pushNamed('pic'),
-                                          child: ClipOval(
-                                            child: Image.network(
-                                              userInfo?.profilePic ?? kDefaultProfilePictureUrl,
-                                              width: 180,
-                                              height: 180,
-                                              fit: BoxFit.cover,
-                                              loadingBuilder: (context, child, loadingProgress) {
-                                                if (loadingProgress == null) return child;
-                                                return Center(
-                                                  child: CircularProgressIndicator(
-                                                    value: loadingProgress.expectedTotalBytes != null
-                                                        ? loadingProgress.cumulativeBytesLoaded /
-                                                            loadingProgress.expectedTotalBytes!
-                                                        : null,
-                                                  ),
-                                                );
-                                              },
-                                              errorBuilder: (context, error, stackTrace) => Image.asset(
-                                                'assets/icons/default_profile_male.png',
+                                    widget: Stack(
+                                      alignment: Alignment.bottomRight,
+                                      children: [
+                                        Container(
+                                          width: 180,
+                                          height: 180,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: appColors.primaryOne.withValues(alpha: 0.3),
+                                                blurRadius: 30,
+                                                spreadRadius: 5,
+                                              ),
+                                            ],
+                                            border: Border.all(
+                                              color: appColors.primaryOne.withValues(alpha: 0.5),
+                                              width: 4,
+                                            ),
+                                          ),
+                                          child: InkWell(
+                                            onTap: () => context.pushNamed('pic'),
+                                            borderRadius: BorderRadius.circular(100),
+                                            child: ClipOval(
+                                              child: Image.network(
+                                                userInfo?.profilePic ?? kDefaultProfilePictureUrl,
+                                                width: 180,
+                                                height: 180,
                                                 fit: BoxFit.cover,
+                                                loadingBuilder: (context, child, loadingProgress) {
+                                                  if (loadingProgress == null) return child;
+                                                  return Center(
+                                                    child: CircularProgressIndicator(
+                                                      value: loadingProgress.expectedTotalBytes != null
+                                                          ? loadingProgress.cumulativeBytesLoaded /
+                                                              loadingProgress.expectedTotalBytes!
+                                                          : null,
+                                                    ),
+                                                  );
+                                                },
+                                                errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                  'assets/icons/default_profile_male.png',
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ),
+                                        Positioned(
+                                          bottom: 10,
+                                          right: 10,
+                                          child: Container(
+                                            padding: const EdgeInsets.all(8),
+                                            decoration: BoxDecoration(
+                                              color: appColors.primaryOne,
+                                              shape: BoxShape.circle,
+                                              border: Border.all(color: Colors.white, width: 2),
+                                            ),
+                                            child: const Icon(Icons.camera_alt_rounded, color: Colors.white, size: 16),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     withFade: false,
                                     moveY: const MoveYConfig(begin: 100, duration: Duration(seconds: 1)),
@@ -265,7 +292,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                 width: 40,
                                 height: 4,
                                 decoration: BoxDecoration(
-                                  color: appColors.alternateTwo.withValues(alpha: 0.3),
+                                  color: Colors.white.withValues(alpha: 0.2),
                                   borderRadius: BorderRadius.circular(2),
                                 ),
                               ),
@@ -274,16 +301,19 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
 
                           // Content
                           Padding(
-                            padding: const EdgeInsets.only(top: 24),
+                            padding: const EdgeInsets.only(top: 32),
                             child: ListView(
                               controller: scrollController,
                               padding: const EdgeInsets.fromLTRB(24, 8, 24, 24),
                               children: [
                                 Text(
-                                  'Latest Stats',
-                                  style: AppTextStyles.headlineMedium(context, color: AppThemeManager.primaryText),
+                                  'Performance Overview',
+                                  style:
+                                      AppTextStyles.headlineSmall(context, color: AppThemeManager.primaryText).copyWith(
+                                    fontWeight: FontWeight.w900,
+                                  ),
                                 ),
-                                const SizedBox(height: 16),
+                                const SizedBox(height: 20),
                                 Wrap(
                                   spacing: 16,
                                   runSpacing: 16,
@@ -377,37 +407,43 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
     required Color borderColor,
     bool isAction = false,
   }) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      decoration: BoxDecoration(
-        color: AppThemeManager.secondaryBackground.withValues(alpha: 0.9),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: borderColor, width: 2),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(16),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.15),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.1), width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 10,
+                offset: const Offset(0, 4),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 18, color: borderColor),
-          const SizedBox(width: 8),
-          Text(
-            text,
-            style: AppTextStyles.bodyMedium(
-              context,
-              color: AppThemeManager.primaryText,
-            ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(icon, size: 20, color: borderColor),
+              const SizedBox(width: 10),
+              Text(
+                text,
+                style: AppTextStyles.bodyMedium(
+                  context,
+                  color: Colors.white,
+                ).copyWith(fontWeight: FontWeight.w600),
+              ),
+              if (isAction) ...[
+                const SizedBox(width: 4),
+                const Icon(Icons.chevron_right_rounded, size: 18, color: Colors.white70),
+              ],
+            ],
           ),
-          if (isAction) ...[
-            const SizedBox(width: 4),
-            Icon(Icons.chevron_right_rounded, size: 16, color: borderColor),
-          ],
-        ],
+        ),
       ),
     );
   }

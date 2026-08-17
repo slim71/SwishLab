@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../functions/add_animation.dart';
@@ -25,73 +27,67 @@ class StatsContainer extends StatelessWidget {
         valueListenable: AppThemeManager.notifier,
         builder: (_, __, ___) {
           return addAnimation(
-              widget: Container(
-                width: MediaQuery.sizeOf(context).width * 0.42,
-                height: 160,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      AppThemeManager.secondaryBackground,
-                      AppThemeManager.primaryBackground.withValues(alpha: 0.9),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(24),
-                  border: Border.all(color: borderColor.withValues(alpha: 0.8), width: 2),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
+              widget: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width * 0.42,
+                    height: 160,
+                    decoration: BoxDecoration(
+                      color: AppThemeManager.secondaryBackground.withValues(alpha: 0.6),
+                      borderRadius: BorderRadius.circular(24),
+                      border: Border.all(color: borderColor.withValues(alpha: 0.3), width: 1.5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.05),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Custom icon with subtle glow
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: borderColor.withValues(alpha: 0.2),
-                            blurRadius: 12,
-                            spreadRadius: 2,
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Custom icon with subtle glow
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: borderColor.withValues(alpha: 0.1),
+                            shape: BoxShape.circle,
                           ),
-                        ],
-                      ),
-                      child: DynamicIconImage(
-                        width: 48,
-                        height: 48,
-                        imageName: iconName,
-                      ),
-                    ),
+                          child: DynamicIconImage(
+                            width: 42,
+                            height: 48,
+                            imageName: iconName,
+                          ),
+                        ),
 
-                    // Some space
-                    const SizedBox(height: 12),
+                        // Some space
+                        const SizedBox(height: 12),
 
-                    // Title for the section
-                    Text(
-                      title,
-                      style: AppTextStyles.labelMedium(context, color: AppThemeManager.secondaryText).copyWith(
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.5,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
+                        // Title for the section
+                        Text(
+                          title,
+                          style: AppTextStyles.labelSmall(context, color: AppThemeManager.primaryText.withValues(alpha: 0.5)).copyWith(
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
 
-                    // Latest score
-                    Text(
-                      text ?? '0',
-                      style: AppTextStyles.headlineSmall(context, color: AppThemeManager.primaryText).copyWith(
-                        fontWeight: FontWeight.w900,
-                      ),
-                      textAlign: TextAlign.center,
+                        // Latest score
+                        Text(
+                          text ?? '0',
+                          style: AppTextStyles.titleLarge(context, color: AppThemeManager.primaryText).copyWith(
+                            fontWeight: FontWeight.w900,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
               withFade: false,

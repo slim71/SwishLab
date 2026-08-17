@@ -266,6 +266,7 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
       valueListenable: AppThemeManager.notifier,
       builder: (context, _, __) {
         return Scaffold(
+          extendBodyBehindAppBar: true,
           backgroundColor: AppThemeManager.primaryBackground,
           appBar: const MyAppBar(
             style: MyAppBarStyle.titleOnly,
@@ -277,6 +278,7 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: kToolbarHeight + 40),
                   ...visibleSections.expand((section) {
                     final sectionIndex = visibleSections.indexOf(section);
                     int animationIndex = 0;

@@ -21,6 +21,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? profileImageUrl;
   final double height;
   final IconData? backIcon;
+  final double elevation;
 
   const MyAppBar({
     super.key,
@@ -31,6 +32,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.profileImageUrl,
     this.height = kToolbarHeight,
     this.backIcon,
+    this.elevation = 10,
   });
 
   @override
@@ -47,7 +49,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           backgroundColor: appColors.primaryOne,
           automaticallyImplyLeading: false,
           centerTitle: _isTitleCentered,
-          elevation: 10,
+          elevation: elevation,
           toolbarHeight: height,
           title: Text(
             title,

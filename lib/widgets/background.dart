@@ -14,7 +14,9 @@ class Background extends StatelessWidget {
   Widget build(BuildContext context) {
     final appColors = AppThemeManager.currentColors;
 
-    return DecoratedBox(
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
       decoration: BoxDecoration(
         gradient: appColors.gradientBackground(),
       ),

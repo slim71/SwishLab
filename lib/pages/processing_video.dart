@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -101,47 +102,72 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
               child:
                   // Column to place the content for the loading page
                   Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // Loading animation
-                    const DynamicAsset(
-                      name: 'loader_basketball.json',
-                      type: 'animation',
-                      width: 300,
-                      height: 300,
-                    ),
-
-                    // "Processing Video" text
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(32, 16, 32, 0),
-                      child: Text(
-                        'Processing Video',
-                        style: AppTextStyles.headlineLarge(context, color: Colors.black),
+                    // Loading animation in Glass Card
+                    _buildGlassCard(
+                      padding: const EdgeInsets.all(8),
+                      child: const DynamicAsset(
+                        name: 'loader_basketball.gif',
+                        type: 'gif',
+                        width: double.infinity,
+                        height: 350,
+                        fit: BoxFit.contain,
                       ),
                     ),
 
-                    // Text to ask the user to wait a bit
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(32, 8, 32, 0),
-                      child: Text(
-                        'Please wait while we prepare your video',
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.labelLarge(context, color: Colors.black),
+                    const SizedBox(height: 48),
+
+                    // Processing Text in Glass Pill
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(32),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                        child: Container(
+                          padding: const EdgeInsets.all(24),
+                          decoration: BoxDecoration(
+                            color: AppThemeManager.secondaryBackground.withValues(alpha: 0.8), // Increased opacity
+                            borderRadius: BorderRadius.circular(32),
+                            border: Border.all(color: Colors.white.withValues(alpha: 0.3), width: 1.5),
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'Processing Video',
+                                style:
+                                    AppTextStyles.headlineMedium(context, color: AppThemeManager.primaryText).copyWith(
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 1,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                'Please wait while we prepare your video',
+                                textAlign: TextAlign.center,
+                                style: AppTextStyles.labelMedium(context,
+                                    color: AppThemeManager.primaryText.withValues(alpha: 0.6)),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
 
-                    // Container used to place a custom divider
+                    const SizedBox(height: 32),
+
+                    // Progress Visualization
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(32, 32, 32, 0),
+                      padding: const EdgeInsets.symmetric(horizontal: 32),
                       child: Container(
                         width: 240,
                         height: 8,
                         decoration: BoxDecoration(
-                          color: appColors.alternateOne,
+                          color: appColors.alternateOne.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child:
@@ -157,13 +183,14 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
                       ),
                     ),
 
-                    // Text stating that the loading might take a while
+                    // Extra Hint text in matching style
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(32, 24, 32, 0),
                       child: Text(
                         'This may take a moment depending on the video size',
                         textAlign: TextAlign.center,
-                        style: AppTextStyles.labelLarge(context, color: Colors.black),
+                        style: AppTextStyles.labelSmall(context,
+                            color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
                       ),
                     ),
 
@@ -182,6 +209,31 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGlassCard({required Widget child, EdgeInsets? padding}) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(32),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+        child: Container(
+          padding: padding ?? const EdgeInsets.all(32),
+          decoration: BoxDecoration(
+            color: AppThemeManager.secondaryBackground.withValues(alpha: 0.6),
+            borderRadius: BorderRadius.circular(32),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.1), width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: child,
         ),
       ),
     );

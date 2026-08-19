@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 
 import '../constants.dart';
 import '../logger.dart';
@@ -18,12 +17,14 @@ class DynamicAsset extends StatefulWidget {
     this.height,
     required this.name,
     this.type = 'icon',
+    this.fit = BoxFit.contain,
   });
 
   final double? width;
   final double? height;
   final String name;
   final String type;
+  final BoxFit fit;
 
   @override
   State<DynamicAsset> createState() => _DynamicAssetState();
@@ -34,15 +35,11 @@ class _DynamicAssetState extends State<DynamicAsset> {
   static const String iconNetworkPath = "Icons";
   static const String iconLocalPath = "assets/icons";
   static const String imagePath = "assets/images";
-  static const String jsonPath = "assets/json";
   static const String gifPath = "assets/gifs";
-  static const String animationPath = "assets/lottie";
 
   static const Map<String, AssetType> _typeMap = {
     'icon': AssetType.icon,
     'image': AssetType.image,
-    'json': AssetType.json,
-    'animation': AssetType.animation,
     'gif': AssetType.gif,
   };
 
@@ -119,28 +116,9 @@ class _DynamicAssetState extends State<DynamicAsset> {
         return [
           '$gifPath/$normalizedName.gif',
           '$root/$gifPath/$normalizedName.gif',
+          '$gifPath/$normalizedName.png', // Fallback
+          '$gifPath/$normalizedName.jpg', // Fallback
         ];
-
-      case AssetType.json:
-      case AssetType.animation:
-        final List<String> exts = ['json', 'lottie', 'dotlottie'];
-        if (fileExtension != null && !exts.contains(fileExtension)) {
-          exts.insert(0, fileExtension!);
-        }
-
-        final List<String> paths = [];
-        // Local folders first
-        for (final ext in exts) {
-          paths.add('$animationPath/$normalizedName.$ext');
-          paths.add('$jsonPath/$normalizedName.$ext');
-        }
-        // Network folders second
-        for (final ext in exts) {
-          paths.add('$root/$animationPath/$normalizedName.$ext');
-          paths.add('$root/$jsonPath/$normalizedName.$ext');
-        }
-
-        return paths;
     }
   }
 
@@ -180,53 +158,23 @@ class _DynamicAssetState extends State<DynamicAsset> {
     }
 
     final path = _candidates[_currentIndex];
-
-    Widget child;
-    if (typeEnum == AssetType.animation || typeEnum == AssetType.json) {
-      child = path.startsWith('http')
-          ? Lottie.network(
-              path,
-              key: ValueKey(path),
-              width: widget.width,
-              height: widget.height,
-              fit: BoxFit.contain,
-              animate: true,
-              repeat: true,
-              errorBuilder: (context, error, stackTrace) {
-                _onLoadError(path, error);
-                return const SizedBox.shrink();
-              },
-            )
-          : Lottie.asset(
-              path,
-              key: ValueKey(path),
-              width: widget.width,
-              height: widget.height,
-              fit: BoxFit.contain,
-              animate: true,
-              repeat: true,
-              errorBuilder: (context, error, stackTrace) {
-                _onLoadError(path, error);
-                return const SizedBox.shrink();
-              },
-            );
-    } else {
-      child = Image(
-        key: ValueKey(path),
-        image: path.startsWith('http') ? NetworkImage(path) : AssetImage(path) as ImageProvider,
-        width: widget.width,
-        height: widget.height,
-        fit: BoxFit.contain,
-        errorBuilder: (context, error, stackTrace) {
-          _onLoadError(path, error);
-          return const SizedBox.shrink();
-        },
-      );
-    }
+    DynamicAsset._logger.d('BUILDING ASSET: Index: $_currentIndex, Path: $path, Type: ${widget.type}');
 
     return ValueListenableBuilder(
       valueListenable: AppThemeManager.notifier,
-      builder: (_, __, ___) => child,
+      builder: (_, __, ___) {
+        return Image(
+          key: ValueKey('asset_${_currentIndex}_$path'),
+          image: path.startsWith('http') ? NetworkImage(path) : AssetImage(path) as ImageProvider,
+          width: widget.width,
+          height: widget.height,
+          fit: widget.fit,
+          errorBuilder: (context, error, stackTrace) {
+            _onLoadError(path, error);
+            return const SizedBox.shrink();
+          },
+        );
+      },
     );
   }
 }

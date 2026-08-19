@@ -1,18 +1,16 @@
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../functions/add_animation.dart';
-import '../models/analysis_response.dart';
 import '../models/custom_enums.dart';
-import '../models/results_response.dart';
-import '../models/statistics_row.dart';
 import '../models/video_source.dart';
 import '../providers/users_provider.dart';
 import '../styles/styles.dart';
+import '../styles/theme_manager.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/background.dart';
 import '../widgets/choice_chips_group.dart';
@@ -38,38 +36,21 @@ class VideoPreUpload extends ConsumerStatefulWidget {
 
 class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
-  String? analysisFinalJson;
 
-  // State field(s) for videoName widget.
-  FocusNode? videoNameFocusNode;
   late final TextEditingController videoNameTextController;
-
-  // State field(s) for videoDescription widget.
-  FocusNode? videoDescriptionFocusNode;
   late final TextEditingController videoDescriptionTextController;
+  late final FocusNode videoNameFocusNode;
+  late final FocusNode videoDescriptionFocusNode;
 
   int? selectedHandIndex;
-
-  // Stores action output result for [Custom Action - uploadVideoToGradio] action in uploadButton widget.
-  String? gradioTempUrl;
-
-  // Stores action output result for [Backend Call - API (AnalyzeShootingForm)] action in uploadButton widget.
-  AnalysisResponse? analysisJsonEventId;
-
-  // Stores action output result for [Backend Call - API (GetShootingFormResults)] action in uploadButton widget.
-  ResultsResponse? analysisJsonResults;
-
-  // Stores action output result for [Backend Call - Insert Row] action in uploadButton widget.
-  StatisticsRow? insertionReturnValue;
 
   @override
   void initState() {
     super.initState();
     videoNameTextController = TextEditingController();
     videoDescriptionTextController = TextEditingController();
-
-    videoNameFocusNode ??= FocusNode();
-    videoDescriptionFocusNode ??= FocusNode();
+    videoNameFocusNode = FocusNode();
+    videoDescriptionFocusNode = FocusNode();
 
     // Initialize shooting hand from user profile
     final userInfo = ref.read(appUserProvider).value;
@@ -81,210 +62,239 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
   }
 
   @override
+  void dispose() {
+    videoNameTextController.dispose();
+    videoDescriptionTextController.dispose();
+    videoNameFocusNode.dispose();
+    videoDescriptionFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final appColors = AppThemeManager.currentColors;
+
     return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-      },
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+        extendBodyBehindAppBar: true,
         appBar: const MyAppBar(
-          style: MyAppBarStyle.backButtonTitleCentered,
-          title: 'Upload video',
+          style: MyAppBarStyle.backButtonTitleLeft,
+          title: 'Review Upload',
         ),
-        body: SafeArea(
-          top: true,
-          child:
-              // Container to have a colored background
-              Background(
+        body: Background(
+          child: SafeArea(
             child: Form(
               key: formKey,
-              autovalidateMode: AutovalidateMode.disabled,
-              child:
-                  // Column to place the content on the Upload Video page
-                  addAnimation(
-                widget: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.fromLTRB(24, 20, 24, 40),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Column to place the content on screen
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              // Wrap to gracefully organize content
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                                child: Wrap(
-                                  spacing: 16,
-                                  runSpacing: 16,
-                                  alignment: WrapAlignment.start,
-                                  crossAxisAlignment: WrapCrossAlignment.start,
-                                  direction: Axis.horizontal,
-                                  runAlignment: WrapAlignment.center,
-                                  verticalDirection: VerticalDirection.down,
-                                  clipBehavior: Clip.none,
-                                  children: [
-                                    // Column to place video and related info
-                                    Column(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        // Player to preview the chosen video
-                                        VideoPreview(
-                                          source: FileVideoSource(widget.videoFile),
-                                        ),
-                                        const SizedBox(height: 12),
-
-                                        // Video name - TODO: change
-                                        InputField(
-                                          label: 'Video name',
-                                          controller: videoNameTextController,
-                                          focusNode: videoNameFocusNode,
-                                          textCapitalization: TextCapitalization.words,
-                                          obscureText: false,
-                                        ),
-                                        const SizedBox(height: 12),
-
-                                        // Video description - TODO: not used for now
-                                        InputField(
-                                          label: 'Description...',
-                                          controller: videoDescriptionTextController,
-                                          focusNode: videoDescriptionFocusNode,
-                                          textCapitalization: TextCapitalization.words,
-                                          obscureText: false,
-                                        ),
-                                      ],
-                                    ),
-
-                                    // Container to show labels
-                                    Container(
-                                      constraints: const BoxConstraints(
-                                        maxWidth: 570,
-                                      ),
-                                      decoration: const BoxDecoration(),
-                                      child:
-                                          // Column to place labels
-                                          Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          // "Category" text
-                                          Text(
-                                            'Category',
-                                            style: AppTextStyles.labelMedium(context, color: Colors.black),
-                                          ),
-                                          const SizedBox(height: 12),
-
-                                          // Label to differentiate the functionality chosen, which is
-                                          // related to the video perspective
-                                          ChoiceChipsGroup<String>(
-                                            labels: OriginFunc.values.map((e) => e.name).toList(),
-                                            selectedIndex: widget.perspective!.index,
-                                            // preselect "side"
-                                            onChanged: (_) {}, // no interaction
-                                          ),
-                                          const SizedBox(height: 24),
-
-                                          // "Shooting hand" text
-                                          Text(
-                                            'Shooting hand',
-                                            style: AppTextStyles.labelMedium(context, color: Colors.black),
-                                          ),
-                                          const SizedBox(height: 12),
-
-                                          // Label to differentiate the shooting hand
-                                          ChoiceChipsGroup<String>(
-                                            labels: Handedness.values
-                                                .map((e) => e.name == 'left' ? 'Left' : 'Right')
-                                                .toList(),
-                                            selectedIndex: selectedHandIndex,
-                                            onChanged: (_) {}, // no interaction
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                    // --- VIDEO PREVIEW CARD ---
+                    _buildGlassCard(
+                      padding: EdgeInsets.zero,
+                      child: Column(
+                        children: [
+                          ClipRRect(
+                            borderRadius: const BorderRadius.vertical(top: Radius.circular(32)),
+                            child: VideoPreview(
+                              source: FileVideoSource(widget.videoFile),
+                            ),
                           ),
-                        ),
+                          Padding(
+                            padding: const EdgeInsets.all(20),
+                            child: Row(
+                              children: [
+                                Icon(Icons.movie_filter_rounded, color: appColors.primaryOne, size: 20),
+                                const SizedBox(width: 12),
+                                Text(
+                                  'Video Capture Ready',
+                                  style: AppTextStyles.titleSmall(context, color: AppThemeManager.primaryText)
+                                      .copyWith(fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
+                    ).animate().fade().slideY(begin: 0.1),
 
-                    // Column to place the upload button
-                    Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        // Button to upload the video and start the analysis
-                        Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 16, 12),
-                            child: addAnimation(
-                              widget: DarkButton(
-                                text: 'Upload and Analyze',
-                                onPressed: () async {
-                                  final userInfo = ref.read(appUserProvider).value;
+                    const SizedBox(height: 32),
 
-                                  // Check required parameters
-                                  final shootingHand = selectedHandIndex != null
-                                      ? Handedness.values[selectedHandIndex!].name
-                                      : userInfo?.shootingHand;
-                                  final perspective = widget.perspective?.name;
-                                  if (shootingHand == null || perspective == null) {
-                                    final List<String> missingFields = [];
-                                    if (shootingHand == null) {
-                                      missingFields.add('shooting hand');
-                                    }
-                                    if (perspective == null) {
-                                      missingFields.add('point of view');
-                                    }
+                    // --- DETAILS SECTION ---
+                    _buildSectionLabel('SESSION DETAILS'),
+                    const SizedBox(height: 12),
+                    _buildGlassCard(
+                      child: Column(
+                        children: [
+                          InputField(
+                            label: 'Session Name',
+                            controller: videoNameTextController,
+                            focusNode: videoNameFocusNode,
+                            textCapitalization: TextCapitalization.words,
+                            prefixIcon: Icon(Icons.edit_rounded, size: 18, color: appColors.primaryOne),
+                          ),
+                          const SizedBox(height: 20),
+                          InputField(
+                            label: 'Notes (Optional)',
+                            controller: videoDescriptionTextController,
+                            focusNode: videoDescriptionFocusNode,
+                            textCapitalization: TextCapitalization.sentences,
+                            prefixIcon: Icon(Icons.notes_rounded, size: 18, color: appColors.primaryOne),
+                          ),
+                        ],
+                      ),
+                    ).animate(delay: 200.ms).fade().slideY(begin: 0.1),
 
-                                    if (!context.mounted) return;
+                    const SizedBox(height: 32),
 
-                                    await showDialog<void>(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                        title: const Text('Invalid data'),
-                                        content: Text('Missing: ${missingFields.join(' and ')}.',
-                                            style: AppTextStyles.bodyLarge(context, color: Colors.black)),
-                                      ),
-                                    );
-                                    return;
-                                  }
+                    // --- CONFIGURATION SECTION ---
+                    _buildSectionLabel('ANALYSIS CONFIG'),
+                    const SizedBox(height: 12),
+                    _buildGlassCard(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Perspective',
+                            style: AppTextStyles.labelSmall(context,
+                                    color: AppThemeManager.primaryText.withValues(alpha: 0.5))
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 12),
+                          ChoiceChipsGroup<String>(
+                            labels: OriginFunc.values.map((e) => e.name.toUpperCase()).toList(),
+                            selectedIndex: widget.perspective!.index,
+                            onChanged: (_) {}, // fixed based on entry
+                          ),
+                          const SizedBox(height: 24),
+                          Text(
+                            'Shooting Hand',
+                            style: AppTextStyles.labelSmall(context,
+                                    color: AppThemeManager.primaryText.withValues(alpha: 0.5))
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 12),
+                          ChoiceChipsGroup<String>(
+                            labels: Handedness.values.map((e) => e.name == 'left' ? 'LEFT' : 'RIGHT').toList(),
+                            selectedIndex: selectedHandIndex,
+                            onChanged: (idx) => setState(() => selectedHandIndex = idx),
+                          ),
+                        ],
+                      ),
+                    ).animate(delay: 400.ms).fade().slideY(begin: 0.1),
 
-                                  // Navigate to processing page
-                                  if (!context.mounted) return;
-                                  context.pushNamed(
-                                    'processing',
-                                    extra: {
-                                      'videoFile': widget.videoFile,
-                                      'shootingHand': shootingHand,
-                                      'pointOfView': perspective,
-                                    },
-                                  );
-                                },
-                              ),
-                              withFade: false,
-                              scale: ScaleConfig(
-                                begin: const Offset(1.0, 1.0),
-                                end: const Offset(1.1, 1.1),
-                                delay: 500.ms,
-                                curve: Curves.easeIn,
-                              ),
-                            ))
-                      ],
-                    ),
+                    const SizedBox(height: 48),
+
+                    // --- UPLOAD BUTTON ---
+                    DarkButton(
+                      text: 'Start AI Analysis',
+                      onPressed: _handleUpload,
+                    ).animate(delay: 600.ms).fade().scale(begin: const Offset(0.9, 0.9)),
                   ],
                 ),
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildSectionLabel(String label) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 0, bottom: 4),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(100),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: AppThemeManager.secondaryBackground.withValues(alpha: 0.7),
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(color: Colors.white.withValues(alpha: 0.2), width: 1.5),
+                ),
+                child: Text(
+                  label,
+                  style: AppTextStyles.labelSmall(context, color: AppThemeManager.primaryText).copyWith(
+                    letterSpacing: 2,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGlassCard({required Widget child, EdgeInsets? padding}) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(32),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+        child: Container(
+          width: double.infinity,
+          padding: padding ?? const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: AppThemeManager.secondaryBackground.withValues(alpha: 0.6),
+            borderRadius: BorderRadius.circular(32),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.1), width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
+              ),
+            ],
+          ),
+          child: child,
+        ),
+      ),
+    );
+  }
+
+  Future<void> _handleUpload() async {
+    final userInfo = ref.read(appUserProvider).value;
+    final shootingHand =
+        selectedHandIndex != null ? Handedness.values[selectedHandIndex!].name : userInfo?.shootingHand;
+    final perspective = widget.perspective?.name;
+
+    if (shootingHand == null || perspective == null) {
+      _showErrorDialog('Missing Data', 'Please select your shooting hand to proceed.');
+      return;
+    }
+
+    context.pushNamed(
+      'processing',
+      extra: {
+        'videoFile': widget.videoFile,
+        'shootingHand': shootingHand,
+        'pointOfView': perspective,
+      },
+    );
+  }
+
+  void _showErrorDialog(String title, String message) {
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppThemeManager.secondaryBackground,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        title: Text(title),
+        content: Text(message, style: AppTextStyles.bodyLarge(context)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx),
+            child: Text('OK', style: TextStyle(color: AppThemeManager.currentColors.primaryOne)),
+          ),
+        ],
       ),
     );
   }

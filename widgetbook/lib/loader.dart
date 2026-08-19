@@ -160,15 +160,14 @@ Widget buildDynamicIconImage(BuildContext context) {
 @widgetbook.UseCase(name: 'DynamicAsset', type: DynamicAsset)
 Widget buildDynamicAssetAnimation(BuildContext context) {
   final Map<String, String> objects = {
-    'animation': 'loader_basketball.json',
+    'gif': 'loader_basketball.gif',
     'image': 'thompson_front.jpg',
-    'gif': 'thompson.gif',
     'icon': 'default_icon.png',
   };
   final assetType = context.knobs.object.dropdown<String>(
     label: 'Asset type',
-    options: ["animation", "image", "gif", "icon"],
-    initialOption: "animation",
+    options: ["gif", "image", "icon"],
+    initialOption: "gif",
     labelBuilder: (value) => value,
   );
   return DynamicAsset(

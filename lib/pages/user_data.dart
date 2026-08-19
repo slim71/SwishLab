@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -14,7 +16,6 @@ import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/background.dart';
-import '../widgets/box_with_shadow.dart';
 import '../widgets/dark_button.dart';
 import '../widgets/drop_down.dart';
 import '../widgets/input_field.dart';
@@ -97,7 +98,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
           label: 'First Name',
           prefixIcon: Icon(Icons.person_outline_rounded, color: iconColor),
           controller: firstNameFieldTextController,
-          focusNode: firstNameFieldFocusNode,
+          focusNode: firstNameFieldFocusNode!,
           autofillHints: const [AutofillHints.name],
           textCapitalization: TextCapitalization.words,
           validator: (value) => firstNameFieldTextControllerValidator.call(context, value),
@@ -115,7 +116,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
           label: 'Last Name',
           prefixIcon: Icon(Icons.badge_outlined, color: iconColor),
           controller: lastNameFieldTextController,
-          focusNode: lastNameFieldFocusNode,
+          focusNode: lastNameFieldFocusNode!,
           autofillHints: const [AutofillHints.name],
           textCapitalization: TextCapitalization.words,
           validator: (value) => lastNameFieldTextControllerValidator.call(context, value),
@@ -132,7 +133,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
           label: 'Email',
           prefixIcon: Icon(Icons.email_outlined, color: iconColor),
           controller: emailFieldTextController,
-          focusNode: emailFieldFocusNode,
+          focusNode: emailFieldFocusNode!,
           autofillHints: const [AutofillHints.email],
           textCapitalization: TextCapitalization.none,
           validator: (value) => emailFieldTextControllerValidator.call(context, value),
@@ -172,7 +173,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
     );
 
     firstNameFieldTextController = TextEditingController(text: userInfo?.firstName);
-    firstNameFieldFocusNode ??= FocusNode();
+    firstNameFieldFocusNode = FocusNode();
     firstNameFieldTextControllerValidator = (context, value) {
       if (value == null || value.isEmpty) return 'First name required';
       if (value.length < 2) return 'First name too short';
@@ -183,7 +184,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
     };
 
     lastNameFieldTextController = TextEditingController(text: userInfo?.lastName);
-    lastNameFieldFocusNode ??= FocusNode();
+    lastNameFieldFocusNode = FocusNode();
     lastNameFieldTextControllerValidator = (context, value) {
       if (value == null || value.isEmpty) return 'Last name required';
       if (value.length < 2) return 'Last name too short';
@@ -194,7 +195,7 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
     };
 
     emailFieldTextController = TextEditingController(text: userInfo?.email);
-    emailFieldFocusNode ??= FocusNode();
+    emailFieldFocusNode = FocusNode();
     emailFieldTextControllerValidator = (context, value) {
       if (value == null || value.isEmpty) return 'Email required';
 
@@ -241,6 +242,12 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
     lastNameAnim.dispose();
     emailAnim.dispose();
     shootingHandAnim.dispose();
+    firstNameFieldTextController.dispose();
+    lastNameFieldTextController.dispose();
+    emailFieldTextController.dispose();
+    firstNameFieldFocusNode?.dispose();
+    lastNameFieldFocusNode?.dispose();
+    emailFieldFocusNode?.dispose();
     super.dispose();
   }
 
@@ -253,208 +260,196 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
 
     _initFields();
 
-    return Scaffold(
-      backgroundColor: AppThemeManager.primaryBackground,
-      appBar: const MyAppBar(
-        style: MyAppBarStyle.backButtonTitleLeft,
-        title: 'User info',
-      ),
-      body: SafeArea(
-        top: true,
-        bottom: false,
-        child: Background(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(24, 24, 24, 8),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text(
-                      'Your information'.toUpperCase(),
-                      style: AppTextStyles.labelSmall(context, color: Colors.white.withValues(alpha: 0.7)).copyWith(
-                        letterSpacing: 1.5,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-                    child: Container(
-                      decoration: BoxWithShadow(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            AppThemeManager.secondaryBackground.withValues(alpha: 0.85),
-                            AppThemeManager.primaryBackground.withValues(alpha: 0.9),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(32),
-                        border: Border.all(
-                          color: AppThemeManager.currentColors.containersBorders.withValues(alpha: 0.2),
-                          width: 1,
-                        ),
-                        shadowOffset: const Offset(0, 8),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(24),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: List.generate(_fields!.length, (index) {
-                            final field = _fields![index];
-                            final iconColor = settingsItemBackgrounds[index % settingsItemBackgrounds.length];
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Scaffold(
+        extendBodyBehindAppBar: true,
+        backgroundColor: AppThemeManager.primaryBackground,
+        appBar: const MyAppBar(
+          style: MyAppBarStyle.backButtonTitleLeft,
+          title: 'User Profile',
+        ),
+        body: Background(
+          child: SafeArea(
+            child: Column(
+              children: [
+                const SizedBox(height: 20),
+                _buildSectionHeader('YOUR INFORMATION'),
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 100),
+                    child: _buildGlassCard(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: List.generate(_fields!.length, (index) {
+                          final field = _fields![index];
+                          final iconColor = settingsItemBackgrounds[index % settingsItemBackgrounds.length];
 
-                            return Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                if (!field.isValid())
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 4),
-                                    child: Text(
-                                      field.errorText,
-                                      style: AppTextStyles.labelSmall(context, color: Colors.red),
-                                    ),
-                                  ),
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              if (!field.isValid())
                                 Padding(
-                                  padding: EdgeInsets.only(bottom: index == _fields!.length - 1 ? 8 : 24),
-                                  child: field
-                                      .builder(context, iconColor)
-                                      .animate(controller: field.animationController)
-                                      .shake(
-                                        duration: 1000.ms,
-                                        hz: 5,
-                                        rotation: 0.017,
-                                        curve: Curves.easeInOut,
-                                      ),
+                                  padding: const EdgeInsets.only(left: 8, bottom: 4),
+                                  child: Text(
+                                    field.errorText,
+                                    style: AppTextStyles.labelSmall(context, color: Colors.redAccent)
+                                        .copyWith(fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ],
-                            );
-                          }),
-                        ),
+                              field
+                                  .builder(context, iconColor)
+                                  .animate(controller: field.animationController)
+                                  .shake(duration: 1000.ms, hz: 5, rotation: 0.01),
+                              if (index != _fields!.length - 1) const SizedBox(height: 24),
+                            ],
+                          );
+                        }),
                       ),
                     ),
                   ),
                 ),
-              ),
+              ],
+            ),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: DarkButton(
+            text: 'Save Changes',
+            onPressed: () => _handleSave(userId, appState),
+          ),
+        ),
+      ),
+    );
+  }
 
-              // Save Changes Button (Docked)
-              Container(
-                width: double.infinity,
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(24, 0, 24, 8),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(100),
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.transparent,
-                      AppThemeManager.primaryBackground.withValues(alpha: 0.8),
-                    ],
+                  color: AppThemeManager.secondaryBackground.withValues(alpha: 0.7),
+                  borderRadius: BorderRadius.circular(100),
+                  border: Border.all(color: Colors.white.withValues(alpha: 0.2), width: 1.5),
+                ),
+                child: Text(
+                  title,
+                  style: AppTextStyles.labelSmall(context, color: AppThemeManager.primaryText).copyWith(
+                    letterSpacing: 2,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
-                padding: EdgeInsets.fromLTRB(24, 16, 24, MediaQuery.of(context).padding.bottom + 16),
-                child: DarkButton(
-                  onPressed: () async {
-                    validationStruct = UserInfoValidation(
-                      firstNameValid: firstNameFieldTextController.text.isNotEmpty &&
-                          isFieldValid(
-                            firstNameFieldTextController.text,
-                            r"^[A-Za-z' -]+$",
-                          ),
-                      lastNameValid: lastNameFieldTextController.text.isNotEmpty &&
-                          isFieldValid(
-                            lastNameFieldTextController.text,
-                            r"^[A-Za-z' -]+$",
-                          ),
-                      emailValid: emailFieldTextController.text.isNotEmpty &&
-                          isFieldValid(
-                            emailFieldTextController.text,
-                            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[A-Za-z]{2,}$',
-                          ),
-                      shootingHandValid: shootingHandDropDownValue != null && shootingHandDropDownValue!.isNotEmpty,
-                    );
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-                    setState(() {});
-
-                    if (validationStruct?.isAllValid ?? false) {
-                      try {
-                        // Update the user's info in the DB
-                        updatedRow = await ref.read(updateUserProvider).execute(
-                          userId: userId!,
-                          data: {
-                            'first_name': firstNameFieldTextController.text,
-                            'last_name': lastNameFieldTextController.text,
-                            'email': emailFieldTextController.text,
-                            'shooting_hand': shootingHandDropDownValue,
-                          },
-                        );
-
-                        // Update the related app state
-                        ref.read(appStateProvider.notifier).setUserData(
-                              appState.userData!.copyWith(
-                                firstName: updatedRow.firstName,
-                                lastName: updatedRow.lastName,
-                                eMail: updatedRow.email,
-                                shootingHand: updatedRow.shootingHand,
-                              ),
-                            );
-
-                        // Refresh appUserProvider
-                        ref.invalidate(appUserProvider);
-
-                        setState(() {});
-
-                        // Show success
-                        if (!context.mounted) return;
-                        await showDialog<void>(
-                          context: context,
-                          builder: (alertDialogContext) {
-                            return AlertDialog(
-                              title: const Text('Success'),
-                              content: Text('New data has been set successfully',
-                                  style: AppTextStyles.bodyLarge(context, color: Colors.black)),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(alertDialogContext),
-                                  child: const Text('Ok'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-
-                        if (!context.mounted) return;
-                        Navigator.pop(context);
-                      } catch (e) {
-                        if (!context.mounted) return;
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Failed to update. Check your internet connection.'),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
-                      }
-                    } else {
-                      HapticFeedback.lightImpact();
-
-                      await Future.wait(
-                          _fields!.where((f) => !f.isValid()).map((f) => f.animationController.forward(from: 0)));
-                    }
-
-                    setState(() {});
-                  },
-                  text: 'Save Changes',
-                ),
+  Widget _buildGlassCard({required Widget child}) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(32),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+        child: Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(32),
+          decoration: BoxDecoration(
+            color: AppThemeManager.secondaryBackground.withValues(alpha: 0.6),
+            borderRadius: BorderRadius.circular(32),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.1), width: 1.5),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.05),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
               ),
             ],
           ),
+          child: child,
         ),
+      ),
+    );
+  }
+
+  Future<void> _handleSave(String? userId, AppState appState) async {
+    validationStruct = UserInfoValidation(
+      firstNameValid: firstNameFieldTextController.text.isNotEmpty &&
+          isFieldValid(firstNameFieldTextController.text, r"^[A-Za-z' -]+$"),
+      lastNameValid: lastNameFieldTextController.text.isNotEmpty &&
+          isFieldValid(lastNameFieldTextController.text, r"^[A-Za-z' -]+$"),
+      emailValid: emailFieldTextController.text.isNotEmpty &&
+          isFieldValid(
+              emailFieldTextController.text, r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[A-Za-z]{2,}$'),
+      shootingHandValid: shootingHandDropDownValue != null && shootingHandDropDownValue!.isNotEmpty,
+    );
+
+    setState(() {});
+
+    if (validationStruct?.isAllValid ?? false) {
+      try {
+        updatedRow = await ref.read(updateUserProvider).execute(
+          userId: userId!,
+          data: {
+            'first_name': firstNameFieldTextController.text,
+            'last_name': lastNameFieldTextController.text,
+            'email': emailFieldTextController.text,
+            'shooting_hand': shootingHandDropDownValue,
+          },
+        );
+
+        ref.read(appStateProvider.notifier).setUserData(
+              appState.userData!.copyWith(
+                firstName: updatedRow.firstName,
+                lastName: updatedRow.lastName,
+                eMail: updatedRow.email,
+                shootingHand: updatedRow.shootingHand,
+              ),
+            );
+
+        ref.invalidate(appUserProvider);
+        if (!mounted) return;
+        _showSuccessDialog();
+      } catch (e) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Failed to update profile.')));
+      }
+    } else {
+      HapticFeedback.lightImpact();
+      for (var f in _fields!) {
+        if (!f.isValid()) f.animationController.forward(from: 0);
+      }
+    }
+  }
+
+  void _showSuccessDialog() {
+    showDialog<void>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: AppThemeManager.secondaryBackground,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+        title: const Text('Success'),
+        content: Text('Profile updated successfully!', style: AppTextStyles.bodyLarge(context)),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(ctx);
+              Navigator.pop(context);
+            },
+            child: Text('OK', style: TextStyle(color: AppThemeManager.currentColors.primaryOne)),
+          ),
+        ],
       ),
     );
   }

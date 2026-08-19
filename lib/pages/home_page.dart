@@ -283,12 +283,33 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                       ).animate().fade(duration: 600.ms).slideY(begin: 0.1, curve: Curves.easeOutBack),
 
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(24, 32, 24, 16),
-                        child: Text(
-                          'SHOOT ANALYSIS MODES',
-                          style: AppTextStyles.labelSmall(context,
-                                  color: AppThemeManager.primaryText.withValues(alpha: 0.4))
-                              .copyWith(letterSpacing: 2, fontWeight: FontWeight.bold),
+                        padding: const EdgeInsets.fromLTRB(24, 32, 24, 8),
+                        child: Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: BackdropFilter(
+                                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                  decoration: BoxDecoration(
+                                    color: AppThemeManager.secondaryBackground.withValues(alpha: 0.7),
+                                    borderRadius: BorderRadius.circular(100),
+                                    border: Border.all(color: Colors.white.withValues(alpha: 0.2), width: 1.5),
+                                  ),
+                                  child: Text(
+                                    'SHOOT ANALYSIS MODES',
+                                    style:
+                                        AppTextStyles.labelSmall(context, color: AppThemeManager.primaryText).copyWith(
+                                      letterSpacing: 2,
+                                      fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const Expanded(child: SizedBox()),
+                          ],
                         ),
                       ),
 
@@ -382,7 +403,9 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
           children: [
             Text(label,
                 style: AppTextStyles.labelSmall(context, color: AppThemeManager.primaryText.withValues(alpha: 0.4))),
-            Text(value, style: AppTextStyles.titleLarge(context).copyWith(fontWeight: FontWeight.w900)),
+            Text(value,
+                style: AppTextStyles.titleLarge(context, color: AppThemeManager.primaryText)
+                    .copyWith(fontWeight: FontWeight.w900)),
           ],
         ),
       ],
@@ -446,7 +469,8 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                   children: [
                     Text(
                       title,
-                      style: AppTextStyles.titleLarge(context).copyWith(fontWeight: FontWeight.w900),
+                      style: AppTextStyles.titleLarge(context, color: AppThemeManager.primaryText)
+                          .copyWith(fontWeight: FontWeight.w900),
                     ),
                     const SizedBox(height: 4),
                     Text(

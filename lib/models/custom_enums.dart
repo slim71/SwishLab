@@ -8,8 +8,6 @@ enum OriginFunc {
 enum AssetType {
   icon,
   image,
-  json,
-  animation,
   gif,
 }
 

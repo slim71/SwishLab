@@ -188,16 +188,30 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
 
   Widget _buildSectionHeader(String title, int animationIndex) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(32, 24, 16, 8),
+      padding: const EdgeInsetsDirectional.fromSTEB(24, 24, 16, 8),
       child: addAnimation(
-        widget: Text(
-          title.toUpperCase(),
-          style: AppTextStyles.labelSmall(
-            context,
-            color: AppThemeManager.primaryText.withValues(alpha: 0.4),
-          ).copyWith(
-            letterSpacing: 2.0,
-            fontWeight: FontWeight.w900,
+        widget: ClipRRect(
+          borderRadius: BorderRadius.circular(100),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              decoration: BoxDecoration(
+                color: AppThemeManager.secondaryBackground.withValues(alpha: 0.7),
+                borderRadius: BorderRadius.circular(100),
+                border: Border.all(color: Colors.white.withValues(alpha: 0.2), width: 1.5),
+              ),
+              child: Text(
+                title.toUpperCase(),
+                style: AppTextStyles.labelSmall(
+                  context,
+                  color: AppThemeManager.primaryText,
+                ).copyWith(
+                  letterSpacing: 2.0,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ),
           ),
         ),
         withFade: false,
@@ -312,12 +326,12 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
 
                   // Redesigned Footer Card
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 40, 16, 40),
+                    padding: const EdgeInsets.fromLTRB(16, 40, 16, 80), // Increased bottom padding
                     child: addAnimation(
                       widget: Container(
-                        padding: const EdgeInsets.all(24),
+                        padding: const EdgeInsets.all(28),
                         decoration: BoxWithShadow(
-                          borderRadius: BorderRadius.circular(24),
+                          borderRadius: BorderRadius.circular(32),
                           gradient: LinearGradient(
                             begin: Alignment.topLeft,
                             end: Alignment.bottomRight,
@@ -364,11 +378,13 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                                     children: [
                                       Text(
                                         'SwishLab',
-                                        style: AppTextStyles.headlineSmall(context).copyWith(
+                                        style: AppTextStyles.headlineSmall(context, color: AppThemeManager.primaryText)
+                                            .copyWith(
                                           fontWeight: FontWeight.w900,
                                           letterSpacing: 1,
                                         ),
                                       ),
+                                      const SizedBox(height: 2),
                                       Text(
                                         'Version 0.0.1',
                                         style: AppTextStyles.labelSmall(context,
@@ -415,7 +431,7 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                                 ),
                               ],
                             ),
-                            const Divider(height: 32),
+                            const Divider(height: 48),
                             Text(
                               'Made with ❤️ for the game',
                               style: AppTextStyles.labelMedium(context,
@@ -457,6 +473,7 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                       ),
                     ),
                   ),
+                  const SizedBox(height: 40), // Extra safety space at the very bottom
                 ],
               ),
             ),

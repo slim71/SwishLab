@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -164,6 +165,15 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                     },
                   ),
                   DebugItem(
+                    title: 'Test Success Page',
+                    subtitle: 'View the post-signup success screen',
+                    icon: Icons.check_circle_outline_rounded,
+                    buttonText: 'View',
+                    onPressed: () {
+                      context.pushNamed('success');
+                    },
+                  ),
+                  DebugItem(
                     title: 'Test Loading Page',
                     subtitle: 'Show the analysis loading screen',
                     icon: Icons.hourglass_empty_rounded,
@@ -215,12 +225,33 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(24, 24, 16, 8),
-        child: Text(
-          title.toUpperCase(),
-          style: AppTextStyles.labelSmall(
-            context,
-            color: AppThemeManager.primaryText.withValues(alpha: 0.5),
-          ).copyWith(letterSpacing: 1.2, fontWeight: FontWeight.bold),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(100),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: AppThemeManager.secondaryBackground.withValues(alpha: 0.7),
+                    borderRadius: BorderRadius.circular(100),
+                    border: Border.all(color: Colors.white.withValues(alpha: 0.2), width: 1.5),
+                  ),
+                  child: Text(
+                    title.toUpperCase(),
+                    style: AppTextStyles.labelSmall(
+                      context,
+                      color: AppThemeManager.primaryText,
+                    ).copyWith(
+                      letterSpacing: 2.0,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -229,29 +260,54 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
   Widget _buildEnvironmentCard() {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsetsDirectional.fromSTEB(16, 8, 16, 8),
-        child: Container(
-          decoration: BoxDecoration(
-            color: AppThemeManager.primaryText.withValues(alpha: 0.03),
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppThemeManager.primaryText.withValues(alpha: 0.05)),
-          ),
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.info_outline_rounded, size: 16, color: AppThemeManager.secondaryText),
-                  const SizedBox(width: 8),
-                  Text('Environment Info', style: AppTextStyles.titleSmall(context)),
+        padding: const EdgeInsetsDirectional.fromSTEB(16, 24, 16, 8),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(24),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppThemeManager.secondaryBackground.withValues(alpha: 0.6),
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(color: Colors.white.withValues(alpha: 0.15), width: 1.5),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.05),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
+                  ),
                 ],
               ),
-              const SizedBox(height: 12),
-              _buildInfoRow('Supabase', supabaseDomain),
-              _buildInfoRow('HF Space', hfSpace),
-              _buildInfoRow('Version', '0.0.1 (Debug)'),
-            ],
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: AppThemeManager.primaryText.withValues(alpha: 0.05),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(Icons.info_outline_rounded,
+                            size: 18, color: AppThemeManager.primaryText.withValues(alpha: 0.8)),
+                      ),
+                      const SizedBox(width: 12),
+                      Text(
+                        'Environment Info',
+                        style: AppTextStyles.titleMedium(context, color: AppThemeManager.primaryText)
+                            .copyWith(fontWeight: FontWeight.w900),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  _buildInfoRow('Supabase', supabaseDomain),
+                  _buildInfoRow('HF Space', hfSpace),
+                  _buildInfoRow('Version', '0.0.1 (Debug)'),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -260,12 +316,21 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
 
   Widget _buildInfoRow(String label, String value) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 4),
+      padding: const EdgeInsets.only(bottom: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: AppTextStyles.bodySmall(context, color: AppThemeManager.secondaryText)),
-          Text(value, style: AppTextStyles.bodySmall(context, color: AppThemeManager.primaryText)),
+          Text(label,
+              style: AppTextStyles.labelSmall(context, color: AppThemeManager.primaryText.withValues(alpha: 0.5))
+                  .copyWith(fontWeight: FontWeight.bold)),
+          Flexible(
+            child: Text(
+              value,
+              textAlign: TextAlign.end,
+              style: AppTextStyles.bodySmall(context, color: AppThemeManager.primaryText)
+                  .copyWith(fontWeight: FontWeight.w600),
+            ),
+          ),
         ],
       ),
     );

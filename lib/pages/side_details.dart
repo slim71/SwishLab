@@ -105,9 +105,10 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                           addAnimation(
                               widget: IconActionButton(
                                 const Icon(Icons.arrow_back_rounded),
-                                size: 60,
-                                iconColor: AppThemeManager.primaryText,
-                                iconSize: 25,
+                                size: 48,
+                                iconColor: Colors.white,
+                                backgroundColor: appColors.primaryOne.withValues(alpha: 0.8),
+                                iconSize: 24,
                                 onPressed: () async {
                                   context.pop();
                                 },
@@ -126,9 +127,10 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                             child: addAnimation(
                                 widget: IconActionButton(
                                   const FaIcon(FontAwesomeIcons.upload),
-                                  size: 60,
-                                  iconColor: AppThemeManager.primaryText,
-                                  iconSize: 25,
+                                  size: 48,
+                                  iconColor: Colors.white,
+                                  backgroundColor: appColors.primaryOne.withValues(alpha: 0.8),
+                                  iconSize: 20,
                                   onPressed: () async {
                                     final picker = ImagePicker();
 

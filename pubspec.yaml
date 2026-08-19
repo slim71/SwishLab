@@ -26,7 +26,6 @@ dependencies:
   # Media
   video_player: ^2.8.2
   image_picker: ^1.0.7
-  lottie: ^3.3.2
 
   # File paths
   path_provider: ^2.1.5
@@ -61,7 +60,6 @@ flutter:
   assets:
     - .env
     - assets/images/
-    - assets/lottie/
     - assets/json/
     - assets/icons/
     - assets/gifs/

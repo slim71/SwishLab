@@ -1,0 +1,507 @@
+[
+  {
+    "scores": [
+      {
+        "name": "Ball eye distance",
+        "ranges": [
+          {
+            "feedback": "The ball is too close to your face, blocking your vision. Try to create more space.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair spacing, but the ball still partially obstructs your view. Push it slightly forward.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good distance. You have a clear sightline to the rim.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Perfect spacing between the ball and your eyes for maximum visibility.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      },
+      {
+        "name": "Elbow angle",
+        "ranges": [
+          {
+            "feedback": "Your elbow angle is too tight. Work on creating that 90-degree 'L' shape.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair angle, but try to keep it more consistent for better power transfer.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good elbow angle. You've created a strong leverage point.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Perfect elbow angle. You're in a powerful and stable shooting position.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      },
+      {
+        "name": "Shoulder angle",
+        "ranges": [
+          {
+            "feedback": "Your shoulder is misaligned. Keep it relaxed and square to your target.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair shoulder position, but ensure it doesn't rotate too much during the shot.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good shoulder alignment. Your upper body is stable.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Excellent shoulder positioning. Perfectly aligned with your shooting line.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      }
+    ],
+    "section": "Set point"
+  },
+  {
+    "scores": [
+      {
+        "name": "Phase",
+        "ranges": [
+          {
+            "feedback": "Your jump timing is off. Work on synchronizing your release with your lift.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair timing. Try to release the ball closer to the peak of your jump.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good jump phase. You're utilizing your leg power well.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Perfect timing! Releasing at the exact peak of your jump for maximum range.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      },
+      {
+        "name": "Forward distance",
+        "ranges": [
+          {
+            "feedback": "You're drifting too far forward. Aim for a more vertical jump.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair verticality, but there's still significant forward drift. Tighten your lift.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good verticality. Minimal forward drift detected.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Outstanding vertical jump. Perfectly balanced landing.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      },
+      {
+        "name": "Side distance",
+        "ranges": [
+          {
+            "feedback": "You're drifting sideways. Focus on landing in a straight line.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair side control. Ensure your body weight is centered when you jump.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good lateral stability. You're staying aligned with the rim.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Perfect lateral balance. Zero sideways drift during the shot.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      },
+      {
+        "name": "Overall distance",
+        "ranges": [
+          {
+            "feedback": "Too much movement during your jump. Focus on a vertical 'elevator' lift.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair landing zone. Try to minimize your total displacement.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good body control. Your landing is consistent and stable.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Flawless jump mechanics. Perfectly vertical displacement.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      }
+    ],
+    "section": "Jump"
+  },
+  {
+    "scores": [
+      {
+        "name": "Vertical",
+        "ranges": [
+          {
+            "feedback": "Your elbow is too low at release. Lift it to give your shot a better arc.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair vertical positioning. Aim for a slightly higher release point.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good elbow height. This creates a soft landing arc for the ball.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Perfect vertical alignment. Ideal height for a professional arc.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      },
+      {
+        "name": "Horizontal",
+        "ranges": [
+          {
+            "feedback": "Your elbow is flaring out significantly. Tuck it in for a straighter path.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair horizontal position. Keep working on pointing your elbow at the rim.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good elbow tuck. Your arm is well-aligned with your target.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Perfect horizontal alignment. Your arm is a straight arrow to the basket.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      }
+    ],
+    "section": "Elbow position"
+  },
+  {
+    "scores": [
+      {
+        "name": "Left foot",
+        "ranges": [
+          {
+            "feedback": "Your left foot is pointing away from the target. Square it up for stability.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair left foot position. Ensure it's pointing consistently at your target.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good left foot alignment. Solid anchor for your shooting base.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Perfect left foot direction. Provides a stable foundation.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      },
+      {
+        "name": "Right foot",
+        "ranges": [
+          {
+            "feedback": "Your right foot is misaligned. Point your toes toward the rim.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair right foot direction. Small adjustments will improve your balance.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good right foot alignment. Guides your entire shooting motion.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Perfect right foot position. Ideal for a straight shooting line.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      }
+    ],
+    "section": "Feet direction"
+  },
+  {
+    "scores": [
+      {
+        "name": "Average deviation",
+        "ranges": [
+          {
+            "feedback": "Your shot path is very erratic. Focus on a linear motion.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair path consistency. Try to minimize any lateral ball movement.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good linear motion. The ball path is relatively straight.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Masterful path control. Perfectly straight from set point to release.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      },
+      {
+        "name": "Efficiency",
+        "ranges": [
+          {
+            "feedback": "There is a lot of wasted energy in your shot. Simplify your motion.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair efficiency. Work on a smoother transition to release.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good energy transfer. Your shot feels fluid and controlled.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Perfect efficiency. Maximum power with minimum effort.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      },
+      {
+        "name": "Angle variance",
+        "ranges": [
+          {
+            "feedback": "Your release angle is very inconsistent. Stick to one arc.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair angle control. Aim for a more repeatable release.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good arc consistency. You're hitting your spots well.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Flawless angle repeatability. Your arc is identical every time.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      }
+    ],
+    "section": "Shot path"
+  },
+  {
+    "scores": [
+      {
+        "name": "Duration",
+        "ranges": [
+          {
+            "feedback": "You're dropping your arm immediately. Hold it 'in the cookie jar' for longer.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair follow-through duration. Hold it until the ball hits the rim.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good discipline. You're holding your release well.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Perfect follow-through. Held for the ideal amount of time.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      },
+      {
+        "name": "Elbow extension",
+        "ranges": [
+          {
+            "feedback": "Your arm is short-circuiting. Fully lock your elbow at the top.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair extension. Work on reaching higher toward the ceiling.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good arm extension. You're getting solid height on your shot.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Masterful extension. Perfectly locked elbow at release.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      },
+      {
+        "name": "Wrist angle",
+        "ranges": [
+          {
+            "feedback": "Your wrist flick is weak. Snap it down for better rotation.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair wrist snap. Relax your hand more after release.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good snap. The ball has a healthy amount of backspin.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Perfect wrist action. Clean, soft rotation on every shot.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      },
+      {
+        "name": "Hand steadiness",
+        "ranges": [
+          {
+            "feedback": "Your hand is shaking after release. Keep it rock solid.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair hand control. Avoid any extra movement after the ball leaves.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good hand steadiness. Your release is calm and controlled.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Imperceptible movement. A perfectly steady follow-through.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      },
+      {
+        "name": "Jump",
+        "ranges": [
+          {
+            "feedback": "Stick your landing! Your balance after the shot is crucial.",
+            "max": 0.375,
+            "min": 0.0
+          },
+          {
+            "feedback": "Fair post-shot balance. Try to land and stay set.",
+            "max": 0.625,
+            "min": 0.375
+          },
+          {
+            "feedback": "Good landing. You're ready for the rebound or next play.",
+            "max": 0.875,
+            "min": 0.625
+          },
+          {
+            "feedback": "Perfect balance. You're landing like a pro.",
+            "max": 1.0,
+            "min": 0.875
+          }
+        ]
+      }
+    ],
+    "section": "Follow through"
+  }
+]

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../providers/feedback_provider.dart';
 import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
 import 'dynamic_icon_image.dart';
@@ -96,19 +97,19 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                               ),
                               child: InkWell(
                                 onTap: () => Navigator.pop(context),
-                                child: const Row(
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 5),
-                                      child: FaIcon(FontAwesomeIcons.gripLines, color: Colors.black, size: 25),
+                                      padding: const EdgeInsets.symmetric(vertical: 5),
+                                      child: FaIcon(FontAwesomeIcons.gripLines, color: AppThemeManager.primaryText, size: 25),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
                           ),
-                          const Divider(height: 1, thickness: 1, color: Colors.black),
+                          const Divider(height: 1, thickness: 1),
                           Expanded(
                             child: Stack(
                               children: [
@@ -169,11 +170,11 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                         padding: const EdgeInsets.symmetric(vertical: 16),
                                         child: Text(
                                           'Details',
-                                          style: AppTextStyles.headlineSmall(context, color: Colors.black).copyWith(
+                                          style: AppTextStyles.headlineSmall(context, color: AppThemeManager.primaryText).copyWith(
                                             fontWeight: FontWeight.w900,
                                             letterSpacing: 1,
                                             shadows: [
-                                              const Shadow(color: Colors.white, blurRadius: 10),
+                                              Shadow(color: AppThemeManager.isDark ? Colors.black : Colors.white, blurRadius: 10),
                                             ],
                                           ),
                                         ),
@@ -186,7 +187,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                               flex: 2,
                                               child: Text('Area',
                                                   style: AppTextStyles.labelSmall(context,
-                                                          color: Colors.black.withValues(alpha: 0.5))
+                                                          color: AppThemeManager.secondaryText)
                                                       .copyWith(fontWeight: FontWeight.bold, letterSpacing: 1)),
                                             ),
                                             Expanded(
@@ -194,7 +195,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                               child: Text('Measured',
                                                   textAlign: TextAlign.center,
                                                   style: AppTextStyles.labelSmall(context,
-                                                          color: Colors.black.withValues(alpha: 0.5))
+                                                          color: AppThemeManager.secondaryText)
                                                       .copyWith(fontWeight: FontWeight.bold, letterSpacing: 1)),
                                             ),
                                             Expanded(
@@ -202,7 +203,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                               child: Text('Ideal',
                                                   textAlign: TextAlign.end,
                                                   style: AppTextStyles.labelSmall(context,
-                                                          color: Colors.black.withValues(alpha: 0.5))
+                                                          color: AppThemeManager.secondaryText)
                                                       .copyWith(fontWeight: FontWeight.bold, letterSpacing: 1)),
                                             ),
                                           ],
@@ -211,9 +212,9 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                       Container(
                                         margin: const EdgeInsets.symmetric(horizontal: 16),
                                         decoration: BoxDecoration(
-                                          color: Colors.white.withValues(alpha: 0.6),
+                                          color: AppThemeManager.secondaryBackground.withValues(alpha: 0.6),
                                           borderRadius: BorderRadius.circular(24),
-                                          border: Border.all(color: Colors.black.withValues(alpha: 0.08), width: 1.5),
+                                          border: Border.all(color: AppThemeManager.primaryText.withValues(alpha: 0.08), width: 1.5),
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(4),
@@ -253,7 +254,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                 Expanded(
                                                                     child: Text(item['name']?.toString() ?? '',
                                                                         style: AppTextStyles.bodyMedium(context,
-                                                                                color: Colors.black)
+                                                                                color: AppThemeManager.primaryText)
                                                                             .copyWith(fontWeight: FontWeight.w600),
                                                                         overflow: TextOverflow.ellipsis)),
                                                               ],
@@ -278,13 +279,13 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                         : val.toString();
                                                                   })(),
                                                                   style: AppTextStyles.bodyMedium(context,
-                                                                          color: Colors.black)
+                                                                          color: AppThemeManager.primaryText)
                                                                       .copyWith(fontWeight: FontWeight.w900),
                                                                 ),
                                                                 TextSpan(
                                                                   text: ' ${item['unit']?.toString() ?? ''}',
                                                                   style: AppTextStyles.labelSmall(context,
-                                                                      color: Colors.black.withValues(alpha: 0.5)),
+                                                                      color: AppThemeManager.secondaryText),
                                                                 ),
                                                               ]),
                                                             ),
@@ -294,7 +295,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                             child: Text(item['range']?.toString() ?? '',
                                                                 textAlign: TextAlign.end,
                                                                 style: AppTextStyles.bodySmall(context).copyWith(
-                                                                    color: Colors.black.withValues(alpha: 0.6),
+                                                                    color: AppThemeManager.secondaryText,
                                                                     fontWeight: FontWeight.w500)),
                                                           ),
                                                         ],
@@ -306,7 +307,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                           thickness: 1,
                                                           indent: 16,
                                                           endIndent: 16,
-                                                          color: Colors.black.withValues(alpha: 0.04)),
+                                                          color: AppThemeManager.primaryText.withValues(alpha: 0.04)),
                                                   ],
                                                 );
                                               }),
@@ -318,7 +319,13 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                         padding: const EdgeInsets.symmetric(vertical: 24),
                                         child: Text(
                                           'Scores',
-                                          style: AppTextStyles.titleLarge(context, color: Colors.black),
+                                          style: AppTextStyles.titleLarge(context, color: AppThemeManager.primaryText).copyWith(
+                                            fontWeight: FontWeight.w900,
+                                            letterSpacing: 1,
+                                            shadows: [
+                                              Shadow(color: AppThemeManager.isDark ? Colors.black : Colors.white, blurRadius: 10),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       Material(
@@ -327,14 +334,17 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                         child: Container(
                                           margin: const EdgeInsets.symmetric(horizontal: 16),
                                           decoration: BoxDecoration(
-                                            color: Colors.white.withValues(alpha: 0.4),
+                                            color: AppThemeManager.secondaryBackground.withValues(alpha: 0.4),
                                             borderRadius: BorderRadius.circular(16),
                                             border: Border.all(color: appColors.alternateTwo.withValues(alpha: .5)),
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 4),
                                             child: Builder(builder: (context) {
-                                              final scoresJson = (widget.sectionJson['scores'] as List<dynamic>?) ?? [];
+                                              final allScores = (widget.sectionJson['scores'] as List<dynamic>?) ?? [];
+                                              final scoresJson = allScores
+                                                  .where((s) => s['name']?.toString().toLowerCase() != 'total')
+                                                  .toList();
                                               return Column(
                                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                                 children: List.generate(scoresJson.length, (index) {
@@ -418,10 +428,30 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                       child: Padding(
                                                                         padding: const EdgeInsets.all(12),
                                                                         child: Text(
-                                                                            'Some feedback to download or I don\'t know how to gather',
+                                                                            ref.watch(feedbackProvider).maybeWhen(
+                                                                                  data: (templates) =>
+                                                                                      getFeedbackForScore(
+                                                                                    templates: templates,
+                                                                                    sectionName: widget
+                                                                                            .sectionJson['section']
+                                                                                            ?.toString() ??
+                                                                                        '',
+                                                                                    scoreName: scoresJsonItem['name']
+                                                                                            ?.toString() ??
+                                                                                        '',
+                                                                                    scoreValue: (scoresJsonItem['value']
+                                                                                                as num?)
+                                                                                            ?.toDouble() ??
+                                                                                        0.0,
+                                                                                  ),
+                                                                                  orElse: () =>
+                                                                                      'Gathering coaching tips...',
+                                                                                ),
                                                                             textAlign: TextAlign.start,
-                                                                            style: AppTextStyles.bodySmall(context)
-                                                                                .copyWith(fontStyle: FontStyle.italic)),
+                                                                            style: AppTextStyles.bodyMedium(context).copyWith(
+                                                                              fontWeight: FontWeight.w500,
+                                                                              color: AppThemeManager.primaryText,
+                                                                            )),
                                                                       ),
                                                                     ),
                                                                   ),
@@ -446,7 +476,7 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                           ),
                                         ),
                                       ),
-                                      const SizedBox(height: 32),
+                                      const SizedBox(height: 64),
                                     ],
                                   ),
                                 ),

@@ -110,8 +110,8 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
       },
       child: Scaffold(
         extendBodyBehindAppBar: true,
-        appBar: const MyAppBar(
-            style: MyAppBarStyle.backButtonTitleLeft, title: 'Analysis Results', backIcon: Icons.home),
+        appBar:
+            const MyAppBar(style: MyAppBarStyle.backButtonTitleLeft, title: 'Analysis Results', backIcon: Icons.home),
         body: Background(
           child: SafeArea(
             top: true,
@@ -155,7 +155,8 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                     child: Container(
                                                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                                                       decoration: BoxDecoration(
-                                                        color: AppThemeManager.secondaryBackground.withValues(alpha: 0.7),
+                                                        color:
+                                                            AppThemeManager.secondaryBackground.withValues(alpha: 0.7),
                                                         borderRadius: BorderRadius.circular(100),
                                                         border: Border.all(
                                                             color: Colors.white.withValues(alpha: 0.2), width: 1.5),
@@ -213,16 +214,16 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                   fillColor: Colors.transparent,
                                                   borderColor: Colors.transparent,
                                                   entryRadius: 0,
-                                                  dataEntries: List.generate(analysisResultListed.length,
-                                                      (_) => const RadarEntry(value: 1.0)),
+                                                  dataEntries: List.generate(
+                                                      analysisResultListed.length, (_) => const RadarEntry(value: 1.0)),
                                                 ),
                                                 // Scale constraint (Invisible 0.0 center point)
                                                 RadarDataSet(
                                                   fillColor: Colors.transparent,
                                                   borderColor: Colors.transparent,
                                                   entryRadius: 0,
-                                                  dataEntries: List.generate(analysisResultListed.length,
-                                                      (_) => const RadarEntry(value: 0.0)),
+                                                  dataEntries: List.generate(
+                                                      analysisResultListed.length, (_) => const RadarEntry(value: 0.0)),
                                                 ),
                                               ],
                                               radarBackgroundColor: Colors.transparent,
@@ -329,8 +330,7 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                   mainAxisSize: MainAxisSize.min,
                                                   children: [
                                                     Icon(Icons.touch_app_rounded,
-                                                        size: 14,
-                                                        color: AppThemeManager.primaryText),
+                                                        size: 14, color: AppThemeManager.primaryText),
                                                     const SizedBox(width: 8),
                                                     Text(
                                                       'TAP FOR DETAILS',
@@ -430,7 +430,9 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                 const SizedBox(height: 12),
                                                 Text(
                                                   analysisResultListedItem['section'].toString(),
-                                                  style: AppTextStyles.bodyMedium(context, color: AppThemeManager.primaryText).copyWith(
+                                                  style: AppTextStyles.bodyMedium(context,
+                                                          color: AppThemeManager.primaryText)
+                                                      .copyWith(
                                                     fontWeight: FontWeight.w600,
                                                   ),
                                                   textAlign: TextAlign.center,
@@ -444,10 +446,13 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                         )?['value'] as num?)
                                                             ?.toDouble() ??
                                                         0.0),
-                                                  ),
-                                                  style: AppTextStyles.bodySmall(context).copyWith(
-                                                    color:
-                                                        getBorderColor(kMyColors.toList(), analysisResultListedIndex),
+                                                  ).toUpperCase(),
+                                                  style: AppTextStyles.labelSmall(context,
+                                                          color: AppThemeManager.primaryText)
+                                                      .copyWith(
+                                                    fontWeight: FontWeight.w900,
+                                                    letterSpacing: 1.0,
+                                                    color: AppThemeManager.primaryText.withValues(alpha: 0.7),
                                                   ),
                                                 ),
                                                 const SizedBox(height: 8),
@@ -460,7 +465,8 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                                                           .toStringAsFixed(1)
                                                           .toString() ??
                                                       ''),
-                                                  style: AppTextStyles.titleLarge(context, color: AppThemeManager.primaryText),
+                                                  style: AppTextStyles.titleLarge(context,
+                                                      color: AppThemeManager.primaryText),
                                                 ),
                                               ],
                                             ),

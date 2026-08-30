@@ -1,7 +1,3 @@
-import '../logger.dart';
-
-final sortLogger = AppLogger.scope('Credits');
-
 /// Sort a JSON list through the "order" field
 List<dynamic> sortByOrder(List<dynamic> list) {
   // Make a copy so original is not modified

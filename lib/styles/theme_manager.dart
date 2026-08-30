@@ -40,6 +40,20 @@ class AppThemeManager extends ChangeNotifier {
     _notify();
   }
 
+  @visibleForTesting
+  static void reset() {
+    brightness = AppBrightness.system;
+    currentColors = theBay;
+    notifier.value = 0;
+  }
+
+  /// Resets the theme to system defaults
+  static void clearPreferences() {
+    brightness = AppBrightness.system;
+    currentColors = theBay;
+    _notify();
+  }
+
   /// Public bridge to protected notifyListeners()
   void triggerRefresh() {
     notifyListeners();
@@ -74,8 +88,11 @@ class AppThemeManager extends ChangeNotifier {
       case AppBrightness.dark:
         return true;
       case AppBrightness.system:
-        final windowBrightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
-        return windowBrightness == Brightness.dark;
+        try {
+          return WidgetsBinding.instance.platformDispatcher.platformBrightness == Brightness.dark;
+        } catch (_) {
+          return false;
+        }
     }
   }
 

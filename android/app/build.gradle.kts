@@ -45,6 +45,10 @@ android {
         }
         debug {
             isMinifyEnabled = false
+            // Enable coverage for unit tests
+            enableUnitTestCoverage = true
+            // Enable coverage for instrumentation tests
+            enableAndroidTestCoverage = true
         }
     }
 

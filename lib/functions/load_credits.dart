@@ -11,7 +11,7 @@ final creditsLogger = AppLogger.scope('Credits');
 
 /// Loads a JSON array of credits from local assets or remote Supabase
 /// storage.
-Future<List<Credit>> loadCredits() async {
+Future<List<Credit>> loadCredits({http.Client? client}) async {
   const localPath = 'assets/json/credits.json';
   const remoteUrl = '$supabaseDomain/storage/v1/object/public/assets/json/credits.json';
 
@@ -28,13 +28,15 @@ Future<List<Credit>> loadCredits() async {
   // Try remote if local not available
   if (jsonString == null || jsonString.isEmpty) {
     try {
-      final response = await http.get(Uri.parse(remoteUrl));
+      final httpClient = client ?? http.Client();
+      final response = await httpClient.get(Uri.parse(remoteUrl));
       if (response.statusCode == 200 && response.body.isNotEmpty) {
         jsonString = response.body;
         creditsLogger.i('Loaded remote credits.json');
       } else {
         creditsLogger.w('Failed to load remote credits.json: ${response.statusCode}');
       }
+      if (client == null) httpClient.close();
     } catch (e, stack) {
       creditsLogger.e('Error fetching remote JSON', error: e, stackTrace: stack);
     }
@@ -43,7 +45,7 @@ Future<List<Credit>> loadCredits() async {
   // Check content
   if (jsonString == null || jsonString.isEmpty) {
     creditsLogger.w('No JSON data found');
-    return [];
+    return <Credit>[];
   }
 
   // Parse content
@@ -54,6 +56,6 @@ Future<List<Credit>> loadCredits() async {
     return data.cast<Map<String, dynamic>>().map((json) => Credit.fromJson(json)).toList();
   } catch (e, stack) {
     creditsLogger.e('Failed to parse credits JSON', error: e, stackTrace: stack);
-    return [];
+    return <Credit>[];
   }
 }

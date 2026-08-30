@@ -55,7 +55,7 @@ class _HelpPageState extends ConsumerState<HelpPage> with TickerProviderStateMix
     final appColors = AppThemeManager.currentColors;
 
     // Watch the FAQs from state
-    var allFaqs = ref.watch(appStateProvider.select((s) => s.loadedFaqs)) ?? [];
+    var allFaqs = ref.watch(appStateProvider.select((s) => s.loadedFaqs)) ?? <Map<String, dynamic>>[];
 
     _logger.d('Initial FAQs from state: ${allFaqs.length}');
 

@@ -43,9 +43,10 @@ Widget buildDarkButton(BuildContext context) {
 @widgetbook.UseCase(name: 'LightButton', type: LightButton)
 Widget buildLightButton(BuildContext context) {
   return LightButton(
-      text: 'Example',
-      icon: FaIcon(FontAwesomeIcons.google, size: 15),
-      onPressed: () async {});
+    text: 'Example',
+    icon: FaIcon(FontAwesomeIcons.google, size: 15),
+    onPressed: () async {},
+  );
 }
 
 @widgetbook.UseCase(name: 'TransparentButton', type: TransparentButton)
@@ -66,14 +67,17 @@ Widget buildIconActionButton(BuildContext context) {
 
 @widgetbook.UseCase(name: 'SingleChoiceChip', type: SingleChoiceChip)
 Widget buildSingleChoiceChip(BuildContext context) {
-  final isSelected =
-  context.knobs.boolean(label: 'Selected', initialValue: false);
+  final isSelected = context.knobs.boolean(
+    label: 'Selected',
+    initialValue: false,
+  );
 
   return SingleChoiceChip(
-      label: 'Sample',
-      icon: Icons.paypal,
-      selected: isSelected,
-      onTap: () async {});
+    label: 'Sample',
+    icon: Icons.paypal,
+    selected: isSelected,
+    onTap: () async {},
+  );
 }
 
 @widgetbook.UseCase(name: 'Dropdown', type: Dropdown)
@@ -104,25 +108,30 @@ Widget buildToggleIcon(BuildContext context) {
 @widgetbook.UseCase(name: 'Text', type: Text)
 Widget buildText(BuildContext context) {
   return ValueListenableBuilder(
-      valueListenable: AppThemeManager.notifier,
-      builder: (_, _, _) {
-        return Container(
-            color: AppThemeManager.primaryBackground,
-            child: Text('some text', style: AppTextStyles.bodyMedium(context)));
-      });
+    valueListenable: AppThemeManager.notifier,
+    builder: (_, _, _) {
+      return Container(
+        color: AppThemeManager.primaryBackground,
+        child: Text('some text', style: AppTextStyles.bodyMedium(context)),
+      );
+    },
+  );
 }
 
 @widgetbook.UseCase(name: 'CustomTextSpan', type: CustomTextSpan)
 Widget buildCustomTextSpan(BuildContext context) {
   return RichText(
-      text:
-      CustomTextSpan(context, text: 'Sample', style: TextStyle(height: 2)));
+    text: CustomTextSpan(context, text: 'Sample', style: TextStyle(height: 2)),
+  );
 }
 
 @widgetbook.UseCase(name: 'InputField', type: InputField)
 Widget buildInputField(BuildContext context) {
   return InputField(
-      controller: TextEditingController(), onChanged: (_) {}, label: 'Sample');
+    controller: TextEditingController(),
+    onChanged: (_) {},
+    label: 'Sample',
+  );
 }
 
 @widgetbook.UseCase(name: 'SettingsRow', type: SettingsRow)
@@ -136,9 +145,10 @@ Widget buildSettingsRow(BuildContext context) {
 
   return SettingsRow(
     item: SettingsItem(
-        title: 'Sample',
-        background: settingsItemBackgrounds[backgroundIndex],
-        onTap: (_) async {}),
+      title: 'Sample',
+      background: settingsItemBackgrounds[backgroundIndex],
+      onTap: (_) async {},
+    ),
   );
 }
 
@@ -146,7 +156,8 @@ Widget buildSettingsRow(BuildContext context) {
 Widget buildVideoPreview(BuildContext context) {
   return VideoPreview(
     source: NetworkVideoSource(
-        'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4'),
+      'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4',
+    ),
     autoPlay: false,
   );
 }
@@ -171,13 +182,21 @@ Widget buildDynamicAssetAnimation(BuildContext context) {
     labelBuilder: (value) => value,
   );
   return DynamicAsset(
-      width: 200, height: 200, name: objects[assetType]!, type: assetType);
+    width: 200,
+    height: 200,
+    name: objects[assetType]!,
+    type: assetType,
+  );
 }
 
 @widgetbook.UseCase(name: 'NavBar', type: NavBar)
 Widget buildNavBar(BuildContext context) {
-  final index = context.knobs.int
-      .slider(label: 'Active tab', initialValue: 0, min: 0, max: 3);
+  final index = context.knobs.int.slider(
+    label: 'Active tab',
+    initialValue: 0,
+    min: 0,
+    max: 3,
+  );
 
   return NavBarView(
     currentIndex: index,
@@ -194,7 +213,7 @@ Widget buildMyAppBarTitleOnly(BuildContext context) {
       MyAppBarStyle.titleOnly,
       MyAppBarStyle.titleWithProfileImage,
       MyAppBarStyle.backButtonTitleLeft,
-      MyAppBarStyle.backButtonTitleCentered
+      MyAppBarStyle.backButtonTitleCentered,
     ],
     initialOption: MyAppBarStyle.titleOnly,
     labelBuilder: (value) => value.name,
@@ -208,7 +227,7 @@ Widget buildMyAppBarTitleOnly(BuildContext context) {
         height: 100,
         onProfilePressed: () {},
         profileImageUrl:
-        'https://yavuzceliker.github.io/sample-images/image-1021.jpg',
+            'https://yavuzceliker.github.io/sample-images/image-1021.jpg',
       ),
       body: Center(child: Text('Body content here')),
     );
@@ -243,23 +262,28 @@ Widget buildBoxWithShadow(BuildContext context) {
   );
 
   return Container(
-      color: AppThemeManager.primaryBackground,
-      child: Center(
-          child: Container(
-              width: 200,
-              height: 200,
-              decoration: BoxWithShadow(
-                  border: Border.all(color: borderColors[borderIndex])))));
+    color: AppThemeManager.primaryBackground,
+    child: Center(
+      child: Container(
+        width: 200,
+        height: 200,
+        decoration: BoxWithShadow(
+          border: Border.all(color: borderColors[borderIndex]),
+        ),
+      ),
+    ),
+  );
 }
 
 @widgetbook.UseCase(name: 'StatsContainer', type: StatsContainer)
 Widget buildStatsContainer(BuildContext context) {
   final appColors = AppThemeManager.currentColors;
   return StatsContainer(
-      borderColor: appColors.alternateTwo,
-      title: 'Sample',
-      iconName: 'jump',
-      text: 'Sample1');
+    borderColor: appColors.alternateTwo,
+    title: 'Sample',
+    iconName: 'jump',
+    text: 'Sample1',
+  );
 }
 
 @widgetbook.UseCase(name: 'FaqItem', type: FaqItem)
@@ -278,19 +302,22 @@ Widget buildFaqItem(BuildContext context) {
 @widgetbook.UseCase(name: 'DebugItem', type: DebugItem)
 Widget buildDebugItem(BuildContext context) {
   return DebugItem(
-      width: 300,
-      title: 'Sample Utility',
-      subtitle: 'This is a subtitle for the utility',
-      icon: Icons.bug_report_rounded,
-      buttonText: 'Action',
-      onPressed: () async {});
+    width: 300,
+    title: 'Sample Utility',
+    subtitle: 'This is a subtitle for the utility',
+    icon: Icons.bug_report_rounded,
+    buttonText: 'Action',
+    onPressed: () async {},
+  );
 }
 
 @widgetbook.UseCase(name: 'SectionDetails', type: SectionDetails)
 Widget buildSectionDetails(BuildContext context) {
   return SectionDetails(
-      sectionJson: processAnalysisResults(
-          jsonDecode(kDefaultResultsJson)["analysis"])[0]);
+    sectionJson: processAnalysisResults(
+      jsonDecode(kDefaultResultsJson)["analysis"],
+    )[0],
+  );
 }
 
 @widgetbook.UseCase(name: 'Theme Color Test', type: ThemeTestPage)

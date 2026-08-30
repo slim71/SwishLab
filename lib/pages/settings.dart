@@ -5,16 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 
 import '../constants.dart';
 import '../functions/add_animation.dart';
 import '../functions/load_json_remote_or_app_state.dart';
 import '../logger.dart';
+import '../providers/auth_providers.dart';
 import '../providers/debug_provider.dart';
-import '../providers/supabase_provider.dart';
 import '../providers/users_provider.dart';
-import '../router/central_routing.dart' show rootScaffoldMessengerKey;
+import '../router/central_routing.dart' show routerProvider, rootScaffoldMessengerKey;
 import '../state/app_state.dart';
 import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
@@ -72,7 +71,7 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
           title: 'Appearance',
           icon: Icons.palette_rounded,
           onTap: (context) async {
-            context.pushNamed('appearance');
+            ref.read(routerProvider).pushNamed('appearance');
           },
         ),
       ],
@@ -84,7 +83,7 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
             title: 'User Info',
             icon: Icons.person_rounded,
             onTap: (context) async {
-              context.pushNamed('user');
+              ref.read(routerProvider).pushNamed('user');
             }),
       ],
     ),
@@ -95,14 +94,14 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
           title: 'Getting Started',
           icon: Icons.rocket_launch_rounded,
           onTap: (context) async {
-            context.pushNamed('getting-started');
+            ref.read(routerProvider).pushNamed('getting-started');
           },
         ),
         _SettingsItemData(
           title: 'About Us',
           icon: Icons.info_rounded,
           onTap: (context) async {
-            context.pushNamed('about');
+            ref.read(routerProvider).pushNamed('about');
           },
         ),
         _SettingsItemData(
@@ -118,7 +117,7 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
             appStateNotifier.setLoadedFaqs(faqsJsonList!);
 
             if (!context.mounted) return;
-            context.pushNamed('help');
+            ref.read(routerProvider).pushNamed('help');
 
             setState(() {});
           },
@@ -127,7 +126,7 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
           title: 'Credits',
           icon: Icons.favorite_rounded,
           onTap: (context) async {
-            context.pushNamed('credits');
+            ref.read(routerProvider).pushNamed('credits');
           },
         ),
       ],
@@ -139,35 +138,35 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
           title: 'Privacy Policy',
           icon: Icons.privacy_tip_rounded,
           onTap: (context) async {
-            context.pushNamed('document', pathParameters: {'name': 'PRIVACY'});
+            ref.read(routerProvider).pushNamed('document', pathParameters: {'name': 'PRIVACY'});
           },
         ),
         _SettingsItemData(
           title: 'Terms & Conditions',
           icon: Icons.description_rounded,
           onTap: (context) async {
-            context.pushNamed('document', pathParameters: {'name': 'TAC'});
+            ref.read(routerProvider).pushNamed('document', pathParameters: {'name': 'TAC'});
           },
         ),
         _SettingsItemData(
           title: 'EULA',
           icon: Icons.gavel_rounded,
           onTap: (context) async {
-            context.pushNamed('document', pathParameters: {'name': 'EULA'});
+            ref.read(routerProvider).pushNamed('document', pathParameters: {'name': 'EULA'});
           },
         ),
         _SettingsItemData(
           title: 'Disclaimer',
           icon: Icons.warning_rounded,
           onTap: (context) async {
-            context.pushNamed('document', pathParameters: {'name': 'DISCLAIMER'});
+            ref.read(routerProvider).pushNamed('document', pathParameters: {'name': 'DISCLAIMER'});
           },
         ),
         _SettingsItemData(
           title: 'Acceptable Use Policy',
           icon: Icons.rule_rounded,
           onTap: (context) async {
-            context.pushNamed('document', pathParameters: {'name': 'USE'});
+            ref.read(routerProvider).pushNamed('document', pathParameters: {'name': 'USE'});
           },
         ),
       ],
@@ -179,7 +178,7 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
           title: 'Debug utilities',
           icon: Icons.bug_report_rounded,
           onTap: (context) async {
-            context.pushNamed('debug');
+            ref.read(routerProvider).pushNamed('debug');
           },
         ),
       ],
@@ -441,14 +440,15 @@ class _SettingsState extends ConsumerState<Settings> with TickerProviderStateMix
                             LightButton(
                               onPressed: () async {
                                 logger.w('LOGOUT triggered. Resetting states...');
-                                final supabase = ref.read(supabaseProvider);
+                                final authService = ref.read(authServiceProvider);
                                 final debugNotifier = ref.read(debugProvider.notifier);
                                 final appStateNotifier = ref.read(appStateProvider.notifier);
                                 final container = ProviderScope.containerOf(context);
 
-                                await supabase.auth.signOut();
+                                await authService.signOut();
                                 await debugNotifier.reset();
                                 appStateNotifier.reset();
+                                AppThemeManager.clearPreferences(); // Clear theme preferences
                                 container.invalidate(appUserProvider);
                                 container.invalidate(debugProvider);
                                 logger.i('Logout reset complete.');

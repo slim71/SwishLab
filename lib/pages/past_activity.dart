@@ -38,7 +38,8 @@ class _PastActivityState extends ConsumerState<PastActivity> {
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Text(
                     'All activity from this past month.',
-                    style: AppTextStyles.labelMedium(context, color: AppThemeManager.primaryText.withValues(alpha: 0.6)),
+                    style:
+                        AppTextStyles.labelMedium(context, color: AppThemeManager.primaryText.withValues(alpha: 0.6)),
                   ),
                 ),
 

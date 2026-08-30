@@ -102,7 +102,8 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 5),
-                                      child: FaIcon(FontAwesomeIcons.gripLines, color: AppThemeManager.primaryText, size: 25),
+                                      child: FaIcon(FontAwesomeIcons.gripLines,
+                                          color: AppThemeManager.primaryText, size: 25),
                                     ),
                                   ],
                                 ),
@@ -170,11 +171,15 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                         padding: const EdgeInsets.symmetric(vertical: 16),
                                         child: Text(
                                           'Details',
-                                          style: AppTextStyles.headlineSmall(context, color: AppThemeManager.primaryText).copyWith(
+                                          style:
+                                              AppTextStyles.headlineSmall(context, color: AppThemeManager.primaryText)
+                                                  .copyWith(
                                             fontWeight: FontWeight.w900,
                                             letterSpacing: 1,
                                             shadows: [
-                                              Shadow(color: AppThemeManager.isDark ? Colors.black : Colors.white, blurRadius: 10),
+                                              Shadow(
+                                                  color: AppThemeManager.isDark ? Colors.black : Colors.white,
+                                                  blurRadius: 10),
                                             ],
                                           ),
                                         ),
@@ -214,13 +219,14 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                         decoration: BoxDecoration(
                                           color: AppThemeManager.secondaryBackground.withValues(alpha: 0.6),
                                           borderRadius: BorderRadius.circular(24),
-                                          border: Border.all(color: AppThemeManager.primaryText.withValues(alpha: 0.08), width: 1.5),
+                                          border: Border.all(
+                                              color: AppThemeManager.primaryText.withValues(alpha: 0.08), width: 1.5),
                                         ),
                                         child: Padding(
                                           padding: const EdgeInsets.all(4),
                                           child: Builder(builder: (context) {
                                             final List<dynamic> sectionFields =
-                                                (widget.sectionJson['fields'] as List<dynamic>? ?? []);
+                                                (widget.sectionJson['fields'] as List<dynamic>? ?? <dynamic>[]);
                                             return Column(
                                               crossAxisAlignment: CrossAxisAlignment.stretch,
                                               children: List.generate(sectionFields.length, (index) {
@@ -268,12 +274,15 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                 TextSpan(
                                                                   text: (() {
                                                                     final val = item['value'];
-                                                                    if (val == null) return 'NA';
+                                                                    if (val == null) {
+                                                                      return 'NA';
+                                                                    }
                                                                     double? dVal;
                                                                     if (val is num) {
                                                                       dVal = val.toDouble();
-                                                                    } else if (val is String)
+                                                                    } else if (val is String) {
                                                                       dVal = double.tryParse(val);
+                                                                    }
                                                                     return dVal != null
                                                                         ? dVal.toStringAsFixed(1)
                                                                         : val.toString();
@@ -319,11 +328,14 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                         padding: const EdgeInsets.symmetric(vertical: 24),
                                         child: Text(
                                           'Scores',
-                                          style: AppTextStyles.titleLarge(context, color: AppThemeManager.primaryText).copyWith(
+                                          style: AppTextStyles.titleLarge(context, color: AppThemeManager.primaryText)
+                                              .copyWith(
                                             fontWeight: FontWeight.w900,
                                             letterSpacing: 1,
                                             shadows: [
-                                              Shadow(color: AppThemeManager.isDark ? Colors.black : Colors.white, blurRadius: 10),
+                                              Shadow(
+                                                  color: AppThemeManager.isDark ? Colors.black : Colors.white,
+                                                  blurRadius: 10),
                                             ],
                                           ),
                                         ),
@@ -341,7 +353,8 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                           child: Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 4),
                                             child: Builder(builder: (context) {
-                                              final allScores = (widget.sectionJson['scores'] as List<dynamic>?) ?? [];
+                                              final allScores =
+                                                  (widget.sectionJson['scores'] as List<dynamic>?) ?? <dynamic>[];
                                               final scoresJson = allScores
                                                   .where((s) => s['name']?.toString().toLowerCase() != 'total')
                                                   .toList();
@@ -383,12 +396,15 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                   children: [
                                                                     Text((() {
                                                                       final val = scoresJsonItem['value'];
-                                                                      if (val == null) return 'NA';
+                                                                      if (val == null) {
+                                                                        return 'NA';
+                                                                      }
                                                                       double? dVal;
                                                                       if (val is num) {
                                                                         dVal = val.toDouble();
-                                                                      } else if (val is String)
+                                                                      } else if (val is String) {
                                                                         dVal = double.tryParse(val);
+                                                                      }
                                                                       return dVal != null
                                                                           ? dVal.toStringAsFixed(2)
                                                                           : val.toString();
@@ -439,16 +455,25 @@ class _SectionDetailsState extends ConsumerState<SectionDetails> {
                                                                                     scoreName: scoresJsonItem['name']
                                                                                             ?.toString() ??
                                                                                         '',
-                                                                                    scoreValue: (scoresJsonItem['value']
-                                                                                                as num?)
-                                                                                            ?.toDouble() ??
-                                                                                        0.0,
+                                                                                    scoreValue: (() {
+                                                                                      final val =
+                                                                                          scoresJsonItem['value'];
+                                                                                      if (val is num) {
+                                                                                        return val.toDouble();
+                                                                                      }
+                                                                                      if (val is String) {
+                                                                                        return double.tryParse(val) ??
+                                                                                            0.0;
+                                                                                      }
+                                                                                      return 0.0;
+                                                                                    })(),
                                                                                   ),
                                                                                   orElse: () =>
                                                                                       'Gathering coaching tips...',
                                                                                 ),
                                                                             textAlign: TextAlign.start,
-                                                                            style: AppTextStyles.bodyMedium(context).copyWith(
+                                                                            style: AppTextStyles.bodyMedium(context)
+                                                                                .copyWith(
                                                                               fontWeight: FontWeight.w500,
                                                                               color: AppThemeManager.primaryText,
                                                                             )),

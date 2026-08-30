@@ -119,14 +119,14 @@ class EndpointAddressApi {
                   return ResultsResponse(first);
                 }
                 // If it's not a map, wrap it so ResultsResponse can still be created
-                return ResultsResponse({'data': decoded});
+                return ResultsResponse(<String, dynamic>{'data': decoded});
               }
-              return ResultsResponse({'data': <dynamic>[]});
+              return ResultsResponse(<String, dynamic>{'data': <dynamic>[]});
             } else if (decoded is Map<String, dynamic>) {
               return ResultsResponse(decoded);
             } else {
               _logger.w('Decoded data is of unexpected type: ${decoded.runtimeType}');
-              return ResultsResponse({'raw_data': decoded});
+              return ResultsResponse(<String, dynamic>{'raw_data': decoded});
             }
           }
           currentEvent = null;

@@ -42,6 +42,36 @@ final rootNavigatorKey = GlobalKey<NavigatorState>();
 final rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 final routingLogger = AppLogger.scope('Router');
 
+/// Public routes that can be accessed without authentication.
+const publicRoutes = ['/splash', '/login', '/signup'];
+
+/// Central redirection logic for the application.
+///
+/// Decides where to send the user based on:
+/// - [status]: Current authentication/connectivity status.
+/// - [location]: The destination URL.
+/// - [hasOpenedBefore]: Whether the user has completed onboarding.
+String? rootRedirect(AppAuthStatus status, String location, bool hasOpenedBefore) {
+  switch (status) {
+    case AppAuthStatus.loading:
+      if (location == '/' || location == '/loading') return null;
+      return '/loading';
+
+    case AppAuthStatus.offline:
+      return null;
+
+    case AppAuthStatus.unauthenticated:
+      return publicRoutes.contains(location) ? null : '/splash';
+
+    case AppAuthStatus.authenticated:
+      // If the user is on a public page but is already logged in, send them home/guide
+      if (publicRoutes.contains(location) || location == '/' || location == '/loading') {
+        return hasOpenedBefore ? '/home' : '/settings/getting-started';
+      }
+      return null;
+  }
+}
+
 // Basically all app's navigation routes
 final routerProvider = Provider<GoRouter>((ref) {
   final refreshNotifier = ref.watch(routerRefreshProvider);
@@ -53,35 +83,13 @@ final routerProvider = Provider<GoRouter>((ref) {
     observers: [_RouterObserver()],
     redirect: (context, state) {
       final status = ref.read(appStatusProvider);
-      final location = state.matchedLocation;
-
-      // Public routes
-      const publicRoutes = ['/splash', '/login', '/signup'];
-
-      switch (status) {
-        case AppAuthStatus.loading:
-          if (location == '/' || location == '/loading') return null;
-          return '/loading';
-
-        case AppAuthStatus.offline:
-          return null;
-
-        case AppAuthStatus.unauthenticated:
-          return publicRoutes.contains(location) ? null : '/splash';
-
-        case AppAuthStatus.authenticated:
-          // If the user is on a public page but is already logged in, send them home/guide
-          if (publicRoutes.contains(location) || location == '/' || location == '/loading') {
-            final hasOpened = ref.read(appStateProvider).hasOpenedBefore;
-            return hasOpened ? '/home' : '/settings/getting-started';
-          }
-          return null;
-      }
+      final hasOpened = ref.read(appStateProvider).hasOpenedBefore;
+      return rootRedirect(status, state.matchedLocation, hasOpened);
     },
     errorBuilder: (context, state) {
-      final error = state.error;
-      routingLogger.e('Routing error on ${state.uri}', error: error, stackTrace: StackTrace.current);
-      return ErrorPage(message: error?.toString(), onHome: () => context.go('/'));
+      final String uri = state.uri.toString();
+      routingLogger.e('Routing error on $uri', error: state.error);
+      return ErrorPage(message: state.error?.toString(), onHome: () => context.go('/'));
     },
     routes: [
       GoRoute(
@@ -221,20 +229,24 @@ final routerProvider = Provider<GoRouter>((ref) {
       ),
       GoRoute(
         name: 'pre-upload',
-        path: '/pre-upload',
+        path: '/pre-upload/:perspective',
         builder: (context, state) {
-          final extra = state.extra;
+          final perspectiveStr = state.pathParameters['perspective'];
+          final extra = state.extra as Map<String, dynamic>?;
 
-          // Defensive guard
-          if (extra is! Map<String, dynamic>) {
+          // Defensive guard for video file
+          if (extra == null || extra['videoFile'] is! File) {
             return const SizedBox.shrink();
           }
 
-          final originFunc = extra['originFunc'] as OriginFunc;
+          final perspective = OriginFunc.values.firstWhere(
+            (e) => e.name == perspectiveStr,
+            orElse: () => OriginFunc.front,
+          );
           final File videoFile = extra['videoFile'] as File;
 
           return VideoPreUpload(
-            perspective: originFunc,
+            perspective: perspective,
             videoFile: videoFile,
           );
         },

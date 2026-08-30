@@ -43,8 +43,8 @@ class _DynamicAssetState extends State<DynamicAsset> {
     'gif': AssetType.gif,
   };
 
-  List<String> _candidates = const [];
-  final Set<String> _failedPaths = {};
+  List<String> _candidates = const <String>[];
+  final Set<String> _failedPaths = <String>{};
   int _currentIndex = 0;
 
   late String normalizedName;

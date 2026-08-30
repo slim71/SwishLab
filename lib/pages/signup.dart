@@ -2,13 +2,13 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../functions/add_animation.dart';
 import '../models/users_row.dart';
 import '../providers/auth_providers.dart';
 import '../providers/users_provider.dart';
+import '../router/central_routing.dart';
 import '../state/app_state.dart';
 import '../styles/styles.dart';
 import '../widgets/background.dart';
@@ -331,8 +331,7 @@ class _SignupPageState extends ConsumerState<SignupPage> with TickerProviderStat
                                               ref.invalidate(appUserProvider);
 
                                               // Navigate to root to trigger correct redirect
-                                              if (!context.mounted) return;
-                                              context.go('/');
+                                              ref.read(routerProvider).go('/');
                                             } on AuthException catch (e) {
                                               if (!context.mounted) return;
 
@@ -378,7 +377,7 @@ class _SignupPageState extends ConsumerState<SignupPage> with TickerProviderStat
                                           padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
                                           child: InkWell(
                                             onTap: () async {
-                                              context.goNamed('login');
+                                              ref.read(routerProvider).goNamed('login');
                                             },
                                             child: RichText(
                                               textScaler: MediaQuery.of(context).textScaler,

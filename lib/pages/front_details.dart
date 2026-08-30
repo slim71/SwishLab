@@ -6,9 +6,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../router/central_routing.dart';
 import '../functions/add_animation.dart';
 import '../models/custom_enums.dart';
 import '../styles/styles.dart';
@@ -111,7 +111,7 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                               backgroundColor: appColors.primaryOne.withValues(alpha: 0.8),
                               iconSize: 24,
                               onPressed: () async {
-                                context.pop();
+                                ref.read(routerProvider).pop();
                               },
                             ),
                             fade: FadeConfig(duration: 300.ms),
@@ -137,15 +137,19 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
                                   onPressed: () async {
                                     final picker = ImagePicker();
 
-                                    // Pick video
-                                    final XFile? video = await picker.pickVideo(
-                                      source: ImageSource.gallery,
-                                    );
-                                    if (!context.mounted || video == null) return;
-
                                     setState(() => isDataUploading = true);
 
                                     try {
+                                      // Pick video
+                                      final XFile? video = await picker.pickVideo(
+                                        source: ImageSource.gallery,
+                                      );
+
+                                      if (!context.mounted || video == null) {
+                                        setState(() => isDataUploading = false);
+                                        return;
+                                      }
+
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         const SnackBar(content: Text('Uploading file...')),
                                       );
@@ -154,23 +158,29 @@ class _FrontDetailsState extends ConsumerState<FrontDetails> with TickerProvider
 
                                       // Save locally or prepare preview path
                                       chosenFrontVideo = videoFile;
+
+                                      if (context.mounted) {
+                                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                      }
                                     } catch (e) {
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(content: Text('Failed to upload data')),
-                                      );
+                                      if (context.mounted) {
+                                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('Failed to upload data')),
+                                        );
+                                      }
                                       return;
                                     } finally {
-                                      ScaffoldMessenger.of(context).hideCurrentSnackBar();
                                       setState(() => isDataUploading = false);
                                     }
 
                                     if (chosenFrontVideo == null) return;
 
                                     // Navigate
-                                    context.pushNamed(
+                                    ref.read(routerProvider).pushNamed(
                                       'pre-upload',
+                                      pathParameters: {'perspective': OriginFunc.front.name},
                                       extra: {
-                                        'originFunc': OriginFunc.front,
                                         'videoFile': chosenFrontVideo!,
                                       },
                                     );

@@ -125,7 +125,9 @@ class _CreditsState extends ConsumerState<Credits> {
                         ),
                         itemCount: creditsList.length,
                         itemBuilder: (context, index) {
-                          if (index >= creditsList.length) return const SizedBox.shrink();
+                          if (index >= creditsList.length) {
+                            return const SizedBox.shrink();
+                          }
                           final creditsItem = creditsList[index];
 
                           return Container(

@@ -58,4 +58,27 @@ class UserRowData {
       shootingHand: shootingHand ?? this.shootingHand,
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is UserRowData &&
+        other.userID == userID &&
+        other.firstName == firstName &&
+        other.lastName == lastName &&
+        other.eMail == eMail &&
+        other.profilePicture == profilePicture &&
+        other.registrationDate == registrationDate &&
+        other.shootingHand == shootingHand;
+  }
+
+  @override
+  int get hashCode =>
+      userID.hashCode ^
+      firstName.hashCode ^
+      lastName.hashCode ^
+      eMail.hashCode ^
+      profilePicture.hashCode ^
+      registrationDate.hashCode ^
+      shootingHand.hashCode;
 }

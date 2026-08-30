@@ -3,10 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../models/users_row.dart';
 import '../providers/users_provider.dart';
+import '../router/central_routing.dart';
 import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
 import '../widgets/background.dart';
@@ -52,12 +52,15 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup> with Ti
                               color: Colors.greenAccent.withValues(alpha: 0.1),
                               shape: BoxShape.circle,
                             ),
-                          ).animate(onPlay: (c) => c.repeat()).scale(
+                          )
+                              .animate(onPlay: (c) => c.repeat())
+                              .scale(
                                 duration: 2.seconds,
                                 begin: const Offset(1, 1),
                                 end: const Offset(1.4, 1.4),
                                 curve: Curves.easeOut,
-                              ).fade(begin: 0.3, end: 0.0),
+                              )
+                              .fade(begin: 0.3, end: 0.0),
                           Container(
                             width: 80,
                             height: 80,
@@ -96,7 +99,8 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup> with Ti
 
                       Text(
                         'Your account is ready.',
-                        style: AppTextStyles.labelLarge(context, color: AppThemeManager.primaryText.withValues(alpha: 0.6)),
+                        style: AppTextStyles.labelLarge(context,
+                            color: AppThemeManager.primaryText.withValues(alpha: 0.6)),
                       ).animate().fade(delay: 300.ms).slideY(begin: 0.2),
 
                       const SizedBox(height: 32),
@@ -114,7 +118,8 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup> with Ti
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.email_outlined, size: 16, color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
+                            Icon(Icons.email_outlined,
+                                size: 16, color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
                             const SizedBox(width: 8),
                             Text(
                               userInfo?.email ?? 'na@email.com',
@@ -132,7 +137,8 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup> with Ti
                         textAlign: TextAlign.center,
                         text: CustomTextSpan(
                           context,
-                          style: AppTextStyles.bodySmall(context, color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
+                          style: AppTextStyles.bodySmall(context,
+                              color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
                           children: [
                             CustomTextSpan(context, text: 'Tip: You can customize your shooting hand in '),
                             CustomTextSpan(
@@ -148,7 +154,7 @@ class _SuccessAfterSignupState extends ConsumerState<SuccessAfterSignup> with Ti
                       const SizedBox(height: 32),
 
                       DarkButton(
-                        onPressed: () => context.goNamed('getting-started'),
+                        onPressed: () => ref.read(routerProvider).goNamed('getting-started'),
                         text: 'Get Started',
                       ).animate().fade(delay: 800.ms).slideY(begin: 0.2),
                     ],

@@ -96,14 +96,17 @@ class _AppearanceSettingsState extends ConsumerState<AppearanceSettings> {
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: AppThemeManager.primaryText.withValues(alpha: 0.05)),
         ),
-        child: SwitchListTile.adaptive(
-          title: Text(title, style: AppTextStyles.titleMedium(context)),
-          subtitle: Text(subtitle, style: AppTextStyles.bodySmall(context, color: AppThemeManager.secondaryText)),
-          value: value,
-          onChanged: onChanged,
-          activeTrackColor: AppThemeManager.currentColors.primaryOne,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        child: Material(
+          color: Colors.transparent,
+          child: SwitchListTile.adaptive(
+            title: Text(title, style: AppTextStyles.titleMedium(context)),
+            subtitle: Text(subtitle, style: AppTextStyles.bodySmall(context, color: AppThemeManager.secondaryText)),
+            value: value,
+            onChanged: onChanged,
+            activeTrackColor: AppThemeManager.currentColors.primaryOne,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          ),
         ),
       ),
     );

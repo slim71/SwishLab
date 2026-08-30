@@ -4,11 +4,11 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../models/custom_enums.dart';
 import '../models/video_source.dart';
 import '../providers/users_provider.dart';
+import '../router/central_routing.dart';
 import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
 import '../widgets/app_bar.dart';
@@ -271,7 +271,7 @@ class _VideoPreUploadState extends ConsumerState<VideoPreUpload> with TickerProv
       return;
     }
 
-    context.pushNamed(
+    ref.read(routerProvider).pushNamed(
       'processing',
       extra: {
         'videoFile': widget.videoFile,

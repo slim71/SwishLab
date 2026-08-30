@@ -81,6 +81,7 @@ class AppStateNotifier extends Notifier<AppState> {
   }
 
   void setUserData(UserRowData data) {
+    if (state.userData == data) return;
     state = state.copyWith(userData: data, userDataFetched: true);
   }
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart' as smooth_page_indicator;
 
+import '../router/central_routing.dart';
 import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
 import '../widgets/background.dart';
@@ -395,7 +395,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                       // Login button
                       LightButton(
                         onPressed: () async {
-                          context.goNamed('login');
+                          ref.read(routerProvider).goNamed('login');
                         },
                         text: 'Login',
                       ),
@@ -403,7 +403,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
                       // Register button
                       DarkButton(
                         onPressed: () async {
-                          context.goNamed('signup');
+                          ref.read(routerProvider).goNamed('signup');
                         },
                         text: 'Register',
                       ),

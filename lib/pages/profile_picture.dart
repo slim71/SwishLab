@@ -6,12 +6,12 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../constants.dart';
 import '../providers/users_provider.dart';
 import '../state/app_state.dart';
+import '../router/central_routing.dart';
 import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
 import '../widgets/app_bar.dart';
@@ -265,7 +265,8 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                           Text(
                             'Choose a photo from your device or use a direct URL.',
                             textAlign: TextAlign.center,
-                            style: AppTextStyles.labelMedium(context, color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
+                            style: AppTextStyles.labelMedium(context,
+                                color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
                           ),
                         ],
                       ),
@@ -343,7 +344,7 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
                       children: [
                         Expanded(
                           child: LightButton(
-                            onPressed: () => context.pop(),
+                            onPressed: () => ref.read(routerProvider).pop(),
                             text: 'Cancel',
                           ),
                         ),
@@ -374,7 +375,8 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
     return Image.network(
       imgNetwork ?? kDefaultProfilePictureUrl,
       fit: BoxFit.cover,
-      loadingBuilder: (_, child, progress) => progress == null ? child : const Center(child: CircularProgressIndicator()),
+      loadingBuilder: (_, child, progress) =>
+          progress == null ? child : const Center(child: CircularProgressIndicator()),
       errorBuilder: (_, __, ___) => Image.asset('assets/images/error_image.jpg', fit: BoxFit.cover),
     );
   }
@@ -405,7 +407,8 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
     );
   }
 
-  Widget _buildSourceButton({required IconData icon, required String label, required VoidCallback onTap, required Color color}) {
+  Widget _buildSourceButton(
+      {required IconData icon, required String label, required VoidCallback onTap, required Color color}) {
     return Expanded(
       child: InkWell(
         onTap: onTap,
@@ -442,9 +445,10 @@ class _ProfilePicturePageState extends ConsumerState<ProfilePicturePage> with Ti
 
       ref.invalidate(appUserProvider);
       if (!mounted) return;
-      context.goNamed('home');
+      ref.read(routerProvider).goNamed('home');
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Error uploading profile picture'), backgroundColor: Colors.red));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Error uploading profile picture'), backgroundColor: Colors.red));
     } finally {
       if (mounted) setState(() => isDataUploading = false);
     }

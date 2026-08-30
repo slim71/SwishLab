@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../router/central_routing.dart';
 import '../functions/add_animation.dart';
 import '../models/custom_enums.dart';
 import '../styles/styles.dart';
@@ -110,7 +110,7 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                 backgroundColor: appColors.primaryOne.withValues(alpha: 0.8),
                                 iconSize: 24,
                                 onPressed: () async {
-                                  context.pop();
+                                  ref.read(routerProvider).pop();
                                 },
                               ),
                               scale: const ScaleConfig(begin: Offset(0.5, 1.0))),
@@ -138,7 +138,9 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                     final XFile? video = await picker.pickVideo(
                                       source: ImageSource.gallery,
                                     );
-                                    if (!context.mounted || video == null) return;
+                                    if (!context.mounted || video == null) {
+                                      return;
+                                    }
 
                                     setState(() => isDataUploading = true);
 
@@ -164,10 +166,10 @@ class _SideDetailsState extends ConsumerState<SideDetails> with TickerProviderSt
                                     if (chosenSideVideo == null) return;
 
                                     // Navigate
-                                    context.pushNamed(
+                                    ref.read(routerProvider).pushNamed(
                                       'pre-upload',
+                                      pathParameters: {'perspective': OriginFunc.side.name},
                                       extra: {
-                                        'originFunc': OriginFunc.front,
                                         'videoFile': chosenSideVideo!,
                                       },
                                     );

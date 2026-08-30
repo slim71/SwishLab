@@ -6,9 +6,7 @@ import 'dart:ui';
 
 import '../constants.dart';
 import '../functions/add_animation.dart';
-import '../functions/get_border_color.dart';
 import '../functions/process_analysis_results.dart';
-import '../functions/score_to_rating.dart';
 import '../models/analysis_state.dart';
 import '../models/statistics_row.dart';
 import '../models/video_source.dart';
@@ -18,9 +16,7 @@ import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
 import '../widgets/app_bar.dart';
 import '../widgets/background.dart';
-import '../widgets/dynamic_icon_image.dart';
-import '../widgets/box_with_shadow.dart';
-import '../widgets/section_details.dart';
+import '../widgets/analysis_score_card.dart';
 import '../widgets/video_preview.dart';
 
 class AnalysisResults extends ConsumerStatefulWidget {
@@ -371,110 +367,10 @@ class _AnalysisResultsState extends ConsumerState<AnalysisResults> with TickerPr
                               children: List.generate(analysisResultListed.length, (analysisResultListedIndex) {
                                 final analysisResultListedItem =
                                     analysisResultListed[analysisResultListedIndex] as Map<String, dynamic>;
-                                return Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 20),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(24),
-                                    child: BackdropFilter(
-                                      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                                      child: Container(
-                                        width: (MediaQuery.sizeOf(context).width - 64) / 2,
-                                        decoration: BoxWithShadow(
-                                          color: AppThemeManager.secondaryBackground.withValues(alpha: 0.6),
-                                          borderRadius: BorderRadius.circular(24),
-                                          border: Border.all(
-                                            color: getBorderColor(kMyColors.toList(), analysisResultListedIndex)
-                                                .withValues(alpha: 0.5),
-                                            width: 2,
-                                          ),
-                                        ),
-                                        child: InkWell(
-                                          onTap: () async {
-                                            await showModalBottomSheet<void>(
-                                              isScrollControlled: true,
-                                              backgroundColor: Colors.transparent,
-                                              context: context,
-                                              builder: (context) {
-                                                return GestureDetector(
-                                                  onTap: () {
-                                                    FocusScope.of(context).unfocus();
-                                                    FocusManager.instance.primaryFocus?.unfocus();
-                                                  },
-                                                  child: Padding(
-                                                    padding: MediaQuery.viewInsetsOf(context),
-                                                    child: SizedBox(
-                                                      height: MediaQuery.sizeOf(context).height * 0.9,
-                                                      child: SectionDetails(
-                                                        sectionJson: analysisResultListedItem,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            ).then((value) => setState(() {}));
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(16),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                SizedBox(
-                                                  width: 40,
-                                                  height: 40,
-                                                  child: DynamicIconImage(
-                                                    width: 40,
-                                                    height: 40,
-                                                    imageName: analysisResultListedItem['section'].toString(),
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 12),
-                                                Text(
-                                                  analysisResultListedItem['section'].toString(),
-                                                  style: AppTextStyles.bodyMedium(context,
-                                                          color: AppThemeManager.primaryText)
-                                                      .copyWith(
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                                const SizedBox(height: 4),
-                                                Text(
-                                                  scoreToRating(
-                                                    (((analysisResultListedItem['scores'] as List?)?.firstWhere(
-                                                          (e) => e['name'] == 'Total',
-                                                          orElse: () => <String, dynamic>{},
-                                                        )?['value'] as num?)
-                                                            ?.toDouble() ??
-                                                        0.0),
-                                                  ).toUpperCase(),
-                                                  style: AppTextStyles.labelSmall(context,
-                                                          color: AppThemeManager.primaryText)
-                                                      .copyWith(
-                                                    fontWeight: FontWeight.w900,
-                                                    letterSpacing: 1.0,
-                                                    color: AppThemeManager.primaryText.withValues(alpha: 0.7),
-                                                  ),
-                                                ),
-                                                const SizedBox(height: 8),
-                                                Text(
-                                                  (((analysisResultListedItem['scores'] as List?)?.firstWhere(
-                                                        (e) => e['name'] == 'Total',
-                                                        orElse: () => <String, dynamic>{},
-                                                      )?['value'])
-                                                          ?.toDouble()
-                                                          .toStringAsFixed(1)
-                                                          .toString() ??
-                                                      ''),
-                                                  style: AppTextStyles.titleLarge(context,
-                                                      color: AppThemeManager.primaryText),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                return AnalysisScoreCard(
+                                  sectionData: analysisResultListedItem,
+                                  index: analysisResultListedIndex,
+                                  borderColors: kMyColors.toList(),
                                 );
                               }),
                             ),

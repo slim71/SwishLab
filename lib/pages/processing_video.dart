@@ -1,11 +1,12 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
+import '../router/central_routing.dart';
 import '../models/analysis_state.dart';
 import '../providers/shooting_analysis_provider.dart';
 import '../styles/styles.dart';
@@ -31,9 +32,24 @@ class ProcessingVideo extends ConsumerStatefulWidget {
 }
 
 class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
+  late final Stopwatch _stopwatch;
+  late final Timer _timer;
+  String _elapsedTime = '00:00';
+
   @override
   void initState() {
     super.initState();
+    _stopwatch = Stopwatch()..start();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (mounted) {
+        final minutes = _stopwatch.elapsed.inMinutes.toString().padLeft(2, '0');
+        final seconds = (_stopwatch.elapsed.inSeconds % 60).toString().padLeft(2, '0');
+        setState(() {
+          _elapsedTime = '$minutes:$seconds';
+        });
+      }
+    });
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(shootingAnalysisProvider.notifier).start(
             videoFile: widget.videoFile,
@@ -44,6 +60,13 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
   }
 
   @override
+  void dispose() {
+    _timer.cancel();
+    _stopwatch.stop();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final appColors = AppThemeManager.currentColors;
 
@@ -51,7 +74,7 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
       shootingAnalysisProvider,
       (previous, next) {
         if (next is AnalysisSuccess) {
-          context.goNamed('results', extra: next.result.raw);
+          ref.read(routerProvider).goNamed('results', extra: next.result.raw);
         }
 
         if (next is AnalysisFailure) {
@@ -72,8 +95,8 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    context.pop();
-                    context.goNamed('home');
+                    Navigator.of(context, rootNavigator: true).pop(); // dismiss dialog
+                    ref.read(routerProvider).goNamed('home');
                   },
                   child: const Text('Go home'),
                 ),
@@ -186,11 +209,21 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
                     // Extra Hint text in matching style
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(32, 24, 32, 0),
-                      child: Text(
-                        'This may take a moment depending on the video size',
-                        textAlign: TextAlign.center,
-                        style: AppTextStyles.labelSmall(context,
-                            color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Elapsed Time: $_elapsedTime',
+                            style: AppTextStyles.titleMedium(context, color: appColors.primaryTwo)
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            'This may take a moment depending on the video size',
+                            textAlign: TextAlign.center,
+                            style: AppTextStyles.labelSmall(context,
+                                color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
+                          ),
+                        ],
                       ),
                     ),
 
@@ -199,7 +232,29 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
                       padding: const EdgeInsetsDirectional.fromSTEB(0, 48, 0, 0),
                       child: TransparentButton(
                         onPressed: () async {
-                          context.pop();
+                          final shouldPop = await showDialog<bool>(
+                            context: context,
+                            builder: (ctx) => AlertDialog(
+                              title: const Text('Stop Analysis?'),
+                              content:
+                                  const Text('Going back will discard the current shooting analysis. Are you sure?'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(ctx, false),
+                                  child: const Text('Stay'),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.pop(ctx, true),
+                                  child: const Text('Stop', style: TextStyle(color: Colors.red)),
+                                ),
+                              ],
+                            ),
+                          );
+
+                          if (shouldPop == true && context.mounted) {
+                            ref.read(shootingAnalysisProvider.notifier).cancel();
+                            ref.read(routerProvider).pop();
+                          }
                         },
                         text: 'Go back',
                       ),

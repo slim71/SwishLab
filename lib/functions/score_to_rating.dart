@@ -1,16 +1,18 @@
-/// Express a rating related to the provided score
+import '../constants.dart';
+
+/// Express a rating related to the provided score using centralized thresholds
 String scoreToRating(double? score) {
   if (score == null) {
     return 'MISSING';
   }
 
-  if (score >= 1.0) {
+  if (score >= kScorePerfect) {
     return 'PERFECT';
-  } else if (score >= 0.75) {
+  } else if (score >= kScoreExcellent) {
     return 'EXCELLENT';
-  } else if (score >= 0.5) {
+  } else if (score >= kScoreGood) {
     return 'GOOD';
-  } else if (score >= 0.25) {
+  } else if (score >= kScoreFair) {
     return 'FAIR';
   } else {
     return 'POOR';

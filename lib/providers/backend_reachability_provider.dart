@@ -1,73 +1,43 @@
+import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
 
 import '../constants.dart';
 import '../logger.dart';
+import 'api_providers.dart';
 
 /// Periodically checks whether the backend (Supabase) is reachable.
-///
-/// This provider emits a boolean stream indicating connectivity:
-/// - `true`  → backend is reachable
-/// - `false` → backend is unreachable (e.g. network issues, DNS failure,
-///             paused Supabase project)
-///
-/// It performs a lightweight query against the database to force a real
-/// network request. This ensures detection of issues that are not visible
-/// through cached auth state (e.g. `currentSession`).
-///
-/// To avoid unnecessary rebuilds, values are only emitted when the
-/// reachability status changes.
-///
-/// Polling interval: 5 seconds.
-///
-/// Notes:
-/// - The queried table should be small and always available.
-///   Consider using a dedicated 1-row "health_check" table.
-/// - This is a polling-based approach; for more advanced use cases,
-///   it can be replaced with event-driven connectivity detection.
-///
-/// Used by [appStatusProvider] to determine whether the app should
-/// enter the [AppAuthStatus.offline] state.
-/// Requires 3 consecutive failures to report as unreachable to avoid
-/// blips triggering logouts.
-final backendReachabilityProvider = StreamProvider<bool>((ref) async* {
-  bool? last;
-  int consecutiveFailures = 0;
+final backendReachabilityProvider = StreamProvider<bool>((ref) {
   final logger = AppLogger.scope('BackendReachability');
+  final client = ref.watch(httpClientProvider);
+  final interval = ref.watch(reachabilityPollingIntervalProvider);
 
-  while (true) {
+  int consecutiveFailures = 0;
+  bool lastReportedStatus = true;
+
+  // Use Stream.periodic for cleaner polling management
+  final stream = Stream<void>.periodic(interval).asyncMap<bool>((_) async {
     bool currentReachable;
-
     try {
-      final response = await http.get(Uri.parse('$supabaseDomain/rest/v1/')).timeout(const Duration(seconds: 3));
-
-      // If we get ANY response, backend is reachable
+      final response = await client.get(Uri.parse('$supabaseDomain/rest/v1/')).timeout(const Duration(seconds: 3));
       currentReachable = response.statusCode < 500;
     } catch (e) {
       currentReachable = false;
     }
 
-    bool reportedStatus;
     if (currentReachable) {
       consecutiveFailures = 0;
-      reportedStatus = true;
+      lastReportedStatus = true;
     } else {
-      logger.d('Backend unreachable; consecutive failures: $consecutiveFailures');
       consecutiveFailures++;
-      // Only report as unreachable if it failed 3 times in a row
+      logger.d('Backend unreachable; consecutive failures: $consecutiveFailures');
+      // Only flip to false after 3 consecutive failures
       if (consecutiveFailures >= 3) {
-        reportedStatus = false;
-      } else {
-        // Keep the previous status (likely true) until 3 failures reached
-        reportedStatus = last ?? true;
+        lastReportedStatus = false;
       }
     }
+    return lastReportedStatus;
+  });
 
-    if (reportedStatus != last) {
-      yield reportedStatus;
-      last = reportedStatus;
-    }
-
-    await Future<void>.delayed(const Duration(seconds: 5));
-  }
+  // Ensure we emit an initial value immediately and then only on changes
+  return stream.distinct();
 });

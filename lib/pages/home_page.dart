@@ -26,17 +26,12 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMixin {
-  bool _isPromptShowing = false;
-
   @override
   void initState() {
     super.initState();
   }
 
   void _showShootingHandPrompt() {
-    if (_isPromptShowing) return;
-    _isPromptShowing = true;
-
     AppLogger.scope('HomePage').i('Showing shooting hand prompt.');
     showDialog<void>(
       context: context,
@@ -53,7 +48,6 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
           TextButton(
             onPressed: () {
               ref.read(appStateProvider.notifier).setSessionInitialized(true);
-              _isPromptShowing = false;
               Navigator.pop(ctx);
               context.goNamed('user');
             },
@@ -61,7 +55,7 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
           ),
         ],
       ),
-    ).then((_) => _isPromptShowing = false);
+    );
   }
 
   @override
@@ -74,23 +68,20 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
 
     // Listen for user data changes to trigger the one-time prompt
     ref.listen<AsyncValue<UsersRow?>>(appUserProvider, (previous, next) {
+      // If we are already showing a dialog, don't trigger another one
+      if (ModalRoute.of(context)?.isCurrent != true) return;
+
       next.whenData((user) {
         if (user == null) return;
-        if (!sessionInitialized && (user.shootingHand == null || user.shootingHand!.isEmpty)) {
+        final isRequired = (user.shootingHand == null || user.shootingHand!.isEmpty);
+
+        if (!sessionInitialized && isRequired) {
           _showShootingHandPrompt();
-        } else if (!sessionInitialized) {
+        } else if (!sessionInitialized && !isRequired) {
+          // If they already have it, just mark session as initialized
           ref.read(appStateProvider.notifier).setSessionInitialized(true);
         }
       });
-    });
-
-    // Trigger prompt on initial load or state reset if needed
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (userInfo != null &&
-          !sessionInitialized &&
-          (userInfo.shootingHand == null || userInfo.shootingHand!.isEmpty)) {
-        _showShootingHandPrompt();
-      }
     });
 
     final hasShootingHand = (userInfo?.shootingHand?.isNotEmpty ?? false);
@@ -98,26 +89,15 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
     final statsAsync = ref.watch(userStatisticsProvider);
     final List<StatisticsRow> checkedForms = statsAsync.maybeWhen(
       data: (data) => data,
-      orElse: () => const [],
+      orElse: () => const <StatisticsRow>[],
     );
     final last = checkedForms.lastOrNull;
 
-    double calculateRowAvg(StatisticsRow? row) {
-      if (row == null) return 0.0;
-      return ((row.setPointTotalScore ?? 0.0) +
-              (row.jumpTotalScore ?? 0.0) +
-              (row.elbowPositionTotalScore ?? 0.0) +
-              (row.feetDirectionTotalScore ?? 0.0) +
-              (row.shotPathTotalScore ?? 0.0) +
-              (row.followThroughTotalScore ?? 0.0)) /
-          6;
-    }
-
-    final lastSessionScore = calculateRowAvg(last);
+    final lastSessionScore = _calculateRowAvg(last);
 
     double totalOfAll = 0;
     for (var form in checkedForms) {
-      totalOfAll += calculateRowAvg(form);
+      totalOfAll += _calculateRowAvg(form);
     }
     final overallAvgScore = checkedForms.isEmpty ? 0.0 : totalOfAll / checkedForms.length;
 
@@ -521,5 +501,16 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
         ),
       ).animate().shake(duration: 500.ms),
     );
+  }
+
+  double _calculateRowAvg(StatisticsRow? row) {
+    if (row == null) return 0.0;
+    return ((row.setPointTotalScore ?? 0.0) +
+            (row.jumpTotalScore ?? 0.0) +
+            (row.elbowPositionTotalScore ?? 0.0) +
+            (row.feetDirectionTotalScore ?? 0.0) +
+            (row.shotPathTotalScore ?? 0.0) +
+            (row.followThroughTotalScore ?? 0.0)) /
+        6;
   }
 }

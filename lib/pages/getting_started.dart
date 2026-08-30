@@ -3,9 +3,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart' as smooth_page_indicator;
 
+import '../router/central_routing.dart';
 import '../state/app_state.dart';
 import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
@@ -91,7 +91,7 @@ class _GettingStartedPageState extends ConsumerState<GettingStartedPage> with Ti
             ? null
             : () {
                 ref.read(appStateProvider.notifier).setHasOpenedBefore(true);
-                context.goNamed('home');
+                ref.read(routerProvider).goNamed('home');
               },
       ),
       body: Background(
@@ -178,7 +178,10 @@ class _GettingStartedPageState extends ConsumerState<GettingStartedPage> with Ti
                                       .copyWith(
                                     height: 1.5,
                                   ),
-                                ).animate(key: ValueKey('desc_$index')).fade(delay: 100.ms, duration: 400.ms).slideX(begin: 0.1),
+                                )
+                                    .animate(key: ValueKey('desc_$index'))
+                                    .fade(delay: 100.ms, duration: 400.ms)
+                                    .slideX(begin: 0.1),
                                 const SizedBox(height: 32),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
@@ -187,7 +190,7 @@ class _GettingStartedPageState extends ConsumerState<GettingStartedPage> with Ti
                                       DarkButton(
                                         onPressed: () {
                                           ref.read(appStateProvider.notifier).setHasOpenedBefore(true);
-                                          context.goNamed('home');
+                                          ref.read(routerProvider).goNamed('home');
                                         },
                                         text: 'Get Started',
                                       ).animate().scale(delay: 200.ms)

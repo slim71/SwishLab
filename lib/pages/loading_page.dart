@@ -38,13 +38,13 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // Loading animation in Glass Card
-                      const DynamicAsset(
-                        name: 'loader_basketball.gif',
-                        type: 'gif',
-                        width: double.infinity,
-                        height: 350,
-                        fit: BoxFit.contain,
-                      ),
+                    const DynamicAsset(
+                      name: 'loader_basketball.gif',
+                      type: 'gif',
+                      width: double.infinity,
+                      height: 350,
+                      fit: BoxFit.contain,
+                    ),
 
                     const SizedBox(height: 48),
 
@@ -65,7 +65,8 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                             children: [
                               Text(
                                 'Loading',
-                                style: AppTextStyles.headlineMedium(context, color: AppThemeManager.primaryText).copyWith(
+                                style:
+                                    AppTextStyles.headlineMedium(context, color: AppThemeManager.primaryText).copyWith(
                                   fontWeight: FontWeight.w900,
                                   letterSpacing: 2,
                                 ),
@@ -74,7 +75,8 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
                               Text(
                                 'Please wait...',
                                 textAlign: TextAlign.center,
-                                style: AppTextStyles.labelMedium(context, color: AppThemeManager.primaryText.withValues(alpha: 0.7)),
+                                style: AppTextStyles.labelMedium(context,
+                                    color: AppThemeManager.primaryText.withValues(alpha: 0.7)),
                               ),
                             ],
                           ),
@@ -86,31 +88,6 @@ class _LoadingPageState extends ConsumerState<LoadingPage> {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildGlassCard({required Widget child, EdgeInsets? padding}) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(32),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
-        child: Container(
-          padding: padding ?? const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            color: AppThemeManager.secondaryBackground.withValues(alpha: 0.6),
-            borderRadius: BorderRadius.circular(32),
-            border: Border.all(color: Colors.white.withValues(alpha: 0.1), width: 1.5),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
-                blurRadius: 20,
-                offset: const Offset(0, 10),
-              ),
-            ],
-          ),
-          child: child,
         ),
       ),
     );

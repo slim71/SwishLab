@@ -49,7 +49,7 @@ void main() {
       expect(result.first['source'], 'cached');
 
       // Allow background task to run
-      await Future.delayed(const Duration(milliseconds: 100));
+      await Future<void>.delayed(const Duration(milliseconds: 100));
     });
 
     test('background refresh success updates cache', () async {
@@ -64,7 +64,7 @@ void main() {
       await loadJsonRemoteOrAppState(remoteName, defaultJson, client: client);
 
       // Wait for background refresh
-      await Future.delayed(const Duration(milliseconds: 200));
+      await Future<void>.delayed(const Duration(milliseconds: 200));
 
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getString('cached_json_$remoteName'), json.encode(remoteData));

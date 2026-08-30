@@ -1,5 +1,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../constants.dart';
+
 class AuthService {
   final SupabaseClient _supabase;
 
@@ -9,7 +11,7 @@ class AuthService {
   Future<void> signInWithGoogle() async {
     await _supabase.auth.signInWithOAuth(
       OAuthProvider.google,
-      redirectTo: 'swishlab://auth-callback',
+      redirectTo: kAuthCallbackUrl,
     );
   }
 

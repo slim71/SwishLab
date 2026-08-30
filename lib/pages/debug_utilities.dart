@@ -3,14 +3,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../constants.dart';
 import '../providers/auth_providers.dart';
 import '../providers/debug_provider.dart';
 import '../providers/statistics_provider.dart';
 import '../providers/users_provider.dart';
-import '../router/central_routing.dart' show rootScaffoldMessengerKey;
+import '../router/central_routing.dart' show routerProvider, rootScaffoldMessengerKey;
 import '../state/app_state.dart';
 import '../styles/styles.dart';
 import '../styles/theme_manager.dart';
@@ -88,7 +87,9 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                           ref.read(appStateProvider.notifier).setSessionInitialized(false);
                           ref.invalidate(appUserProvider);
 
-                          if (context.mounted) _showDone(context, 'Hand cleared. Returning Home will trigger prompt.');
+                          if (context.mounted) {
+                            _showDone(context, 'Hand cleared. Returning Home will trigger prompt.');
+                          }
                         } catch (e) {
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -113,7 +114,9 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                         try {
                           await ref.read(statisticsRepositoryProvider).clearStatistics(userId);
                           ref.invalidate(userStatisticsProvider);
-                          if (context.mounted) _showDone(context, 'Activity history cleared successfully.');
+                          if (context.mounted) {
+                            _showDone(context, 'Activity history cleared successfully.');
+                          }
                         } catch (e) {
                           if (context.mounted) {
                             ScaffoldMessenger.of(context).showSnackBar(
@@ -134,7 +137,7 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                     buttonText: 'Disable',
                     onPressed: () {
                       ref.read(debugProvider.notifier).setDeveloperMode(false);
-                      context.pop(); // Go back to settings immediately
+                      ref.read(routerProvider).pop(); // Go back to settings immediately
 
                       rootScaffoldMessengerKey.currentState?.clearSnackBars();
                       rootScaffoldMessengerKey.currentState?.showSnackBar(
@@ -161,7 +164,7 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                     buttonText: 'Test',
                     onPressed: () {
                       final defaultJson = jsonDecode(kDefaultResultsJson);
-                      context.go('/results', extra: defaultJson);
+                      ref.read(routerProvider).go('/results', extra: defaultJson);
                     },
                   ),
                   DebugItem(
@@ -170,7 +173,7 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                     icon: Icons.check_circle_outline_rounded,
                     buttonText: 'View',
                     onPressed: () {
-                      context.pushNamed('success');
+                      ref.read(routerProvider).pushNamed('success');
                     },
                   ),
                   DebugItem(
@@ -190,7 +193,7 @@ class _DebugUtilitiesState extends ConsumerState<DebugUtilities> {
                     icon: Icons.color_lens_rounded,
                     buttonText: 'View',
                     onPressed: () {
-                      context.pushNamed('theme-test');
+                      ref.read(routerProvider).pushNamed('theme-test');
                     },
                   ),
                 ]),

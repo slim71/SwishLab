@@ -1,6 +1,9 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../constants.dart';
+import '../logger.dart';
 import '../functions/load_json_remote_or_app_state.dart';
+
+final _logger = AppLogger.scope('FeedbackProvider');
 
 /// Provider that loads coaching feedback templates from Supabase or local fallback.
 final feedbackProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {
@@ -16,24 +19,45 @@ String getFeedbackForScore({
 }) {
   try {
     // 1. Find the section
-    final section = templates.firstWhere(
-      (s) => s['section'].toString().toLowerCase() == sectionName.toLowerCase(),
-      orElse: () => <String, dynamic>{},
-    );
+    Map<String, dynamic>? section;
+    for (var s in templates) {
+      if (s['section'].toString().toLowerCase() == sectionName.toLowerCase()) {
+        section = s;
+        break;
+      }
+    }
+    section ??= <String, dynamic>{};
 
-    if (section.isEmpty) return 'Great work on your $sectionName!';
+    if (section.isEmpty) {
+      _logger.w('Feedback section not found: $sectionName');
+      return 'Great work on your $sectionName!';
+    }
 
     // 2. Find the score category within that section
-    final scores = (section['scores'] as List? ?? []);
-    final scoreConfig = scores.firstWhere(
-      (sc) => sc['name'].toString().toLowerCase() == scoreName.toLowerCase(),
-      orElse: () => scores.firstWhere((sc) => sc['name'].toString().toLowerCase() == 'total', orElse: () => null),
-    );
+    final scores = (section['scores'] as List? ?? <dynamic>[]);
+    Map<String, dynamic>? scoreConfig;
+    for (var sc in scores) {
+      if (sc is Map && sc['name'].toString().toLowerCase() == scoreName.toLowerCase()) {
+        scoreConfig = sc.cast<String, dynamic>();
+        break;
+      }
+    }
+    if (scoreConfig == null) {
+      for (var sc in scores) {
+        if (sc is Map && sc['name'].toString().toLowerCase() == 'total') {
+          scoreConfig = sc.cast<String, dynamic>();
+          break;
+        }
+      }
+    }
 
-    if (scoreConfig == null) return 'Keep practicing your $sectionName $scoreName!';
+    if (scoreConfig == null) {
+      _logger.w('Feedback score config not found for $scoreName in $sectionName');
+      return 'Keep practicing your $sectionName $scoreName!';
+    }
 
     // 3. Find the matching range
-    final ranges = (scoreConfig['ranges'] as List? ?? []);
+    final ranges = (scoreConfig['ranges'] as List? ?? <dynamic>[]);
     for (var range in ranges) {
       final double min = (range['min'] as num).toDouble();
       final double max = (range['max'] as num).toDouble();

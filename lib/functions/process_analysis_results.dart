@@ -9,13 +9,13 @@ List<dynamic> processAnalysisResults(Map<String, dynamic> analysisResults) {
     final sectionData = entry.value;
 
     if (sectionData is Map<String, dynamic>) {
-      return {
+      return <String, dynamic>{
         "section": getSectionName(sectionName),
         "fields": processFields(sectionData),
         "scores": processScores(sectionData),
       };
     } else {
-      return {
+      return <String, dynamic>{
         "section": getSectionName(sectionName),
         "fields": [
           <String, dynamic>{"name": getSectionName(sectionName), "value": sectionData}

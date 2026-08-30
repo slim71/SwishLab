@@ -120,7 +120,9 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                                                 height: 180,
                                                 fit: BoxFit.cover,
                                                 loadingBuilder: (context, child, loadingProgress) {
-                                                  if (loadingProgress == null) return child;
+                                                  if (loadingProgress == null) {
+                                                    return child;
+                                                  }
                                                   return Center(
                                                     child: CircularProgressIndicator(
                                                       value: loadingProgress.expectedTotalBytes != null
@@ -375,15 +377,18 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
                 valueListenable: _sheetExtent,
                 builder: (context, extent, child) {
                   final progress = ((extent - _minExtent) / (_maxExtent - _minExtent)).clamp(0.0, 1.0);
+                  final isVisible = progress > 0.5;
+
                   return Positioned(
                     right: 20,
                     top: MediaQuery.of(context).padding.top + 20,
-                    child: Opacity(
-                      opacity: progress,
-                      child: IgnorePointer(
-                        ignoring: progress < 0.5,
+                    child: AnimatedOpacity(
+                      opacity: isVisible ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 200),
+                      child: Visibility(
+                        visible: isVisible,
                         child: FloatingActionButton.small(
-                          heroTag: null, // Disables Hero to prevent duplicate tag errors during transitions
+                          heroTag: 'profile_edit_fab',
                           backgroundColor: appColors.retroThree ?? Colors.red,
                           onPressed: () => context.pushNamed('user'),
                           child: const Icon(Icons.edit_note_rounded, color: Colors.white),

@@ -29,7 +29,8 @@ class SocialIconButton extends StatelessWidget {
         valueListenable: AppThemeManager.notifier,
         builder: (_, __, ___) {
           final effectiveBorderColor = borderColor ?? AppThemeManager.secondaryBackground;
-          final effectiveBackgroundColor = backgroundColor ?? AppThemeManager.secondaryBackground.withValues(alpha: 0.3);
+          final effectiveBackgroundColor =
+              backgroundColor ?? AppThemeManager.secondaryBackground.withValues(alpha: 0.3);
 
           return Material(
             color: Colors.transparent,

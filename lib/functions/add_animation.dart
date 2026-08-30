@@ -182,6 +182,7 @@ Animate applyShake(Animate anim, ShakeConfig config) {
 Widget addAnimation({
   required Widget widget,
   bool? withFade = true,
+  bool enabled = true,
 
   // Visual clarity
   FadeConfig? fade = const FadeConfig(),
@@ -195,6 +196,8 @@ Widget addAnimation({
   // Attention / feedback
   ShakeConfig? shake,
 }) {
+  if (!enabled) return widget;
+
   Animate anim = widget.animate();
 
   // Visual clarity first

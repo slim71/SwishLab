@@ -150,7 +150,12 @@ class _UserDataState extends ConsumerState<UserData> with TickerProviderStateMix
           controller: shootingHandDropDownValueController!,
           options: const ['Left', 'Right'],
           prefixIcon: Icon(Icons.front_hand_outlined, color: iconColor),
-          onChanged: (val) => setState(() => shootingHandDropDownValue = val),
+          onChanged: (val) {
+            setState(() {
+              shootingHandDropDownValue = val;
+              updateValidationStructStruct((s) => s.shootingHandValid = val != null && val.isNotEmpty);
+            });
+          },
           hintText: 'Select your shooting hand',
           fillColor: Colors.transparent,
         ),

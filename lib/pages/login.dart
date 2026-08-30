@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../logger.dart';
 import '../functions/add_animation.dart';
 import '../providers/auth_providers.dart';
 import '../providers/users_provider.dart';
+import '../router/central_routing.dart';
 import '../styles/styles.dart';
 import '../widgets/background.dart';
 import '../widgets/box_with_shadow.dart';
@@ -29,7 +29,6 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
   late final TextEditingController passwordTextController;
   FocusNode? emailAddressFocusNode;
   FocusNode? passwordFocusNode;
-  late bool passwordVisibility;
   late String? Function(BuildContext, String?) emailAddressTextControllerValidator;
   late String? Function(BuildContext, String?) passwordTextControllerValidator;
   final formKey = GlobalKey<FormState>();
@@ -37,7 +36,6 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
   @override
   void initState() {
     super.initState();
-    passwordVisibility = false;
     emailAddressTextController = TextEditingController();
     passwordTextController = TextEditingController();
     emailAddressFocusNode ??= FocusNode();
@@ -171,7 +169,7 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                             focusNode: passwordFocusNode,
                                             label: 'Password',
                                             autofillHints: const [AutofillHints.password],
-                                            obscureText: !passwordVisibility,
+                                            obscureText: true,
                                             validator: (value) => passwordTextControllerValidator(context, value),
                                             denyRegex: RegExp(r'\s'),
                                           ),
@@ -208,7 +206,7 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                             }
 
                                             ref.invalidate(appUserProvider);
-                                            context.go('/');
+                                            ref.read(routerProvider).go('/');
                                           } on AuthException catch (e) {
                                             if (!context.mounted) return;
 
@@ -241,7 +239,7 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                         onPressed: () async {
                                           await ref.read(authServiceProvider).signInWithGoogle();
                                           if (!context.mounted) return;
-                                          context.goNamed('home');
+                                          ref.read(routerProvider).goNamed('home');
                                         },
                                         text: 'Continue with Google',
                                         icon: const FaIcon(
@@ -255,7 +253,7 @@ class _LoginPageState extends ConsumerState<LoginPage> with TickerProviderStateM
                                         padding: const EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
                                         child: InkWell(
                                           onTap: () async {
-                                            context.goNamed('signup');
+                                            ref.read(routerProvider).goNamed('signup');
                                           },
                                           child: RichText(
                                             textScaler: MediaQuery.of(context).textScaler,

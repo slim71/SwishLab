@@ -4,7 +4,7 @@ import 'package:swish_lab/models/analysis_data.dart';
 void main() {
   group('AnalysisSection', () {
     test('parseScores handles null', () {
-      expect(AnalysisSection.parseScores(null), {});
+      expect(AnalysisSection.parseScores(null), <String, double>{});
     });
 
     test('parseScores handles valid map', () {

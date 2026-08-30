@@ -5,13 +5,16 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 /// Create a temporary local image downloading the URL provided
-Future<File> localImageFromUrl(String imageUrl) async {
+Future<File> localImageFromUrl(String imageUrl, {http.Client? client}) async {
   if (imageUrl.isEmpty) {
     throw Exception('No image URL provided');
   }
 
   // Download the image from the network
-  final response = await http.get(Uri.parse(imageUrl));
+  final httpClient = client ?? http.Client();
+  final response = await httpClient.get(Uri.parse(imageUrl));
+  if (client == null) httpClient.close();
+
   if (response.statusCode != 200) {
     throw Exception('Failed to download image (status ${response.statusCode})');
   }

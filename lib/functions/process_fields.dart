@@ -9,12 +9,12 @@ List<dynamic> processFields(Map<String, dynamic> data) {
     final dynamic meta = fieldsLookupTable(key);
 
     if (value is Map<String, dynamic>) {
-      return {
+      return <String, dynamic>{
         "name": getSectionName(key),
         "value": processFields(value),
       };
     } else {
-      final Map<String, dynamic> field = {
+      final Map<String, dynamic> field = <String, dynamic>{
         "name": getSectionName(key),
         "value": value,
       };

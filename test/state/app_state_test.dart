@@ -23,7 +23,7 @@ void main() {
       expect(state.hasOpenedBefore, false);
       expect(state.userDataFetched, false);
       expect(state.userData, const UserRowData());
-      expect(state.credits, const []);
+      expect(state.credits, const <Credit>[]);
       expect(state.loadedFaqs, isNull);
       expect(state.sessionInitialized, false);
       expect(state.showRadarChart, true);

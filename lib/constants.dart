@@ -363,3 +363,9 @@ const passwordMinSize = 8;
 const String hfSpace = "https://slim71-shootingformanalyzer.hf.space";
 //const String hfSpace = "https://d46dcadeb557551be0.gradio.live";
 const String supabaseDomain = "https://ccqvtpiltowjpogbjmpd.supabase.co";
+const String kAuthCallbackUrl = "swishlab://auth-callback";
+
+const double kScorePerfect = 1.0;
+const double kScoreExcellent = 0.75;
+const double kScoreGood = 0.5;
+const double kScoreFair = 0.25;

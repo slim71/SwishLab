@@ -1,3 +1,5 @@
+import 'analysis_data.dart';
+
 class StatisticsRow {
   final String statId;
   final String userId;
@@ -10,12 +12,12 @@ class StatisticsRow {
   final double? shotPathTotalScore;
   final double? followThroughTotalScore;
 
-  final Map<String, dynamic>? setPoint;
-  final Map<String, dynamic>? jump;
-  final Map<String, dynamic>? elbowPosition;
-  final Map<String, dynamic>? feetDirection;
-  final Map<String, dynamic>? shotPath;
-  final Map<String, dynamic>? followThrough;
+  final SetPointData? setPoint;
+  final JumpData? jump;
+  final ElbowPositionData? elbowPosition;
+  final FeetDirectionData? feetDirection;
+  final ShotPathData? shotPath;
+  final FollowThroughData? followThrough;
 
   const StatisticsRow({
     required this.statId, // primary key
@@ -42,19 +44,22 @@ class StatisticsRow {
       createdAt: DateTime.parse(json['created_at'] as String),
       setPointTotalScore: (json['set_point_total_score'] as num?)?.toDouble(),
       jumpTotalScore: (json['jump_total_score'] as num?)?.toDouble(),
-      elbowPositionTotalScore:
-          (json['elbow_position_total_score'] as num?)?.toDouble(),
-      feetDirectionTotalScore:
-          (json['feet_direction_total_score'] as num?)?.toDouble(),
+      elbowPositionTotalScore: (json['elbow_position_total_score'] as num?)?.toDouble(),
+      feetDirectionTotalScore: (json['feet_direction_total_score'] as num?)?.toDouble(),
       shotPathTotalScore: (json['shot_path_total_score'] as num?)?.toDouble(),
-      followThroughTotalScore:
-          (json['follow_through_total_score'] as num?)?.toDouble(),
-      setPoint: json['set_point'] as Map<String, dynamic>?,
-      jump: json['jump'] as Map<String, dynamic>?,
-      elbowPosition: json['elbow_position'] as Map<String, dynamic>?,
-      feetDirection: json['feet_direction'] as Map<String, dynamic>?,
-      shotPath: json['shot_path'] as Map<String, dynamic>?,
-      followThrough: json['follow_through'] as Map<String, dynamic>?,
+      followThroughTotalScore: (json['follow_through_total_score'] as num?)?.toDouble(),
+      setPoint: json['set_point'] != null ? SetPointData.fromJson(json['set_point'] as Map<String, dynamic>) : null,
+      jump: json['jump'] != null ? JumpData.fromJson(json['jump'] as Map<String, dynamic>) : null,
+      elbowPosition: json['elbow_position'] != null
+          ? ElbowPositionData.fromJson(json['elbow_position'] as Map<String, dynamic>)
+          : null,
+      feetDirection: json['feet_direction'] != null
+          ? FeetDirectionData.fromJson(json['feet_direction'] as Map<String, dynamic>)
+          : null,
+      shotPath: json['shot_path'] != null ? ShotPathData.fromJson(json['shot_path'] as Map<String, dynamic>) : null,
+      followThrough: json['follow_through'] != null
+          ? FollowThroughData.fromJson(json['follow_through'] as Map<String, dynamic>)
+          : null,
     );
   }
 
@@ -69,12 +74,12 @@ class StatisticsRow {
       'feet_direction_total_score': feetDirectionTotalScore,
       'shot_path_total_score': shotPathTotalScore,
       'follow_through_total_score': followThroughTotalScore,
-      'set_point': setPoint,
-      'jump': jump,
-      'elbow_position': elbowPosition,
-      'feet_direction': feetDirection,
-      'shot_path': shotPath,
-      'follow_through': followThrough,
+      'set_point': setPoint?.toJson(),
+      'jump': jump?.toJson(),
+      'elbow_position': elbowPosition?.toJson(),
+      'feet_direction': feetDirection?.toJson(),
+      'shot_path': shotPath?.toJson(),
+      'follow_through': followThrough?.toJson(),
     };
   }
 
@@ -88,12 +93,12 @@ class StatisticsRow {
     double? feetDirectionTotalScore,
     double? shotPathTotalScore,
     double? followThroughTotalScore,
-    Map<String, dynamic>? setPoint,
-    Map<String, dynamic>? jump,
-    Map<String, dynamic>? elbowPosition,
-    Map<String, dynamic>? feetDirection,
-    Map<String, dynamic>? shotPath,
-    Map<String, dynamic>? followThrough,
+    SetPointData? setPoint,
+    JumpData? jump,
+    ElbowPositionData? elbowPosition,
+    FeetDirectionData? feetDirection,
+    ShotPathData? shotPath,
+    FollowThroughData? followThrough,
   }) {
     return StatisticsRow(
       statId: statId ?? this.statId,
@@ -101,13 +106,10 @@ class StatisticsRow {
       createdAt: createdAt ?? this.createdAt,
       setPointTotalScore: setPointTotalScore ?? this.setPointTotalScore,
       jumpTotalScore: jumpTotalScore ?? this.jumpTotalScore,
-      elbowPositionTotalScore:
-          elbowPositionTotalScore ?? this.elbowPositionTotalScore,
-      feetDirectionTotalScore:
-          feetDirectionTotalScore ?? this.feetDirectionTotalScore,
+      elbowPositionTotalScore: elbowPositionTotalScore ?? this.elbowPositionTotalScore,
+      feetDirectionTotalScore: feetDirectionTotalScore ?? this.feetDirectionTotalScore,
       shotPathTotalScore: shotPathTotalScore ?? this.shotPathTotalScore,
-      followThroughTotalScore:
-          followThroughTotalScore ?? this.followThroughTotalScore,
+      followThroughTotalScore: followThroughTotalScore ?? this.followThroughTotalScore,
       setPoint: setPoint ?? this.setPoint,
       jump: jump ?? this.jump,
       elbowPosition: elbowPosition ?? this.elbowPosition,

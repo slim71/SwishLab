@@ -109,7 +109,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
     final appColors = AppThemeManager.currentColors;
 
     if (style != MyAppBarStyle.titleWithProfileImage) {
-      return const [];
+      return const <Widget>[];
     }
 
     return [

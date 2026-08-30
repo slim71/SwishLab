@@ -22,7 +22,6 @@ class AboutUs extends ConsumerStatefulWidget {
 }
 
 class _AboutUsState extends ConsumerState<AboutUs> {
-  DateTime? datePicked;
   final ScrollController _scrollController = ScrollController();
   double _scrollOffset = 0;
 

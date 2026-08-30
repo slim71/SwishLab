@@ -16,17 +16,17 @@ import 'package:riverpod/src/framework.dart' show Override;
 
 class MockGoRouter extends Mock implements GoRouter {
   MockGoRouter() {
-    when(() => pushNamed(any(),
-        pathParameters: any(named: 'pathParameters'),
-        queryParameters: any(named: 'queryParameters'),
-        extra: any(named: 'extra'))).thenAnswer((_) async => null);
-    when(() => push(any(), extra: any(named: 'extra'))).thenAnswer((_) async => null);
-    when(() => go(any(), extra: any(named: 'extra'))).thenReturn(null);
-    when(() => goNamed(any(),
-        pathParameters: any(named: 'pathParameters'),
-        queryParameters: any(named: 'queryParameters'),
-        extra: any(named: 'extra'))).thenReturn(null);
-    when(() => pop(any())).thenReturn(null);
+    when(() => pushNamed(any<String>(),
+        pathParameters: any<Map<String, String>>(named: 'pathParameters'),
+        queryParameters: any<Map<String, dynamic>>(named: 'queryParameters'),
+        extra: any<Object?>(named: 'extra'))).thenAnswer((_) async => null);
+    when(() => push(any<String>(), extra: any<Object?>(named: 'extra'))).thenAnswer((_) async => null);
+    when(() => go(any<String>(), extra: any<Object?>(named: 'extra'))).thenReturn(null);
+    when(() => goNamed(any<String>(),
+        pathParameters: any<Map<String, String>>(named: 'pathParameters'),
+        queryParameters: any<Map<String, dynamic>>(named: 'queryParameters'),
+        extra: any<Object?>(named: 'extra'))).thenReturn(null);
+    when(() => pop(any<Object?>())).thenReturn(null);
   }
 
   @override

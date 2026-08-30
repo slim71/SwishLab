@@ -7,6 +7,7 @@ import 'providers/session.dart';
 import 'providers/supabase_provider.dart';
 import 'providers/users_provider.dart';
 import 'router/central_routing.dart' show routerProvider, rootScaffoldMessengerKey;
+import 'logger.dart';
 import 'styles/theme_manager.dart';
 import 'styles/themes.dart';
 
@@ -57,12 +58,22 @@ class _SwishLabState extends ConsumerState<SwishLab> {
                   lastName: '',
                 );
               }
-            } catch (e) {
-              // Network or DB error, ignore for now as it's a background sync
+            } catch (e, st) {
+              AppLogger.scope('SwishLab').e(
+                'Background user sync failed',
+                error: e,
+                stackTrace: st,
+              );
             }
           },
           loading: () {},
-          error: (_, __) {},
+          error: (e, st) {
+            AppLogger.scope('SwishLab').e(
+              'VerifiedSessionProvider error',
+              error: e,
+              stackTrace: st,
+            );
+          },
         );
       },
     );

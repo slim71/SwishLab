@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_md/flutter_md.dart';
-import 'package:go_router/go_router.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../router/central_routing.dart';
 import '../functions/load_markdown.dart';
 import '../router/app_documents.dart';
 import '../styles/theme_manager.dart';
 import '../widgets/app_bar.dart';
 
-class MarkdownDocument extends StatefulWidget {
+class MarkdownDocument extends ConsumerStatefulWidget {
   final String fileName;
   final String title;
   final String semanticsLabel;
@@ -20,20 +20,22 @@ class MarkdownDocument extends StatefulWidget {
   });
 
   @override
-  State<MarkdownDocument> createState() => _MarkdownDocumentState();
+  ConsumerState<MarkdownDocument> createState() => _MarkdownDocumentState();
 }
 
-class _MarkdownDocumentState extends State<MarkdownDocument> {
+class _MarkdownDocumentState extends ConsumerState<MarkdownDocument> {
   String _markdownSource = '# Loading...';
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     _initMarkdown();
   }
 
   Future<void> _initMarkdown() async {
-    final content = await loadMarkdown(widget.fileName);
+    if (!mounted) return;
+    final bundle = DefaultAssetBundle.of(context);
+    final content = await loadMarkdown(widget.fileName, bundle: bundle);
 
     if (!mounted) return;
 
@@ -61,12 +63,12 @@ class _MarkdownDocumentState extends State<MarkdownDocument> {
                 if (url.startsWith('app://')) {
                   final target = url.replaceFirst('app://', '');
                   if (appDocuments.containsKey(target)) {
-                    context.pushNamed('document', pathParameters: {'name': target});
+                    ref.read(routerProvider).pushNamed('document', pathParameters: {'name': target});
                   } else {
-                    context.pushNamed(target);
+                    ref.read(routerProvider).pushNamed(target);
                   }
                 } else if (appDocuments.containsKey(url)) {
-                  context.pushNamed('document', pathParameters: {'name': url});
+                  ref.read(routerProvider).pushNamed('document', pathParameters: {'name': url});
                 }
               },
               textStyle: TextStyle(

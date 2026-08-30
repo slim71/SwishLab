@@ -17,19 +17,10 @@ CustomTransitionPage<T> buildTransitionPage<T>({
   Duration duration = const Duration(milliseconds: 300),
   Curve curve = Curves.easeOut,
 }) {
-  if (transition == AppTransition.none) {
-    return CustomTransitionPage<T>(
-      key: state.pageKey,
-      child: child,
-      transitionDuration: Duration.zero,
-      transitionsBuilder: (_, __, ___, child) => child,
-    );
-  }
-
   return CustomTransitionPage<T>(
     key: state.pageKey,
     child: child,
-    transitionDuration: duration,
+    transitionDuration: transition == AppTransition.none ? Duration.zero : duration,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       final curvedAnimation = CurvedAnimation(
         parent: animation,
@@ -37,6 +28,9 @@ CustomTransitionPage<T> buildTransitionPage<T>({
       );
 
       switch (transition) {
+        case AppTransition.none:
+          return child;
+
         case AppTransition.fade:
           return FadeTransition(
             opacity: curvedAnimation,
@@ -86,9 +80,6 @@ CustomTransitionPage<T> buildTransitionPage<T>({
             ),
             child: child,
           );
-
-        case AppTransition.none:
-          return child;
       }
     },
   );

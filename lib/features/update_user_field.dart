@@ -1,8 +1,10 @@
+import '../logger.dart';
 import '../models/users_row.dart';
 import '../repositories/users_repository.dart';
 
 class UpdateUser {
   final UsersRepository usersRepository;
+  final _logger = AppLogger.scope('UpdateUser');
 
   UpdateUser({
     required this.usersRepository,
@@ -16,15 +18,23 @@ class UpdateUser {
       throw Exception('No update data provided');
     }
 
-    final updatedUser = await usersRepository.update(
-      userId: userId,
-      data: data,
-    );
+    _logger.i('Updating user $userId with data: $data');
 
-    if (updatedUser == null) {
-      throw Exception('Failed to update user');
+    try {
+      final updatedUser = await usersRepository.update(
+        userId: userId,
+        data: data,
+      );
+
+      if (updatedUser == null) {
+        throw Exception('Failed to update user (not found)');
+      }
+
+      _logger.d('User $userId updated successfully');
+      return updatedUser;
+    } catch (e, st) {
+      _logger.e('Error updating user $userId', error: e, stackTrace: st);
+      rethrow;
     }
-
-    return updatedUser;
   }
 }

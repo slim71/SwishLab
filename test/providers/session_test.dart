@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:swish_lab/models/users_row.dart';
+import 'package:swish_lab/models/user_row_data.dart';
 import 'package:swish_lab/providers/session.dart';
 import 'package:swish_lab/providers/users_provider.dart';
 import 'package:swish_lab/state/app_state.dart';
@@ -24,7 +25,7 @@ class MockAppStateNotifier extends AppStateNotifier {
   AppState build() => initialState;
 
   @override
-  void setUserData(dynamic data) {
+  void setUserData(UserRowData data) {
     state = state.copyWith(userData: data, userDataFetched: true);
   }
 }

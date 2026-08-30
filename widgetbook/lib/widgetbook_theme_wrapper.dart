@@ -6,10 +6,7 @@ import 'package:swish_lab/styles/themes.dart';
 class WidgetbookThemeWrapper extends StatelessWidget {
   final Widget child;
 
-  const WidgetbookThemeWrapper({
-    super.key,
-    required this.child,
-  });
+  const WidgetbookThemeWrapper({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +25,10 @@ class WidgetbookThemeWrapper extends StatelessWidget {
               preferredSize: const Size.fromHeight(60),
               child: Container(
                 color: Theme.of(context).cardColor.withValues(alpha: 0.8),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 child: SafeArea(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -39,14 +39,23 @@ class WidgetbookThemeWrapper extends StatelessWidget {
                         underline: const SizedBox(),
                         onChanged: (setName) {
                           if (setName != null) {
-                            final newSet = themeList.firstWhere((t) => t.name == setName);
+                            final newSet = themeList.firstWhere(
+                              (t) => t.name == setName,
+                            );
                             AppThemeManager.setColors(newSet);
                           }
                         },
-                        items: themeList.map((t) => DropdownMenuItem(
-                          value: t.name,
-                          child: Text(t.name, style: const TextStyle(fontSize: 12)),
-                        )).toList(),
+                        items: themeList
+                            .map(
+                              (t) => DropdownMenuItem(
+                                value: t.name,
+                                child: Text(
+                                  t.name,
+                                  style: const TextStyle(fontSize: 12),
+                                ),
+                              ),
+                            )
+                            .toList(),
                       ),
 
                       const SizedBox(width: 24),
@@ -60,10 +69,17 @@ class WidgetbookThemeWrapper extends StatelessWidget {
                             AppThemeManager.setBrightness(newBrightness);
                           }
                         },
-                        items: AppBrightness.values.map((b) => DropdownMenuItem(
-                          value: b,
-                          child: Text(b.name.toUpperCase(), style: const TextStyle(fontSize: 12)),
-                        )).toList(),
+                        items: AppBrightness.values
+                            .map(
+                              (b) => DropdownMenuItem(
+                                value: b,
+                                child: Text(
+                                  b.name.toUpperCase(),
+                                  style: const TextStyle(fontSize: 12),
+                                ),
+                              ),
+                            )
+                            .toList(),
                       ),
                     ],
                   ),

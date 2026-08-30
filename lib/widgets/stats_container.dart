@@ -70,7 +70,9 @@ class StatsContainer extends StatelessWidget {
                         // Title for the section
                         Text(
                           title,
-                          style: AppTextStyles.labelSmall(context, color: AppThemeManager.primaryText.withValues(alpha: 0.5)).copyWith(
+                          style: AppTextStyles.labelSmall(context,
+                                  color: AppThemeManager.primaryText.withValues(alpha: 0.5))
+                              .copyWith(
                             fontWeight: FontWeight.bold,
                             letterSpacing: 0.5,
                           ),

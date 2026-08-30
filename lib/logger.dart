@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -6,6 +7,9 @@ import 'package:path_provider/path_provider.dart';
 
 class AppLogger {
   static Logger? _baseLogger; // singleton
+  static bool isReleaseMode = kReleaseMode;
+  static const int _maxLogSize = 1024 * 1024; // 1MB
+  static Future<void> _writeLock = Future.value();
 
   /// Must be called in main() before runApp()
   static Future<void> init() async {
@@ -16,6 +20,16 @@ class AppLogger {
         printTime: true,
       ),
     );
+  }
+
+  @visibleForTesting
+  static void reset() {
+    _baseLogger = null;
+  }
+
+  @visibleForTesting
+  static Future<void> waitForWrites() async {
+    await _writeLock;
   }
 
   /// Future remote logging hook
@@ -38,15 +52,34 @@ class AppLogger {
   }
 
   static Future<void> logToFile(String message) async {
+    final completer = Completer<void>();
+    final oldLock = _writeLock;
+    _writeLock = completer.future;
+
     try {
+      await oldLock;
       final file = await _getLogFile();
       if (file != null) {
+        // Simple rotation: check size before writing
+        if (await file.exists()) {
+          final size = await file.length();
+          if (size > _maxLogSize) {
+            await file.writeAsString(
+              '${DateTime.now()} : [SYSTEM] Log rotated due to size limit.\n',
+              mode: FileMode.write, // Overwrite
+            );
+          }
+        }
+
         await file.writeAsString(
           '${DateTime.now()} : $message\n',
           mode: FileMode.append,
         );
       }
-    } catch (_) {}
+    } catch (_) {
+    } finally {
+      completer.complete();
+    }
   }
 
   /// Manual scope
@@ -78,47 +111,33 @@ class ScopedLogger {
 
   void d(String message) {
     AppLogger._logger.d(_format(message));
-    _writeToFile(_format(message));
+    AppLogger.logToFile(_format(message));
   }
 
   void i(String message) {
     AppLogger._logger.i(_format(message));
-    _writeToFile(_format(message));
+    AppLogger.logToFile(_format(message));
   }
 
   void w(String message) {
     AppLogger._logger.w(_format(message));
-    _writeToFile(_format(message));
+    AppLogger.logToFile(_format(message));
   }
 
-  void e(
+  Future<void> e(
     String message, {
     Object? error,
     StackTrace? stackTrace,
-  }) {
+  }) async {
     AppLogger._logger.e(
       _format(message),
       error: error,
       stackTrace: stackTrace,
     );
-    _writeToFile('${_format(message)} | error: $error');
+    await AppLogger.logToFile('${_format(message)} | error: $error');
 
-    if (kReleaseMode) {
+    if (AppLogger.isReleaseMode) {
       AppLogger._sendToRemote(message, error, stackTrace);
-    }
-  }
-
-  Future<void> _writeToFile(String message) async {
-    try {
-      final file = await AppLogger._getLogFile();
-      if (file != null) {
-        await file.writeAsString(
-          '${DateTime.now()} : $message\n',
-          mode: FileMode.append,
-        );
-      }
-    } catch (_) {
-      // silently ignore file errors
     }
   }
 }

@@ -54,6 +54,15 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^6.0.0
 
+  mocktail: any
+  fake_async: any
+  path_provider_platform_interface: any
+  plugin_platform_interface: any
+  url_launcher_platform_interface: any
+  video_player_platform_interface: any
+  state_notifier: any
+  image_picker_platform_interface: any
+  riverpod: any
 flutter:
   uses-material-design: true
 

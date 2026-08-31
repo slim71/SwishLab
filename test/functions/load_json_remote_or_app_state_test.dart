@@ -45,11 +45,16 @@ void main() {
         throw Exception('Network error');
       });
 
+      // Set factory for background refresh
+      httpClientFactory = () => client;
+
       final result = await loadJsonRemoteOrAppState(remoteName, defaultJson, client: client);
       expect(result.first['source'], 'cached');
 
       // Allow background task to run
       await Future<void>.delayed(const Duration(milliseconds: 100));
+
+      httpClientFactory = () => http.Client(); // reset
     });
 
     test('background refresh success updates cache', () async {
@@ -61,6 +66,8 @@ void main() {
         return http.Response(json.encode(remoteData), 200);
       });
 
+      httpClientFactory = () => client;
+
       await loadJsonRemoteOrAppState(remoteName, defaultJson, client: client);
 
       // Wait for background refresh
@@ -68,6 +75,8 @@ void main() {
 
       final prefs = await SharedPreferences.getInstance();
       expect(prefs.getString('cached_json_$remoteName'), json.encode(remoteData));
+
+      httpClientFactory = () => http.Client(); // reset
     });
 
     test('should fallback to default if remote and cache fail', () async {

@@ -9,6 +9,9 @@ import '../logger.dart';
 
 final loadLogger = AppLogger.scope('JsonLoader');
 
+/// Factory for http client, allows overriding in tests for background refresh
+http.Client Function() httpClientFactory = () => http.Client();
+
 /// Tries remote JSON first, then falls back to cached JSON, then finally to hardcoded fallback.
 Future<List<Map<String, dynamic>>> loadJsonRemoteOrAppState(
   String remoteName,
@@ -27,13 +30,16 @@ Future<List<Map<String, dynamic>>> loadJsonRemoteOrAppState(
   // Define a background refresh task
   Future<void> refreshRemote() async {
     try {
-      final httpClient = client ?? http.Client();
-      final response = await httpClient.get(Uri.parse(remoteUrl)).timeout(const Duration(seconds: 10));
-      if (client == null) httpClient.close();
-
-      if (response.statusCode == 200 && response.body.isNotEmpty) {
-        await prefs.setString(cacheKey, response.body);
-        loadLogger.d("Background refresh success for: $remoteName");
+      // Use a fresh client for background refresh to ensure it doesn't fail if the original client is closed.
+      final httpClient = httpClientFactory();
+      try {
+        final response = await httpClient.get(Uri.parse(remoteUrl)).timeout(const Duration(seconds: 10));
+        if (response.statusCode == 200 && response.body.isNotEmpty) {
+          await prefs.setString(cacheKey, response.body);
+          loadLogger.d("Background refresh success for: $remoteName");
+        }
+      } finally {
+        httpClient.close();
       }
     } catch (e) {
       loadLogger.d("Background refresh failed for $remoteName");

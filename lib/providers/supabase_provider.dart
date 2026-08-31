@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -21,44 +19,38 @@ final supabaseProvider = Provider<SupabaseClient>((ref) {
 /// - Cleans up the subscription when disposed
 final supabaseAuthListenerProvider = Provider<void>((ref) {
   final supabase = ref.watch(supabaseProvider);
+  final notifier = ref.read(appAuthStatusProvider.notifier);
+  final appStateNotifier = ref.read(appStateProvider.notifier);
 
-  StreamSubscription<AuthState>? sub;
-
-  Future.microtask(() async {
-    final notifier = ref.read(appAuthStatusProvider.notifier);
-
+  // 1. Synchronously sync initial state to avoid UI flicker
+  // Wrap in microtask to avoid "modifying during build" error
+  Future.microtask(() {
     try {
-      // Initial session
       final session = supabase.auth.currentSession;
-
       if (session?.accessToken == null) {
         notifier.setUnauthenticated();
       } else {
         notifier.setAuthenticated();
       }
     } catch (e) {
-      // If offline, we might get a SocketException or AuthRetryableFetchException
-      // We set unauthenticated or offline based on intent,
-      // but here we just want to avoid crashing.
       notifier.setOffline();
     }
+  });
 
-    // Listen to changes
-    sub = supabase.auth.onAuthStateChange.listen((data) {
-      final session = data.session;
-
+  // 2. Subscribe to real-time auth changes
+  final subscription = supabase.auth.onAuthStateChange.listen((data) {
+    final session = data.session;
+    // Defer update to avoid "modifying during build" if the stream emits immediately
+    Future.microtask(() {
       if (session?.accessToken == null) {
         notifier.setUnauthenticated();
-        // Reset app state on logout
-        ref.read(appStateProvider.notifier).reset();
+        appStateNotifier.reset();
       } else {
         notifier.setAuthenticated();
       }
     });
   });
 
-  // Proper cleanup
-  ref.onDispose(() {
-    sub?.cancel();
-  });
+  // 3. Guaranteed cleanup when the provider is disposed
+  ref.onDispose(() => subscription.cancel());
 });

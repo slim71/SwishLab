@@ -82,7 +82,7 @@ void main() {
       final mockHttpClient = _MockHttpClient();
       httpClientFactory = () => mockHttpClient;
 
-      when(() => mockHttpClient.send(any())).thenAnswer((invocation) async {
+      when(() => mockHttpClient.send(any<http.BaseRequest>())).thenAnswer((invocation) async {
         return http.StreamedResponse(
           Stream.value(utf8.encode(json.encode(['gradio/path.mp4']))),
           200,

@@ -57,10 +57,10 @@ void main() {
     mockAuth = MockGoTrueClient();
     mockPrefs = MockSharedPreferences();
     when(() => mockSupabase.auth).thenReturn(mockAuth);
-    when(() => mockPrefs.getBool(any())).thenReturn(null);
-    when(() => mockPrefs.setBool(any(), any())).thenAnswer((_) async => true);
-    when(() => mockPrefs.setString(any(), any())).thenAnswer((_) async => true);
-    when(() => mockPrefs.getString(any())).thenReturn(null);
+    when(() => mockPrefs.getBool(any<String>())).thenReturn(null);
+    when(() => mockPrefs.setBool(any<String>(), any<bool>())).thenAnswer((_) async => true);
+    when(() => mockPrefs.setString(any<String>(), any<String>())).thenAnswer((_) async => true);
+    when(() => mockPrefs.getString(any<String>())).thenReturn(null);
   });
 
   group('Storage Providers', () {
@@ -332,17 +332,19 @@ void main() {
 
       container.read(supabaseAuthListenerProvider);
 
-      await tester.pump();
+      // Wait for the microtask in supabaseAuthListenerProvider to complete
+      await tester.pump(Duration.zero);
       expect(container.read(appAuthStatusProvider), AppAuthStatus.unauthenticated);
 
       final mockSession = MockSession();
       when(() => mockSession.accessToken).thenReturn('token');
       authStateController.add(AuthState(AuthChangeEvent.signedIn, mockSession));
-      await tester.pump();
+      // Listener uses listen() which might also trigger async updates
+      await tester.pump(Duration.zero);
       expect(container.read(appAuthStatusProvider), AppAuthStatus.authenticated);
 
       authStateController.add(const AuthState(AuthChangeEvent.signedOut, null));
-      await tester.pump();
+      await tester.pump(Duration.zero);
       expect(container.read(appAuthStatusProvider), AppAuthStatus.unauthenticated);
 
       await authStateController.close();
@@ -361,7 +363,7 @@ void main() {
       ]);
 
       container.read(supabaseAuthListenerProvider);
-      await tester.pump();
+      await tester.pump(Duration.zero);
       expect(container.read(appAuthStatusProvider), AppAuthStatus.authenticated);
     });
 
@@ -376,7 +378,7 @@ void main() {
       ]);
 
       container.read(supabaseAuthListenerProvider);
-      await tester.pump();
+      await tester.pump(Duration.zero);
       expect(container.read(appAuthStatusProvider), AppAuthStatus.offline);
     });
   });

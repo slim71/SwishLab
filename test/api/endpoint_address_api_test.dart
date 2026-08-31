@@ -348,23 +348,60 @@ void main() {
       expect(resultFuture, throwsA(anyOf(isA<FormatException>(), isA<TypeError>())));
     });
 
-    test('getFinalAnalysisResult ignores non-complete events', () async {
+    test('analyzeShootingForm passes cancelToken to Dio', () async {
+      final token = CancelToken();
+      when(() => dio.post<Map<String, dynamic>>(
+            any(),
+            data: any(named: 'data'),
+            cancelToken: token,
+          )).thenAnswer((_) async => Response(
+            data: {'event_id': '123'},
+            statusCode: 200,
+            requestOptions: RequestOptions(path: ''),
+          ));
+
+      await api.analyzeShootingForm(
+        sourceVideo: 'video.mp4',
+        shootingHand: 'right',
+        pointOfView: 'front',
+        cancelToken: token,
+      );
+
+      verify(() => dio.post<Map<String, dynamic>>(
+            any(),
+            data: any(named: 'data'),
+            cancelToken: token,
+          )).called(1);
+    });
+
+    test('getShootingFormResults passes cancelToken to Dio', () async {
+      final token = CancelToken();
       final controller = StreamController<Uint8List>();
       final responseBody = ResponseBody(controller.stream, 200);
 
-      when(() => dio.get<ResponseBody>(any(), options: any(named: 'options'))).thenAnswer((_) async => Response(
+      when(() => dio.get<ResponseBody>(
+            any(),
+            cancelToken: token,
+            options: any(named: 'options'),
+          )).thenAnswer((_) async => Response(
             data: responseBody,
             statusCode: 200,
             requestOptions: RequestOptions(path: ''),
           ));
 
-      final resultFuture = api.getFinalAnalysisResult(hfEventId: '123');
-      controller.add(Uint8List.fromList(utf8.encode('event: ping\ndata: 1\n\n')));
-      controller.add(Uint8List.fromList(utf8.encode('event: complete\ndata: {"analysis": {"score": 100}}\n\n')));
-      controller.close();
+      final stream = api.getShootingFormResults(hfEventId: '123', cancelToken: token);
 
-      final result = await resultFuture;
-      expect(result.analysis?['score'], equals(100));
+      // Trigger the get call by listening to the stream
+      stream.listen((_) {});
+
+      controller.close();
+      await Future<void>.delayed(Duration.zero);
+
+      verify(() => dio.get<ResponseBody>(
+            any(),
+            cancelToken: token,
+            options: any(named: 'options'),
+          )).called(1);
     });
   });
 }

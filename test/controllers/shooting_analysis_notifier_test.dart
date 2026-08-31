@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
@@ -20,6 +21,10 @@ import '../test_helper.dart';
 class MockEndpointAddressApi extends Mock implements EndpointAddressApi {}
 
 void main() {
+  setUpAll(() {
+    registerFallbackValue(CancelToken());
+  });
+
   late MockEndpointAddressApi api;
   late MockStatisticsRepository statsRepo;
   late MockUser user;
@@ -61,11 +66,14 @@ void main() {
             sourceVideo: any(named: 'sourceVideo'),
             shootingHand: any(named: 'shootingHand'),
             pointOfView: any(named: 'pointOfView'),
+            cancelToken: any(named: 'cancelToken'),
           )).thenAnswer((_) async => AnalysisResponse(eventId: 'evt123'));
 
       // Mock getFinalAnalysisResult
-      when(() => api.getFinalAnalysisResult(hfEventId: 'evt123'))
-          .thenAnswer((_) async => ResultsResponse(<String, dynamic>{'analysis': <String, dynamic>{}}));
+      when(() => api.getFinalAnalysisResult(
+            hfEventId: any(named: 'hfEventId'),
+            cancelToken: any(named: 'cancelToken'),
+          )).thenAnswer((_) async => ResultsResponse(<String, dynamic>{'analysis': <String, dynamic>{}}));
 
       await controller.start(
         videoFile: testFile,
@@ -81,10 +89,13 @@ void main() {
             sourceVideo: any(named: 'sourceVideo'),
             shootingHand: any(named: 'shootingHand'),
             pointOfView: any(named: 'pointOfView'),
+            cancelToken: any(named: 'cancelToken'),
           )).thenAnswer((_) async => AnalysisResponse(eventId: 'evt123'));
 
-      when(() => api.getFinalAnalysisResult(hfEventId: 'evt123'))
-          .thenAnswer((_) async => ResultsResponse(<String, dynamic>{'analysis': <String, dynamic>{}}));
+      when(() => api.getFinalAnalysisResult(
+            hfEventId: any(named: 'hfEventId'),
+            cancelToken: any(named: 'cancelToken'),
+          )).thenAnswer((_) async => ResultsResponse(<String, dynamic>{'analysis': <String, dynamic>{}}));
 
       final states = <AnalysisState>[];
       container.listen(shootingAnalysisProvider, (previous, next) {
@@ -148,6 +159,7 @@ void main() {
             sourceVideo: any(named: 'sourceVideo'),
             shootingHand: any(named: 'shootingHand'),
             pointOfView: any(named: 'pointOfView'),
+            cancelToken: any(named: 'cancelToken'),
           )).thenThrow(Exception('Trigger failed'));
 
       await controller.start(
@@ -164,10 +176,13 @@ void main() {
             sourceVideo: any(named: 'sourceVideo'),
             shootingHand: any(named: 'shootingHand'),
             pointOfView: any(named: 'pointOfView'),
+            cancelToken: any(named: 'cancelToken'),
           )).thenAnswer((_) async => AnalysisResponse(eventId: 'evt123'));
 
-      when(() => api.getFinalAnalysisResult(hfEventId: 'evt123'))
-          .thenAnswer((_) async => ResultsResponse(<String, dynamic>{}, opStatus: false, opError: 'Backend error'));
+      when(() => api.getFinalAnalysisResult(
+            hfEventId: any(named: 'hfEventId'),
+            cancelToken: any(named: 'cancelToken'),
+          )).thenAnswer((_) async => ResultsResponse(<String, dynamic>{}, opStatus: false, opError: 'Backend error'));
 
       await controller.start(
         videoFile: testFile,
@@ -205,10 +220,13 @@ void main() {
             sourceVideo: any(named: 'sourceVideo'),
             shootingHand: any(named: 'shootingHand'),
             pointOfView: any(named: 'pointOfView'),
+            cancelToken: any(named: 'cancelToken'),
           )).thenAnswer((_) async => AnalysisResponse(eventId: 'evt123'));
 
-      when(() => api.getFinalAnalysisResult(hfEventId: 'evt123'))
-          .thenAnswer((_) async => ResultsResponse(<String, dynamic>{}, opStatus: false, opError: null));
+      when(() => api.getFinalAnalysisResult(
+            hfEventId: any(named: 'hfEventId'),
+            cancelToken: any(named: 'cancelToken'),
+          )).thenAnswer((_) async => ResultsResponse(<String, dynamic>{}, opStatus: false, opError: null));
 
       await controller.start(
         videoFile: testFile,
@@ -226,9 +244,13 @@ void main() {
             sourceVideo: any(named: 'sourceVideo'),
             shootingHand: any(named: 'shootingHand'),
             pointOfView: any(named: 'pointOfView'),
+            cancelToken: any(named: 'cancelToken'),
           )).thenAnswer((_) async => AnalysisResponse(eventId: 'evt123'));
 
-      when(() => api.getFinalAnalysisResult(hfEventId: 'evt123')).thenThrow(Exception('Unexpected stream error'));
+      when(() => api.getFinalAnalysisResult(
+            hfEventId: any(named: 'hfEventId'),
+            cancelToken: any(named: 'cancelToken'),
+          )).thenThrow(Exception('Unexpected stream error'));
 
       await controller.start(
         videoFile: testFile,
@@ -246,6 +268,7 @@ void main() {
             sourceVideo: any(named: 'sourceVideo'),
             shootingHand: any(named: 'shootingHand'),
             pointOfView: any(named: 'pointOfView'),
+            cancelToken: any(named: 'cancelToken'),
           )).thenThrow(Exception('Triggering analysis timed out'));
 
       await controller.start(
@@ -264,9 +287,13 @@ void main() {
             sourceVideo: any(named: 'sourceVideo'),
             shootingHand: any(named: 'shootingHand'),
             pointOfView: any(named: 'pointOfView'),
+            cancelToken: any(named: 'cancelToken'),
           )).thenAnswer((_) async => AnalysisResponse(eventId: 'evt123'));
 
-      when(() => api.getFinalAnalysisResult(hfEventId: 'evt123')).thenThrow(Exception('Analysis timed out'));
+      when(() => api.getFinalAnalysisResult(
+            hfEventId: any(named: 'hfEventId'),
+            cancelToken: any(named: 'cancelToken'),
+          )).thenThrow(Exception('Analysis timed out'));
 
       await controller.start(
         videoFile: testFile,
@@ -327,6 +354,7 @@ void main() {
                 sourceVideo: any(named: 'sourceVideo'),
                 shootingHand: any(named: 'shootingHand'),
                 pointOfView: any(named: 'pointOfView'),
+                cancelToken: any(named: 'cancelToken'),
               )).thenAnswer((_) => completer.future);
 
           localController.start(
@@ -362,9 +390,13 @@ void main() {
                 sourceVideo: any(named: 'sourceVideo'),
                 shootingHand: any(named: 'shootingHand'),
                 pointOfView: any(named: 'pointOfView'),
+                cancelToken: any(named: 'cancelToken'),
               )).thenAnswer((_) async => AnalysisResponse(eventId: 'evt123'));
 
-          when(() => api.getFinalAnalysisResult(hfEventId: 'evt123')).thenAnswer((_) => completer.future);
+          when(() => api.getFinalAnalysisResult(
+                hfEventId: any(named: 'hfEventId'),
+                cancelToken: any(named: 'cancelToken'),
+              )).thenAnswer((_) => completer.future);
 
           localController.start(
             videoFile: testFile,
@@ -403,10 +435,13 @@ void main() {
             sourceVideo: any(named: 'sourceVideo'),
             shootingHand: any(named: 'shootingHand'),
             pointOfView: any(named: 'pointOfView'),
+            cancelToken: any(named: 'cancelToken'),
           )).thenAnswer((_) async => AnalysisResponse(eventId: 'evt123'));
 
-      when(() => api.getFinalAnalysisResult(hfEventId: 'evt123'))
-          .thenAnswer((_) async => ResultsResponse(<String, dynamic>{'analysis': <String, dynamic>{}}));
+      when(() => api.getFinalAnalysisResult(
+            hfEventId: any(named: 'hfEventId'),
+            cancelToken: any(named: 'cancelToken'),
+          )).thenAnswer((_) async => ResultsResponse(<String, dynamic>{'analysis': <String, dynamic>{}}));
 
       await localController.start(
         videoFile: testFile,
@@ -440,6 +475,50 @@ void main() {
       await startFuture;
 
       expect(localController.state, isA<AnalysisIdle>());
+    });
+
+    test('cancel() aborts active Dio requests', () async {
+      final analyzeCompleter = Completer<AnalysisResponse>();
+
+      // Keep the provider alive
+      container.listen(shootingAnalysisProvider, (p, n) {});
+
+      when(() => api.analyzeShootingForm(
+            sourceVideo: any(named: 'sourceVideo'),
+            shootingHand: any(named: 'shootingHand'),
+            pointOfView: any(named: 'pointOfView'),
+            cancelToken: any(named: 'cancelToken'),
+          )).thenAnswer((_) => analyzeCompleter.future);
+
+      final startFuture = controller.start(
+        videoFile: testFile,
+        shootingHand: 'Right',
+        pointOfView: 'Side',
+      );
+
+      // Give it a moment to reach the trigger analysis step
+      await Future<void>.delayed(Duration.zero);
+
+      controller.cancel();
+
+      // Capture the cancel token passed to the API
+      final capturedToken = verify(() => api.analyzeShootingForm(
+            sourceVideo: any(named: 'sourceVideo'),
+            shootingHand: any(named: 'shootingHand'),
+            pointOfView: any(named: 'pointOfView'),
+            cancelToken: captureAny(named: 'cancelToken'),
+          )).captured.first as CancelToken;
+
+      expect(capturedToken.isCancelled, isTrue);
+
+      // Complete the future with a cancel error to simulate Dio behavior
+      analyzeCompleter.completeError(DioException(
+        requestOptions: RequestOptions(path: ''),
+        type: DioExceptionType.cancel,
+      ));
+
+      await startFuture;
+      expect(controller.state, isA<AnalysisIdle>());
     });
   });
 }

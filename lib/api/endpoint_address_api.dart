@@ -21,6 +21,7 @@ class EndpointAddressApi {
     required String sourceVideo,
     required String shootingHand,
     required String pointOfView,
+    CancelToken? cancelToken,
   }) async {
     final url = '${_client.dio.options.baseUrl}/gradio_api/call/api_endpoint';
     _logger.i('POST to $url');
@@ -40,6 +41,7 @@ class EndpointAddressApi {
             pointOfView.toUpperCase(),
           ]
         },
+        cancelToken: cancelToken,
       );
       _logger.i('Response from analyzeShootingForm: ${response.data}');
       return AnalysisResponse.fromJson(response.data as Map<String, dynamic>);
@@ -59,6 +61,7 @@ class EndpointAddressApi {
   /// --------------------------------
   Stream<String> getShootingFormResults({
     required String hfEventId,
+    CancelToken? cancelToken,
   }) async* {
     final url = '/gradio_api/call/api_endpoint/$hfEventId';
     _logger.i('GET (Stream) from ${_client.dio.options.baseUrl}$url');
@@ -66,6 +69,7 @@ class EndpointAddressApi {
     try {
       final response = await _client.dio.get<ResponseBody>(
         url,
+        cancelToken: cancelToken,
         options: Options(
           responseType: ResponseType.stream,
           // We want to keep the connection open for as long as the analysis takes
@@ -89,6 +93,7 @@ class EndpointAddressApi {
 
   Future<ResultsResponse> getFinalAnalysisResult({
     required String hfEventId,
+    CancelToken? cancelToken,
   }) async {
     String? currentEvent;
     String? currentData;
@@ -97,7 +102,7 @@ class EndpointAddressApi {
     _logger.i('Listening for SSE completion on event $hfEventId');
 
     try {
-      await for (final line in getShootingFormResults(hfEventId: hfEventId)) {
+      await for (final line in getShootingFormResults(hfEventId: hfEventId, cancelToken: cancelToken)) {
         final trimmed = line.trim();
         fullBuffer.writeln(trimmed);
 

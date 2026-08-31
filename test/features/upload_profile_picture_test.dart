@@ -96,7 +96,7 @@ void main() {
       verifyNever(() => storageRepository.deleteByPublicUrl(any()));
     });
 
-    test('throws exception when no image provided', () async {
+    test('throws exception when networkUrl is empty', () async {
       changeProfilePicture = ChangeProfilePicture(
         usersRepository: usersRepository,
         storageRepository: storageRepository,
@@ -104,12 +104,30 @@ void main() {
       );
 
       expect(
-        () => changeProfilePicture.execute(userId: userId),
+        () => changeProfilePicture.execute(userId: userId, networkUrl: ''),
         throwsA(isA<Exception>().having((e) => e.toString(), 'message', contains('No image provided'))),
       );
     });
 
-    test('does not delete if previous URL is the same as new URL', () async {
+    test('rethrows when uploadProfilePicture fails', () async {
+      final mockFile = MockFile();
+      when(() => mockFile.path).thenReturn('test.png');
+      changeProfilePicture = ChangeProfilePicture(
+        usersRepository: usersRepository,
+        storageRepository: storageRepository,
+        updateUser: updateUser,
+      );
+
+      when(() => storageRepository.uploadProfilePicture(file: mockFile)).thenThrow(Exception('Upload failed'));
+
+      expect(
+        () => changeProfilePicture.execute(userId: userId, localFile: mockFile),
+        throwsA(isA<Exception>().having((e) => e.toString(), 'message', contains('Upload failed'))),
+      );
+      verify(() => storageRepository.uploadProfilePicture(file: mockFile)).called(1);
+    });
+
+    test('logs warning but does not throw when deleteByPublicUrl fails', () async {
       final mockFile = MockFile();
       when(() => mockFile.path).thenReturn('test.png');
       changeProfilePicture = ChangeProfilePicture(
@@ -119,12 +137,36 @@ void main() {
       );
 
       when(() => storageRepository.uploadProfilePicture(file: mockFile)).thenAnswer((_) async => publicUrl);
-      when(() => usersRepository.getUserRow(userId)).thenAnswer((_) async => userRow.copyWith(profilePic: publicUrl));
+      when(() => usersRepository.getUserRow(userId)).thenAnswer((_) async => userRow);
+      when(() => updateUser.execute(userId: userId, data: {'profile_pic': publicUrl}))
+          .thenAnswer((_) async => userRow.copyWith(profilePic: publicUrl));
+      when(() => storageRepository.deleteByPublicUrl(previousUrl))
+          .thenAnswer((_) async => throw Exception('Delete failed'));
+
+      final result = await changeProfilePicture.execute(userId: userId, localFile: mockFile);
+
+      expect(result, equals(publicUrl));
+      verify(() => storageRepository.deleteByPublicUrl(previousUrl)).called(1);
+    });
+
+    test('continues successfully when getUserRow returns null', () async {
+      final mockFile = MockFile();
+      when(() => mockFile.path).thenReturn('test.png');
+      changeProfilePicture = ChangeProfilePicture(
+        usersRepository: usersRepository,
+        storageRepository: storageRepository,
+        updateUser: updateUser,
+      );
+
+      when(() => storageRepository.uploadProfilePicture(file: mockFile)).thenAnswer((_) async => publicUrl);
+      when(() => usersRepository.getUserRow(userId)).thenAnswer((_) async => null);
       when(() => updateUser.execute(userId: userId, data: {'profile_pic': publicUrl}))
           .thenAnswer((_) async => userRow.copyWith(profilePic: publicUrl));
 
-      await changeProfilePicture.execute(userId: userId, localFile: mockFile);
+      final result = await changeProfilePicture.execute(userId: userId, localFile: mockFile);
 
+      expect(result, equals(publicUrl));
+      verify(() => usersRepository.getUserRow(userId)).called(1);
       verifyNever(() => storageRepository.deleteByPublicUrl(any()));
     });
   });

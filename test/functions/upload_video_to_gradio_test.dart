@@ -97,6 +97,13 @@ void main() {
       // Reset factory
       httpClientFactory = () => http.Client();
     });
+    group('UploadException', () {
+      test('toString returns expected message', () {
+        final e = UploadException('test', statusCode: 404);
+        expect(e.toString(), contains('test'));
+        expect(e.toString(), contains('404'));
+      });
+    });
   });
 }
 

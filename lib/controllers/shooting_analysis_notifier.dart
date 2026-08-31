@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
@@ -16,10 +17,12 @@ class ShootingAnalysisController extends StateNotifier<AnalysisState> {
   final Ref ref;
   final _logger = AppLogger.scope('ShootingAnalysis');
   bool _isCancelled = false;
+  CancelToken? _cancelToken;
 
   void cancel() {
     _logger.w('Analysis cancelled by user.');
     _isCancelled = true;
+    _cancelToken?.cancel("User cancelled analysis");
     state = AnalysisIdle();
   }
 
@@ -34,6 +37,7 @@ class ShootingAnalysisController extends StateNotifier<AnalysisState> {
     }
 
     _isCancelled = false;
+    _cancelToken = CancelToken();
 
     try {
       state = AnalysisLoading();
@@ -59,6 +63,7 @@ class ShootingAnalysisController extends StateNotifier<AnalysisState> {
             sourceVideo: gradioUrl,
             shootingHand: shootingHand,
             pointOfView: pointOfView,
+            cancelToken: _cancelToken,
           )
           .timeout(
             const Duration(seconds: 30),
@@ -71,7 +76,12 @@ class ShootingAnalysisController extends StateNotifier<AnalysisState> {
 
       // 3. Get results
       _logger.i('Step 3: Waiting for final analysis results (SSE)...');
-      final result = await api.getFinalAnalysisResult(hfEventId: eventId).timeout(
+      final result = await api
+          .getFinalAnalysisResult(
+            hfEventId: eventId,
+            cancelToken: _cancelToken,
+          )
+          .timeout(
             const Duration(minutes: 5),
             onTimeout: () => throw Exception('Analysis timed out'),
           );
@@ -99,9 +109,14 @@ class ShootingAnalysisController extends StateNotifier<AnalysisState> {
       _logger.i('Analysis completed successfully!');
       state = AnalysisSuccess(result);
     } catch (e, stack) {
-      if (_isCancelled) return;
+      if (_isCancelled || (e is DioException && CancelToken.isCancel(e))) {
+        _logger.i('Analysis process aborted.');
+        return;
+      }
       _logger.e('Error during analysis process', error: e, stackTrace: stack);
       state = AnalysisFailure(e);
+    } finally {
+      _cancelToken = null;
     }
   }
 }

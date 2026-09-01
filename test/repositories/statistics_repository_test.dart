@@ -21,14 +21,22 @@ void main() {
   });
 
   group('StatisticsRepository', () {
-    test('getUserStatistics returns list of stats', () async {
+    test('getUserStatistics uses correct table name and order', () async {
+      stubPostgrestAwaitable(filterBuilder, <Map<String, dynamic>>[]);
+
+      await repository.getUserStatistics('u1');
+
+      verify(() => client.from('statistics')).called(1);
+    });
+
+    test('getUserStatistics returns list of stats with pagination', () async {
       final now = DateTime.now().toIso8601String();
       final statsData = <Map<String, dynamic>>[
         {'stat_id': 's1', 'user_id': 'u1', 'created_at': now},
       ];
       stubPostgrestAwaitable(filterBuilder, statsData);
 
-      final result = await repository.getUserStatistics('u1');
+      final result = await repository.getUserStatistics('u1', limit: 20, offset: 10);
 
       expect(result.length, 1);
       expect(result.first.statId, 's1');

@@ -87,11 +87,14 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
     final hasShootingHand = (userInfo?.shootingHand?.isNotEmpty ?? false);
     final appColors = AppThemeManager.currentColors;
     final statsAsync = ref.watch(userStatisticsProvider);
-    final List<StatisticsRow> checkedForms = statsAsync.maybeWhen(
-      data: (data) => data,
-      orElse: () => const <StatisticsRow>[],
-    );
-    final last = checkedForms.lastOrNull;
+    final statsData = statsAsync.value;
+    final List<StatisticsRow> checkedForms = statsData?.items ?? const <StatisticsRow>[];
+
+    // Total count now comes directly from the backend via provider state
+    final totalSessions = statsData?.totalCount ?? 0;
+
+    // latest session is now the first item due to descending order in repository
+    final last = checkedForms.firstOrNull;
 
     final lastSessionScore = _calculateRowAvg(last);
 
@@ -190,7 +193,7 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                                   _buildHeroStat(
                                     context,
                                     label: 'Sessions',
-                                    value: checkedForms.length.toString(),
+                                    value: totalSessions.toString(),
                                     icon: Icons.analytics_outlined,
                                   ),
                                 ],

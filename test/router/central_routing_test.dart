@@ -7,6 +7,8 @@ import 'package:swish_lab/pages/home_page.dart';
 import 'package:swish_lab/providers/auth_providers.dart';
 import 'package:swish_lab/router/central_routing.dart';
 import 'package:swish_lab/state/app_state.dart';
+import 'package:swish_lab/providers/statistics_provider.dart';
+import 'package:swish_lab/providers/users_provider.dart';
 import '../test_helper.dart';
 
 class MockAppStateNotifier extends AppStateNotifier {
@@ -103,6 +105,9 @@ void main() {
       overrides: [
         appStatusProvider.overrideWithValue(AppAuthStatus.authenticated),
         appStateProvider.overrideWith(() => MockAppStateNotifier(const AppState(hasOpenedBefore: true))),
+        appUserProvider.overrideWith((ref) => Future.value(null)),
+        userStatisticsProvider.overrideWith((ref) => MockUserStatisticsNotifier(
+            ref, const AsyncValue.data(UserStatisticsState(items: [], totalCount: 0, hasMore: false)))),
       ],
     );
 
@@ -132,6 +137,9 @@ void main() {
       overrides: [
         appStatusProvider.overrideWithValue(AppAuthStatus.authenticated),
         appStateProvider.overrideWith(() => MockAppStateNotifier(const AppState(hasOpenedBefore: true))),
+        appUserProvider.overrideWith((ref) => Future.value(null)),
+        userStatisticsProvider.overrideWith((ref) => MockUserStatisticsNotifier(
+            ref, const AsyncValue.data(UserStatisticsState(items: [], totalCount: 0, hasMore: false)))),
       ],
     );
 

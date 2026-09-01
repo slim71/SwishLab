@@ -213,14 +213,20 @@ void main() {
         supabaseProvider.overrideWithValue(mockSupabase),
       ]);
 
-      final result = await container.read(userStatisticsProvider.future);
-      expect(result, isEmpty);
+      // Wait for initialization
+      final state = await container.read(userStatisticsProvider.notifier).stream.first;
+      final result = state.value!;
+      expect(result.items, isEmpty);
+      expect(result.totalCount, 0);
+      expect(result.hasMore, isFalse);
     });
 
     test('userStatisticsProvider returns stats for user', () async {
       final user = const UsersRow(id: '1', firstName: 'F', lastName: 'L', email: 'e');
       final mockRepo = MockStatisticsRepository();
-      when(() => mockRepo.getUserStatistics('1')).thenAnswer((_) async => []);
+      when(() => mockRepo.getUserStatistics('1', limit: any(named: 'limit'), offset: any(named: 'offset')))
+          .thenAnswer((_) async => []);
+      when(() => mockRepo.getStatsCount('1')).thenAnswer((_) async => 0);
 
       final container = createContainer(overrides: [
         appUserProvider.overrideWith((ref) => user),
@@ -228,9 +234,12 @@ void main() {
         supabaseProvider.overrideWithValue(mockSupabase),
       ]);
 
-      final result = await container.read(userStatisticsProvider.future);
-      expect(result, isEmpty);
-      verify(() => mockRepo.getUserStatistics('1')).called(1);
+      // Wait for initialization
+      final state = await container.read(userStatisticsProvider.notifier).stream.first;
+      final result = state.value!;
+      expect(result.items, isEmpty);
+      expect(result.totalCount, 0);
+      verify(() => mockRepo.getUserStatistics('1', limit: any(named: 'limit'))).called(1);
     });
   });
 

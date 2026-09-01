@@ -1,11 +1,11 @@
 import 'dart:io';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:swish_lab/pages/profile_page.dart';
 import 'package:swish_lab/providers/users_provider.dart';
 import 'package:swish_lab/models/users_row.dart';
 import 'package:swish_lab/providers/statistics_provider.dart';
-import 'package:swish_lab/models/statistics_row.dart';
 import '../test_helper.dart';
 
 void main() {
@@ -27,7 +27,8 @@ void main() {
       child: const ProfilePage(),
       overrides: [
         appUserProvider.overrideWith((ref) => user),
-        userStatisticsProvider.overrideWith((ref) => <StatisticsRow>[]),
+        userStatisticsProvider.overrideWith((ref) => MockUserStatisticsNotifier(
+            ref, const AsyncValue.data(UserStatisticsState(items: [], totalCount: 0, hasMore: false)))),
       ],
     ));
 

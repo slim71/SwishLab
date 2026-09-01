@@ -45,6 +45,9 @@ class FakePostgrestFilterBuilder<T> extends Fake implements PostgrestFilterBuild
   PostgrestTransformBuilder<T> limit(int count, {String? referencedTable}) => this;
 
   @override
+  PostgrestTransformBuilder<T> range(int from, int to, {String? referencedTable}) => this;
+
+  @override
   PostgrestTransformBuilder<Map<String, dynamic>?> maybeSingle() => transformBuilder;
 
   @override

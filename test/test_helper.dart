@@ -9,6 +9,7 @@ import 'package:swish_lab/router/central_routing.dart';
 import 'package:swish_lab/services/authentication.dart';
 import 'package:swish_lab/repositories/users_repository.dart';
 import 'package:swish_lab/repositories/statistics_repository.dart';
+import 'package:swish_lab/providers/statistics_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // ignore: implementation_imports
@@ -42,6 +43,17 @@ class MockUser extends Mock implements User {}
 class MockUsersRepository extends Mock implements UsersRepository {}
 
 class MockStatisticsRepository extends Mock implements StatisticsRepository {}
+
+class MockUserStatisticsNotifier extends UserStatisticsNotifier {
+  final AsyncValue<UserStatisticsState> _state;
+  MockUserStatisticsNotifier(super.ref, this._state);
+
+  @override
+  set state(AsyncValue<UserStatisticsState> value) {} // No-op for mocks
+
+  @override
+  AsyncValue<UserStatisticsState> get state => _state;
+}
 
 class TestHttpOverrides extends HttpOverrides {
   @override

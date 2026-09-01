@@ -38,16 +38,23 @@ class StatisticsRow {
   });
 
   factory StatisticsRow.fromJson(Map<String, dynamic> json) {
+    double? toDouble(dynamic val) {
+      if (val == null) return null;
+      if (val is num) return val.toDouble();
+      if (val is String) return double.tryParse(val);
+      return null;
+    }
+
     return StatisticsRow(
-      statId: json['stat_id'] as String,
-      userId: json['user_id'] as String,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      setPointTotalScore: (json['set_point_total_score'] as num?)?.toDouble(),
-      jumpTotalScore: (json['jump_total_score'] as num?)?.toDouble(),
-      elbowPositionTotalScore: (json['elbow_position_total_score'] as num?)?.toDouble(),
-      feetDirectionTotalScore: (json['feet_direction_total_score'] as num?)?.toDouble(),
-      shotPathTotalScore: (json['shot_path_total_score'] as num?)?.toDouble(),
-      followThroughTotalScore: (json['follow_through_total_score'] as num?)?.toDouble(),
+      statId: json['stat_id']?.toString() ?? '',
+      userId: json['user_id']?.toString() ?? '',
+      createdAt: json['created_at'] != null ? DateTime.parse(json['created_at'].toString()) : DateTime.now(),
+      setPointTotalScore: toDouble(json['set_point_total_score']),
+      jumpTotalScore: toDouble(json['jump_total_score']),
+      elbowPositionTotalScore: toDouble(json['elbow_position_total_score']),
+      feetDirectionTotalScore: toDouble(json['feet_direction_total_score']),
+      shotPathTotalScore: toDouble(json['shot_path_total_score']),
+      followThroughTotalScore: toDouble(json['follow_through_total_score']),
       setPoint: json['set_point'] != null ? SetPointData.fromJson(json['set_point'] as Map<String, dynamic>) : null,
       jump: json['jump'] != null ? JumpData.fromJson(json['jump'] as Map<String, dynamic>) : null,
       elbowPosition: json['elbow_position'] != null

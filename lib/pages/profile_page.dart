@@ -54,7 +54,7 @@ class _ProfilePageState extends ConsumerState<ProfilePage> with TickerProviderSt
 
     final statsAsync = ref.watch(userStatisticsProvider);
     final statisticsDataDecreasing = statsAsync.maybeWhen(
-      data: (data) => data.reversed.toList(),
+      data: (state) => state.items,
       orElse: () => null,
     );
 

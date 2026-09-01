@@ -13,7 +13,23 @@ abstract class AnalysisSection {
 
   static Map<String, double> parseScores(Map<String, dynamic>? json) {
     if (json == null) return {};
-    return json.map((k, v) => MapEntry(k, (v as num?)?.toDouble() ?? 0.0));
+    return json.map((k, v) {
+      return MapEntry(k, toDouble(v) ?? 0.0);
+    });
+  }
+
+  static double? toDouble(dynamic val) {
+    if (val == null) return null;
+    if (val is num) return val.toDouble();
+    if (val is String) return double.tryParse(val);
+    return null;
+  }
+
+  static int? toInt(dynamic val) {
+    if (val == null) return null;
+    if (val is num) return val.toInt();
+    if (val is String) return int.tryParse(val);
+    return null;
   }
 
   @override
@@ -42,9 +58,9 @@ class SetPointData extends AnalysisSection {
   factory SetPointData.fromJson(Map<String, dynamic> json) {
     final scoresMap = AnalysisSection.parseScores(json['scores'] as Map<String, dynamic>?);
     return SetPointData(
-      ballEyeDistance: (json['ball_eye_distance'] as num?)?.toDouble() ?? 0.0,
-      elbowAngle: (json['elbow_angle'] as num?)?.toDouble() ?? 0.0,
-      shoulderAngle: (json['shoulder_angle'] as num?)?.toDouble() ?? 0.0,
+      ballEyeDistance: AnalysisSection.toDouble(json['ball_eye_distance']) ?? 0.0,
+      elbowAngle: AnalysisSection.toDouble(json['elbow_angle']) ?? 0.0,
+      shoulderAngle: AnalysisSection.toDouble(json['shoulder_angle']) ?? 0.0,
       scores: scoresMap,
       totalScore: scoresMap['total'] ?? 0.0,
     );
@@ -88,9 +104,9 @@ class JumpData extends AnalysisSection {
   factory JumpData.fromJson(Map<String, dynamic> json) {
     final scoresMap = AnalysisSection.parseScores(json['scores'] as Map<String, dynamic>?);
     return JumpData(
-      phase: (json['phase'] as num?)?.toDouble() ?? 0.0,
-      forwardDistance: (json['forward_distance'] as num?)?.toDouble() ?? 0.0,
-      sideDistance: (json['side_distance'] as num?)?.toDouble() ?? 0.0,
+      phase: AnalysisSection.toDouble(json['phase']) ?? 0.0,
+      forwardDistance: AnalysisSection.toDouble(json['forward_distance']) ?? 0.0,
+      sideDistance: AnalysisSection.toDouble(json['side_distance']) ?? 0.0,
       scores: scoresMap,
       totalScore: scoresMap['total'] ?? 0.0,
     );
@@ -132,8 +148,8 @@ class ElbowPositionData extends AnalysisSection {
   factory ElbowPositionData.fromJson(Map<String, dynamic> json) {
     final scoresMap = AnalysisSection.parseScores(json['scores'] as Map<String, dynamic>?);
     return ElbowPositionData(
-      vertical: (json['vertical'] as num?)?.toDouble() ?? 0.0,
-      horizontal: (json['horizontal'] as num?)?.toDouble() ?? 0.0,
+      vertical: AnalysisSection.toDouble(json['vertical']) ?? 0.0,
+      horizontal: AnalysisSection.toDouble(json['horizontal']) ?? 0.0,
       scores: scoresMap,
       totalScore: scoresMap['total'] ?? 0.0,
     );
@@ -174,10 +190,10 @@ class FeetDirectionData extends AnalysisSection {
   factory FeetDirectionData.fromJson(Map<String, dynamic> json) {
     final scoresMap = AnalysisSection.parseScores(json['scores'] as Map<String, dynamic>?);
     return FeetDirectionData(
-      leftDirection: (json['left_direction'] as num?)?.toDouble() ?? 0.0,
-      rightDirection: (json['right_direction'] as num?)?.toDouble() ?? 0.0,
-      leftAngle: (json['left_angle'] as num?)?.toDouble() ?? 0.0,
-      rightAngle: (json['right_angle'] as num?)?.toDouble() ?? 0.0,
+      leftDirection: AnalysisSection.toDouble(json['left_direction']) ?? 0.0,
+      rightDirection: AnalysisSection.toDouble(json['right_direction']) ?? 0.0,
+      leftAngle: AnalysisSection.toDouble(json['left_angle']) ?? 0.0,
+      rightAngle: AnalysisSection.toDouble(json['right_angle']) ?? 0.0,
       scores: scoresMap,
       totalScore: scoresMap['total'] ?? 0.0,
     );
@@ -228,11 +244,11 @@ class ShotPathData extends AnalysisSection {
   factory ShotPathData.fromJson(Map<String, dynamic> json) {
     final scoresMap = AnalysisSection.parseScores(json['scores'] as Map<String, dynamic>?);
     return ShotPathData(
-      averageDeviation: (json['average_deviation'] as num?)?.toDouble() ?? 0.0,
-      maxDeviation: (json['max_deviation'] as num?)?.toDouble() ?? 0.0,
-      deviationRatio: (json['deviation_ratio'] as num?)?.toDouble() ?? 0.0,
-      efficiency: (json['efficiency'] as num?)?.toDouble() ?? 0.0,
-      angleVariance: (json['angle_variance'] as num?)?.toDouble() ?? 0.0,
+      averageDeviation: AnalysisSection.toDouble(json['average_deviation']) ?? 0.0,
+      maxDeviation: AnalysisSection.toDouble(json['max_deviation']) ?? 0.0,
+      deviationRatio: AnalysisSection.toDouble(json['deviation_ratio']) ?? 0.0,
+      efficiency: AnalysisSection.toDouble(json['efficiency']) ?? 0.0,
+      angleVariance: AnalysisSection.toDouble(json['angle_variance']) ?? 0.0,
       scores: scoresMap,
       totalScore: scoresMap['total'] ?? 0.0,
     );
@@ -293,11 +309,11 @@ class FollowThroughData extends AnalysisSection {
     final scoresMap = AnalysisSection.parseScores(json['scores'] as Map<String, dynamic>?);
     return FollowThroughData(
       held: json['held'] as bool? ?? false,
-      framesHeld: (json['frames_held'] as num?)?.toInt() ?? 0,
-      finalElbowAngle: (json['final_elbow_angle'] as num?)?.toDouble() ?? 0.0,
-      averageWristAngle: (json['average_wrist_angle'] as num?)?.toDouble() ?? 0.0,
-      averageWristVelocity: (json['average_wrist_velocity'] as num?)?.toDouble() ?? 0.0,
-      averageFingerVelocity: (json['average_finger_velocity'] as num?)?.toDouble() ?? 0.0,
+      framesHeld: AnalysisSection.toInt(json['frames_held']) ?? 0,
+      finalElbowAngle: AnalysisSection.toDouble(json['final_elbow_angle']) ?? 0.0,
+      averageWristAngle: AnalysisSection.toDouble(json['average_wrist_angle']) ?? 0.0,
+      averageWristVelocity: AnalysisSection.toDouble(json['average_wrist_velocity']) ?? 0.0,
+      averageFingerVelocity: AnalysisSection.toDouble(json['average_finger_velocity']) ?? 0.0,
       scores: scoresMap,
       totalScore: scoresMap['total'] ?? 0.0,
     );

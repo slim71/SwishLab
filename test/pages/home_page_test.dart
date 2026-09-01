@@ -13,6 +13,7 @@ import 'package:swish_lab/models/users_row.dart';
 import 'package:swish_lab/pages/home_page.dart';
 import 'package:swish_lab/providers/shared_preferences_provider.dart';
 import 'package:swish_lab/providers/statistics_provider.dart';
+import '../test_helper.dart';
 import 'package:swish_lab/providers/users_provider.dart';
 import 'package:swish_lab/state/app_state.dart';
 
@@ -213,7 +214,8 @@ void main() {
       createWidgetUnderTest(
         overrides: [
           appUserProvider.overrideWith((ref) => Future.value(mockUserWithoutHand)),
-          userStatisticsProvider.overrideWith((ref) => <StatisticsRow>[]),
+          userStatisticsProvider.overrideWith((ref) => MockUserStatisticsNotifier(
+              ref, const AsyncValue.data(UserStatisticsState(items: [], totalCount: 0, hasMore: false)))),
         ],
       ),
     );
@@ -233,7 +235,8 @@ void main() {
       createWidgetUnderTest(
         overrides: [
           appUserProvider.overrideWith((ref) => mockUserWithHand),
-          userStatisticsProvider.overrideWith((ref) => mockStats),
+          userStatisticsProvider.overrideWith((ref) => MockUserStatisticsNotifier(ref,
+              AsyncValue.data(UserStatisticsState(items: mockStats, totalCount: mockStats.length, hasMore: false)))),
         ],
       ),
     );
@@ -253,7 +256,8 @@ void main() {
       createWidgetUnderTest(
         overrides: [
           appUserProvider.overrideWith((ref) => Future.value(mockUserWithoutHand)),
-          userStatisticsProvider.overrideWith((ref) => <StatisticsRow>[]),
+          userStatisticsProvider.overrideWith((ref) => MockUserStatisticsNotifier(
+              ref, const AsyncValue.data(UserStatisticsState(items: [], totalCount: 0, hasMore: false)))),
         ],
       ),
     );
@@ -282,7 +286,8 @@ void main() {
       createWidgetUnderTest(
         overrides: [
           appUserProvider.overrideWith((ref) => mockUserWithoutHand),
-          userStatisticsProvider.overrideWith((ref) => <StatisticsRow>[]),
+          userStatisticsProvider.overrideWith((ref) => MockUserStatisticsNotifier(
+              ref, const AsyncValue.data(UserStatisticsState(items: [], totalCount: 0, hasMore: false)))),
           // Skipping the dialog by initializing the session
           appStateProvider.overrideWith(() => InitializedAppStateNotifier()),
         ],
@@ -310,7 +315,8 @@ void main() {
       createWidgetUnderTest(
         overrides: [
           appUserProvider.overrideWith((ref) => mockUserWithHand),
-          userStatisticsProvider.overrideWith((ref) => mockStats),
+          userStatisticsProvider.overrideWith((ref) => MockUserStatisticsNotifier(ref,
+              AsyncValue.data(UserStatisticsState(items: mockStats, totalCount: mockStats.length, hasMore: false)))),
         ],
       ),
     );

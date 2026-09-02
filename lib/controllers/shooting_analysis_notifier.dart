@@ -47,7 +47,7 @@ class ShootingAnalysisController extends StateNotifier<AnalysisState> {
       // 1. Upload video to Gradio
       _logger.i('Step 1: Uploading video to Gradio...');
       final uploader = ref.read(videoUploaderProvider);
-      final gradioUrl = await uploader(videoFile).timeout(
+      final gradioUrl = await uploader(videoFile, cancelToken: _cancelToken).timeout(
         const Duration(minutes: 2),
         onTimeout: () => throw Exception('Upload timed out'),
       );
@@ -103,6 +103,8 @@ class ShootingAnalysisController extends StateNotifier<AnalysisState> {
           analysisData: (result.raw['analysis'] as Map<String, dynamic>? ?? <String, dynamic>{}),
         );
         _logger.i('Results persisted to DB for user ${user.id}');
+        // Refresh the statistics provider so the new session appears on the Home Page
+        ref.invalidate(userStatisticsProvider);
       }
       if (_isCancelled) return;
 

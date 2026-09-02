@@ -206,24 +206,40 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
                       ),
                     ),
 
-                    // Extra Hint text in matching style
+                    const SizedBox(height: 32),
+
+                    // Extra Hint text in matching style (Glass Bubble)
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(32, 24, 32, 0),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Elapsed Time: $_elapsedTime',
-                            style: AppTextStyles.titleMedium(context, color: appColors.primaryTwo)
-                                .copyWith(fontWeight: FontWeight.bold),
+                      padding: const EdgeInsets.symmetric(horizontal: 48),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(24),
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                            decoration: BoxDecoration(
+                              color: AppThemeManager.secondaryBackground.withValues(alpha: 0.6),
+                              borderRadius: BorderRadius.circular(24),
+                              border: Border.all(color: Colors.white.withValues(alpha: 0.2), width: 1.5),
+                            ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Elapsed Time: $_elapsedTime',
+                                  style: AppTextStyles.titleMedium(context, color: AppThemeManager.primaryText)
+                                      .copyWith(fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'This may take a moment depending on the video size',
+                                  textAlign: TextAlign.center,
+                                  style: AppTextStyles.labelSmall(context,
+                                      color: AppThemeManager.primaryText.withValues(alpha: 0.6)),
+                                ),
+                              ],
+                            ),
                           ),
-                          const SizedBox(height: 12),
-                          Text(
-                            'This may take a moment depending on the video size',
-                            textAlign: TextAlign.center,
-                            style: AppTextStyles.labelSmall(context,
-                                color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
 

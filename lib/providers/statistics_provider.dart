@@ -48,9 +48,11 @@ class UserStatisticsNotifier extends StateNotifier<AsyncValue<UserStatisticsStat
   static const int _pageSize = 20;
   final _logger = AppLogger.scope('UserStatsNotifier');
 
-  UserStatisticsNotifier(this.ref) : super(const AsyncValue.loading()) {
+  UserStatisticsNotifier(this.ref) : super(const AsyncValue.loading());
+
+  Future<void> init() async {
     _logger.d('Building UserStatisticsNotifier');
-    _init();
+    await _init();
   }
 
   Future<void> _init() async {
@@ -122,4 +124,4 @@ class UserStatisticsNotifier extends StateNotifier<AsyncValue<UserStatisticsStat
 
 final userStatisticsProvider =
     StateNotifierProvider.autoDispose<UserStatisticsNotifier, AsyncValue<UserStatisticsState>>(
-        (ref) => UserStatisticsNotifier(ref));
+        (ref) => UserStatisticsNotifier(ref)..init());

@@ -49,6 +49,11 @@ class MockUserStatisticsNotifier extends UserStatisticsNotifier {
   MockUserStatisticsNotifier(super.ref, this._state);
 
   @override
+  Future<void> init() async {
+    // Do nothing in mocks to avoid hitting Supabase
+  }
+
+  @override
   set state(AsyncValue<UserStatisticsState> value) {} // No-op for mocks
 
   @override

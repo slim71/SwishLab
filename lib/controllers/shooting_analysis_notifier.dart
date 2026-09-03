@@ -40,14 +40,22 @@ class ShootingAnalysisController extends StateNotifier<AnalysisState> {
     _cancelToken = CancelToken();
 
     try {
-      state = AnalysisLoading();
+      state = AnalysisLoading(progress: 0.0);
 
       _logger.i('Starting analysis process for file: ${videoFile.path}');
 
       // 1. Upload video to Gradio
       _logger.i('Step 1: Uploading video to Gradio...');
       final uploader = ref.read(videoUploaderProvider);
-      final gradioUrl = await uploader(videoFile, cancelToken: _cancelToken).timeout(
+      final gradioUrl = await uploader(
+        videoFile,
+        cancelToken: _cancelToken,
+        onProgress: (p) {
+          if (!_isCancelled) {
+            state = AnalysisLoading(progress: p);
+          }
+        },
+      ).timeout(
         const Duration(minutes: 2),
         onTimeout: () => throw Exception('Upload timed out'),
       );

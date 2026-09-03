@@ -1,27 +1,44 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:swish_lab/repositories/users_repository.dart';
 import '../supabase_mock.dart';
 
 void main() {
   late MockSupabaseClient client;
   late UsersRepository repository;
-  late FakeSupabaseQueryBuilder queryBuilder;
-  late FakePostgrestFilterBuilder<List<Map<String, dynamic>>> filterBuilder;
-  late FakePostgrestTransformBuilder<dynamic> transformBuilder;
+  late MockSupabaseQueryBuilder queryBuilder;
+  late MockPostgrestFilterBuilder<PostgrestList> filterBuilder;
+  late MockPostgrestTransformBuilder<PostgrestList> transformListBuilder;
+  late MockPostgrestTransformBuilder<PostgrestMap?> transformMapBuilder;
+
+  setUpAll(() {
+    setupSupabaseMocks();
+  });
 
   setUp(() {
     client = MockSupabaseClient();
     repository = UsersRepository(client);
-    queryBuilder = FakeSupabaseQueryBuilder();
-    filterBuilder = queryBuilder.filterBuilder;
-    transformBuilder = filterBuilder.transformBuilder as FakePostgrestTransformBuilder<dynamic>;
+    queryBuilder = MockSupabaseQueryBuilder();
+    filterBuilder = MockPostgrestFilterBuilder<PostgrestList>();
+    transformListBuilder = MockPostgrestTransformBuilder<PostgrestList>();
+    transformMapBuilder = MockPostgrestTransformBuilder<PostgrestMap?>();
 
     when(() => client.from(any())).thenAnswer((_) => queryBuilder);
+    when(() => queryBuilder.select(any())).thenAnswer((_) => filterBuilder);
+    when(() => queryBuilder.select()).thenAnswer((_) => filterBuilder);
+    when(() => queryBuilder.insert(any())).thenAnswer((_) => filterBuilder);
+    when(() => queryBuilder.update(any())).thenAnswer((_) => filterBuilder);
+    when(() => filterBuilder.eq(any(), any())).thenAnswer((_) => filterBuilder);
+    when(() => filterBuilder.select(any())).thenAnswer((_) => transformListBuilder);
+    when(() => filterBuilder.select()).thenAnswer((_) => transformListBuilder);
+    when(() => filterBuilder.maybeSingle()).thenAnswer((_) => transformMapBuilder);
+    when(() => transformListBuilder.maybeSingle()).thenAnswer((_) => transformMapBuilder);
 
     // Default awaitable stubs
-    stubPostgrestAwaitable(filterBuilder, <Map<String, dynamic>>[]);
-    stubPostgrestAwaitable(transformBuilder, null);
+    stubPostgrestAwaitable<PostgrestList>(filterBuilder, <Map<String, dynamic>>[]);
+    stubPostgrestAwaitable<PostgrestList>(transformListBuilder, <Map<String, dynamic>>[]);
+    stubPostgrestAwaitable<PostgrestMap?>(transformMapBuilder, null);
   });
 
   group('UsersRepository', () {
@@ -29,7 +46,7 @@ void main() {
       final userData = <Map<String, dynamic>>[
         {'id': '123', 'first_name': 'John', 'last_name': 'Doe', 'email': 'john@example.com'}
       ];
-      stubPostgrestAwaitable(filterBuilder, userData);
+      stubPostgrestAwaitable<PostgrestList>(filterBuilder, userData);
 
       final result = await repository.getUserById('123');
 
@@ -39,7 +56,7 @@ void main() {
 
     test('getUserRow returns user when found', () async {
       final userData = {'id': '123', 'first_name': 'John', 'last_name': 'Doe', 'email': 'john@example.com'};
-      stubPostgrestAwaitable(transformBuilder, userData);
+      stubPostgrestAwaitable<PostgrestMap?>(transformMapBuilder, userData);
 
       final result = await repository.getUserRow('123');
 
@@ -48,7 +65,7 @@ void main() {
     });
 
     test('getUserRow returns null when not found', () async {
-      stubPostgrestAwaitable(transformBuilder, null);
+      stubPostgrestAwaitable<PostgrestMap?>(transformMapBuilder, null);
 
       final result = await repository.getUserRow('456');
 
@@ -72,7 +89,7 @@ void main() {
         'email': 'john@example.com',
         'profile_pic': 'new_url'
       };
-      stubPostgrestAwaitable(transformBuilder, userData);
+      stubPostgrestAwaitable<PostgrestMap?>(transformMapBuilder, userData);
 
       final result = await repository.updateProfilePicture(
         userId: '123',
@@ -90,7 +107,7 @@ void main() {
         'email': 'john@example.com',
         'shooting_hand': 'Left'
       };
-      stubPostgrestAwaitable(transformBuilder, userData);
+      stubPostgrestAwaitable<PostgrestMap?>(transformMapBuilder, userData);
 
       final result = await repository.updateShootingHand(
         userId: '123',
@@ -106,7 +123,7 @@ void main() {
     });
 
     test('update returns null if response is null', () async {
-      stubPostgrestAwaitable(transformBuilder, null);
+      stubPostgrestAwaitable<PostgrestMap?>(transformMapBuilder, null);
       final result = await repository.update(userId: '123', data: {'key': 'val'});
       expect(result, isNull);
     });

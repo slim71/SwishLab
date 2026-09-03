@@ -25,6 +25,7 @@ Future<String> uploadVideoToGradio(
   File videoFile, {
   Dio? dioClient,
   CancelToken? cancelToken,
+  void Function(double progress)? onProgress,
 }) async {
   try {
     if (!await videoFile.exists()) {
@@ -47,6 +48,11 @@ Future<String> uploadVideoToGradio(
       url,
       data: formData,
       cancelToken: cancelToken,
+      onSendProgress: (sent, total) {
+        if (total > 0 && onProgress != null) {
+          onProgress(sent / total);
+        }
+      },
       options: Options(
         sendTimeout: const Duration(minutes: 5),
         receiveTimeout: const Duration(minutes: 2),

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 import 'package:mocktail/mocktail.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -6,9 +7,49 @@ class MockSupabaseClient extends Mock implements SupabaseClient {}
 
 class MockSupabaseQueryBuilder extends Mock implements SupabaseQueryBuilder {}
 
-class MockPostgrestFilterBuilder<T> extends Mock implements PostgrestFilterBuilder<T> {}
+// ignore: must_be_immutable
+class MockPostgrestFilterBuilder<T> extends Mock implements PostgrestFilterBuilder<T> {
+  dynamic mockFuture;
 
-class MockPostgrestTransformBuilder<T> extends Mock implements PostgrestTransformBuilder<T> {}
+  @override
+  Future<R> then<R>(FutureOr<R> Function(T) onValue, {Function? onError}) async {
+    if (mockFuture != null) {
+      final value = await mockFuture;
+      return onValue(value as T);
+    }
+    try {
+      final fallback = super.noSuchMethod(
+        Invocation.method(#then, [onValue], {#onError: onError}),
+      );
+      if (fallback is Future<R>) return fallback;
+      return onValue(null as T);
+    } catch (_) {
+      return onValue(null as T);
+    }
+  }
+}
+
+// ignore: must_be_immutable
+class MockPostgrestTransformBuilder<T> extends Mock implements PostgrestTransformBuilder<T> {
+  dynamic mockFuture;
+
+  @override
+  Future<R> then<R>(FutureOr<R> Function(T) onValue, {Function? onError}) async {
+    if (mockFuture != null) {
+      final value = await mockFuture;
+      return onValue(value as T);
+    }
+    try {
+      final fallback = super.noSuchMethod(
+        Invocation.method(#then, [onValue], {#onError: onError}),
+      );
+      if (fallback is Future<R>) return fallback;
+      return onValue(null as T);
+    } catch (_) {
+      return onValue(null as T);
+    }
+  }
+}
 
 class MockSupabaseStorageClient extends Mock implements SupabaseStorageClient {}
 
@@ -28,4 +69,12 @@ void setupSupabaseMocks() {
   registerFallbackValue(const FileOptions());
   registerFallbackValue(Uint8List(0));
   registerFallbackValue(CountOption.exact);
+}
+
+void stubPostgrestAwaitable<T>(dynamic builder, dynamic result) {
+  if (builder is MockPostgrestFilterBuilder<T>) {
+    builder.mockFuture = result;
+  } else if (builder is MockPostgrestTransformBuilder<T>) {
+    builder.mockFuture = result;
+  }
 }

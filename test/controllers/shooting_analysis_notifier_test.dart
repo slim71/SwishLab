@@ -46,7 +46,7 @@ void main() {
     container = createContainer(
       overrides: [
         endpointAddressApiProvider.overrideWithValue(api),
-        videoUploaderProvider.overrideWithValue((file, {dioClient, cancelToken}) async => 'gradio-url'),
+        videoUploaderProvider.overrideWithValue((file, {dioClient, cancelToken, onProgress}) async => 'gradio-url'),
         statisticsRepositoryProvider.overrideWithValue(statsRepo),
         authUserProvider.overrideWithValue(user),
       ],
@@ -118,8 +118,8 @@ void main() {
       container = createContainer(
         overrides: [
           endpointAddressApiProvider.overrideWithValue(api),
-          videoUploaderProvider
-              .overrideWithValue((file, {dioClient, cancelToken}) async => throw Exception('Upload failed')),
+          videoUploaderProvider.overrideWithValue(
+              (file, {dioClient, cancelToken, onProgress}) async => throw Exception('Upload failed')),
         ],
       );
       controller = container.read(shootingAnalysisProvider.notifier);
@@ -139,8 +139,8 @@ void main() {
       container = createContainer(
         overrides: [
           endpointAddressApiProvider.overrideWithValue(api),
-          videoUploaderProvider
-              .overrideWithValue((file, {dioClient, cancelToken}) async => throw Exception('Upload timed out')),
+          videoUploaderProvider.overrideWithValue(
+              (file, {dioClient, cancelToken, onProgress}) async => throw Exception('Upload timed out')),
         ],
       );
       controller = container.read(shootingAnalysisProvider.notifier);
@@ -201,8 +201,8 @@ void main() {
       container = createContainer(
         overrides: [
           endpointAddressApiProvider.overrideWithValue(api),
-          videoUploaderProvider
-              .overrideWithValue((file, {dioClient, cancelToken}) async => throw Exception('Upload failed')),
+          videoUploaderProvider.overrideWithValue(
+              (file, {dioClient, cancelToken, onProgress}) async => throw Exception('Upload failed')),
         ],
       );
       controller = container.read(shootingAnalysisProvider.notifier);
@@ -316,7 +316,7 @@ void main() {
           final localContainer = createContainer(
             overrides: [
               endpointAddressApiProvider.overrideWithValue(api),
-              videoUploaderProvider.overrideWithValue((file, {dioClient, cancelToken}) => completer.future),
+              videoUploaderProvider.overrideWithValue((file, {dioClient, cancelToken, onProgress}) => completer.future),
             ],
           );
           // Listen to keep the autoDispose provider alive
@@ -347,7 +347,7 @@ void main() {
           final localContainer = createContainer(
             overrides: [
               endpointAddressApiProvider.overrideWithValue(api),
-              videoUploaderProvider.overrideWithValue((file, {dioClient, cancelToken}) async => 'url'),
+              videoUploaderProvider.overrideWithValue((file, {dioClient, cancelToken, onProgress}) async => 'url'),
             ],
           );
           localContainer.listen(shootingAnalysisProvider, (p, n) {});
@@ -383,7 +383,7 @@ void main() {
           final localContainer = createContainer(
             overrides: [
               endpointAddressApiProvider.overrideWithValue(api),
-              videoUploaderProvider.overrideWithValue((file, {dioClient, cancelToken}) async => 'url'),
+              videoUploaderProvider.overrideWithValue((file, {dioClient, cancelToken, onProgress}) async => 'url'),
             ],
           );
           localContainer.listen(shootingAnalysisProvider, (p, n) {});
@@ -427,7 +427,7 @@ void main() {
       container = createContainer(
         overrides: [
           endpointAddressApiProvider.overrideWithValue(api),
-          videoUploaderProvider.overrideWithValue((file, {dioClient, cancelToken}) async => 'gradio-url'),
+          videoUploaderProvider.overrideWithValue((file, {dioClient, cancelToken, onProgress}) async => 'gradio-url'),
           statisticsRepositoryProvider.overrideWithValue(statsRepo),
           authUserProvider.overrideWithValue(null),
         ],
@@ -462,7 +462,8 @@ void main() {
       container = createContainer(
         overrides: [
           endpointAddressApiProvider.overrideWithValue(api),
-          videoUploaderProvider.overrideWithValue((file, {dioClient, cancelToken}) => uploadCompleter.future),
+          videoUploaderProvider
+              .overrideWithValue((file, {dioClient, cancelToken, onProgress}) => uploadCompleter.future),
         ],
       );
       final localController = container.read(shootingAnalysisProvider.notifier);

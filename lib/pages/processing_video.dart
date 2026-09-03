@@ -69,6 +69,9 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
   @override
   Widget build(BuildContext context) {
     final appColors = AppThemeManager.currentColors;
+    final analysisState = ref.watch(shootingAnalysisProvider);
+    final uploadProgress = analysisState is AnalysisLoading ? analysisState.progress : 0.0;
+    final isUploading = analysisState is AnalysisLoading && uploadProgress < 1.0;
 
     ref.listen<AnalysisState>(
       shootingAnalysisProvider,
@@ -161,7 +164,7 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                'Processing Video',
+                                isUploading ? 'Uploading Video' : 'Processing Video',
                                 style:
                                     AppTextStyles.headlineMedium(context, color: AppThemeManager.primaryText).copyWith(
                                   fontWeight: FontWeight.w900,
@@ -170,7 +173,9 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                'Please wait while we prepare your video',
+                                isUploading
+                                    ? 'Sending your session to our AI server'
+                                    : 'Please wait while we analyze your form',
                                 textAlign: TextAlign.center,
                                 style: AppTextStyles.labelMedium(context,
                                     color: AppThemeManager.primaryText.withValues(alpha: 0.6)),
@@ -186,23 +191,33 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
                     // Progress Visualization
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 32),
-                      child: Container(
-                        width: 240,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: appColors.alternateOne.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child:
-                            // Container used as colored divider
-                            Container(
-                          width: 120,
-                          height: 8,
-                          decoration: BoxDecoration(
-                            gradient: appColors.gradientLinear(),
-                            borderRadius: BorderRadius.circular(12),
+                      child: Stack(
+                        children: [
+                          Container(
+                            width: 240,
+                            height: 12,
+                            decoration: BoxDecoration(
+                              color: appColors.alternateOne.withValues(alpha: 0.2),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                           ),
-                        ),
+                          AnimatedContainer(
+                            duration: const Duration(milliseconds: 300),
+                            width: 240 * uploadProgress,
+                            height: 12,
+                            decoration: BoxDecoration(
+                              gradient: appColors.gradientLinear(),
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: appColors.primaryOne.withValues(alpha: 0.3),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
 
@@ -224,6 +239,14 @@ class _ProcessingVideoState extends ConsumerState<ProcessingVideo> {
                             ),
                             child: Column(
                               children: [
+                                if (isUploading) ...[
+                                  Text(
+                                    'Uploading Video: ${(uploadProgress * 100).toInt()}%',
+                                    style: AppTextStyles.headlineSmall(context, color: appColors.primaryOne)
+                                        .copyWith(fontWeight: FontWeight.w900, fontSize: 18),
+                                  ),
+                                  const SizedBox(height: 8),
+                                ],
                                 Text(
                                   'Elapsed Time: $_elapsedTime',
                                   style: AppTextStyles.titleMedium(context, color: AppThemeManager.primaryText)

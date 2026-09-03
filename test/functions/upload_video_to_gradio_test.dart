@@ -42,6 +42,7 @@ void main() {
             any<String>(),
             data: any(named: 'data'),
             cancelToken: any(named: 'cancelToken'),
+            onSendProgress: any(named: 'onSendProgress'),
             options: any(named: 'options'),
           )).thenAnswer((_) async => Response<dynamic>(
             data: ['gradio/cached/path.mp4'],
@@ -58,6 +59,7 @@ void main() {
             any<String>(),
             data: any(named: 'data'),
             cancelToken: any(named: 'cancelToken'),
+            onSendProgress: any(named: 'onSendProgress'),
             options: any(named: 'options'),
           )).thenAnswer((_) async => Response<dynamic>(
             data: 'Error',
@@ -73,6 +75,7 @@ void main() {
             any<String>(),
             data: any(named: 'data'),
             cancelToken: any(named: 'cancelToken'),
+            onSendProgress: any(named: 'onSendProgress'),
             options: any(named: 'options'),
           )).thenAnswer((_) async => Response<dynamic>(
             data: {'error': 'bad response'},
@@ -90,6 +93,7 @@ void main() {
             any<String>(),
             data: any(named: 'data'),
             cancelToken: any(named: 'cancelToken'),
+            onSendProgress: any(named: 'onSendProgress'),
             options: any(named: 'options'),
           )).thenThrow(DioException(
         requestOptions: RequestOptions(path: ''),
@@ -98,6 +102,34 @@ void main() {
 
       expect(() => uploadVideoToGradio(tempFile, dioClient: mockDio, cancelToken: cancelToken),
           throwsA(isA<DioException>()));
+    });
+
+    test('should report upload progress', () async {
+      double? reportedProgress;
+
+      when(() => mockDio.post<dynamic>(
+            any<String>(),
+            data: any(named: 'data'),
+            cancelToken: any(named: 'cancelToken'),
+            onSendProgress: any(named: 'onSendProgress'),
+            options: any(named: 'options'),
+          )).thenAnswer((invocation) async {
+        final onSendProgress = invocation.namedArguments[#onSendProgress] as void Function(int, int)?;
+        onSendProgress?.call(50, 100);
+        return Response<dynamic>(
+          data: ['gradio/path.mp4'],
+          statusCode: 200,
+          requestOptions: RequestOptions(path: ''),
+        );
+      });
+
+      await uploadVideoToGradio(
+        tempFile,
+        dioClient: mockDio,
+        onProgress: (p) => reportedProgress = p,
+      );
+
+      expect(reportedProgress, 0.5);
     });
 
     group('UploadException', () {

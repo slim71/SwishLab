@@ -7,6 +7,7 @@ typedef VideoUploader = Future<String> Function(
   File videoFile, {
   Dio? dioClient,
   CancelToken? cancelToken,
+  void Function(double progress)? onProgress,
 });
 
 final videoUploaderProvider = Provider<VideoUploader>((ref) {

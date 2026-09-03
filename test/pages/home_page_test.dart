@@ -249,6 +249,9 @@ void main() {
 
     expect(find.text('John'), findsOneWidget);
     expect(find.text('1'), findsOneWidget);
+    expect(find.text('Overall'), findsOneWidget);
+    expect(find.text('Last 10'), findsOneWidget);
+    expect(find.text('Latest'), findsOneWidget);
   });
 
   testWidgets('Setup button in dialog navigates to user page', (tester) async {

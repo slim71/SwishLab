@@ -19,12 +19,14 @@ class UserStatisticsState {
   final int totalCount;
   final bool hasMore;
   final bool isLoadingMore;
+  final double overallAvgScore;
 
   const UserStatisticsState({
     required this.items,
     required this.totalCount,
     required this.hasMore,
     this.isLoadingMore = false,
+    this.overallAvgScore = 0.0,
   });
 
   UserStatisticsState copyWith({
@@ -32,12 +34,14 @@ class UserStatisticsState {
     int? totalCount,
     bool? hasMore,
     bool? isLoadingMore,
+    double? overallAvgScore,
   }) {
     return UserStatisticsState(
       items: items ?? this.items,
       totalCount: totalCount ?? this.totalCount,
       hasMore: hasMore ?? this.hasMore,
       isLoadingMore: isLoadingMore ?? this.isLoadingMore,
+      overallAvgScore: overallAvgScore ?? this.overallAvgScore,
     );
   }
 }
@@ -67,22 +71,25 @@ class UserStatisticsNotifier extends StateNotifier<AsyncValue<UserStatisticsStat
     try {
       final repo = ref.read(statisticsRepositoryProvider);
 
-      _logger.d('Fetching items and count for user: ${user.id}');
-      // Fetch items and count in parallel
+      _logger.d('Fetching items, count, and overall average for user: ${user.id}');
+      // Fetch items, count, and overall average in parallel
       final results = await Future.wait([
         repo.getUserStatistics(user.id, limit: _pageSize),
         repo.getStatsCount(user.id),
+        repo.getOverallAverageScore(user.id),
       ]);
       _logger.d('Fetched: $results');
 
       final initialItems = results[0] as List<StatisticsRow>;
       final totalCount = results[1] as int;
-      _logger.i('Fetched ${initialItems.length} items. Total count: $totalCount');
+      final overallAvgScore = results[2] as double;
+      _logger.i('Fetched ${initialItems.length} items. Total count: $totalCount. Overall Avg: $overallAvgScore');
 
       state = AsyncValue.data(UserStatisticsState(
         items: initialItems,
         totalCount: totalCount,
         hasMore: initialItems.length == _pageSize,
+        overallAvgScore: overallAvgScore,
       ));
     } catch (e, stack) {
       _logger.e('Error during initialization', error: e, stackTrace: stack);
@@ -115,6 +122,7 @@ class UserStatisticsNotifier extends StateNotifier<AsyncValue<UserStatisticsStat
         totalCount: currentState.totalCount, // Count doesn't change during pagination
         hasMore: nextItems.length == _pageSize,
         isLoadingMore: false,
+        overallAvgScore: currentState.overallAvgScore,
       ));
     } catch (e) {
       state = AsyncValue.data(currentState.copyWith(isLoadingMore: false));

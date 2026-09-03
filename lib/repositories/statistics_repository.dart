@@ -68,15 +68,48 @@ class StatisticsRepository {
   /// Returns the total number of shooting sessions for a user.
   Future<int> getStatsCount(String userId) async {
     try {
-      final response = await _client
-          .from(_tableName)
-          .select('stat_id')
-          .eq('user_id', userId)
-          .count(CountOption.exact);
+      final response = await _client.from(_tableName).select('stat_id').eq('user_id', userId).count(CountOption.exact);
       return response.count;
     } catch (e) {
       _logger.e('Error fetching stats count', error: e);
       return 0;
+    }
+  }
+
+  /// Returns the overall average score for a user across all sessions.
+  Future<double> getOverallAverageScore(String userId) async {
+    try {
+      final response = await _client
+          .from(_tableName)
+          .select(
+            'set_point_total_score, '
+            'jump_total_score, '
+            'elbow_position_total_score, '
+            'feet_direction_total_score, '
+            'shot_path_total_score, '
+            'follow_through_total_score',
+          )
+          .eq('user_id', userId);
+
+      final List<dynamic> rows = response as List<dynamic>;
+      if (rows.isEmpty) return 0.0;
+
+      double totalSumOfAverages = 0;
+      for (var row in rows) {
+        double rowSum = 0;
+        rowSum += (row['set_point_total_score'] ?? 0.0) as num;
+        rowSum += (row['jump_total_score'] ?? 0.0) as num;
+        rowSum += (row['elbow_position_total_score'] ?? 0.0) as num;
+        rowSum += (row['feet_direction_total_score'] ?? 0.0) as num;
+        rowSum += (row['shot_path_total_score'] ?? 0.0) as num;
+        rowSum += (row['follow_through_total_score'] ?? 0.0) as num;
+        totalSumOfAverages += (rowSum / 6.0);
+      }
+
+      return totalSumOfAverages / rows.length;
+    } catch (e) {
+      _logger.e('Error fetching overall average score', error: e);
+      return 0.0;
     }
   }
 }

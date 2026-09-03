@@ -227,6 +227,7 @@ void main() {
       when(() => mockRepo.getUserStatistics('1', limit: any(named: 'limit'), offset: any(named: 'offset')))
           .thenAnswer((_) async => []);
       when(() => mockRepo.getStatsCount('1')).thenAnswer((_) async => 0);
+      when(() => mockRepo.getOverallAverageScore('1')).thenAnswer((_) async => 0.0);
 
       final container = createContainer(overrides: [
         appUserProvider.overrideWith((ref) => user),

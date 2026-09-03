@@ -95,14 +95,18 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
 
     // latest session is now the first item due to descending order in repository
     final last = checkedForms.firstOrNull;
-
     final lastSessionScore = _calculateRowAvg(last);
 
-    double totalOfAll = 0;
-    for (var form in checkedForms) {
-      totalOfAll += _calculateRowAvg(form);
+    // Calculate Last 10 Average from the loaded items
+    final last10Items = checkedForms.take(10).toList();
+    double totalOfLast10 = 0;
+    for (var form in last10Items) {
+      totalOfLast10 += _calculateRowAvg(form);
     }
-    final overallAvgScore = checkedForms.isEmpty ? 0.0 : totalOfAll / checkedForms.length;
+    final last10AvgScore = last10Items.isEmpty ? 0.0 : totalOfLast10 / last10Items.length;
+
+    // Overall Avg now comes directly from the backend via provider state
+    final overallAvgScore = statsData?.overallAvgScore ?? 0.0;
 
     Color getScoreColor(double score) {
       return score >= 0.8
@@ -113,6 +117,7 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
     }
 
     final overallColor = getScoreColor(overallAvgScore);
+    final last10Color = getScoreColor(last10AvgScore);
     final lastColor = getScoreColor(lastSessionScore);
 
     return GestureDetector(
@@ -203,22 +208,22 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                                 child: Divider(height: 1, thickness: 0.5, color: Colors.black12),
                               ),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   // Overall Health
                                   Expanded(
                                     child: Row(
                                       children: [
                                         _buildShotHealthIndicator(overallAvgScore, overallColor),
-                                        const SizedBox(width: 10),
+                                        const SizedBox(width: 8),
                                         Flexible(
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Overall Avg',
+                                                'Overall',
                                                 style: AppTextStyles.labelSmall(context,
                                                     color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
+                                                overflow: TextOverflow.ellipsis,
                                               ),
                                               Text(
                                                 '${(overallAvgScore * 100).toInt()}%',
@@ -231,21 +236,50 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
                                       ],
                                     ),
                                   ),
-                                  const SizedBox(width: 8),
-                                  // Last Session
+                                  const SizedBox(width: 4),
+                                  // Last 10 Health
                                   Expanded(
                                     child: Row(
                                       children: [
-                                        _buildShotHealthIndicator(lastSessionScore, lastColor),
-                                        const SizedBox(width: 10),
+                                        _buildShotHealthIndicator(last10AvgScore, last10Color),
+                                        const SizedBox(width: 8),
                                         Flexible(
                                           child: Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Last Session',
+                                                'Last 10',
                                                 style: AppTextStyles.labelSmall(context,
                                                     color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                              Text(
+                                                '${(last10AvgScore * 100).toInt()}%',
+                                                style: AppTextStyles.titleMedium(context, color: last10Color)
+                                                    .copyWith(fontWeight: FontWeight.w900),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  // Last Session
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        _buildShotHealthIndicator(lastSessionScore, lastColor),
+                                        const SizedBox(width: 8),
+                                        Flexible(
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Latest',
+                                                style: AppTextStyles.labelSmall(context,
+                                                    color: AppThemeManager.primaryText.withValues(alpha: 0.5)),
+                                                overflow: TextOverflow.ellipsis,
                                               ),
                                               Text(
                                                 '${(lastSessionScore * 100).toInt()}%',
